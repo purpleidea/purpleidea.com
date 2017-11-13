@@ -25,6 +25,8 @@ rm -rf public/*
 echo "Generating site"
 hugo
 
+echo "purpleidea.com" > public/CNAME
+
 echo "Updating gh-pages branch"
 cd public && git add . && git commit -m "hugo: Publishing new site via publish.sh" && cd -
 
