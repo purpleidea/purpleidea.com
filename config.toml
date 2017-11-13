@@ -1,3 +1,14 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+baseURL = "https://purpleidea.com/"
+languageCode = "en-ca"
+title = "purpleidea.com"
+
+[author]
+  name = "James Shubin"
+
+[params]
+  github = "https://github.com/purpleidea/"
+  twitter = "https://twitter.com/purpleidea"
+
+  # https://api.staticman.net/v2/entry/{GITHUB USERNAME}/{GITHUB REPOSITORY}/{BRANCH}/{PROPERTY (optional)}
+  staticmanURL = "https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master"
+  staticmanPR = "https://github.com/purpleidea/purpleidea.com/pulls"
