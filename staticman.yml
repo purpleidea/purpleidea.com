@@ -20,7 +20,7 @@ comments:
   branch: "master"
 
   # Text to use as the commit message or pull request title. Accepts placeholders.
-  commitMessage: "staticman: New post comment to {options.entryId}"
+  commitMessage: "staticman: New post comment"
 
   # (*) REQUIRED
   #
