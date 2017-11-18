@@ -20,7 +20,7 @@ comments:
   branch: "master"
 
   # Text to use as the commit message or pull request title. Accepts placeholders.
-  commitMessage: "staticman: New post comment"
+  commitMessage: "staticman: New post comment to {options.entryId}"
 
   # (*) REQUIRED
   #
@@ -78,5 +78,5 @@ comments:
   # List of transformations to apply to any of the fields supplied. Keys are
   # the name of the field and values are possible transformation types.
   # foo
-  transforms:
+  #transforms:
   #  email: md5
