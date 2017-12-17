@@ -23,6 +23,17 @@
 				<hr>
 				<strong>Tags</strong><br>
 				{{ range .Params.tags }}<a class="label label-default" href="/tags/{{ . | urlize }}">{{ . }}</a> {{ end }}
+				{{ if .Params.original_url }}
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="{{ .Params.original_url }}"><small>{{ .Params.original_url }}</small></a>
+				{{ end }}
+
+				{{ if and (not (eq .Params.author "purpleidea")) (not (eq .Params.author ""))   }}
+				<hr>
+				<strong>Author</strong><br>
+				<small>{{ .Params.author }}</small>
+				{{ end }}
 			</div>
 			{{ partial "menu.html" . }}
 		</div>
