@@ -1,0 +1,33 @@
++++
+date = "2014-03-27 20:32:41"
+title = "Puppet-Gluster now available as RPM"
+draft = "false"
+categories = ["technical"]
+tags = ["planetfedora", "puppet-puppet", "puppet-shorewall", "puppet-yum", "rpm", "fedora", "planetdevops", "puppet-common", "puppet-keepalived", "wizard", "puppet-gluster", "centos", "devops", "planetpuppet", "puppet", "puppetlabs-stdlib", "yum"]
+author = "jamesjustjames"
++++
+
+I've been afraid of <a href="https://en.wikipedia.org/wiki/RPM_Package_Manager">RPM</a> and package maintaining [1] for years, but thanks to <a href="http://www.keithley.org/kaleb/kaleb.html">Kaleb Keithley</a>, I have finally made some RPM's that weren't generated from a <a href="http://docs.python.org/3/distutils/builtdist.html">high level tool</a>. Now that I have the <a href="https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155">boilerplate</a> done, it's a relatively painless process!
+
+In case you don't know <a href="https://twitter.com/kalebkuechle">kkeithley</a>, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a <a href="https://en.wikipedia.org/wiki/Beer"><em>$BEVERAGE</em></a>. &lt;/plug&gt;
+
+[caption id="attachment_799" align="alignnone" width="584"]<a href="http://ttboj.files.wordpress.com/2014/03/wizard_penguin.png"><img class="size-large wp-image-799" src="http://ttboj.files.wordpress.com/2014/03/wizard_penguin.png?w=584" alt="A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin." width="584" height="758" /></a> A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.[/caption]
+
+<a href="https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155">The full source of my changes is available in git.</a>
+
+If you want to make the RPM's yourself, simply clone the <a title="puppet-gluster" href="https://ttboj.wordpress.com/code/puppet-gluster/">puppet-gluster</a> source, and run: <code>make rpm</code>. If you'd rather download pre-built RPM's, SRPM'S, or source tarballs, they are all being graciously hosted on <a href="https://download.gluster.org/pub/gluster/purpleidea/puppet-gluster/">download.gluster.org</a>, thanks to <a href="https://twitter.com/johnmark">John Mark Walker</a> and the <a href="http://www.gluster.org/">gluster.org</a> community.
+
+These RPM's will install their contents into <code>/usr/share/puppet/modules/</code>. They should work on <a href="https://fedoraproject.org/">Fedora</a> or <a href="https://www.centos.org/">CentOS</a>, but they do require a <code>puppet</code> package to be installed. I hope to offer them in the future as part of a repository for easier consumption.
+
+There are also <a href="https://download.gluster.org/pub/gluster/purpleidea/">RPM's available</a> for <a title="Screencasts of Puppet-Gluster + Vagrant" href="https://github.com/purpleidea/puppet-common">puppet-common</a>, <a href="https://github.com/purpleidea/puppet-keepalived">puppet-keepalived</a>, <a href="https://github.com/purpleidea/puppet-puppet">puppet-puppet</a>, <a href="https://github.com/purpleidea/puppet-shorewall">puppet-shorewall</a>, <a href="https://github.com/purpleidea/puppet-yum">puppet-yum</a>, and even <a href="https://github.com/purpleidea/puppetlabs-stdlib">puppetlabs-stdlib</a>. These are the dependencies required to install the <a title="Screencasts of Puppet-Gluster + Vagrant" href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> module.
+
+Please let me know if you find any issues with any of the packages, or if you have any recommendations for improvement! I'm new to packaging, so I probably made some mistakes.
+
+Happy Hacking,
+
+James
+
+<strong>[1]</strong> package maintainer, aka: "paintainer" - according to <a href="https://github.com/semiosis">semiosis</a>, who is right!
+
+<strong>[2]</strong> wizard as in an <a href="http://www.catb.org/jargon/html/W/wizard.html">awesome, talented, hacker</a>.
+
