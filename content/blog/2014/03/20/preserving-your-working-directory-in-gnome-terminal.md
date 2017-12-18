@@ -3,8 +3,9 @@ date = "2014-03-20 18:01:24"
 title = "Preserving your working directory in gnome-terminal"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "gnome-terminal", "gnome", "pgo", "planetpuppet", "bash", "devops", "puppet", "fedora", "planetfedora", "planetdevops"]
-author = "jamesjustjames"
+tags = ["bash", "devops", "fedora", "gluster", "gnome", "gnome-terminal", "pgo", "planetdevops", "planetfedora", "planetpuppet", "puppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/03/20/preserving-your-working-directory-in-gnome-terminal/"
 +++
 
 I use gnome-terminal for most of my hacking. In fact, I use it so much, that I'll often have multiple tabs open for a particular project. Here's my workflow:
@@ -27,11 +28,9 @@ to your <code>~/.bashrc</code>. Now everything works perfectly!
 
 Many thanks to <a href="https://blogs.gnome.org/mclasen/">Matthias Clasen</a> and <a href="https://blogs.gnome.org/halfline/">Ray Strode</a> for figuring this one out!
 
-One side note: this used to be the default, but for some reason it broke around Fedora 19 or 20. Maybe it had to do with my <a href="/post/2014/01/29/show-the-exit-status-in-your-ps1/">fancy prompt</a>, but everything is working great now.
+One side note: this used to be the default, but for some reason it broke around Fedora 19 or 20. Maybe it had to do with my <a href="/blog/2014/01/29/show-the-exit-status-in-your-ps1/">fancy prompt</a>, but everything is working great now.
 
 Happy Hacking,
 
 James
-
-&nbsp;
 

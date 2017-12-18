@@ -3,8 +3,9 @@ date = "2010-03-09 17:17:51"
 title = "getting gedit to work like magic"
 draft = "false"
 categories = ["technical"]
-tags = ["indentation", "magic", "programming", "vim", "wow", "gedit", "linux", "pgo", "tabs"]
-author = "jamesjustjames"
+tags = ["gedit", "indentation", "linux", "magic", "pgo", "programming", "tabs", "vim", "wow"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2010/03/09/getting-gedit-to-work-like-magic/"
 +++
 
 i use <a href="http://en.wikipedia.org/wiki/GNU/Linux">gnu/linux</a>. it's probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using <a href="http://projects.gnome.org/gedit/">gedit</a> for editing text. i still use <a href="http://www.vim.org/">vim</a>, echo (<a href="http://www.gnu.org/">gnu</a> bash) and <a href="http://www.gnu.org/software/emacs/">emacs</a> (but only for <a href="http://orgmode.org/">org-mode</a>).

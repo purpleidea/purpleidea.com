@@ -3,8 +3,9 @@ date = "2013-09-18 22:32:16"
 title = "Linuxcon day one, Monday"
 draft = "false"
 categories = ["technical"]
-tags = ["shorewall", "fedora", "gluster", "linuxcon", "new orleans", "planetdevops", "raspberry pi", "puppet", "puppet-gluster", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["fedora", "gluster", "linuxcon", "new orleans", "planetdevops", "planetpuppet", "puppet", "puppet-gluster", "raspberry pi", "shorewall"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/18/linuxcon-day-one-monday/"
 +++
 
 I'm here in New Orleans at Linux Con, hacking on <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> and talking to lots of interesting folks. I've met gluster hacker <a href="https://twitter.com/theronconrey">Theron Conrey</a>, and my host <a href="https://twitter.com/johnmark">John Mark Walker</a>, Fedora and Raspberry Pi experts <a href="https://twitter.com/spotrh">Spot</a> and <a href="https://twitter.com/suehle">Ruth Suehle</a>, and many others too.

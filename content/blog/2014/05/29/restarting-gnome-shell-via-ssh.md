@@ -3,8 +3,9 @@ date = "2014-05-29 02:18:35"
 title = "Restarting GNOME shell via SSH"
 draft = "false"
 categories = ["technical"]
-tags = ["fedora", "planetdevops", "bash", "planetfedora", "devops", "gnome shell", "restart"]
-author = "jamesjustjames"
+tags = ["bash", "devops", "fedora", "gnome shell", "planetdevops", "planetfedora", "restart"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/05/29/restarting-gnome-shell-via-ssh/"
 +++
 
 When GNOME shell breaks, you get to keep both pieces. The nice thing about shell failures in GNOME 3, is that if you're able to do a restart, the active windows are <a href="https://bugzilla.gnome.org/show_bug.cgi?id=695487">mostly not disturbed</a>. The common way to do this is to type <em>ALT-F2</em>, <em>r</em>, <<em>ENTER</em>>.
@@ -22,6 +23,4 @@ The script is available as a <a href="https://gist.github.com/purpleidea/aae7b91
 Happy hacking,
 
 James
-
-&nbsp;
 

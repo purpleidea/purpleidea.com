@@ -3,8 +3,9 @@ date = "2012-11-03 03:12:39"
 title = "changing *that* keyboard shortcut right there (in gnome)"
 draft = "false"
 categories = ["technical"]
-tags = ["gnome", "keyboard shortcuts", "magic", "dconf/gsettings", "gtk", "pgo", "shortcuts"]
-author = "jamesjustjames"
+tags = ["dconf/gsettings", "gnome", "gtk", "keyboard shortcuts", "magic", "pgo", "shortcuts"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/03/changing-that-keyboard-shortcut-right-there-in-gnome/"
 +++
 
 I love my keyboard shortcuts, and I sometimes I want to change them. If you're ever in a gnome application and wanted to change *that one right there*, you can now live-edit them!

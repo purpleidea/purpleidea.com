@@ -3,11 +3,12 @@ date = "2014-01-20 11:46:31"
 title = "Building base images for Vagrant with a Makefile"
 draft = "false"
 categories = ["technical"]
-tags = ["dangerous", "devops", "gluster", "makefile", "planetfedora", "selinux", "vagrant", "bash", "fedora", "planetpuppet", "puppet-gluster", "vagrant-libvirt", "centos", "planetdevops", "virt-builder", "boxes", "make", "puppet", "box"]
-author = "jamesjustjames"
+tags = ["bash", "box", "boxes", "centos", "dangerous", "devops", "fedora", "gluster", "make", "makefile", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster", "selinux", "vagrant", "vagrant-libvirt", "virt-builder"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/01/20/building-base-images-for-vagrant-with-a-makefile/"
 +++
 
-I needed a base image "<a href="https://docs.vagrantup.com/v2/boxes.html">box</a>" for my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="http://ttboj.wordpress.com/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn't able to satisfy either of these conditions, so I've had to build one myself! <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/README">I've published all of my code</a>, so that you can use these techniques and <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile">tools</a> too!
+I needed a base image "<a href="https://docs.vagrantup.com/v2/boxes.html">box</a>" for my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="/blog/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn't able to satisfy either of these conditions, so I've had to build one myself! <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/README">I've published all of my code</a>, so that you can use these techniques and <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile">tools</a> too!
 
 <strong><span style="text-decoration:underline;">Status quo</span>:</strong>
 
@@ -21,7 +22,7 @@ I decided to use the excellent <a href="http://libguestfs.org/virt-builder.1.htm
 ```
 $ sudo yum install libguestfs-tools
 ```
-It wasn't available in Fedora 19, but after a lot of pain, I managed to build (mostly correct?) packages. I have <a href="https://download.gluster.org/pub/gluster/purpleidea/virt-builder/f19/rpm/">posted them online</a> if you are <a href="https://download.gluster.org/pub/gluster/purpleidea/virt-builder/f19/rpm/README">brave (or crazy?)</a> enough to want them.
+It wasn't available in Fedora 19, but after a lot of pain, I managed to build (mostly correct?) packages. I have <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/virt-builder/f19/rpm/">posted them online</a> if you are <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/virt-builder/f19/rpm/README">brave (or crazy?)</a> enough to want them.
 
 <strong><span style="text-decoration:underline;">Using the right tool</span>:</strong>
 
@@ -35,7 +36,7 @@ At the moment, it builds <em>x86_64</em>, <a href="https://en.wikipedia.org/wiki
 
 <strong><span style="text-decoration:underline;">Download the image</span>:</strong>
 
-If you'd like to download the image that I generated, it is being generously hosted by the <a href="https://www.gluster.org/">Gluster</a> community <a href="https://download.gluster.org/pub/gluster/purpleidea/vagrant/">here</a>. If you're using the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/gluster/Vagrantfile">Vagrantfile</a> from my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="http://ttboj.wordpress.com/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> setup, then you don't have to download it manually, this will happen automatically.
+If you'd like to download the image that I generated, it is being generously hosted by the <a href="https://www.gluster.org/">Gluster</a> community <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/">here</a>. If you're using the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/gluster/Vagrantfile">Vagrantfile</a> from my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> setup, then you don't have to download it manually, this will happen automatically.
 
 <strong><span style="text-decoration:underline;">Open issues</span>:</strong>
 
@@ -45,7 +46,7 @@ The biggest issue with the images is that <em>SELinux</em> gets disabled! You mi
 
 If you'd like to see this in action, but don't want to run it yourself, here's an example run:
 
-[code gutter="false"]
+{{< highlight bash >}}
 $ date && time make && date
 Mon Jan 20 10:57:35 EST 2014
 Running templater...
@@ -88,8 +89,8 @@ user	2m23.282s
 sys	0m37.109s
 Mon Jan 20 11:06:46 EST 2014
 $
-```
-If you have any other questions, <a title="contact" href="http://ttboj.wordpress.com/contact/">please let me know</a>!
+{{< /highlight >}}
+If you have any other questions, <a title="contact" href="/contact/">please let me know</a>!
 
 Happy hacking,
 

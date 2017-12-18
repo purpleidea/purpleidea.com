@@ -3,18 +3,19 @@ date = "2015-08-18 03:12:26"
 title = "Thanking Oh-My-Vagrant contributors for version 1.0.0"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "1.0.0", "mainstream mode", "vagrant", "fedora", "oh-my-vagrant", "planetdevops", "planetfedora", "vagrant-libvirt", "libvirt", "puppet", "devops", "networking", "planetpuppet", "thanks"]
-author = "jamesjustjames"
+tags = ["1.0.0", "devops", "fedora", "gluster", "libvirt", "mainstream mode", "networking", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "puppet", "thanks", "vagrant", "vagrant-libvirt"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/"
 +++
 
 The <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant project</a> became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.
 ```
 james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count
-<strong>188</strong>
+188
 james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1)
 commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371
 Author: James Shubin <james@shubin.ca>
-Date:   <strong>Thu Aug 28 01:08:03 2014 -0400</strong>
+Date:   Thu Aug 28 01:08:03 2014 -0400
 
     Initial commit of vagrant-puppet-docker-template...
     
@@ -53,7 +54,7 @@ Vasyl is a great hacker who first <a href="https://github.com/purpleidea/oh-my-v
 
 <span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=rbarlow">Randy Barlow</a></span> (<a href="https://twitter.com/bowlofeggs">bowlofeggs</a>)
 
-Randy came up with the idea for "<a href="/post/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">mainstream mode</a>", and while his initial proof of concept didn't quite work, the idea was good. His time budget didn't afford the project this new feature, but he has sent in some other patches including <a href="https://github.com/purpleidea/oh-my-vagrant/commit/94534dfa6f3728fab00cbd47606e1dffe209c31e">some</a>, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/c85c7962fe44e933792c7f338d702e7fb338f07c">tweaks</a> used by the <a href="http://www.pulpproject.org/">Pulp</a> Vagrantfile. He's got a patch or two pending on his TODO list which we're looking forward to, as he finishes the work to port Pulp to OMV.
+Randy came up with the idea for "<a href="/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">mainstream mode</a>", and while his initial proof of concept didn't quite work, the idea was good. His time budget didn't afford the project this new feature, but he has sent in some other patches including <a href="https://github.com/purpleidea/oh-my-vagrant/commit/94534dfa6f3728fab00cbd47606e1dffe209c31e">some</a>, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/c85c7962fe44e933792c7f338d702e7fb338f07c">tweaks</a> used by the <a href="http://www.pulpproject.org/">Pulp</a> Vagrantfile. He's got a patch or two pending on his TODO list which we're looking forward to, as he finishes the work to port Pulp to OMV.
 
 <span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=scollier">Scott Collier</a></span>
 

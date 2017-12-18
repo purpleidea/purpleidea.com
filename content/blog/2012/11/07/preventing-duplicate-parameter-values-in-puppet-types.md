@@ -4,7 +4,8 @@ title = "preventing duplicate parameter values in puppet types"
 draft = "false"
 categories = ["technical"]
 tags = ["devops", "keepalived", "puppet", "vrrp"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/"
 +++
 
 I am writing a <a href="http://www.keepalived.org/">keepalived</a> module for puppet. It will naturally be called: "puppet-keepalived", and I will be releasing the code in the near future! In any case, if you're familiar with <a href="http://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol">VRRP</a>, you'll know that each managed link (eg: resource or <a href="http://en.wikipedia.org/wiki/Virtual_IP_address">VIP</a>) has a common <em>routerid</em> and <em>password</em> which are shared among all members in the group. It is important that these parameters are unique across the type definitions on a single node.

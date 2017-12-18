@@ -3,7 +3,8 @@ date = "2009-06-08 14:08:14"
 title = "brilliant: get rid of mono"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/06/08/brilliant-get-rid-of-mono/"
 +++
 
 fedora announces that they'll be replacing potentially patent encumbered mono based note taking application tomboy with the line for line port to c++ called <a href="http://live.gnome.org/Gnote">gnote</a>.

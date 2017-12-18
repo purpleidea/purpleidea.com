@@ -3,34 +3,35 @@ date = "2014-01-08 23:00:22"
 title = "Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!"
 draft = "false"
 categories = ["technical"]
-tags = ["planetdevops", "puppet", "vagrant", "fedora", "NFS", "gluster::simple", "planetfedora", "planetpuppet", "vagrant-cachier", "devops", "exec['again']", "testing", "vcssh", "keepalived", "shorewall", "puppet-gluster", "vagrant-libvirt", "vrrp", "fedora 20", "gluster"]
-author = "jamesjustjames"
+tags = ["NFS", "devops", 'exec["again"]', "fedora", "fedora 20", "gluster", "gluster::simple", "keepalived", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster", "shorewall", "testing", "vagrant", "vagrant-cachier", "vagrant-libvirt", "vcssh", "vrrp"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/"
 +++
 
-<a title="puppet-gluster" href="http://ttboj.wordpress.com/code/puppet-gluster/">Puppet-Gluster</a> was always about automating the deployment of <a href="https://www.gluster.org/">GlusterFS</a>. Getting your own Puppet server and the associated infrastructure running was never included "<em>out of the box</em>". <strong>Today, it is!</strong> (This is big news!)
+<a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> was always about automating the deployment of <a href="https://www.gluster.org/">GlusterFS</a>. Getting your own Puppet server and the associated infrastructure running was never included "<em>out of the box</em>". <strong>Today, it is!</strong> (This is big news!)
 
 I've used <a href="https://www.vagrantup.com/">Vagrant</a> to automatically build these GlusterFS clusters. I've tested this with <a href="https://fedoraproject.org/">Fedora 20</a>, and <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. This won't work with Fedora 19 because of <a href="https://bugzilla.redhat.com/show_bug.cgi?id=876541">bz#876541</a>. I recommend first reading my earlier articles for Vagrant and Fedora:
 <ul>
 	<li>
-<blockquote><a href="/post/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></blockquote>
+<blockquote><a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></blockquote>
 </li>
 	<li>
-<blockquote><a href="/post/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></blockquote>
+<blockquote><a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></blockquote>
 </li>
 	<li>
-<blockquote><a href="/post/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and 'screen'</a></blockquote>
+<blockquote><a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and 'screen'</a></blockquote>
 </li>
 </ul>
 Once you're comfortable with the material in the above articles, we can continue...
 
 <strong><span style="text-decoration:underline;">The short answer</span>:</strong>
 
-```bash gutter="false"
+{{< highlight bash >}}
 $ sudo service nfs start
 $ git clone --recursive https://github.com/purpleidea/puppet-gluster.git
 $ cd puppet-gluster/vagrant/gluster/
 $ vagrant up puppet && sudo -v && vagrant up
-```
+{{< /highlight >}}
 Once those commands finish, you should have four running gluster hosts, and a puppet server. The gluster hosts will still be building. You can log in and <code>tail -F</code> log files, or <code>watch -n 1</code> gluster status commands.
 
 The whole process including the one-time downloads took about 30 minutes. If you've got faster internet that I do, I'm sure you can cut that down to under 20. Building the gluster hosts themselves probably takes about 15 minutes.
@@ -41,15 +42,15 @@ Enjoy your new Gluster cluster!
 
 I took a few screenshots to make this more visual for you. I like to have <a href="http://virt-manager.org/">virt-manager</a> open so that I can visually see what's going on:
 
-[caption id="attachment_702" align="alignnone" width="579"]<a href="http://ttboj.files.wordpress.com/2014/01/virt-manager.png"><img class="size-full wp-image-702" alt="The annex{1..4} machines are building in parallel." src="http://ttboj.files.wordpress.com/2014/01/virt-manager.png" width="579" height="360" /></a> The annex{1..4} machines are building in parallel. The valleys happened when the machines were waiting for the vagrant DHCP server (dnsmasq).[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager.png"><img class="size-full wp-image-702" alt="The annex{1..4} machines are building in parallel." src="virt-manager.png" width="100%" height="100%" /></a></td></tr><tr><td> The annex{1..4} machines are building in parallel. The valleys happened when the machines were waiting for the vagrant DHCP server (dnsmasq).</td></tr></table></br />
 
 Here we can see two puppet runs happening on <em>annex1</em> and <em>annex4</em>.
 
-[caption id="attachment_703" align="alignnone" width="579"]<a href="http://ttboj.files.wordpress.com/2014/01/virt-manager-puppet.png"><img class="size-full wp-image-703" alt="Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}." src="http://ttboj.files.wordpress.com/2014/01/virt-manager-puppet.png" width="579" height="360" /></a> Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager-puppet.png"><img class="size-full wp-image-703" alt="Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}." src="virt-manager-puppet.png" width="100%" height="100%" /></a></td></tr><tr><td> Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}.</td></tr></table></br />
 
 Here's another example, with four hosts working in parallel:
 
-[caption id="attachment_704" align="alignnone" width="579"]<a href="http://ttboj.files.wordpress.com/2014/01/virt-manager-puppet2.png"><img class="size-full wp-image-704" alt="foo" src="http://ttboj.files.wordpress.com/2014/01/virt-manager-puppet2.png" width="579" height="360" /></a> Can you answer why the annex machines have two peaks? Why are the second peaks bigger?[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager-puppet2.png"><img class="size-full wp-image-704" alt="foo" src="virt-manager-puppet2.png" width="100%" height="100%" /></a></td></tr><tr><td> Can you answer why the annex machines have two peaks? Why are the second peaks bigger?</td></tr></table></br />
 
 <strong><span style="text-decoration:underline;">Tell me more</span>!</strong>
 
@@ -57,7 +58,7 @@ Okay, let's start with the command sequence shown above.
 ```
 $ sudo service nfs start
 ```
-This needs to be run <em>once</em> if the NFS server on your host is not already running. It is used to provide folder synchronization for the Vagrant guest machines. I offer more information about the NFS synchronization in an <a href="/post/2013/12/21/vagrant-vsftp-and-other-tricks/">earlier article</a>.
+This needs to be run <em>once</em> if the NFS server on your host is not already running. It is used to provide folder synchronization for the Vagrant guest machines. I offer more information about the NFS synchronization in an <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">earlier article</a>.
 ```
 $ git clone --recursive https://github.com/purpleidea/puppet-gluster.git
 ```
@@ -69,7 +70,7 @@ The Puppet-Gluster source contains a <em>vagrant</em> subdirectory. I've include
 ```
 $ vagrant up puppet && sudo -v && vagrant up
 ```
-This is where the fun stuff happens. You'll need a <a href="https://docs.vagrantup.com/v2/boxes.html">base box</a> image to run machines with Vagrant. Luckily, I've already built one for you, and it is generously hosted by the <a href="https://download.gluster.org/pub/gluster/purpleidea/vagrant/">Gluster community</a>.
+This is where the fun stuff happens. You'll need a <a href="https://docs.vagrantup.com/v2/boxes.html">base box</a> image to run machines with Vagrant. Luckily, I've already built one for you, and it is generously hosted by the <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/">Gluster community</a>.
 
 The very first time you run this Vagrant command, it will download this image automatically, install it and then continue the build process. This initial box download and installation only happens once. Subsequent Puppet-Gluster+Vagrant deploys and re-deploys won't need to re-download the base image!
 
@@ -87,21 +88,21 @@ $ vagrant destroy annex{1..4}
 ```
 You don't have to rebuild the puppet server because this command is clever and automatically cleans the old host entries from it! This makes re-deploying even faster!
 
-Then, run the <code>vagrant up</code> command with the <code>--gluster-count=<em><<strong>N</strong>></em></code> argument. Example:
+Then, run the <code>vagrant up</code> command with the <code>--gluster-count=<em><N></em></code> argument. Example:
 ```
-$ vagrant up --gluster-count=<strong>8</strong>
+$ vagrant up --gluster-count=8
 ```
 This is also configurable in the <code>puppet-gluster.yaml</code> file which will appear in your vagrant working directory. Remember that before you change any configuration option, you should destroy the affected hosts first, otherwise vagrant can get confused about the current machine state.
 
 <strong><span style="text-decoration:underline;">I want to test a different GlusterFS version</span>:</strong>
 
 By default, this will use the packages from:
-```
+
 <a href="https://download.gluster.org/pub/gluster/glusterfs/LATEST/">https://download.gluster.org/pub/gluster/glusterfs/LATEST/</a>
+
+but if you'd like to pick a specific GlusterFS version you can do so with the <code>--gluster-version=<em>&lt;<strong>version</strong>&gt;</em></code> argument. Example:
 ```
-but if you'd like to pick a specific GlusterFS version you can do so with the <code>--gluster-version=<em><<strong>version</strong>></em></code> argument. Example:
-```
-$ vagrant up --gluster-version='<strong>3.4.2-1.el6</strong>'
+$ vagrant up --gluster-version='3.4.2-1.el6'
 ```
 This is also stored, and configurable in the <code>puppet-gluster.yaml</code> file.
 
@@ -125,7 +126,7 @@ Once the vagrant commands are done running, you'll want to look at something to 
 ```
 $ vcssh --screen root@annex{1..4}
 ```
-I explain how to do this kind of magic in <a href="/post/2014/01/02/vagrant-clustered-ssh-and-screen/">an earlier post</a>. I then run some of the following commands:
+I explain how to do this kind of magic in <a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">an earlier post</a>. I then run some of the following commands:
 ```
 # tail -F /var/log/messages
 ```
@@ -159,16 +160,16 @@ The network block, domain, and other parameters are all configurable inside of t
 
 <strong><span style="text-decoration:underline;">What's the greatest number of machines this will scale to</span>?</strong>
 
-Good question! I'd like to know too! I know that GlusterFS probably can't scale to <a href="http://www.gluster.org/community/documentation/index.php/Features/thousand-node-glusterd">1000 hosts</a> yet. Keepalived can't support more than 256 priorities, therefore Puppet-Gluster can't scale beyond that count until a suitable fix can be found. There are likely some earlier limits inside of Puppet-Gluster due to maximum command line length constraints that you'll hit. If you find any, let me know and I'll patch them. Patches now cost around seven karma points. Other than those limits, there's the limit of my hardware. Since this is all being virtualized on a lowly <a href="https://en.wikipedia.org/wiki/ThinkPad_X_Series#X201">X201</a>, my tests are limited. <a title="donate" href="https://ttboj.wordpress.com/donate/">An upgrade would be awesome!</a>
+Good question! I'd like to know too! I know that GlusterFS probably can't scale to <a href="http://www.gluster.org/community/documentation/index.php/Features/thousand-node-glusterd">1000 hosts</a> yet. Keepalived can't support more than 256 priorities, therefore Puppet-Gluster can't scale beyond that count until a suitable fix can be found. There are likely some earlier limits inside of Puppet-Gluster due to maximum command line length constraints that you'll hit. If you find any, let me know and I'll patch them. Patches now cost around seven karma points. Other than those limits, there's the limit of my hardware. Since this is all being virtualized on a lowly <a href="https://en.wikipedia.org/wiki/ThinkPad_X_Series#X201">X201</a>, my tests are limited. <a title="donate" href="/donate/">An upgrade would be awesome!</a>
 
 <strong><span style="text-decoration:underline;">Can I use this to test QA releases, point releases and new GlusterFS versions</span>?</strong>
 
 Absolutely! That's the idea. There are two caveats:
 <ol>
 	<li>Automatically testing QA releases isn't supported until the QA packages have a sensible home on <em>download.gluster.org</em> or similar. This will need a change to:
-```
+
 <a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/repo.pp#L18">https://github.com/purpleidea/puppet-gluster/blob/master/manifests/repo.pp#L18</a>
-```
+
 The gluster community is working on this, and as soon as a solution is found, I'll patch Puppet-Gluster to support it. If you want to disable automatic repository management (in <code>gluster::simple</code>) and manage this yourself with the <a href="https://docs.vagrantup.com/v2/provisioning/shell.html">vagrant shell provisioner</a>, you're able to do so now.</li>
 	<li>It's possible that new releases introduce bugs, or change things in a backwards incompatible way that breaks Puppet-Gluster. If this happens, please let me know so that something can get patched. That's what testing is for!</li>
 </ol>
@@ -192,11 +193,11 @@ to refresh the local clone. To see what's going on, or to customize the process,
 
 <strong><span style="text-decoration:underline;">Client machines</span>:</strong>
 
-At the moment, this doesn't build separate machines for gluster client use. You can either mount your gluster pool from the puppet server, another gluster server, or if you add the right DNS entries to your <code>/etc/hosts</code>, you can mount the volume on your host machine. If you really want Vagrant to build client machines, you'll have to <a title="donate" href="https://ttboj.wordpress.com/donate/">persuade me</a>.
+At the moment, this doesn't build separate machines for gluster client use. You can either mount your gluster pool from the puppet server, another gluster server, or if you add the right DNS entries to your <code>/etc/hosts</code>, you can mount the volume on your host machine. If you really want Vagrant to build client machines, you'll have to <a title="donate" href="/donate/">persuade me</a>.
 
 <strong><span style="text-decoration:underline;">What about firewalls</span>?</strong>
 
-Normally I use <a href="http://www.shorewall.net/">shorewall</a> to manage the firewall. It integrates well with Puppet-Gluster, and does a great job. For an unexplained reason, it seems to be blocking my VRRP (keepalived) traffic, and I had to disable it. I think this is due to a <a href="http://wiki.libvirt.org/page/VirtualNetworking">libvirt networking</a> bug, but I can't prove it yet. If you can help debug this issue, <a href="/post/contact/">please let me know</a>! To reproduce it, enable the <em>firewall</em> and <em>shorewall</em> directives in:
+Normally I use <a href="http://www.shorewall.net/">shorewall</a> to manage the firewall. It integrates well with Puppet-Gluster, and does a great job. For an unexplained reason, it seems to be blocking my VRRP (keepalived) traffic, and I had to disable it. I think this is due to a <a href="http://wiki.libvirt.org/page/VirtualNetworking">libvirt networking</a> bug, but I can't prove it yet. If you can help debug this issue, <a href="/contact/">please let me know</a>! To reproduce it, enable the <em>firewall</em> and <em>shorewall</em> directives in:
 ```
 puppet-gluster/vagrant/gluster/puppet/manifests/site.pp
 ```
@@ -216,7 +217,7 @@ I used <a href="http://libguestfs.org/virt-builder.1.html">virt-builder</a>, som
 
 <strong><span style="text-decoration:underline;">Are you still here</span>?</strong>
 
-If you've read this far, then good for you! I'm sorry that it has been a long read, but I figured I would try to answer everyone's questions in advance. I'd like to hear your <a href="#comments">comments</a>! I get very little feedback, and I've never gotten a <a title="donate" href="https://ttboj.wordpress.com/donate/">single tip</a>! If you find this useful, <a title="contact" href="https://ttboj.wordpress.com/contact/">please let me know</a>.
+If you've read this far, then good for you! I'm sorry that it has been a long read, but I figured I would try to answer everyone's questions in advance. I'd like to hear your <a href="#comments">comments</a>! I get very little feedback, and I've never gotten a <a title="donate" href="/donate/">single tip</a>! If you find this useful, <a title="contact" href="/contact/">please let me know</a>.
 
 Until then,
 

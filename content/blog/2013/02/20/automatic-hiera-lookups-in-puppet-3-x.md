@@ -3,8 +3,9 @@ date = "2013-02-20 00:43:35"
 title = "Automatic hiera lookups in puppet 3.x"
 draft = "false"
 categories = ["technical"]
-tags = ["hiera", "puppet3", "automatic lookup", "devops", "puppet", "yaml"]
-author = "jamesjustjames"
+tags = ["automatic lookup", "devops", "hiera", "puppet", "puppet3", "yaml"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/"
 +++
 
 Dear readers,

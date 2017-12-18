@@ -3,8 +3,9 @@ date = "2012-12-31 00:34:45"
 title = "How I broke (and fixed) my rgmanager service"
 draft = "false"
 categories = ["technical"]
-tags = ["clustat", "clustering", "rgmanager", "clusvcadm", "devops"]
-author = "jamesjustjames"
+tags = ["clustat", "clustering", "clusvcadm", "devops", "rgmanager"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/12/31/how-i-broke-and-fixed-my-rgmanager-service/"
 +++
 
 <a href="https://fedorahosted.org/cluster/wiki/RGManager">Rgmanager</a>, clustat and clusvcadm are useful tools in cluster land. I recently built a custom resource which I added to one of my service chains. Upon inspecting clustat, I noticed:
@@ -19,7 +20,7 @@ server2                                 2 Online
 
 Service Name                   Owner (Last)                   State
 ------- ----                   ----- ------                   -----
-service:service-main-server1   (server1)                      <strong>failed</strong>
+service:service-main-server1   (server1)                      failed
 
 ```
 Looking at <em>/var/log/messages</em>, I found:
@@ -45,6 +46,4 @@ Hopefully you've now got your feet wet with this clustering intro! Remember that
 Happy Hacking,
 
 James
-
-&nbsp;
 

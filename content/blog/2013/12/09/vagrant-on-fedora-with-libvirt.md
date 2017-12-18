@@ -3,15 +3,16 @@ date = "2013-12-09 20:14:51"
 title = "Vagrant on Fedora with libvirt"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "planetpuppet", "puppet", "puppet-gluster", "virt-manager", "fedora", "libvirt", "pkla", "policykit", "virsh", "gluster", "planetfedora", "polkit", "vagrant"]
-author = "jamesjustjames"
+tags = ["devops", "fedora", "gluster", "libvirt", "pkla", "planetfedora", "planetpuppet", "policykit", "polkit", "puppet", "puppet-gluster", "vagrant", "virsh", "virt-manager"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/12/09/vagrant-on-fedora-with-libvirt/"
 +++
 
 Apparently lots of people are using <a href="https://www.vagrantup.com/">Vagrant</a> these days, so I figured I'd try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I've done. I did this on Fedora 19. Feel free to suggest improvements.
 
 <span style="text-decoration:underline;">Intro</span>:
 
-Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a>. It's often used for development. I'm planning on using it to test some <a title="puppet-gluster" href="http://ttboj.wordpress.com/code/puppet-gluster/">Puppet-Gluster</a> managed GlusterFS clusters.
+Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a>. It's often used for development. I'm planning on using it to test some <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> managed GlusterFS clusters.
 
 <span style="text-decoration:underline;">Installation</span>:
 
@@ -23,11 +24,11 @@ $ mkdir ~/vagrant
 $ wget http://files.vagrantup.com/packages/a40522f5fabccb9ddabad03d836e120ff5d14093/vagrant_1.3.5_x86_64.rpm
 $ sudo yum install vagrant_1.3.5_x86_64.rpm
 ```
-<em>EDIT</em>: Please use version <strong>1.3.5</strong> only! The 1.4 series breaks compatibility with a lot of the necessary plugins. You might have success with different versions, but I have not tested them yet.
+<em>EDIT</em>: Please use version 1.3.5 only! The 1.4 series breaks compatibility with a lot of the necessary plugins. You might have success with different versions, but I have not tested them yet.
 
 You'll probably need some dependencies for the next few steps. Ensure they're present:
 ```
-$ sudo yum install libvirt-devel l<code>ibxslt-devel libxml2-devel</code>
+$ sudo yum install libvirt-devel libxslt-devel libxml2-devel
 ```
 The <a href="http://libvirt.org/virshcmdref.html"><em>virsh</em></a> and <a href="http://virt-manager.org/"><em>virt-manager</em></a> tools are especially helpful additions. Install those too.
 
@@ -37,12 +38,12 @@ Vagrant has a concept of default "boxes". These are pre-built images that you do
 
 First we'll need to install a special <a href="https://github.com/sciurus/vagrant-mutate">Vagrant plugin</a>:
 ```
-<code>$ sudo yum install qemu-img # depends on this</code><code>
-$ vagrant plugin install vagrant-mutate</code>
+$ sudo yum install qemu-img # depends on this
+$ vagrant plugin install vagrant-mutate
 ```
-<em>EDIT</em>: Note that there is a <a href="https://github.com/sciurus/vagrant-mutate/issues/37">bug</a> on Fedora 20 that breaks mutate! Feel free to skip over the mutate steps below on Fedora, and use <a href="https://download.gluster.org/pub/gluster/purpleidea/vagrant/centos-6.box">this</a> image instead. You can install it with:
+<em>EDIT</em>: Note that there is a <a href="https://github.com/sciurus/vagrant-mutate/issues/37">bug</a> on Fedora 20 that breaks mutate! Feel free to skip over the mutate steps below on Fedora, and use <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-6/centos-6.box">this</a> image instead. You can install it with:
 ```
-$ vagrant box add centos-6 https://download.gluster.org/pub/gluster/purpleidea/vagrant/centos-6.box --provider=libvirt
+$ vagrant box add centos-6 https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-6/centos-6.box --provider=libvirt
 ```
 You'll have to replace the <em>precise32</em> name in the below <em>Vagrantfile</em> with <em>centos-6</em>.
 
@@ -54,7 +55,7 @@ $ vagrant box add precise32 http://files.vagrantup.com/precise32.box
 ```
 Finally, convert the box so that it's libvirt compatible:
 ```
-<code>$ vagrant mutate precise32 libvirt</code>
+$ vagrant mutate precise32 libvirt
 ```
 This plugin can also convert to KVM friendly boxes.
 
@@ -68,9 +69,9 @@ $ vagrant init precise32
 
 I initially tried getting this working with the <a href="https://github.com/adrahon/vagrant-kvm">vagrant-kvm</a> plugin that Fedora 20 will eventually include, but I did not succeed. Instead, I used the <a href="https://github.com/pradels/vagrant-libvirt">vagrant-libvirt</a> plugin:
 ```
-<code>$ vagrant plugin install vagrant-libvirt</code>
+$ vagrant plugin install vagrant-libvirt
 ```
-<em>EDIT</em>: I forgot to mention that you'll need to specify the <code>--provider</code> argument when running vagrant commands. I wrote about how to do this in my <a href="/post/2013/12/21/vagrant-vsftp-and-other-tricks/">second article</a>. You can use <code>--provider=libvirt</code> for each command or include the:
+<em>EDIT</em>: I forgot to mention that you'll need to specify the <code>--provider</code> argument when running vagrant commands. I wrote about how to do this in my <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">second article</a>. You can use <code>--provider=libvirt</code> for each command or include the:
 ```
 export VAGRANT_DEFAULT_PROVIDER=libvirt
 ```
@@ -80,7 +81,8 @@ line in your ~/.bashrc file.
 
 I have found a number of issues with it, but I'll show you which magic knobs I've used so that you can replicate my setup. Let me show you my <em>Vagrantfile</em>:
 
-```ruby
+{{< highlight ruby >}}
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -129,7 +131,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		}
 	end
 end
-```
+{{< /highlight >}}
 A few caveats:
 <ul>
 	<li>The <code>:libvirt__network_name => "default"</code> needs to always be specified. If you don't specify it, or if you specify a different name, you'll get an error:
@@ -166,7 +168,7 @@ I won't go into further details here, because this information is <a href="http:
 
 At this point you're probably getting annoyed by having to repeatedly type your password to interact with your VM through libvirt. You're probably seeing a dialog like this:
 
-<a href="http://ttboj.files.wordpress.com/2013/12/screenshot-authenticate.png"><img class="alignnone size-full wp-image-635" alt="Screenshot-Authenticate" src="http://ttboj.files.wordpress.com/2013/12/screenshot-authenticate.png" width="484" height="343" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="screenshot-authenticate.png"><img class="alignnone size-full wp-image-635" alt="Screenshot-Authenticate" src="screenshot-authenticate.png" width="100%" height="100%" /></a></td></tr></table></br />
 
 This should look familiar if you've used <em>virt-manager</em> before. When you open <em>virt-manager</em>, and it tries to connect to <code>qemu:///system</code>, PolicyKit does the <em>right thing</em> and ensures that you're allowed to get access to the resource first! The annoying part is that you get repeatedly prompted when you're using <em>Vagrant</em>, because it is constantly opening up and closing new connections. If you're comfortable allowing this permanently, you can add a policy file:
 ```

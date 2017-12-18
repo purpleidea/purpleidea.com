@@ -3,8 +3,9 @@ date = "2014-02-02 15:15:10"
 title = "Scathing review of the Lenovo X240"
 draft = "false"
 categories = ["technical"]
-tags = ["puppet", "planetfedora", "gluster", "keyboard", "planetdevops", "devops", "warranty", "X201", "X240", "lenovo", "planetpuppet", "RAM"]
-author = "jamesjustjames"
+tags = ["RAM", "X201", "X240", "devops", "gluster", "keyboard", "lenovo", "planetdevops", "planetfedora", "planetpuppet", "puppet", "warranty"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/02/02/scathing-review-of-the-lenovo-x240/"
 +++
 
 I'm using a Lenovo X201 with 8GiB of RAM. Apart from some minor issues, I've been very satisfied with this laptop. It's over four years old, and so I decided to see what's available on the horizon. I <em>did not</em> buy an X240 because of the following reasons:
@@ -21,7 +22,7 @@ The X240 removes the dedicated <em>Forward</em> and <em>Back</em> buttons, and r
 
 <em>If that wasn't bad enough</em>, the <em>Insert</em> key now shares a button with the <em>End</em> key, which makes common <em>Shift</em>+<em>Insert</em> sequences near impossible to anyone that isn't either a <a href="https://en.wikipedia.org/wiki/Octopus">cephalopod</a> or an <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Modifier-Keys.html">Emacs</a> user. Time to update the <a href="http://www.emacswiki.org/emacs/FootSwitches">pedals</a> to include an <em>Fn</em> key.
 
-[caption id="attachment_742" align="alignnone" width="584"]<a href="http://ttboj.files.wordpress.com/2014/02/x240-keyboard.jpg"><img class="size-full wp-image-742" src="http://ttboj.files.wordpress.com/2014/02/x240-keyboard.jpg" alt="The X240 keyboard is missing buttons." width="584" height="353" /></a> The X240 keyboard is missing buttons.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="x240-keyboard.jpg"><img class="size-full wp-image-742" src="x240-keyboard.jpg" alt="The X240 keyboard is missing buttons." width="100%" height="100%" /></a></td></tr><tr><td> The X240 keyboard is missing buttons.</td></tr></table></br />
 
 It's also worth mentioning that the dedicated volume controls are gone.
 
@@ -55,7 +56,7 @@ Getting a hardware replacement with the Lenovo "return to depot" service can tak
 
 Instead of iterating and improving on the much-loved <em>X series</em>, Lenovo has decided to sacrifice its followers in trying to appeal to a low-end laptop market. Once the model of power and portability, the <em>X series</em> is now designed for users who are afraid of having too many buttons or too much RAM.
 
-<em>The X220 and X230 are not available for sale anymore. The X250 isn't due before 2015. I've extended the warranty of my X201 to the maximum of five years. Let's hope someone at Lenovo reads this article and can make a difference before it's too late. I'm happy to consult and demo new hardware if you <a title="contact" href="https://ttboj.wordpress.com/contact/">contact</a> me. I'd genuinely like to help.</em>
+<em>The X220 and X230 are not available for sale anymore. The X250 isn't due before 2015. I've extended the warranty of my X201 to the maximum of five years. Let's hope someone at Lenovo reads this article and can make a difference before it's too late. I'm happy to consult and demo new hardware if you <a title="contact" href="/contact/">contact</a> me. I'd genuinely like to help.</em>
 
 Happy Hacking,
 

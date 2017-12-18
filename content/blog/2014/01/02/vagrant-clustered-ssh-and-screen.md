@@ -1,19 +1,20 @@
 +++
 date = "2014-01-02 00:40:49"
-title = "Vagrant clustered SSH and &#039;screen&#039;"
+title = "Vagrant clustered SSH and ‘screen’"
 draft = "false"
 categories = ["technical"]
-tags = ["screen", "ssh", "fedora", "cssh", "devops", "planetdevops", "planetfedora", "vagrant", "vsftp", "clustered ssh", "planetpuppet", "puppet", "sftp", "gluster", "vcssh", "vscreen", "bash"]
-author = "jamesjustjames"
+tags = ["bash", "clustered ssh", "cssh", "devops", "fedora", "gluster", "planetdevops", "planetfedora", "planetpuppet", "puppet", "screen", "sftp", "ssh", "vagrant", "vcssh", "vscreen", "vsftp"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/01/02/vagrant-clustered-ssh-and-screen/"
 +++
 
 Some fun updates for vagrant hackers... I wanted to use the venerable clustered SSH (<code>cssh</code>) and <code>screen</code> with vagrant. I decided to expand on my <a href="https://gist.github.com/purpleidea/8071962#file-bashrc_vagrant-sh-L17"><code>vsftp</code></a> script. First read:
 <blockquote>
-<p style="text-align:center;"><strong><a title="Vagrant on Fedora with libvirt" href="https://ttboj.wordpress.com/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></strong></p>
+<p style="text-align:center;"><strong><a title="Vagrant on Fedora with libvirt" href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></strong></p>
 </blockquote>
 and
 <blockquote>
-<p style="text-align:center;"><strong><a title="Vagrant vsftp and other tricks" href="https://ttboj.wordpress.com/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></strong></p>
+<p style="text-align:center;"><strong><a title="Vagrant vsftp and other tricks" href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></strong></p>
 </blockquote>
 to get up to speed on the background information.
 
@@ -21,7 +22,8 @@ to get up to speed on the background information.
 
 First, a simple <code>screen</code> hack... I often use my <code>vssh</code> alias to quickly ssh into a machine, but I don't want to have to waste time with <code>sudo</code>-ing to <em>root</em> and then running <code>screen</code> each time. Enter <code>vscreen</code>:
 
-```bash
+{{< highlight bash >}}
+
 # vagrant screen
 function vscreen {
 	[ "$1" = '' ] || [ "$2" != '' ] && echo "Usage: vscreen <vm-name> - vagrant screen" 1>&2 && return 1
@@ -54,12 +56,12 @@ function vscreen {
 	fi
 	[ -e "$f" ] && ssh -t -F "$f" "$1" 'screen -xRR'
 }
-```
+{{< /highlight >}}
 I usually run it this way:
 ```
 $ vscreen root@machine
 ```
-which logs in as <em>root</em>, to <em>machine</em> and gets me (back) into <code>screen</code>. This is almost identical to the <em>vsftp</em> script <a title="Vagrant vsftp and other tricks" href="http://ttboj.wordpress.com/2013/12/21/vagrant-vsftp-and-other-tricks/">which I explained in an earlier blog post</a>.
+which logs in as <em>root</em>, to <em>machine</em> and gets me (back) into <code>screen</code>. This is almost identical to the <em>vsftp</em> script <a title="Vagrant vsftp and other tricks" href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">which I explained in an earlier blog post</a>.
 
 <strong><span style="text-decoration:underline;">Vagrant cssh</span>:</strong>
 
@@ -67,9 +69,10 @@ First you'll need to install <code>cssh</code>. On my Fedora machine it's as eas
 ```
 # yum install -y clusterssh
 ```
-I've been hacking a lot on <a title="puppet-gluster" href="http://ttboj.wordpress.com/code/puppet-gluster/">Puppet-Gluster</a> lately, and occasionally multi-machine hacking demands multi-machine key punching. Enter <code>vcssh</code>:
+I've been hacking a lot on <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> lately, and occasionally multi-machine hacking demands multi-machine key punching. Enter <code>vcssh</code>:
 
-```bash
+{{< highlight bash >}}
+
 
 # vagrant cssh
 function vcssh {
@@ -185,7 +188,7 @@ function vcssh {
 	# running: bash -c glues together --action 'foo --bar' type commands...
 	[ -e "$cssh" ] && bash -c "cssh --options '-F ${cssh}${screen}$options' $cmd"
 }
-```
+{{< /highlight >}}
 This can be called like this:
 ```
 $ vcssh annex{1..4} -l root

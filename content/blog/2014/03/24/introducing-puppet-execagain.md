@@ -1,10 +1,11 @@
 +++
 date = "2014-03-24 18:37:23"
-title = "Introducing Puppet Exec[&#039;again&#039;]"
+title = "Introducing Puppet Exec['again']"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "exec", "exec['again']", "puppet", "puppet-gluster", "python", "gluster", "planetpuppet", "execvpe", "planetfedora", "spawn", "finite state machine", "planetdevops"]
-author = "jamesjustjames"
+tags = ["devops", "exec", "Exec['again']", "execvpe", "finite state machine", "gluster", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster", "python", "spawn"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/03/24/introducing-puppet-execagain/"
 +++
 
 Puppet is missing a number of much-needed features. That's the bad news. The good news is that I've been able to write some of these as modules that don't need to change the Puppet core! This is an article about one of these features.
@@ -20,7 +21,7 @@ There are some advanced corner cases, where this is not possible. In these situa
 	<li>Waiting 30 minutes while your machines are idle is (<a href="https://xkcd.com/303/">mostly</a>) a waste of time.</li>
 	<li>Doing manual work to set up your automation kind of <a href="https://www.andertoons.com/technology/cartoon/6125/i-dunno-kind-of-defeats-purpose-doesnt-it">defeats the purpose</a>.</li>
 </ul>
-[caption id="" align="alignnone" width="413"]<a href="https://xkcd.com/303/"><img src="http://imgs.xkcd.com/comics/compiling.png" alt="'Are you stealing those LCDs?' 'Yeah, but I'm doing it while my code compiles.'" width="413" height="360" /></a> Waiting 30 minutes while your machines are idle is (mostly) a waste of time. Okay, maybe it's not entirely a waste of time :)[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://xkcd.com/303/"><img src="http://imgs.xkcd.com/comics/compiling.png" alt="'Are you stealing those LCDs?' 'Yeah, but I'm doing it while my code compiles.'" width="100%" height="100%" /></a></td></tr><tr><td> Waiting 30 minutes while your machines are idle is (mostly) a waste of time. Okay, maybe it's not entirely a waste of time :)</td></tr></table></br />
 
 So what's the solution?
 
@@ -52,7 +53,7 @@ file { '/tmp/foo':
 ```
 <strong><span style="text-decoration:underline;">How do I decide if I need to run again?</span></strong>
 
-This depends on your module, and isn't always a trivial thing to figure out. In one case, I had to build a <a href="/post/2013/09/28/finite-state-machines-in-puppet/">finite state machine in puppet</a> to help decide whether this was necessary or not. In some cases, <a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/brick.pp#L397">the solution might be simpler</a>. In all cases, this is an advanced technique, so you'll probably already have a good idea about how to figure this out if you need this type of technique.
+This depends on your module, and isn't always a trivial thing to figure out. In one case, I had to build a <a href="/blog/2013/09/28/finite-state-machines-in-puppet/">finite state machine in puppet</a> to help decide whether this was necessary or not. In some cases, <a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/brick.pp#L397">the solution might be simpler</a>. In all cases, this is an advanced technique, so you'll probably already have a good idea about how to figure this out if you need this type of technique.
 
 <strong><span style="text-decoration:underline;">Can I introduce a minimum delay before the next run happens?</span></strong>
 
@@ -73,7 +74,7 @@ exec { '/bin/true':
 ```
 <strong><span style="text-decoration:underline;">Can you show me a real-world example of this module?</span></strong>
 
-Have a look at the <a title="puppet-gluster" href="https://ttboj.wordpress.com/code/puppet-gluster/">Puppet-Gluster</a> module. This module was one of the reasons that I wrote the <em>Exec['again']</em> functionality.
+Have a look at the <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> module. This module was one of the reasons that I wrote the <em>Exec['again']</em> functionality.
 
 <strong><span style="text-decoration:underline;">Are there any caveats?</span></strong>
 
@@ -93,7 +94,7 @@ root 4079 0.0 0.7 132700 3768 ? S 18:26 0:00 /usr/bin/python /var/lib/puppet/tmp
 again.py: no process killed
 [root@server ~]#
 ```
-<span style="text-decoration:underline;"><strong>Does this work with puppet running as a service or with <em>puppet agent --test</em>?</strong></span>
+<strong><span style="text-decoration:underline;">Does this work with puppet running as a service or with <em>puppet agent --test</em>?</span></strong>
 
 Yes.
 
@@ -103,11 +104,9 @@ The spawn/exec logic was implemented as a <a href="https://github.com/purpleidea
 
 <strong><span style="text-decoration:underline;">Conclusion</span></strong>
 
-I hope you enjoyed this addition to your toolbox. Please remember to use it with care. If you have a legitimate use for it, please <a title="contact" href="https://ttboj.wordpress.com/contact/">let me know</a> so that I can better understand your use case!
+I hope you enjoyed this addition to your toolbox. Please remember to use it with care. If you have a legitimate use for it, please <a title="contact" href="/contact/">let me know</a> so that I can better understand your use case!
 
 Happy hacking,
 
 James
-
-&nbsp;
 

@@ -3,8 +3,9 @@ date = "2012-10-24 04:08:38"
 title = "Multifile mode for text editors"
 draft = "false"
 categories = ["technical"]
-tags = ["feature request", "vim", "text editor", "gedit", "inventions", "multifile mode", "puppet"]
-author = "jamesjustjames"
+tags = ["feature request", "gedit", "inventions", "multifile mode", "puppet", "text editor", "vim"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/10/24/multifile-mode-for-text-editors/"
 +++
 
 Dear internets,

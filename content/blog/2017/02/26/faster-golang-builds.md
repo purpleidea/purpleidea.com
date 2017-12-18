@@ -3,8 +3,9 @@ date = "2017-02-26 17:02:35"
 title = "Faster golang builds"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "gcc", "etcd", "fedora", "mgmtconfig", "planetdevops", "go build", "golang", "gluster", "$GOPATH", "GNU", "planetfedora", "posix", "prometheus", "XDG"]
-author = "jamesjustjames"
+tags = ["$GOPATH", "GNU", "XDG", "devops", "etcd", "fedora", "gcc", "gluster", "go build", "golang", "mgmtconfig", "planetdevops", "planetfedora", "posix", "prometheus"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2017/02/26/faster-golang-builds/"
 +++
 
 I've been hacking in <a href="https://en.wikipedia.org/wiki/Golang">golang</a> since before version 1.4, and the speed at which my builds finished has been mostly trending downwards. Let's look into the reasons and some fixes. TL;DR click-bait title: "Get 4x faster golang builds with this one trick!".
@@ -38,13 +39,13 @@ The sad part of this story is that these aren't cached by default, and stale res
 <span style="text-decoration:underline;">Example</span>
 
 ```
-james@computer:~/code/mgmt$ time go build    <strong># before</strong>
+james@computer:~/code/mgmt$ time go build    # before
 
 real    0m28.152s
 user    1m17.097s
 sys     0m5.235s
 
-james@computer:~/code/mgmt$ time go build -i    <strong># after</strong>
+james@computer:~/code/mgmt$ time go build -i    # after
 
 real    0m8.129s
 user    0m12.014s

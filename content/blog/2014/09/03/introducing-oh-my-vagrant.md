@@ -3,11 +3,12 @@ date = "2014-09-03 23:19:19"
 title = "Introducing: Oh My Vagrant!"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "fedora", "puppet", "docker", "planetpuppet", "bash", "gluster", "oh-my-vagrant", "planetdevops", "planetfedora", "vagrant", "vagrant-libvirt"]
-author = "jamesjustjames"
+tags = ["bash", "devops", "docker", "fedora", "gluster", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "puppet", "vagrant", "vagrant-libvirt"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/09/03/introducing-oh-my-vagrant/"
 +++
 
-If you're a reader of my <a href="https://github.com/purpleidea/">code</a> or of <a href="/post/">this blog</a>, it's no secret that I hack on a lot of <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">puppet</a> and <a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">vagrant</a>. Recently I've fooled around with a bit of <a href="https://en.wikipedia.org/wiki/Docker_%28software%29">docker</a>, too. I realized that the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/Vagrantfile">vagrant</a>, <a href="https://github.com/purpleidea/puppet-ipa/blob/master/vagrant/Vagrantfile">environments</a> I built for <a href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a> and <a href="https://github.com/purpleidea/puppet-ipa/">puppet-ipa</a> needed to be generalized, and they needed new features too. Therefore...
+If you're a reader of my <a href="https://github.com/purpleidea/">code</a> or of <a href="/blog/">this blog</a>, it's no secret that I hack on a lot of <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">puppet</a> and <a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">vagrant</a>. Recently I've fooled around with a bit of <a href="https://en.wikipedia.org/wiki/Docker_%28software%29">docker</a>, too. I realized that the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/Vagrantfile">vagrant</a>, <a href="https://github.com/purpleidea/puppet-ipa/blob/master/vagrant/Vagrantfile">environments</a> I built for <a href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a> and <a href="https://github.com/purpleidea/puppet-ipa/">puppet-ipa</a> needed to be generalized, and they needed new features too. Therefore...
 
 Introducing: <strong>Oh My Vagrant!</strong>
 
@@ -15,7 +16,7 @@ Introducing: <strong>Oh My Vagrant!</strong>
 
 <span style="text-decoration:underline;">Prerequisites</span>:
 
-I use a <a href="https://fedoraproject.org/">Fedora 20</a> laptop with <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. Efforts are underway to create an RPM of vagrant-libvirt, but in the meantime you'll have to read: <a href="/post/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a>. This should work with other distributions too, but I don't test them very often. Please step up and help test :)
+I use a <a href="https://fedoraproject.org/">Fedora 20</a> laptop with <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. Efforts are underway to create an RPM of vagrant-libvirt, but in the meantime you'll have to read: <a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a>. This should work with other distributions too, but I don't test them very often. Please step up and help test :)
 
 <span style="text-decoration:underline;">The bits</span>:
 
@@ -202,7 +203,7 @@ As you saw, other settings are available. There are a few notable ones that are 
 
 For now, if you specify a list of docker images, they will be automatically pulled into your vm environment. It is recommended that you pre-cache them in an existing base image to save bandwidth. Custom base vagrant images can be easily be built with <a href="https://github.com/purpleidea/vagrant-builder">vagrant-builder</a>, but this process is currently undocumented.
 
-I'll try to write-up a post on this process if there are enough requests. To keep you busy in the meantime, <a href="https://download.gluster.org/pub/gluster/purpleidea/vagrant/centos-7.0-docker/">I've published a CentOS 7 vagrant base image that includes docker images for CentOS and Fedora</a>. It is being graciously hosted by the <a href="https://www.gluster.org/">GlusterFS community</a>.
+I'll try to write-up a post on this process if there are enough requests. To keep you busy in the meantime, <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-7.0-docker/">I've published a CentOS 7 vagrant base image that includes docker images for CentOS and Fedora</a>. It is being graciously hosted by the <a href="https://www.gluster.org/">GlusterFS community</a>.
 
 <span style="text-decoration:underline;">What other magic does this all do</span>?
 
@@ -224,6 +225,4 @@ There's still a lot more that I have planned, and some parts of the <em>Vagrantf
 Happy hacking,
 
 James
-
-&nbsp;
 

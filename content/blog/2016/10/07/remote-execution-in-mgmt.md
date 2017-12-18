@@ -3,8 +3,9 @@ date = "2016-10-07 15:33:17"
 title = "Remote execution in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["ssh", "tftp", "vagrant", "oh-my-vagrant", "planetfreeipa", "remote execution", "devops", "planetfedora", "puppet", "orchestrator", "planetpuppet", "agent-less", "gluster", "mgmtconfig", "fedora", "golang", "mgmt", "kickstart", "planetdevops", "planetipa"]
-author = "jamesjustjames"
+tags = ["agent-less", "devops", "fedora", "gluster", "golang", "kickstart", "mgmt", "mgmtconfig", "oh-my-vagrant", "orchestrator", "planetdevops", "planetfedora", "planetfreeipa", "planetipa", "planetpuppet", "puppet", "remote execution", "ssh", "tftp", "vagrant"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/10/07/remote-execution-in-mgmt/"
 +++
 
 Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by <a href="https://github.com/ansible/ansible">Ansible</a>'s agent-less remote execution model, but never wanted to build a centralized orchestrator. <a href="https://en.wikipedia.org/wiki/You_can%27t_have_your_cake_and_eat_it">I soon realized that I could have my ice cream and eat it too.</a>
@@ -14,10 +15,10 @@ Bootstrapping a cluster from your laptop, or managing machines without needing t
 If you haven't read the earlier articles about mgmt, then I recommend you start with those, and then come back here. The first and fourth are essential if you're going to make sense of this article.
 
 <ul>
-    <li><a href="/post/2016/01/18/next-generation-configuration-mgmt/">Next generation config mgmt</a></li>
-    <li><a href="/post/2016/03/14/automatic-edges-in-mgmt/">Automatic edges in mgmt</a></li>
-    <li><a href="/post/2016/03/30/automatic-grouping-in-mgmt/">Automatic grouping in mgmt</a></li>
-    <li><a href="/post/2016/06/20/automatic-clustering-in-mgmt/">Automatic clustering in mgmt</a></li>
+    <li><a href="/blog/2016/01/18/next-generation-configuration-mgmt/">Next generation config mgmt</a></li>
+    <li><a href="/blog/2016/03/14/automatic-edges-in-mgmt/">Automatic edges in mgmt</a></li>
+    <li><a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">Automatic grouping in mgmt</a></li>
+    <li><a href="/blog/2016/06/20/automatic-clustering-in-mgmt/">Automatic clustering in mgmt</a></li>
 </ul>
 
 <span style="text-decoration:underline;">Limitations of existing orchestrators</span>
@@ -69,30 +70,30 @@ This second possibility occurs when you run mgmt with the familiar <code>--conve
 
 I've used by poor libreoffice draw skills to make a diagram. Hopefully this helps out my visual readers.
 
-<a href="https://ttboj.files.wordpress.com/2016/10/remote-execution.png"><img class="aligncenter size-full wp-image-1894" src="https://ttboj.files.wordpress.com/2016/10/remote-execution.png" alt="remote-execution" width="380" height="323" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="remote-execution.png"><img class="aligncenter size-full wp-image-1894" src="remote-execution.png" alt="remote-execution" width="100%" height="100%" /></a></td></tr></table></br />
 
-If you can improve this diagram, please <a href="/post/contact/">let me know</a>!
+If you can improve this diagram, please <a href="/contact/">let me know</a>!
 
 <span style="text-decoration:underline;">Example</span>
 
 I find that using one or more vagrant virtual machines for the remote endpoints is the best way to test this out. In my case I use <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> to set up these machines, but the method you use is entirely up to you! Here's a sample remote execution. Please note that I have omitted a number of lines for brevity, and added emphasis to the more interesting ones.
 
 ```
-james@hostname:~/code/mgmt$ <strong>./mgmt run --remote examples/remote2a.yaml --remote examples/remote2b.yaml --tmp-prefix</strong> 
+james@hostname:~/code/mgmt$ ./mgmt run --remote examples/remote2a.yaml --remote examples/remote2b.yaml --tmp-prefix
 17:58:22 main.go:76: This is: mgmt, version: 0.0.5-3-g4b8ad3a
 17:58:23 remote.go:596: Remote: Connect...
 17:58:23 remote.go:607: Remote: Sftp...
-17:58:23 remote.go:164: Remote: <strong>Self executable is: /home/james/code/gopath/src/github.com/purpleidea/mgmt/mgmt</strong>
-17:58:23 remote.go:221: Remote: <strong>Remotely created: /tmp/mgmt-412078160/remote</strong>
-17:58:23 remote.go:226: Remote: <strong>Remote path is: /tmp/mgmt-412078160/remote/mgmt</strong>
+17:58:23 remote.go:164: Remote: Self executable is: /home/james/code/gopath/src/github.com/purpleidea/mgmt/mgmt
 17:58:23 remote.go:221: Remote: Remotely created: /tmp/mgmt-412078160/remote
 17:58:23 remote.go:226: Remote: Remote path is: /tmp/mgmt-412078160/remote/mgmt
-17:58:23 remote.go:235: Remote: <strong>Copying binary, please be patient...</strong>
+17:58:23 remote.go:221: Remote: Remotely created: /tmp/mgmt-412078160/remote
+17:58:23 remote.go:226: Remote: Remote path is: /tmp/mgmt-412078160/remote/mgmt
 17:58:23 remote.go:235: Remote: Copying binary, please be patient...
-17:58:24 remote.go:256: Remote: <strong>Copying graph definition...</strong>
-17:58:24 remote.go:618: Remote: <strong>Tunnelling...</strong>
-17:58:24 remote.go:630: Remote: <strong>Exec...</strong>
-17:58:24 remote.go:510: Remote: <strong>Running: /tmp/mgmt-412078160/remote/mgmt run --hostname '192.168.121.201' --no-server --seeds 'http://127.0.0.1:2379' --file '/tmp/mgmt-412078160/remote/remote2a.yaml' --depth 1</strong>
+17:58:23 remote.go:235: Remote: Copying binary, please be patient...
+17:58:24 remote.go:256: Remote: Copying graph definition...
+17:58:24 remote.go:618: Remote: Tunnelling...
+17:58:24 remote.go:630: Remote: Exec...
+17:58:24 remote.go:510: Remote: Running: /tmp/mgmt-412078160/remote/mgmt run --hostname '192.168.121.201' --no-server --seeds 'http://127.0.0.1:2379' --file '/tmp/mgmt-412078160/remote/remote2a.yaml' --depth 1
 17:58:24 etcd.go:2088: Etcd: Watch: Path: /_mgmt/exported/
 17:58:24 main.go:255: Main: Waiting...
 17:58:24 remote.go:256: Remote: Copying graph definition...
@@ -102,17 +103,17 @@ james@hostname:~/code/mgmt$ <strong>./mgmt run --remote examples/remote2a.yaml -
 17:58:24 etcd.go:2088: Etcd: Watch: Path: /_mgmt/exported/
 17:58:24 main.go:291: Config: Parse failure
 17:58:24 main.go:255: Main: Waiting...
-^C17:58:48 main.go:62: <strong>Interrupted by ^C</strong>
+^C17:58:48 main.go:62: Interrupted by ^C
 17:58:48 main.go:397: Destroy...
-17:58:48 remote.go:532: <strong>Remote: Output...</strong>
-<strong>|    17:58:23 main.go:76: This is: mgmt, version: 0.0.5-3-g4b8ad3a</strong>
-<strong>|    17:58:47 main.go:419: Goodbye!</strong>
-17:58:48 remote.go:636: <strong>Remote: Done!</strong>
+17:58:48 remote.go:532: Remote: Output...
+|    17:58:23 main.go:76: This is: mgmt, version: 0.0.5-3-g4b8ad3a
+|    17:58:47 main.go:419: Goodbye!
+17:58:48 remote.go:636: Remote: Done!
 17:58:48 remote.go:532: Remote: Output...
 |    17:58:24 main.go:76: This is: mgmt, version: 0.0.5-3-g4b8ad3a
 |    17:58:48 main.go:419: Goodbye!
 17:58:48 remote.go:636: Remote: Done!
-17:58:48 main.go:419: <strong>Goodbye!</strong>
+17:58:48 main.go:419: Goodbye!
 ```
 You should see that we kick off the remote executions, and how they are wired back through the tunnel. In this particular case we terminated the runs with a <code>^C</code>.
 
@@ -137,7 +138,7 @@ For this particular example, since we export and collect resources through the t
 You'll see this occurring with this message in the logs:
 
 ```
-18:00:44 remote.go:973: <strong>Remote: Copied over new graph definition: examples/remote2b.yaml</strong>
+18:00:44 remote.go:973: Remote: Copied over new graph definition: examples/remote2b.yaml</strong>
 ```
 While you might not necessarily want to use this functionality on a production machine, it will definitely make your interactive hacking sessions more useful, in particular because you never need to re-run parts of the graph which have already converged!
 
@@ -151,7 +152,7 @@ Even though we recommend running mgmt in a normal clustered mode instead of over
 
 In this mode, the primary initiator would first connect to one or more secondary nodes, which would then stage a second series of remote execution runs resulting in an order of depth equal to two or more. This fan out approach can be used to distribute the number of outgoing connections across more intermediate machines, or as a method to conserve remote execution bandwidth on the primary link into your datacenter, by having the secondary machine run most of the remote execution runs.
 
-<a href="https://ttboj.files.wordpress.com/2016/10/remote-execution2.png"><img class="aligncenter size-full wp-image-1895" src="https://ttboj.files.wordpress.com/2016/10/remote-execution2.png" alt="remote-execution2" width="492" height="569" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="remote-execution2.png"><img class="aligncenter size-full wp-image-1895" src="remote-execution2.png" alt="remote-execution2" width="100%" height="100%" /></a></td></tr></table></br />
 
 This particular extension hasn't been built, although some of the plumbing has been laid. If you'd like to contribute this feature to the upstream project, please join us in <a href="https://webchat.freenode.net/?channels=#mgmtconfig">#mgmtconfig on Freenode</a> and let us (I'm @<a href="https://twitter.com/purpleidea">purpleidea</a>) know!
 

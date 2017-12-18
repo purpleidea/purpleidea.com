@@ -4,7 +4,8 @@ title = "how to use ssh escape characters"
 draft = "false"
 categories = ["technical"]
 tags = ["devops", "sctp", "ssh"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/04/25/how-to-use-ssh-escape-characters/"
 +++
 
 So you've learned screen, ssh and vim. Time to take your skills to level two.

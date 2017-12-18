@@ -3,8 +3,9 @@ date = "2014-08-27 05:52:47"
 title = "Rough data density calculations"
 draft = "false"
 categories = ["technical"]
-tags = ["math", "back-of-the-envelope-calculations", "planetpuppet", "planetdevops", "gluster", "planetfedora", "puppet", "puppet-gluster", "devops"]
-author = "jamesjustjames"
+tags = ["back-of-the-envelope-calculations", "devops", "gluster", "math", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/08/27/rough-data-density-calculations/"
 +++
 
 <a href="https://hardware.slashdot.org/story/14/08/26/2325203/seagate-ships-first-8-terabyte-hard-drive">Seagate has just publicly announced 8TB HDD's in a 3.5" form factor.</a> I decided to do some <em>rough</em> calculations to understand the density a bit better...
@@ -81,9 +82,5 @@ Happy hacking,
 
 James
 
-&nbsp;
-
 <span style="text-decoration:underline;">Disclaimer</span>: I have not tried the 8TB Seagate HDD's, or the Supermicro 90 x 3.5" servers, but if you are building a petabyte scale cluster with GlusterFS/Puppet-Gluster, I'd like to hear about it!
-
-&nbsp;
 

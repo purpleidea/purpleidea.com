@@ -3,8 +3,9 @@ date = "2012-11-24 19:09:37"
 title = "more rows and columns on firefox new tab page"
 draft = "false"
 categories = ["technical"]
-tags = ["firefox", "pgo", "newtab", "speeddial"]
-author = "jamesjustjames"
+tags = ["firefox", "newtab", "pgo", "speeddial"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/"
 +++
 
 <a href="http://firefox.com/">Firefox</a> has a "new tab" <em>speed dial</em> type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.
@@ -18,6 +19,4 @@ Happy hacking,
 James
 
 PS: Now if firefox would only integrate natively with gnome-keyring like chrome and <a href="http://projects.gnome.org/epiphany/">epiphany</a> already do!
-
-&nbsp;
 

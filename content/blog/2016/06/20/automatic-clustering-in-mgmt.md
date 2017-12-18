@@ -3,8 +3,9 @@ date = "2016-06-20 12:28:51"
 title = "Automatic clustering in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "embedded", "mgmt", "devops", "mgmtconfig", "puppet", "etcd", "planetdevops", "planetpuppet", "raft", "clustering", "planetfedora", "elastic", "golang"]
-author = "jamesjustjames"
+tags = ["clustering", "devops", "elastic", "embedded", "etcd", "gluster", "golang", "mgmt", "mgmtconfig", "planetdevops", "planetfedora", "planetpuppet", "puppet", "raft"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/06/20/automatic-clustering-in-mgmt/"
 +++
 
 In <a href="https://github.com/purpleidea/mgmt/">mgmt</a>, deploying and managing your clustered config management infrastructure needs to be as automatic as the infrastructure you're using mgmt to manage. With mgmt, instead of a centralized data store, we function as a distributed system, built on top of <a href="https://github.com/coreos/etcd">etcd</a> and the <a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">raft protocol</a>.
@@ -16,9 +17,9 @@ In this article, I'll cover how this feature works.
 Mgmt is a next generation configuration management project. If you haven't heard of it yet, or you don't remember why we use a distributed database, start by reading the previous articles:
 
 <ul>
-    <li><a href="/post/2016/01/18/next-generation-configuration-mgmt/">Next generation config mgmt</a></li>
-    <li><a href="/post/2016/03/14/automatic-edges-in-mgmt/">Automatic edges in mgmt</a></li>
-    <li><a href="/post/2016/03/30/automatic-grouping-in-mgmt/">Automatic grouping in mgmt</a></li>
+    <li><a href="/blog/2016/01/18/next-generation-configuration-mgmt/">Next generation config mgmt</a></li>
+    <li><a href="/blog/2016/03/14/automatic-edges-in-mgmt/">Automatic edges in mgmt</a></li>
+    <li><a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">Automatic grouping in mgmt</a></li>
 </ul>
 
 <strong><span style="text-decoration:underline;">Embedded etcd</span>:</strong>
@@ -111,7 +112,7 @@ You should see the last host start-up an etcd server. If you reduce the <code>id
 
 <strong><span style="text-decoration:underline;">Security</span>:</strong>
 
-Unfortunately no authentication security or transport security has been implemented yet. We have a great design, but are busy working on other parts of the project at the moment. If you'd like to help out here, <a href="/post/contact/">please let us know</a>!
+Unfortunately no authentication security or transport security has been implemented yet. We have a great design, but are busy working on other parts of the project at the moment. If you'd like to help out here, <a href="/contact/">please let us know</a>!
 
 <strong><span style="text-decoration:underline;">Future work</span>:</strong>
 

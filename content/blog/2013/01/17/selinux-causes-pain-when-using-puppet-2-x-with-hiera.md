@@ -3,8 +3,9 @@ date = "2013-01-17 03:03:36"
 title = "SElinux causes pain when using puppet 2.x with hiera"
 draft = "false"
 categories = ["technical"]
-tags = ["hiera", "pain", "puppetmasterd", "selinux", "audit.log", "puppet"]
-author = "jamesjustjames"
+tags = ["audit.log", "hiera", "pain", "puppet", "puppetmasterd", "selinux"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/"
 +++
 
 So hiera wasn't working when used through my puppetmaster. It worked perfectly when I was running my scripts manually with: <em>puppet apply site.pp</em> but the moment I switched over to regular <em>puppetmasterd</em> usage, everything went dead.
@@ -24,7 +25,7 @@ To make a long story short, after following a few dead ends, it hit me, and so I
 ```
 type=AVC msg=audit(1358404083.789:55416): avc:  denied  { getattr } for  pid=13830 comm="puppetmasterd" path="/etc/puppet/hiera.yaml" dev=dm-0 ino=18613624 scontext=unconfined_u:system_r:puppetmaster_t:s0 tcontext=unconfined_u:object_r:admin_home_t:s0 tclass=file
 ```
-to find that <a title="Clustering virtual machines with rgmanager and clusvcadm" href="http://ttboj.wordpress.com/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/">selinux was once again</a> causing me pain. When I had started <em>puppetmasterd</em> manually, I was root, which allowed me to bypass selinux rules. Sadly, I like selinux, but since I'm not nearly clever enough to want to learn how to fix this the right way, it just got disabled on another one of my machines.
+to find that <a title="Clustering virtual machines with rgmanager and clusvcadm" href="/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/">selinux was once again</a> causing me pain. When I had started <em>puppetmasterd</em> manually, I was root, which allowed me to bypass selinux rules. Sadly, I like selinux, but since I'm not nearly clever enough to want to learn how to fix this the right way, it just got disabled on another one of my machines.
 
 Running:
 ```

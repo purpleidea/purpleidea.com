@@ -3,12 +3,13 @@ date = "2012-11-20 06:25:51"
 title = "recursion in puppet (for no particular reason)"
 draft = "false"
 categories = ["technical"]
-tags = ["hacks", "puppet", "recursion", "devops"]
-author = "jamesjustjames"
+tags = ["devops", "hacks", "puppet", "recursion"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/20/recursion-in-puppet-for-no-particular-reason/"
 +++
 
 I'm working on some <em>fancy</em> puppet "code", and I realized recursion could be very useful. I decided to try out a little hack to see if I could get it to work. I'll jump right into the code:
-```
+{{< highlight ruby >}}
 #!/usr/bin/puppet
 
 define recursion(
@@ -32,7 +33,8 @@ define recursion(
 recursion { 'start':
     count => 4,
 }
-```
+{{< /highlight >}}
+
 In theory, this should now work because of local variable scopes. Let's see if we'll blow up the puppet stack or not...
 ```
 [james@computer tmp]$ ./rec.pp 
@@ -68,5 +70,5 @@ Happy hacking!
 
 James
 
-<strong>EDIT</strong>: <a title="Advanced recursion and memoization in Puppet" href="http://ttboj.wordpress.com/2013/11/27/advanced-recursion-and-memoization-in-puppet/">A follow up is now available.</a>
+<strong>EDIT</strong>: <a title="Advanced recursion and memoization in Puppet" href="/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/">A follow up is now available.</a>
 

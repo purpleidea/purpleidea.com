@@ -3,8 +3,9 @@ date = "2015-03-16 05:36:19"
 title = "Fancy git aliases and git cherryfetch"
 draft = "false"
 categories = ["technical"]
-tags = ["planetfedora", "puppet", "devops", "gluster", "git", "git alias", "git rebase", "planetpuppet", "bash", "fedora", "cherry-pick", "cherryfetch", "planetdevops"]
-author = "jamesjustjames"
+tags = ["bash", "cherry-pick", "cherryfetch", "devops", "fedora", "git", "git alias", "git rebase", "gluster", "planetdevops", "planetfedora", "planetpuppet", "puppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/03/16/fancy-git-aliases-and-git-cherryfetch/"
 +++
 
 Here are two quick <a href="https://en.wikipedia.org/wiki/Git_%28software%29">git</a> tricks that I've added to my toolbox lately...

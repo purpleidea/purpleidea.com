@@ -3,8 +3,9 @@ date = "2013-05-14 01:41:23"
 title = "Overriding attributes of collected exported resources"
 draft = "false"
 categories = ["technical"]
-tags = ["exported resources", "killer feature", "planetpuppet", "puppet", "collect", "devops", "linux"]
-author = "jamesjustjames"
+tags = ["collect", "devops", "exported resources", "killer feature", "linux", "planetpuppet", "puppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/05/14/overriding-attributes-of-collected-exported-resources/"
 +++
 
 This post is about a particularly elegant (and crucial) feature in <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">puppet</a> <a href="http://docs.puppetlabs.com/guides/exported_resources.html">exported resources</a>: <span style="text-decoration:underline;">attribute overriding</span>. If you're not already familiar with exported resources, you should start there, as they are <em>the</em> killer feature that makes configuration management with puppet awesome. (I haven't found any explicit docs about this feature either, so feel free to comment if you know where they're hidden.)
@@ -32,6 +33,4 @@ Hope this takes your puppet coding to another level,
 Happy hacking,
 
 James
-
-&nbsp;
 

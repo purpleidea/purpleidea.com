@@ -3,8 +3,9 @@ date = "2014-10-10 15:34:53"
 title = "Continuous integration for Puppet modules"
 draft = "false"
 categories = ["technical"]
-tags = ["ci", "freeipa", "gluster", "planetfedora", "planetpuppet", "forge", "git", "puppet", "puppet-ipa", "planetdevops", "travis", "blacksmith", "jenkins", "puppet-gluster"]
-author = "jamesjustjames"
+tags = ["blacksmith", "ci", "forge", "freeipa", "git", "gluster", "jenkins", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster", "puppet-ipa", "travis"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/10/10/continuous-integration-for-puppet-modules/"
 +++
 
 I just patched <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> and <a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a> to bring their infrastructure up to date with the current state of affairs...

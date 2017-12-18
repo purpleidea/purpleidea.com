@@ -5,6 +5,10 @@ title = "purpleidea.com"
 [author]
   name = "James Shubin"
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
 [params]
   github = "https://github.com/purpleidea/"
   twitter = "https://twitter.com/purpleidea"

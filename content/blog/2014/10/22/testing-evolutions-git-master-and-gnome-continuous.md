@@ -1,10 +1,11 @@
 +++
 date = "2014-10-22 17:22:56"
-title = "Testing Evolution&#039;s git master and GNOME continuous"
+title = "Testing Evolution's git master and GNOME continuous"
 draft = "false"
 categories = ["technical"]
-tags = ["git", "gnome continuous", "libguestfs", "archive", "continuous", "email", "evolution", "geary", "planetpuppet", "gnome", "planetdevops", "devops", "gmail", "gtkinspector", "virt-manager", "fedora", "gpg", "guestfs-browser", "planetfedora"]
-author = "jamesjustjames"
+tags = ["archive", "continuous", "devops", "email", "evolution", "fedora", "geary", "git", "gmail", "gnome", "gnome continuous", "gpg", "gtkinspector", "guestfs-browser", "libguestfs", "planetdevops", "planetfedora", "planetpuppet", "virt-manager"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/"
 +++
 
 I've wanted a feature in <a href="https://wiki.gnome.org/Apps/Evolution/">Evolution</a> for a while. It was <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621">formally requested in 2002</a>, and it just recently <a href="https://git.gnome.org/browse/evolution/commit/?id=f6c0c8226ef8895f15c0221c94869ac5c663694f">got fixed in git master</a>. I only started <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621#c9">publicly groaning about this missing feature in 2013</a>, and mcrha finally patched it. I tested the feature and found a small bug, <a href="https://git.gnome.org/browse/evolution/commit/?id=ba3c08c7108519658b1d46a49ea3b2a834bc8e79">mcrha patched that too</a>, and I finally re-tested it. Now I'm blogging about this process so that you can get involved too!
@@ -24,7 +25,7 @@ I'd like to be able to select a bunch of messages and click an archive action to
 
 In your account editor, you can select the "<em>Archive Folder</em>" that you want messages moved to:
 
-<a href="https://ttboj.files.wordpress.com/2014/10/evolution-account-archive-folder.png"><img class="alignnone size-large wp-image-941" src="https://ttboj.files.wordpress.com/2014/10/evolution-account-archive-folder.png?w=584" alt="evolution-account-archive-folder" width="584" height="462" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-account-archive-folder.png"><img class="alignnone size-large wp-image-941" src="evolution-account-archive-folder.png" alt="evolution-account-archive-folder" width="100%" height="100%" /></a></td></tr></table></br />
 
 This will let you have a different folder set per account.
 
@@ -34,7 +35,7 @@ If you use Evolution with a Gmail account, and you want the same functionality a
 
 To use this functionality (with or without Gmail), simply select the messages you want to move, and click the "<em>Archive...</em>" button:
 
-<a href="https://ttboj.files.wordpress.com/2014/10/evolution-context-menu-archive.png"><img class="alignnone wp-image-944 size-full" src="https://ttboj.files.wordpress.com/2014/10/evolution-context-menu-archive.png" alt="evolution-context-menu-archive" width="1024" height="768" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-context-menu-archive.png"><img class="alignnone wp-image-944 size-full" src="evolution-context-menu-archive.png" alt="evolution-context-menu-archive" width="100%" height="100%" /></a></td></tr></table></br />
 
 This is also available via the "<em>Message</em>" menu. You can also activate with the <strong>Control-Alt-a</strong> shortcut. For more information, please <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621#c11">read the description from mcrha</a>.
 

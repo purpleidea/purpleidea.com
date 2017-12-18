@@ -3,8 +3,9 @@ date = "2013-01-16 07:29:14"
 title = "Dynamically including classes in puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["dynamic include", "puppet", "hiera"]
-author = "jamesjustjames"
+tags = ["dynamic include", "hiera", "puppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/01/16/dynamically-including-classes-in-puppet/"
 +++
 
 As you might already know, I like pushing the boundaries of what puppet is able to do. Today, I realized that I needed to <em>include</em> a class by variable name. A simple way to do this is possible with:
@@ -30,6 +31,4 @@ which finishes off the trilogy. Hope this was useful, now start getting creative
 Happy hacking,
 
 James
-
-&nbsp;
 

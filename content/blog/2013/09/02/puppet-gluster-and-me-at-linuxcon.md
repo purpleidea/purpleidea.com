@@ -3,8 +3,9 @@ date = "2013-09-02 05:50:23"
 title = "Puppet-Gluster and me at Linuxcon"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "linuxcon", "new orleans", "puppet", "glusterfs", "planetpuppet", "redhat", "gluster", "programming"]
-author = "jamesjustjames"
+tags = ["devops", "gluster", "glusterfs", "linuxcon", "new orleans", "planetpuppet", "programming", "puppet", "redhat"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/02/puppet-gluster-and-me-at-linuxcon/"
 +++
 
 <a href="http://www.johnmark.org/blog/">John Mark Walker</a>, (from <a href="http://www.redhat.com/">Redhat</a>) has been kind enough to invite me to speak at the <a href="https://events.linuxfoundation.org/events/linuxcon-north-america/program/co-located-events">Linuxcon Gluster Workshop</a> in <a href="https://events.linuxfoundation.org/events/linuxcon-north-america/extend-the-experience/about-new-orleans">New Orleans</a>. I'll be speaking about <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>, giving demos, and hopefully showing off some new features. I'm also looking forward to meeting up with <a href="http://www.gluster.org/">gluster</a> expert <a href="http://joejulian.name/">Joe Julian</a>.

@@ -3,17 +3,18 @@ date = "2016-03-14 00:50:48"
 title = "Automatic edges in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["systemd", "planetfedora", "network", "pkcon", "rpm", "dnf", "libvirt", "packagekit", "autoedge", "autoedges", "planetdevops", "apt-get", "deb", "dpkg", "pkg", "puppet", "devops", "gluster", "mgmt", "mgmtconfig", "planetpuppet", "yum"]
-author = "jamesjustjames"
+tags = ["apt-get", "autoedge", "autoedges", "deb", "devops", "dnf", "dpkg", "gluster", "libvirt", "mgmt", "mgmtconfig", "network", "packagekit", "pkcon", "pkg", "planetdevops", "planetfedora", "planetpuppet", "puppet", "rpm", "systemd", "yum"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/03/14/automatic-edges-in-mgmt/"
 +++
 
-It's been <a href="/post/2016/01/18/next-generation-configuration-mgmt/">two months since I announced mgmt</a>, and now it's time to continue the story by telling you more about the design of <a href="https://github.com/purpleidea/mgmt/">what's now in git master</a>. Before I get into those details, let me quickly <a href="https://www.youtube.com/watch?v=M4vqr3_ROIk&t=748&html5=1">recap</a> what's happened since then.
+It's been <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">two months since I announced mgmt</a>, and now it's time to continue the story by telling you more about the design of <a href="https://github.com/purpleidea/mgmt/">what's now in git master</a>. Before I get into those details, let me quickly <a href="https://www.youtube.com/watch?v=M4vqr3_ROIk&t=748&html5=1">recap</a> what's happened since then.
 
 <span style="text-decoration:underline;">Mgmt community recap</span>:
 
 <ul>
     <li>I gave the first public presentation about mgmt at <a href="http://cfgmgmtcamp.eu/schedule/speakers/JamesShubin.html">CfgMgmtCamp</a>.</li>
-    <li>I repeated the talk at <a href="https://devconfcz2016.sched.org/event/5m14/next-generation-config-mgmt">DevConf.cz</a>. <strong><a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">The video recording is available.</a></strong></li>
+    <li>I repeated the talk at <a href="https://devconfcz2016.sched.org/event/5m14/next-generation-config-mgmt">DevConf.cz</a>. <a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">The video recording is available.</a></li>
     <li>Felix wrote about his work <a href="https://ffrank.github.io/features/2016/02/18/from-catalog-to-mgmt/">cross compiling puppet code to mgmt</a>.</li>
     <li><a href="https://github.com/purpleidea/mgmt/graphs/contributors">Three new contributors</a> got their feet wet in git master.</li>
     <li><a href="https://github.com/purpleidea/mgmt/#on-the-web">Mgmt got a lot more attention on the web...</a></li>
@@ -25,7 +26,7 @@ Okay, time to tell you what's new in mgmt!
 
 Configuration management systems have the concept of primitives for the basic building blocks of functionality. The well-known ones are "package", "file", "service" and "exec" or "execute". <a href="https://docs.chef.io/resource.html">Chef calls these "resources"</a>, while <a href="https://docs.puppetlabs.com/puppet/latest/reference/type.html">puppet (misleadingly) calls them "types"</a>.
 
-I made the mistake of calling the primitives in mgmt, "types", no doubt due to <a href="/post/?s=puppet">my extensive background in puppet</a>, however this overloads the word because it usually refers to <a href="https://en.wikipedia.org/wiki/Type_system">programming types</a>, so I've decided not to use it any more to refer to these primitives. The Chef folks got this right! From now on they'll be <a href="https://github.com/purpleidea/mgmt/commit/3a8538437743d2151c73c108f75a93d6f1fbff17">referred to as "resources"</a> or "res" when abbreviated.
+I made the mistake of calling the primitives in mgmt, "types", no doubt due to <a href="/tags/puppet/">my extensive background in puppet</a>, however this overloads the word because it usually refers to <a href="https://en.wikipedia.org/wiki/Type_system">programming types</a>, so I've decided not to use it any more to refer to these primitives. The Chef folks got this right! From now on they'll be <a href="https://github.com/purpleidea/mgmt/commit/3a8538437743d2151c73c108f75a93d6f1fbff17">referred to as "resources"</a> or "res" when abbreviated.
 
 Mgmt now has: "<a href="https://github.com/purpleidea/mgmt/blob/master/resources.go#L18">noop</a>", "<a href="https://github.com/purpleidea/mgmt/blob/master/file.go#L18">file</a>", "<a href="https://github.com/purpleidea/mgmt/blob/master/svc.go#L18">svc</a>", "<a href="https://github.com/purpleidea/mgmt/blob/master/exec.go#L18">exec</a>", and now: "<a href="https://github.com/purpleidea/mgmt/blob/master/pkg.go#L18">pkg</a>"...
 
@@ -132,9 +133,9 @@ How does it work? Each resource has a method to generate a "unique id" for that 
 
 The Next() method produces a list of possible matching edges for that resource. Whichever edges match are added to the graph, and the results of each match is fed into the Test(...) function. This information is used to tell the resource whether there are more potential matches available or not. The process iterates until Test returns false, which means that there are no other available matches.
 
-This ensures that a file: <code>/var/lib/foo/bar/baz/</code> will first seek a dependency on <code>/var/lib/foo/bar/</code>, but be able to fall back to <code>/var/lib/</code> if that's the first file resource available. This way, we avoid adding more resource dependencies than necessary, which would diminish the amount of <a href="/post/2016/01/18/next-generation-configuration-mgmt/">parallelism</a> possible, while running the graph.
+This ensures that a file: <code>/var/lib/foo/bar/baz/</code> will first seek a dependency on <code>/var/lib/foo/bar/</code>, but be able to fall back to <code>/var/lib/</code> if that's the first file resource available. This way, we avoid adding more resource dependencies than necessary, which would diminish the amount of <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">parallelism</a> possible, while running the graph.
 
-Lastly, it's also worth noting that users can choose to disable AutoEdges per resource if they so desire. If you've got an idea for a clever automatic edge, please <a href="/post/contact/">contact me</a>, send a patch, or leave the information in the <a href="#comments">comments</a>!
+Lastly, it's also worth noting that users can choose to disable AutoEdges per resource if they so desire. If you've got an idea for a clever automatic edge, please <a href="/contact/">contact me</a>, send a patch, or leave the information in the <a href="#comments">comments</a>!
 
 <span style="text-decoration:underline;">Contributing</span>:
 

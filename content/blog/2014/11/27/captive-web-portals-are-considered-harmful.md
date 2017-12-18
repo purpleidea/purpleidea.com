@@ -3,8 +3,9 @@ date = "2014-11-27 00:46:06"
 title = "Captive web portals are considered harmful"
 draft = "false"
 categories = ["technical"]
-tags = ["HTTP", "planetfedora", "devops", "fedora", "gluster", "AT&amp;T GUI", "cache", "MITM", "planetpuppet", "captive portal", "HTTPS", "planetdevops", "/cgi-bin/redirect.ha", "firefox"]
-author = "jamesjustjames"
+tags = ["/cgi-bin/redirect.ha", "AT&amp;T GUI", "HTTP", "HTTPS", "MITM", "cache", "captive portal", "devops", "fedora", "firefox", "gluster", "planetdevops", "planetfedora", "planetpuppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/11/27/captive-web-portals-are-considered-harmful/"
 +++
 
 Recently, when I tried to access <a href="http://slashdot.org/">http://slashdot.org/</a> in Firefox, I would see my browser title bar flash briefly to "AT&amp;T GUI", and then I would get redirected to: <code>http://slashdot.org/<strong>cgi-bin/redirect.ha</strong></code> which returns slashdot's custom error 404 page! What is going on? (Read on for answer...)
@@ -36,7 +37,7 @@ When I visited http://slashdot.org/ on public WIFI, the captive portal web page 
 
 Actually it's very simple: just clear your browser cache. You don't need to delete your cookies or your history. Choose the "Clear Now" button in Firefox. Example:
 
-<a href="https://ttboj.files.wordpress.com/2014/11/clear-cache.png"><img class="alignnone size-medium wp-image-1001" src="https://ttboj.files.wordpress.com/2014/11/clear-cache.png?w=300" alt="clear-cache" width="300" height="288" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="clear-cache.png"><img class="alignnone size-medium wp-image-1001" src="clear-cache.png" alt="clear-cache" width="100%" height="100%" /></a></td></tr></table></br />
 
 <span style="text-decoration:underline;">Whose fault is this</span>?
 <ul>

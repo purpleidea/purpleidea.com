@@ -3,11 +3,12 @@ date = "2013-09-18 23:05:05"
 title = "Linuxcon day two, Tuesday"
 draft = "false"
 categories = ["technical"]
-tags = ["puppet-gluster", "ubuntu", "gluster", "gluster+openshift", "planetpuppet", "linuxcon", "puppet", "devops", "openshift"]
-author = "jamesjustjames"
+tags = ["devops", "gluster", "gluster+openshift", "linuxcon", "openshift", "planetpuppet", "puppet", "puppet-gluster", "ubuntu"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/18/linuxcon-day-two-tuesday/"
 +++
 
-<a title="Linuxcon day one, Monday" href="http://ttboj.wordpress.com/2013/09/18/linuxcon-day-one-monday/">Continuing on from yesterday</a>, I've met even more interesting people. I chatted with <a href="https://twitter.com/pythondj">Dianne Mueller</a> about some interesting ideas for gluster+<a href="https://www.openshift.com/">openshift</a>. More to come on that front soon. Hung out with <a href="https://twitter.com/jonobacon">Jono Bacon</a> and talked a bit about <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> on <a href="http://www.ubuntu.com/">Ubuntu</a>. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks. Hello to all the others that I didn't mention.
+<a title="Linuxcon day one, Monday" href="/blog/2013/09/18/linuxcon-day-one-monday/">Continuing on from yesterday</a>, I've met even more interesting people. I chatted with <a href="https://twitter.com/pythondj">Dianne Mueller</a> about some interesting ideas for gluster+<a href="https://www.openshift.com/">openshift</a>. More to come on that front soon. Hung out with <a href="https://twitter.com/jonobacon">Jono Bacon</a> and talked a bit about <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> on <a href="http://www.ubuntu.com/">Ubuntu</a>. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks. Hello to all the others that I didn't mention.
 
 On the hacking side of things, I added <a href="https://github.com/purpleidea/puppet-gluster/commit/269be1cc13c43df0e8e3a3c0babbe494ed727e60">proper xml parsing</a>, and a lot of work on <a href="https://github.com/purpleidea/puppet-gluster/commit/4dbba38fc44e8d7226fdecec12b1237fc24d026d">fancier firewalling</a> to <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>. At the moment, here's how the firewall support works:
 <ol>

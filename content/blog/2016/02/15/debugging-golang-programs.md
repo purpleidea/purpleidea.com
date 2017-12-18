@@ -3,11 +3,12 @@ date = "2016-02-15 16:47:57"
 title = "Debugging golang programs"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "printf", "delve", "coredump", "debugging", "mgmtconfig", "fedora", "FOSDEM", "planetfedora", "control+backslash", "planetdevops", "devops", "gdb", "race", "golang", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["FOSDEM", "control+backslash", "coredump", "debugging", "delve", "devops", "fedora", "gdb", "gluster", "golang", "mgmtconfig", "planetdevops", "planetfedora", "planetpuppet", "printf", "race"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/02/15/debugging-golang-programs/"
 +++
 
-I've been writing a lot of <a href="/post/2016/01/18/next-generation-configuration-mgmt/">golang</a> lately. <a href="/post/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/">I've hit painful problems in the past.</a> Here are some debugging tips. Hopefully they help you out. I bet you don't know #2.
+I've been writing a lot of <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">golang</a> lately. <a href="/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/">I've hit painful problems in the past.</a> Here are some debugging tips. Hopefully they help you out. I bet you don't know #2.
 
 <strong><span style="text-decoration:underline;">#0 Use log.Printf</span>:</strong>
 
@@ -39,7 +40,7 @@ james@computer:~/code/mgmt$ ./mgmt run --file examples/graph0.yaml
 16:19:26 main.go:163: State: graphNil -> graphStarting
 16:19:26 main.go:165: State: graphStarting -> graphStarted
 16:19:26 file.go:340: File[file1]: Apply
-<strong>^\SIGQUIT: quit</strong>
+^\SIGQUIT: quit
 PC=0x482a53 m=2
 
 goroutine 0 [idle]:

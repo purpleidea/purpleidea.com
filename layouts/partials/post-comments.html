@@ -1,3 +1,4 @@
+<a name="comments"></a>
 <section class="post-comments">
 	<h3>Comments</h3>
 {{ $comments := readDir "data/comments" }}
@@ -27,6 +28,7 @@
 	<p>Nothing yet.</p>
 {{ end }}
 	<hr />
+	<a name="comment"></a>
 	<h3>Post a comment</h3>
 	<form class="post-new-comment" method="POST" action="{{ .Site.Params.staticmanURL }}/comments">
 		<input type="hidden" name="options[redirect]" value="{{ .Permalink }}#comment-submitted">

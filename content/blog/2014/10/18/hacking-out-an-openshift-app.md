@@ -3,8 +3,9 @@ date = "2014-10-18 16:43:00"
 title = "Hacking out an Openshift app"
 draft = "false"
 categories = ["technical"]
-tags = ["bootstrap", "fedora", "planetfedora", "python", "git", "openshift", "planetdevops", "planetpuppet", "puppet-gluster", "devops", "gluster", "pdf", "pdfdoc"]
-author = "jamesjustjames"
+tags = ["bootstrap", "devops", "fedora", "git", "gluster", "openshift", "pdf", "pdfdoc", "planetdevops", "planetfedora", "planetpuppet", "puppet-gluster", "python"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/10/18/hacking-out-an-openshift-app/"
 +++
 
 <a href="https://github.com/purpleidea/puppet-gluster/commit/a4bf5cad81ca66212f4c8e52edb2e816b8895690">I had an itch to scratch</a>, and I wanted to get a bit more familiar with <a href="https://www.openshift.com/">Openshift</a>. I had used it in the past, but it was time to have another go. The <a href="https://pdfdoc-purpleidea.rhcloud.com/">app</a> and the <a href="https://github.com/purpleidea/pdfdoc/">code</a> are now available. Feel free to check out:

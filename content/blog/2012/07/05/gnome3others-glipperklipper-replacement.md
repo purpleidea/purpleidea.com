@@ -3,8 +3,9 @@ date = "2012-07-05 18:56:40"
 title = "gnome3+others glipper/klipper replacement"
 draft = "false"
 categories = ["technical"]
-tags = ["clipboard", "gnome3", "pgo", "xsel", "gnome", "gpaste"]
-author = "jamesjustjames"
+tags = ["clipboard", "gnome", "gnome3", "gpaste", "pgo", "xsel"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/07/05/gnome3others-glipperklipper-replacement/"
 +++
 
 So a friend of mine uses kde4 for its klipper feature. Turns out he's right that it's an awesome feature! I realized I couldn't let gnome3 take second place to a clipboard app, so after a bit of searching...

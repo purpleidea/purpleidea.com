@@ -3,8 +3,9 @@ date = "2015-02-23 22:48:39"
 title = "Building RHEL Vagrant Boxes with Vagrant-Builder"
 draft = "false"
 categories = ["technical"]
-tags = ["vagrant", "btrfs", "oh-my-vagrant", "red hat enterprise linux", "rhel", "setfacl", "virt-builder", "fedora", "gluster", "puppet", "qemu", "subscription-manager", "vagrant boxes", "vagrant-builder", "planetdevops", "planetfedora", "devops", "planetpuppet", "acl", "centos"]
-author = "jamesjustjames"
+tags = ["acl", "btrfs", "centos", "devops", "fedora", "gluster", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "puppet", "qemu", "red hat enterprise linux", "rhel", "setfacl", "subscription-manager", "vagrant", "vagrant boxes", "vagrant-builder", "virt-builder"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/"
 +++
 
 <a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">Vagrant</a> is a great tool for development, but <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">Red Hat Enterprise Linux</a> (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they're running in production.
@@ -29,15 +30,15 @@ $ sudo yum install -y /usr/bin/virt-{install,builder}
 
 Login to <a href="https://access.redhat.com/">https://access.redhat.com/</a> and check that you have a <a href="https://access.redhat.com/management/subscriptions">valid subscription available</a>. This should look like this:
 
-[caption id="attachment_1028" align="alignnone" width="300"]<a href="/img/subscriptions.png"><img class="size-medium wp-image-1028" src="/img/subscriptions.png?w=300" alt="A view of my available subscriptions." width="300" height="288" /></a> A view of my available subscriptions.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="subscriptions.png"><img class="size-medium wp-image-1028" src="subscriptions.png" alt="A view of my available subscriptions." width="100%" height="100%" /></a></td></tr><tr><td> A view of my available subscriptions.</td></tr></table></br />
 
 If everything looks good, you'll need to download an ISO image of RHEL. First head to the <a href="https://access.redhat.com/downloads/">downloads</a> section and find the RHEL product:
 
-[caption id="attachment_1029" align="alignnone" width="277"]<a href="https://ttboj.files.wordpress.com/2015/02/downloads.png"><img class="size-medium wp-image-1029" src="https://ttboj.files.wordpress.com/2015/02/downloads.png?w=277" alt="A view of my available product downloads." width="277" height="300" /></a> A view of my available product downloads.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="downloads.png"><img class="size-medium wp-image-1029" src="downloads.png" alt="A view of my available product downloads." width="100%" height="100%" /></a></td></tr><tr><td> A view of my available product downloads.</td></tr></table></br />
 
 In the RHEL download section, you'll find a number of variants. You want the RHEL 7.0 Binary DVD:
 
-[caption id="attachment_1030" align="alignnone" width="246"]<a href="https://ttboj.files.wordpress.com/2015/02/downloads2.png"><img class="size-medium wp-image-1030" src="https://ttboj.files.wordpress.com/2015/02/downloads2.png?w=246" alt="A view of the available RHEL downloads." width="246" height="300" /></a> A view of the available RHEL downloads.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="downloads2.png"><img class="size-medium wp-image-1030" src="downloads2.png" alt="A view of the available RHEL downloads." width="100%" height="100%" /></a></td></tr><tr><td> A view of the available RHEL downloads.</td></tr></table></br />
 
 After it has finished downloading, verify the SHA-256 hash is correct, and continue to step two!
 ```
@@ -135,11 +136,11 @@ As you can see, we've produced a bunch of files. The <code>rhel-7.0-iso.box</cod
 
 <span style="text-decoration:underline;">Step four</span>:
 
-If you haven't ever installed vagrant, you'll pleased to know that as of last week, vagrant and vagrant-libvirt RPM's have hit Fedora 21! I started trying to <a href="/post/2014/04/02/working-at-redhat/">convince the RPM wizards about a year ago</a>, and we finally have something that is quite usable! Hopefully we'll iterate on any packaging bugs, and keep this great work going! There are now only three things you need to do to get a working vagrant-libvirt setup on Fedora 21:
+If you haven't ever installed vagrant, you'll pleased to know that as of last week, vagrant and vagrant-libvirt RPM's have hit Fedora 21! I started trying to <a href="/blog/2014/04/02/working-at-redhat/">convince the RPM wizards about a year ago</a>, and we finally have something that is quite usable! Hopefully we'll iterate on any packaging bugs, and keep this great work going! There are now only three things you need to do to get a working vagrant-libvirt setup on Fedora 21:
 <ol>
 	<li><code>$ yum install -y vagrant-libvirt</code></li>
 	<li>Source this <code>.bashrc</code> add-on from: <a href="https://gist.github.com/purpleidea/8071962">https://gist.github.com/purpleidea/8071962</a></li>
-	<li>Add a <a href="/post/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">vagrant.pkla file as mentioned here</a></li>
+	<li>Add a <a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">vagrant.pkla file as mentioned here</a></li>
 </ol>
 Now that we're now in well-known vagrant territory. Adding the box into vagrant is a simple:
 ```
@@ -147,13 +148,13 @@ $ vagrant box add rhel-7.0-iso.box --name rhel-7.0
 ```
 <span style="text-decoration:underline;">Using the box effectively</span>:
 
-Having a base box is great, but having to manage subscription-manager manually isn't fun in a DevOps environment. Enter <a href="/post/2014/09/03/introducing-oh-my-vagrant/">Oh-My-Vagrant (omv)</a>. You can use omv to automatically register and unregister boxes! Edit the <code>omv.yaml</code> file so that the <em>image</em> variable refers to the base box you just built, enter your https://access.redhat.com/ username and password, and <code>vagrant up</code> away!
+Having a base box is great, but having to manage subscription-manager manually isn't fun in a DevOps environment. Enter <a href="/blog/2014/09/03/introducing-oh-my-vagrant/">Oh-My-Vagrant (omv)</a>. You can use omv to automatically register and unregister boxes! Edit the <code>omv.yaml</code> file so that the <em>image</em> variable refers to the base box you just built, enter your https://access.redhat.com/ username and password, and <code>vagrant up</code> away!
 ```
 $ cat omv.yaml 
 ---
 :domain: example.com
 :network: 192.168.123.0/24
-<strong>:image: rhel-7.0</strong>
+:image: rhel-7.0
 :boxurlprefix: ''
 :sync: rsync
 :folder: ''
@@ -165,8 +166,8 @@ $ cat omv.yaml
 :vms: []
 :namespace: omv
 :count: 2
-<strong>:username: 'purpleidea@redhat.com'
-:password: 'hunter2'</strong>
+:username: 'purpleidea@redhat.com'
+:password: 'hunter2'
 :poolid: true
 :repos: []
 $ vs

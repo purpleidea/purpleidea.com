@@ -3,20 +3,21 @@ date = "2015-04-20 04:35:43"
 title = "Docker containers in Oh-My-Vagrant"
 draft = "false"
 categories = ["technical"]
-tags = ["git", "oh-my-vagrant", "centos", "fedora", "puppet", "vagrant-libvirt", "devops", "gluster", "screencast", "vagrant", "planetdevops", "planetfedora", "planetpuppet", "docker", "kubernetes"]
-author = "jamesjustjames"
+tags = ["centos", "devops", "docker", "fedora", "git", "gluster", "kubernetes", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "puppet", "screencast", "vagrant", "vagrant-libvirt"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/04/20/docker-containers-in-oh-my-vagrant/"
 +++
 
 The <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, <em>omv</em> can be used to help this happen more naturally.
 
 Oh-My-Vagrant can be very useful as a docker application development environment. I've made a quick (<9min) screencast demoing this topic. Please have a look:
 
-<strong><a href="https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv">https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv</a></strong>
+<a href="https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv">https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv</a>
 
 If you watched the screencast, you should have a good overview of what's possible. Let's discuss some of these features in more detail.
 
-<span style="text-decoration:underline;">Pull an arbitrary list of docker images</span>:<code>
-```
+<span style="text-decoration:underline;">Pull an arbitrary list of docker images</span>:
+
 If you use an image that was baked with <a href="https://github.com/purpleidea/vagrant-builder">vagrant-builder</a>, you can make sure that an arbitrary list of docker images will be pre-cached into the base image so that you don't have to wait for the slow docker registry every time you boot up a development vm.
 
 This is easily seen in the CentOS-7.1 <a href="https://github.com/purpleidea/vagrant-builder/blob/master/v7/versions/centos-7.1-docker.sh#L15">image definition file seen here</a>. Here's an excerpt:
@@ -24,9 +25,9 @@ This is easily seen in the CentOS-7.1 <a href="https://github.com/purpleidea/vag
 VERSION='centos-7.1'
 POSTFIX='docker'
 SIZE='40'
-<strong>DOCKER</strong>='centos fedora'		# list of docker images to include
+DOCKER='centos fedora'		# list of docker images to include
 ```
-The <a href="https://www.gluster.org/">GlusterFS</a> community <a href="https://download.gluster.org/pub/gluster/purpleidea/vagrant/centos-7.1-docker/">gracefully hosts a copy of this image here</a>.
+The <a href="https://www.gluster.org/">GlusterFS</a> community <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-7.1-docker/">gracefully hosts a copy of this image here</a>.
 
 If you'd like to add images to a vm you can add a list of things to pull in the <em>docker</em> <code>omv.yaml</code> variable:
 ```

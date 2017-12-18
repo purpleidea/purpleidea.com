@@ -3,8 +3,9 @@ date = "2012-11-18 01:02:22"
 title = "continuous display of log files (better tail -f)"
 draft = "false"
 categories = ["technical"]
-tags = ["file descriptor", "gluster", "devops", "tail -f"]
-author = "jamesjustjames"
+tags = ["devops", "file descriptor", "gluster", "tail -f"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/18/continuous-display-of-log-files-better-tail-f/"
 +++
 
 All good sysadmins know about using <em>tail -f</em> to <em>follow</em> a log file. I use this all the time to follow <em>/var/log/messages</em> and my gluster logs in particular. Maybe everyone already knows this, but it deserves a PSA: after a certain amount of time (~days) it seems that new messages don't appear!
@@ -24,6 +25,4 @@ on any up to date version of tail to get the same result. This adds in <em>--ret
 Happy hacking!
 
 James
-
-&nbsp;
 

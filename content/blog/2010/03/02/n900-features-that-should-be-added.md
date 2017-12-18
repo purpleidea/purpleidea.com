@@ -3,7 +3,8 @@ date = "2010-03-02 17:59:47"
 title = "n900 features that should be added"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2010/03/02/n900-features-that-should-be-added/"
 +++
 
 i decided i'd compile a short list of features / functionality which should be added to the new <a href="http://maemo.nokia.com/n900/">nokia N900</a> to make it totally pro. it's pretty good as it is, despite it not working with the <a href="http://www.bell.ca/">bell</a> networks. i've attempted to order this list in order of importance (more or less).

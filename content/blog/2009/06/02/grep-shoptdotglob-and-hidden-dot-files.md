@@ -3,14 +3,15 @@ date = "2009-06-02 11:56:08"
 title = "grep, shopt:dotglob and (hidden) dot files"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/06/02/grep-shoptdotglob-and-hidden-dot-files/"
 +++
 
 i thought grep was broken, but it's not. see below:
 ```
 james@dazzle:~$ echo $0
 bash
-james@dazzle:~$ echo 'hello world' &gt; .hello
+james@dazzle:~$ echo 'hello world' > .hello
 james@dazzle:~$ grep 'hello world' *
 james@dazzle:~$ grep 'hello world' .*
 .hello:hello world

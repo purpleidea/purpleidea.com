@@ -3,13 +3,14 @@ date = "2014-04-02 14:27:35"
 title = "Working at RedHat"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "fedora", "gluster", "puppet", "redhat", "planetdevops", "planetfedora", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["devops", "fedora", "gluster", "planetdevops", "planetfedora", "planetpuppet", "puppet", "redhat"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/04/02/working-at-redhat/"
 +++
 
 <em>So this happened</em>:
 
-[caption id="attachment_804" align="alignnone" width="584"]<a href="http://ttboj.files.wordpress.com/2014/04/james-redhat.jpg"><img class="size-large wp-image-804" src="http://ttboj.files.wordpress.com/2014/04/james-redhat.jpg?w=584" alt="James just James at RedHat headquarters in North Carolina" width="584" height="438" /></a> James just James at RedHat headquarters in North Carolina wearing his new red hat.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="james-redhat.jpg"><img class="size-large wp-image-804" src="james-redhat.jpg" alt="James just James at RedHat headquarters in North Carolina" width="100%" height="100%" /></a></td></tr><tr><td> James just James at RedHat headquarters in North Carolina wearing his new red hat.</td></tr></table></br />
 
 <a href="https://www.redhat.com/">RedHat</a> made me an offer, and I am happy to say that I have just started this week!
 

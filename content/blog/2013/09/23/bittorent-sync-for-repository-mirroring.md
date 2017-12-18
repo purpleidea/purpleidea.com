@@ -3,8 +3,9 @@ date = "2013-09-23 02:06:28"
 title = "Bittorent sync for repository mirroring"
 draft = "false"
 categories = ["technical"]
-tags = ["yum", "bittorent sync", "planetdevops", "repository", "rsync", "deb", "puppet", "gluster", "use case", "bittorrent", "devops", "puppet-gluster", "geo-replication", "mirrors"]
-author = "jamesjustjames"
+tags = ["bittorent sync", "bittorrent", "deb", "devops", "geo-replication", "gluster", "mirrors", "planetdevops", "puppet", "puppet-gluster", "repository", "rsync", "use case", "yum"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/23/bittorent-sync-for-repository-mirroring/"
 +++
 
 <a href="https://twitter.com/theronconrey">Theron Conrey</a> writes about using:

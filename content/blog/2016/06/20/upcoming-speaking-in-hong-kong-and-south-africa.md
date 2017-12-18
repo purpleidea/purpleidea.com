@@ -3,11 +3,12 @@ date = "2016-06-20 04:08:59"
 title = "Upcoming speaking In Hong Kong and South Africa"
 draft = "false"
 categories = ["technical"]
-tags = ["planetfedora", "africa", "asia", "debconf", "planetdevops", "hong kong", "debian", "puppet", "south africa", "config management", "fedora", "hkoscon", "mgmt", "planetpuppet", "mgmtconfig", "speaking"]
-author = "jamesjustjames"
+tags = ["africa", "asia", "config management", "debconf", "debian", "fedora", "hkoscon", "hong kong", "mgmt", "mgmtconfig", "planetdevops", "planetfedora", "planetpuppet", "puppet", "south africa", "speaking"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/06/20/upcoming-speaking-in-hong-kong-and-south-africa/"
 +++
 
-I'm thrilled to tell you that I'll be speaking about <a href="/post/?s=mgmtconfig">mgmt</a> in Hong Kong and South Africa. It will be my first time to both countries and my first time to <a href="https://en.wikipedia.org/wiki/Asia">Asia</a> and <a href="https://en.wikipedia.org/wiki/Africa">Africa</a>!
+I'm thrilled to tell you that I'll be speaking about <a href="/tags/mgmtconfig/">mgmt</a> in Hong Kong and South Africa. It will be my first time to both countries and my first time to <a href="https://en.wikipedia.org/wiki/Asia">Asia</a> and <a href="https://en.wikipedia.org/wiki/Africa">Africa</a>!
 
 In Hong Kong I'll be speaking at <a href="https://2016.opensource.hk/topics/next-generation-config-mgmt/">HKOSCon2016</a>.
 

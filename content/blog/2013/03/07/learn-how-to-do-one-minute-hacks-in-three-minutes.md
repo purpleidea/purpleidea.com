@@ -3,8 +3,9 @@ date = "2013-03-07 18:38:45"
 title = "learn how to do one minute hacks, in three minutes"
 draft = "false"
 categories = ["technical"]
-tags = ["recent-files", "1 minute hack", "gsettings", "gnome", "hack", "pgo", "dconf", "gedit"]
-author = "jamesjustjames"
+tags = ["1 minute hack", "dconf", "gedit", "gnome", "gsettings", "hack", "pgo", "recent-files"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/"
 +++
 
 I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here's how I learned to fix a small gedit annoyance in one minute, and within the next three, you'll be able to do the same for other types of problems too. Ready? Set? Go!
@@ -19,7 +20,7 @@ gsettings set org.gnome.gedit.preferences.ui max-recents 8
 ```
 the corresponding 'read' command is:
 ```
-gsettings <strong>get</strong> org.gnome.gedit.preferences.ui max-recents
+gsettings get org.gnome.gedit.preferences.ui max-recents
 ```
 of course. The interesting thing about these settings, is that if coded properly, their actions are "live". Which means, you can toggle them on and off, and in most cases, you'll see the results immediately. Similarly, if you toggle a particular setting in gedit, you should see the changes instantly in dconf-editor.
 
@@ -28,6 +29,4 @@ Have fun playing with this and,
 Happy hacking,
 
 James
-
-&nbsp;
 

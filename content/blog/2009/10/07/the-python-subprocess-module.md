@@ -4,7 +4,8 @@ title = "the python subprocess module"
 draft = "false"
 categories = ["technical"]
 tags = ["programming", "python", "subprocess", "subprocess.popen"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/10/07/the-python-subprocess-module/"
 +++
 
 i'm sure that i won't be able to tell you anything revolutionary which can't be found out by reading the <a href="http://docs.python.org/library/subprocess.html">manual</a>, but i thought i would clarify it, and by showing you a specific example which i needed.
@@ -16,21 +17,21 @@ the magic happens if you use shell=False (the default), in which case the first 
 this means you could pass an argument like: "hello how are you" and it will get received as one element in sys.argv, versus being split up into 4 arguments: "hello", "how", "are", "you". it's still possible to try to do some shell quoting magic, and achieve the same result, but it's <strong>much</strong> harder that way.
 
 ```
-&gt;&gt;&gt; _ = subprocess.Popen(['python', '-c', 'print "dude, this is sweet"'])
-&gt;&gt;&gt; dude, this is sweet
+>>> _ = subprocess.Popen(['python', '-c', 'print "dude, this is sweet"'])
+>>> dude, this is sweet
 ```
 vs.
 
 ```
-&gt;&gt;&gt; _ = subprocess.Popen("python -c 'print "dude, this isnt so sweet"'", shell=True)
-&gt;&gt;&gt; dude, this isnt so sweet
+>>> _ = subprocess.Popen("python -c 'print "dude, this isnt so sweet"'", shell=True)
+>>> dude, this isnt so sweet
 ```
 and i'm not 100% sure how i would even add an ascii apostrophe for the <em>isn't</em>.
 
 the second thing i should mention is that you have to remember that each argument actually needs to be split up; for example:
 
 ```
-&gt;&gt;&gt; _ = subprocess.Popen(['ls', '-F', '--human-readable', '-G'])
+>>> _ = subprocess.Popen(['ls', '-F', '--human-readable', '-G'])
 [ ls output ]
 ```
 yes it's true that you can combine flags into one argument, but that's magic happening inside the program.
@@ -38,8 +39,8 @@ yes it's true that you can combine flags into one argument, but that's magic hap
 all this wouldn't be powerful if we couldn't pipe programs together. here is a simple example:
 
 ```
-&gt;&gt;&gt; p1 = subprocess.Popen(['dmesg'], stdout=subprocess.PIPE)
-&gt;&gt;&gt; p2 = subprocess.Popen(['grep', '-i', 'sda'], stdin=p1.stdout)
+>>> p1 = subprocess.Popen(['dmesg'], stdout=subprocess.PIPE)
+>>> p2 = subprocess.Popen(['grep', '-i', 'sda'], stdin=p1.stdout)
 [ dmesg output that matches sda ]
 ```
 i think it's pretty self explanatory. now let's say we wanted to add one more stage to the pipeline, but have it be something that usually gets executed with os.system:

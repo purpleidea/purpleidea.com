@@ -3,13 +3,14 @@ date = "2015-08-11 13:25:58"
 title = "Making an empty RPM"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "makefile", "planetdevops", "planetfedora", "copr", "fedora", "cpio", "rpm", "vagrant", "rpmbuild", "fpm", "freeipa", "planetipa", "planetpuppet", "spec", "devops", "kickstart", "srpm", "planetfreeipa", "puppet"]
-author = "jamesjustjames"
+tags = ["copr", "cpio", "devops", "fedora", "fpm", "freeipa", "gluster", "kickstart", "makefile", "planetdevops", "planetfedora", "planetfreeipa", "planetipa", "planetpuppet", "puppet", "rpm", "rpmbuild", "spec", "srpm", "vagrant"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/08/11/making-an-empty-rpm/"
 +++
 
-I am definitely not an RPM expert, in fact, I'm afraid of it, but with recent tools such as <a href="https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/">COPR</a>, and <a href="/post/2014/01/20/building-base-images-for-vagrant-with-a-makefile/">my glorious Makefile</a>, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.
+I am definitely not an RPM expert, in fact, I'm afraid of it, but with recent tools such as <a href="https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/">COPR</a>, and <a href="/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/">my glorious Makefile</a>, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.
 
-[caption id="attachment_1128" align="alignnone" width="360"]<a href="https://ttboj.files.wordpress.com/2015/08/cat-typing.gif"><img class="size-full wp-image-1128" src="https://ttboj.files.wordpress.com/2015/08/cat-typing.gif" alt="A video of what my work building this RPM looked like." width="360" height="360" /></a> A video of my journey building this RPM.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="cat-typing.gif"><img class="size-full wp-image-1128" src="cat-typing.gif" alt="A video of what my work building this RPM looked like." width="100%" height="100%" /></a></td></tr><tr><td> A video of my journey building this RPM.</td></tr></table></br />
 
 Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM. As a result, I wanted to build as small an RPM as possible. This took me down a much longer path than I thought it would.
 
@@ -69,7 +70,7 @@ Version:    0.0.24
 Release:    noop
 Summary:    A fake vagrant-libvirt RPM
 License:    AGPLv3+
-<strong>Source0:    vagrant-libvirt-noop.tar.bz2</strong>
+Source0:    vagrant-libvirt-noop.tar.bz2
 BuildArch:  noarch
 
 Requires:   vagrant >= 1.6.5
@@ -145,7 +146,7 @@ james@computer:/tmp/rpmbuild$
 This worked too! It has some interesting output though...
 ```
 james@computer:/tmp/rpmbuild$ rpm -qlp RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
-<strong>(contains no files)</strong>
+(contains no files)
 james@computer:/tmp/rpmbuild$ ls -lAh RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
 -rw-rw-r--. 1 james 5.5K Aug 11 11:53 RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
 james@computer:/tmp/rpmbuild$
@@ -176,13 +177,13 @@ A fake vagrant-libvirt RPM
 %build
 
 %install
-<strong>rm -rf %{buildroot}</strong>
-<strong># _datadir is typically /usr/share/</strong>
-<strong>install -d -m 0755 %{buildroot}/%{_datadir}/vagrant-libvirt/</strong>
-<strong>echo "This is a phony vagrant-libvirt package." > %{buildroot}/%{_datadir}/vagrant-libvirt/README</strong>
+rm -rf %{buildroot}
+# _datadir is typically /usr/share/
+install -d -m 0755 %{buildroot}/%{_datadir}/vagrant-libvirt/
+echo "This is a phony vagrant-libvirt package." > %{buildroot}/%{_datadir}/vagrant-libvirt/README
 
 %files
-<strong>%{_datadir}/vagrant-libvirt/README</strong>
+%{_datadir}/vagrant-libvirt/README
 
 %changelog
 ```

@@ -3,11 +3,12 @@ date = "2016-08-29 09:00:39"
 title = "Live dmesg following"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "planetfreeipa", "planetfedora", "tail -f", "dmesg", "systemd", "planetpuppet", "journalctl", "planetdevops", "fedora"]
-author = "jamesjustjames"
+tags = ["devops", "dmesg", "fedora", "journalctl", "planetdevops", "planetfedora", "planetfreeipa", "planetpuppet", "systemd", "tail -f"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/08/29/live-dmesg-following/"
 +++
 
-<a href="/post/2012/11/18/continuous-display-of-log-files-better-tail-f/">All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.</a>
+<a href="/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/">All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.</a>
 
 Around the time I wrote that article, I remember wanting to stream <code>dmesg</code> output too! The functionality wasn't available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!
 
@@ -33,7 +34,7 @@ $ journalctl -kf
 <em>[snip]</em>
 Aug 28 19:58:13 hostname unknown: All your base are belong to us.
 ```
-[caption id="attachment_1870" align="aligncenter" width="584"]<a href="https://ttboj.files.wordpress.com/2016/08/all-your-base.png"><img class="size-full wp-image-1870" src="https://ttboj.files.wordpress.com/2016/08/all-your-base.png" alt="Now we have a dmesg version too! https://www.youtube.com/watch?v=8fvTxv46ano&html5=1" width="584" height="438" /></a> Now we have a <a href="https://www.youtube.com/watch?v=8fvTxv46ano&html5=1">dmesg version</a> too![/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="all-your-base.png"><img class="size-full wp-image-1870" src="all-your-base.png" alt="Now we have a dmesg version too! https://www.youtube.com/watch?v=8fvTxv46ano&html5=1" width="100%" height="100%" /></a></td></tr><tr><td> Now we have a <a href="https://www.youtube.com/watch?v=8fvTxv46ano&html5=1">dmesg version</a> too!</td></tr></table></br />
 
 Since my dmesg output wasn't very noisy when writing this article, and since I didn't write an "<a href="https://en.wikipedia.org/wiki/All_your_base_are_belong_to_us">all your base</a>" kernel module, you can actually test this functionality by writing to the kernel ring buffer:
 
@@ -44,5 +45,5 @@ Happy hacking!
 
 James
 
-PS: Since this is a facility that provides events, we could eventually write an <a href="/post/?s=mgmtconfig">mgmt config</a> "fact" or resource around it!
+PS: Since this is a facility that provides events, we could eventually write an <a href="/tags/mgmtconfig/">mgmt config</a> "fact" or resource around it!
 

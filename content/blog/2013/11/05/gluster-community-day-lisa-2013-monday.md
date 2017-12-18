@@ -3,8 +3,9 @@ date = "2013-11-05 01:30:05"
 title = "Gluster Community Day, LISA 2013, Monday"
 draft = "false"
 categories = ["technical"]
-tags = ["geo-replication", "gluster", "microserver cluster", "gluster community day", "lisa2013", "planetfedora", "puppet"]
-author = "jamesjustjames"
+tags = ["geo-replication", "gluster", "gluster community day", "lisa2013", "microserver cluster", "planetfedora", "puppet"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/11/05/gluster-community-day-lisa-2013-monday/"
 +++
 
 I'm here at LISA 2013 at the <a href="http://glusterday-lisa.eventbrite.com/">Gluster Community Day</a>. I've been asked by <a href="https://twitter.com/jzb">Joe Brockmeier</a> to give a little recap about what's been going on. So here it is!
@@ -15,7 +16,7 @@ I'm here at LISA 2013 at the <a href="http://glusterday-lisa.eventbrite.com/">Gl
 
 During lunch, I got to meet <a href="https://twitter.com/Obdurodon">Jeff Darcy</a> and talk a bit about storage and feature ideas on my wish-list. He knew my <a href="https://twitter.com/#!/purpleidea">twitter</a>/<a href="http://webchat.freenode.net/">IRC</a> handle, so he instantly gets 200 bonus points. <a href="http://pl.atyp.us/">You should probably checkout his blog if you haven't already.</a>
 
-After lunch I gave my talk about <a title="puppet-gluster" href="http://ttboj.wordpress.com/code/puppet-gluster/">puppet-gluster</a>, and successfully gave two live demos. I'm really due for a blog post about some of the new features that I've added. I'll try to put together a screen cast in the future. If you're really keen on trying out some of the new features, I'm happy to share a screen session on your hosts and walk you through it. When run fully automatically, it takes between five and ten minutes to deploy a featureful GlusterFS!
+After lunch I gave my talk about <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a>, and successfully gave two live demos. I'm really due for a blog post about some of the new features that I've added. I'll try to put together a screen cast in the future. If you're really keen on trying out some of the new features, I'm happy to share a screen session on your hosts and walk you through it. When run fully automatically, it takes between five and ten minutes to deploy a featureful GlusterFS!
 
 I won't be able to hack on this project for free, forever. If you're able to donate test hardware, VM time, or sponsor a feature, it would be appreciated. I'm particularly interested in building a GlusterFS microserver cluster. If you're interested in this too, let me know.
 
@@ -23,9 +24,9 @@ Wesley came back for round two to demo the <a href="https://forge.gluster.org/pu
 
 At this point, we had some left over time for questions and discussion. Jeff, Eco, and I formed a loosely organized "panel" to answer questions. Joe took a photo, and now owes me a copy, since I've never really been on a "panel" before. Jeff knows his GlusterFS internals very well. I should have come prepared with some hard questions!
 
-<a href="http://rhsummit.files.wordpress.com/2013/07/england_th_0450_rhs_perf_practices-4_neependra.pdf">To whoever was looking for Ben England's RHS performance talk, it's available here</a>.
+<a href="england_th_0450_rhs_perf_practices-4_neependra.pdf">To whoever was looking for Ben England's RHS performance talk, it's available here</a>.
 
-Overall, it was a very nice little event, and I hope the attendees enjoyed it. If I forgot anything, please feel free to add it into the comments. I'd also love to hear about what you enjoyed or didn't enjoy about my talk. <a title="contact" href="http://ttboj.wordpress.com/contact/">Let me know</a>!
+Overall, it was a very nice little event, and I hope the attendees enjoyed it. If I forgot anything, please feel free to add it into the comments. I'd also love to hear about what you enjoyed or didn't enjoy about my talk. <a title="contact" href="/contact/">Let me know</a>!
 
 Happy Hacking,
 

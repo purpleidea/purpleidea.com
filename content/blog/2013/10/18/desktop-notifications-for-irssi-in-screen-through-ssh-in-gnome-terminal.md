@@ -3,8 +3,9 @@ date = "2013-10-18 06:00:49"
 title = "Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal"
 draft = "false"
 categories = ["technical"]
-tags = ["bash", "gluster", "notify-send", "pgo", "fnotify", "freenode", "planetdevops", "screen", "ssh", "desktop notifications", "gnome-terminal", "irc", "irssi", "planetfedora"]
-author = "jamesjustjames"
+tags = ["bash", "desktop notifications", "fnotify", "freenode", "gluster", "gnome-terminal", "irc", "irssi", "notify-send", "pgo", "planetdevops", "planetfedora", "screen", "ssh"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/"
 +++
 
 I'm usually on <a href="http://freenode.net/">IRC</a>, but I don't often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it's all done, and you can benefit from my hacking by following along...
@@ -17,10 +18,10 @@ This way, I'm connected to IRC, even when my laptop isn't. I run <a href="http:/
 
 <span style="text-decoration:underline;">Fnotify</span>
 
-The first trick is getting irssi to store notifications in a uniform way. To do this, I modified an irssi script called fnotify. My <a href="https://dl.dropboxusercontent.com/u/48553683/irssi/fnotify.pl">changed version is available here</a>. Installation is easy:
+The first trick is getting irssi to store notifications in a uniform way. To do this, I modified an irssi script called fnotify. My <a href="https://gist.githubusercontent.com/purpleidea/9017ba480391fc2936760a94ae1791ac/raw/3e4ac1404e2f3836842fe3ae01d40b8b345f8155/fnotify.pl">changed version is available here</a>. Installation is easy:
 ```
 # on your ssh server:
-cd /tmp; wget <a href="https://dl.dropboxusercontent.com/u/48553683/irssi/fnotify.pl">https://dl.dropboxusercontent.com/u/48553683/irssi/fnotify.pl</a>
+cd /tmp; wget https://gist.githubusercontent.com/purpleidea/9017ba480391fc2936760a94ae1791ac/raw/3e4ac1404e2f3836842fe3ae01d40b8b345f8155/fnotify.pl -O fnotify.pl
 cp /tmp/fnotify.pl ~/.irssi/scripts/
 # in irssi:
 irssi> /load perl
@@ -30,7 +31,7 @@ When someone sends you a direct message, or highlights your nick on IRC, this sc
 
 <span style="text-decoration:underline;">Watching fnotify</span>
 
-On your local machine, we need a script to <em><a href="https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html">tail</a></em> the fnotify file. This was surprisingly hard to get right. The <a href="https://dl.dropboxusercontent.com/u/48553683/irssi/irssi-fnotify.sh">fruit of my labour is available here</a>. You'll want to copy this script to your local <em>~/bin/</em> directory. I've named this script <em>irssi-fnotify.sh</em>. This script watches the remote <em>fnotify</em> file, and runs <em>notify-send</em> and <em>paplay</em> locally to notify you of any incoming messages, each time one comes in.
+On your local machine, we need a script to <em><a href="https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html">tail</a></em> the fnotify file. This was surprisingly hard to get right. The <a href="https://gist.githubusercontent.com/purpleidea/531441fac2b439b1ab28b424c6eddc8a/raw/84aac2fd1f845aafb62aceb0c870a333d86c51e4/irssi-fnotify.sh">fruit of my labour is available here</a>. You'll want to copy this script to your local <em>~/bin/</em> directory. I've named this script <em>irssi-fnotify.sh</em>. This script watches the remote <em>fnotify</em> file, and runs <em>notify-send</em> and <em>paplay</em> locally to notify you of any incoming messages, each time one comes in.
 
 <span style="text-decoration:underline;">SSH Activation</span>
 
@@ -60,11 +61,11 @@ I've left out some important details:
 </ul>
 Here's a little screenshot (with shameless plug) of the result in action:
 
-<a href="http://ttboj.files.wordpress.com/2013/10/irssi-fnotify.png"><img alt="irssi-fnotify.sh notification screenshot" src="http://ttboj.files.wordpress.com/2013/10/irssi-fnotify.png" width="572" height="78" /></a>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify.png"><img alt="irssi-fnotify.sh notification screenshot" src="irssi-fnotify.png" width="100%" height="100%" /></a></td></tr></table></br />
 
 Here's an example of how this helps me to be more responsive in channel:
 
-[caption id="attachment_555" align="alignnone" width="572"]<a href="http://ttboj.files.wordpress.com/2013/10/irssi-fnotify2.png"><img class="size-full wp-image-555" alt="helping out in #gluster" src="http://ttboj.files.wordpress.com/2013/10/irssi-fnotify2.png" width="572" height="117" /></a> helping out in <a href="https://webchat.freenode.net/?channels=#gluster">#gluster</a>[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify2.png"><img class="size-full wp-image-555" alt="helping out in #gluster" src="irssi-fnotify2.png" width="100%" height="100%" /></a></td></tr><tr><td> helping out in <a href="https://webchat.freenode.net/?channels=#gluster">#gluster</a></td></tr></table></br />
 
 I hope you found this useful.
 

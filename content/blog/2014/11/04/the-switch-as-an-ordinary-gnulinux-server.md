@@ -3,13 +3,14 @@ date = "2014-11-04 02:23:52"
 title = "The switch as an ordinary GNU/Linux server"
 draft = "false"
 categories = ["technical"]
-tags = ["switch", "ASIC", "networkd", "planetpuppet", "puppet", "puppet-shorewall", "rocket-turtle", "Trident", "devops", "ifup/ifdown", "iproute2", "nftables", "planetdevops", "planetfedora", "cumulus", "fedora", "iptables", "python", "switchd", "udev", "cumulusnetworks", "NDA", "selinux", "shorewall", "systemd"]
-author = "jamesjustjames"
+tags = ["ASIC", "NDA", "Trident", "cumulus", "cumulusnetworks", "devops", "fedora", "ifup/ifdown", "iproute2", "iptables", "networkd", "nftables", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-shorewall", "python", "rocket-turtle", "selinux", "shorewall", "switch", "switchd", "systemd", "udev"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/"
 +++
 
 The fact that we manage the <a href="https://en.wikipedia.org/wiki/Network_switch">switches</a> in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of <a href="https://en.wikipedia.org/wiki/Silicon#Electronic_grade">silicon</a> which happens to be able to dramatically speed up the switching bandwidth.
 
-[caption id="attachment_984" align="alignnone" width="350"]<a href="https://ttboj.files.wordpress.com/2014/11/absurd.png"><img class="wp-image-984 size-full" src="https://ttboj.files.wordpress.com/2014/11/absurd.png" alt="absurd" width="350" height="351" /></a> beware of proprietary silicon, it's absurd![/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="absurd.png"><img class="wp-image-984 size-full" src="absurd.png" alt="absurd" width="100%" height="100%" /></a></td></tr><tr><td> beware of proprietary silicon, it's absurd!</td></tr></table></br />
 
 That tiny bit of silicon is known as an <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit">ASIC</a>, or an <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit"><em>application specific integrated circuit</em></a>, and one particularly well performing ASIC (which is present in many commercially available switches) is called the <a href="https://www.broadcom.com/products/Switching/Data-Center/BCM56850-Series">Trident</a>.
 
@@ -21,7 +22,7 @@ We're talking about <a href="https://en.wikipedia.org/wiki/Iptables">iptables</a
 
 I've been able to work around this limitation in the past, by using Linux to do my routing in software, and by building the routers out of <a href="https://en.wikipedia.org/wiki/Commercial_off-the-shelf">COTS</a> <a href="https://en.wikipedia.org/wiki/Rack_unit">2U</a> GNU/Linux boxes. The trouble with this approach, is that they're bigger, louder, more expensive, consume more power, and don't have the port density that a 48 port 1U switch does.
 
-[caption id="attachment_992" align="alignnone" width="584"]<a href="https://ttboj.files.wordpress.com/2014/11/2550t-pwr-front.jpg"><img class="size-large wp-image-992" src="https://ttboj.files.wordpress.com/2014/11/2550t-pwr-front.jpg?w=584" alt="a 48 port, 1U switch" width="584" height="119" /></a> a 48 port, 1U switch[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="2550T-PWR-Front.jpg"><img class="size-large wp-image-992" src="2550T-PWR-Front.jpg" alt="a 48 port, 1U switch" width="100%" height="100%" /></a></td></tr><tr><td> a 48 port, 1U switch</td></tr></table></br />
 
 It turns out that there is a <a href="https://github.com/cumulusnetworks">company</a> which is actually trying to build this <a href="https://en.wikipedia.org/wiki/Legendary_creature">mythical</a> box. It is not perfect, but I think they are on the right track. What follows are my opinions of what they've done right, what's wrong, and what I'd like to see in the future.
 
@@ -29,7 +30,7 @@ It turns out that there is a <a href="https://github.com/cumulusnetworks">compan
 
 They are <a href="https://github.com/cumulusnetworks">Cumulus Networks</a>, and I recently got to meet, demo and discuss with one of their very talented engineers, <a href="https://twitter.com/lesliegeek">Leslie Carr</a>. I recently <a href="https://puppetlabs.com/presentations/switch-server-leslie-carr-cumulus-networks">attended a talk</a> that she gave on this very same subject. She gave me a rocket turtle. (Yes, this now makes me biased!)
 
-[caption id="attachment_987" align="alignnone" width="584"]<a href="https://ttboj.files.wordpress.com/2014/11/rocket-turtle.jpg"><img class="size-large wp-image-987" src="https://ttboj.files.wordpress.com/2014/11/rocket-turtle.jpg?w=584" alt="my rocket turtle, the cumulus networks mascot" width="584" height="438" /></a> my rocket turtle, the cumulus networks mascot[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="rocket-turtle.jpg"><img class="size-large wp-image-987" src="rocket-turtle.jpg" alt="my rocket turtle, the cumulus networks mascot" width="100%" height="100%" /></a></td></tr><tr><td> my rocket turtle, the cumulus networks mascot</td></tr></table></br />
 
 <span style="text-decoration:underline;">What are they doing</span>?
 
@@ -119,9 +120,9 @@ root       398  0.0  0.0      0     0 ?        S    N
 root       862  0.0  0.1  28680  1768 ?        Sl   Nov05   0:03 /usr/sbin/rsyslogd -c4
 root      1041  0.0  0.2   5108  2420 ?        Ss   Nov05   0:00 /sbin/dhclient -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0
 root      1096  0.0  0.1   3344  1552 ?        S    Nov05   0:16 /bin/bash /usr/bin/arp_refresh
-root      1188  0.0  1.1  15456 10676 ?        S    Nov05   1:36 /usr/bin/python /usr/sbin/<strong>ledmgrd</strong>
-root      1218  0.2  1.1  15468 10708 ?        S    Nov05   5:41 /usr/bin/python /usr/sbin/<strong>pwmd</strong>
-root      1248  1.4  1.1  15480 10728 ?        S    Nov05  39:45 /usr/bin/python /usr/sbin/<strong>smond</strong>
+root      1188  0.0  1.1  15456 10676 ?        S    Nov05   1:36 /usr/bin/python /usr/sbin/ledmgrd
+root      1218  0.2  1.1  15468 10708 ?        S    Nov05   5:41 /usr/bin/python /usr/sbin/pwmd
+root      1248  1.4  1.1  15480 10728 ?        S    Nov05  39:45 /usr/bin/python /usr/sbin/smond
 root      1289  0.0  0.0  13832   964 ?        SNov05   0:00 /sbin/auditd
 root      1291  0.0  0.0  10456   852 ?        S
 root     12776  0.0  0.0      0     0 ?        S    04:31   0:01 [kworker/0:0]
@@ -134,7 +135,7 @@ root     30952  0.0  0.3  11196  3500 ?        Ss   Nov05   0
 cumulus  30954  0.0  0.1  11196  1684 ?        S    Nov05   0:00 sshd: cumulus@pts/0
 cumulus  30955  0.0  0.2   4548  2888 pts/0    Ss   Nov05   0:01 -bash
 ```
-In particular, I'm referring to <code>ledmgrd</code>, <code>pwmd</code>, <code>smond</code> and others. I don't doubt these things are necessary and useful, in fact, they're written in python and should be easy to reverse if anyone is interested, but if they're a useful part of a switch capable operating system, I hope that they grow proper upstream projects and get appropriate <a href="/post/2014/10/18/hacking-out-an-openshift-app/">documentation</a>, <a href="https://www.gnu.org/philosophy/free-sw.html">licensing</a>, and <a href="http://rpm.org/">packaging</a> too!
+In particular, I'm referring to <code>ledmgrd</code>, <code>pwmd</code>, <code>smond</code> and others. I don't doubt these things are necessary and useful, in fact, they're written in python and should be easy to reverse if anyone is interested, but if they're a useful part of a switch capable operating system, I hope that they grow proper upstream projects and get appropriate <a href="/blog/2014/10/18/hacking-out-an-openshift-app/">documentation</a>, <a href="https://www.gnu.org/philosophy/free-sw.html">licensing</a>, and <a href="http://rpm.org/">packaging</a> too!
 
 <span style="text-decoration:underline;">Switch ports are network devices</span>:
 
@@ -187,8 +188,7 @@ SDN or <a href="https://en.wikipedia.org/wiki/Software-defined_networking">softw
 This product isn't quite baked yet for me to want to use it in production, but it's so tantalizingly close that it's strongly worth considering. I hope that they react positively to my suggestions and create an even more native, upstream environment. Once this is done, it will be my go to, for all my switching!
 
 <span style="text-decoration:underline;">Thanks</span>:
-
-Thanks very much to the Cumulus team for showing me their software, and giving me access to demo it on some live switches. I didn't test performance, but I have no doubt that it competes with the market average. Prove me right by <a href="https://cumulusnetworks.com/cumulus-workbench/?referral=https://ttboj.wordpress.com/">trying it out yourself</a>!
+Thanks very much to the Cumulus team for showing me their software, and giving me access to demo it on some live switches. I didn't test performance, but I have no doubt that it competes with the market average. Prove me right by <a href="https://cumulusnetworks.com/cumulus-workbench/?referral=purpleidea.com">trying it out yourself</a>!
 
 Thanks for listening, and Happy hacking!
 

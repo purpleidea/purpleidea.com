@@ -4,7 +4,8 @@ title = "the power to yield a better console interface"
 draft = "false"
 categories = ["technical"]
 tags = ["dbus", "gobject", "python", "readline", "yield"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/08/20/the-power-to-yield-a-better-console-interface/"
 +++
 
 as part of a different project, i needed to duplicate some existing terminal magic in python. what i needed to write was something similar to the getch() function in curses. it can be found in: ncurses*/base/lib_getch.c after doing an: apt-get source libncurses5

@@ -3,8 +3,9 @@ date = "2010-03-31 10:13:48"
 title = "lecturing and git-bisect"
 draft = "false"
 categories = ["technical"]
-tags = ["prelude", "git-bisect", "lectures", "mcgill", "bash-tutor", "git"]
-author = "jamesjustjames"
+tags = ["bash-tutor", "git", "git-bisect", "lectures", "mcgill", "prelude"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2010/03/31/lecturing-and-git-bisect/"
 +++
 
 I was recently asked to give a lecture for the <a href="http://www.cs.mcgill.ca/~prelude/Prelude/Home.html">PRELUDE</a> series at McGill. Here was my abstract:

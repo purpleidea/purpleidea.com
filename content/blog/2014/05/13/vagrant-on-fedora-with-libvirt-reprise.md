@@ -3,15 +3,16 @@ date = "2014-05-13 18:58:06"
 title = "Vagrant on Fedora with libvirt (reprise)"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "libvirt", "planetpuppet", "puppet", "vagrant-libvirt", "devops", "planetfedora", "fedora 20", "planetdevops", "virt-manager", "fedora", "polkit", "puppet-gluster", "vagrant", "virsh"]
-author = "jamesjustjames"
+tags = ["devops", "fedora", "fedora 20", "gluster", "libvirt", "planetdevops", "planetfedora", "planetpuppet", "polkit", "puppet", "puppet-gluster", "vagrant", "vagrant-libvirt", "virsh", "virt-manager"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/"
 +++
 
 <a href="http://www.vagrantup.com/">Vagrant</a> has become the <em>de facto</em> tool for <em>devops</em>. Faster iterations, clean environments, and less overhead. This <em>isn't</em> an article about <em>why</em> you should use Vagrant. This is an article about <em>how</em> to get up and running with Vagrant on Fedora with libvirt <em>easily</em>!
 
 <span style="text-decoration:underline;">Background</span>:
 
-This article is an update of my original <a href="/post/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a> article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.
+This article is an update of my original <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a> article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.
 
 <span style="text-decoration:underline;">Why vagrant-libvirt</span>?
 
@@ -39,9 +40,9 @@ Update the system to make sure it's fresh:
 ```
 # yum update -y
 ```
-<strong><span style="text-decoration:underline;">Update</span></strong>: I'm actually now using vagrant 1.6.5, and you should try that instead. It should work for you too. Modify the below to match the newer version.
+<strong><span style="text-decoration:underline;">Update</span>:</strong> I'm actually now using vagrant 1.6.5, and you should try that instead. It should work for you too. Modify the below to match the newer version.
 
-Download Vagrant version 1.5.4. No, <strong>don't</strong> use the latest version, it probably won't work! Vagrant has new releases practically as often as there are sunsets, and they typically cause lots of breakages.
+Download Vagrant version 1.5.4. No, don't use the latest version, it probably won't work! Vagrant has new releases practically as often as there are sunsets, and they typically cause lots of breakages.
 ```
 $ wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.4_x86_64.rpm
 ```
@@ -89,7 +90,7 @@ Now we need the GEM dependencies for the vagrant-libvirt plugin. These GEM's hap
 ```
 # yum install -y libvirt-devel libxslt-devel libxml2-devel
 ```
-<span style="text-decoration:underline;"><strong>Update</strong></span>: Typically we used to now have to install the nokogiri dependencies. With newer versions of vagrant-libvirt, this is no longer necessarily required. Consider skipping this step, and trying to install the vagrant-libvirt plugin without specifying a version. If it doesn't work, try vagrant-libvirt version 0.0.20, if that doesn't work, install nokogiri. Feel free to post your updated experiences in the comments!
+<strong><span style="text-decoration:underline;">Update</span>:</strong> Typically we used to now have to install the nokogiri dependencies. With newer versions of vagrant-libvirt, this is no longer necessarily required. Consider skipping this step, and trying to install the vagrant-libvirt plugin without specifying a version. If it doesn't work, try vagrant-libvirt version 0.0.20, if that doesn't work, install nokogiri. Feel free to post your updated experiences in the comments!
 
 Now, install the <em>nokogiri</em> gem that vagrant-libvirt needs:
 ```
@@ -111,8 +112,8 @@ $ . ~/.bashrc    # reload
 ```
 to pull in my most used Vagrant aliases and functions. I've written about them before. If you're interested, please read:
 <ul>
-	<li><a href="/post/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></li>
-	<li><a href="/post/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and ‘screen’</a></li>
+	<li><a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></li>
+	<li><a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and ‘screen’</a></li>
 </ul>
 <span style="text-decoration:underline;">KVM/QEMU installation</span>:
 
@@ -151,7 +152,7 @@ To make your machine somewhat more palatable, you might want to consider install
 ```
 # yum install -y bash-completion
 ```
-You'll also probably want to add the PolicyKit (polkit) <code>.pkla</code> file that I recommend in my <a href="/post/2013/12/09/vagrant-on-fedora-with-libvirt/">earlier article</a>. Typically that means adding something like:
+You'll also probably want to add the PolicyKit (polkit) <code>.pkla</code> file that I recommend in my <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">earlier article</a>. Typically that means adding something like:
 ```
 [Allow james libvirt management permissions]
 Identity=unix-user:james
@@ -195,6 +196,4 @@ I hope this was helpful to you. Please let me know in the <a href="#comments">co
 Happy hacking,
 
 James
-
-&nbsp;
 

@@ -4,20 +4,21 @@ title = "finding your software install $prefix from inside python"
 draft = "false"
 categories = ["technical"]
 tags = ["agpl3", "devops", "distutils", "prefix", "python"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/09/20/finding-your-software-install-prefix-from-inside-python/"
 +++
 
 Good python software developers tend to use <a href="http://docs.python.org/library/distutils.html">distutils</a> and include a setup.py with their code. The problem I often encounter is finding out which prefix your software has been installed in from within the python code. This might be necessary if you want to interact with some data that you've installed into: $prefix/share/projectname/ Here are the various steps:
 
 <strong>1) <span style="text-decoration:underline;">Distutils</span>:</strong>
-```
+{{< highlight python >}}
 NAME='someproject'
 distutils.core.setup(
     name=NAME,
     version='0.1',
     author='James Shubin',
-    author_email='purpleidea@gmail.com',
-    url='https://ttboj.wordpress.com/',
+    author_email='secret@purpleidea.com',
+    url='https://purpleidea.com/',
     description='This is an example project',
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
@@ -32,20 +33,21 @@ distutils.core.setup(
     package_dir={NAME: 'src'},
     data_files=[
         ('share/%s' % NAME, ['README']),
-<strong>        ('share/%s' % NAME, ['images/something.png']),</strong>
+        ('share/%s' % NAME, ['images/something.png']),
     ],
     scripts=['somebin'],
 )
-```
+{{< /highlight >}}
+
 <strong>2) <span style="text-decoration:underline;">Install</span>:</strong>
 ```
-python setup.py install --prefix=<strong>~/testprefix/</strong>
+python setup.py install --prefix=~/testprefix/
 ```
 <em>Note: If you don't specify a prefix, then this will get installed into your system prefix.</em>
 
 <strong>3) <span style="text-decoration:underline;">Run</span>:</strong>
 ```
-cd <strong>~/testprefix/</strong> # the prefix you chose above
+cd ~/testprefix/ # the prefix you chose above
 PYTHONPATH=lib/python2.7/site-packages/ ./bin/somebin
 ```
 <em>Note: If you didn't specify a prefix above, then you don't need to set the PYTHONPATH variable, and also, the executable will already be in your default $PATH</em>
@@ -54,12 +56,13 @@ PYTHONPATH=lib/python2.7/site-packages/ ./bin/somebin
 
 I have written a small python module which I include in all of my python software. It will returns the projects installed prefix when run. I usually use it like so:
 ```
-print 'something.png is located at: %s' % os.path.join(<strong>prefix.prefix()</strong>, 'share', NAME, 'images', 'something.png')
+print 'something.png is located at: %s' % os.path.join(prefix.prefix(), 'share', NAME, 'images', 'something.png')
 ```
 <strong>5) <span style="text-decoration:underline;">Code</span>:</strong>
 
 Here is the code for <em>prefix.py</em>. I put this file under my <em>projectname/src/</em> directory.
-```
+
+{{< highlight python >}}
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """Find the prefix of the current installation, and other useful variables.
@@ -93,7 +96,7 @@ __all__ = ('prefix', 'name')
 import os
 import sys
 
-<strong>def prefix</strong>(join=None):
+def prefix(join=None):
     """Returns the prefix that this code was installed into."""
     # constants for this execution
     path = os.path.abspath(__file__)
@@ -157,7 +160,7 @@ if __name__ == '__main__':
         print result
     else:
         sys.exit(1)
-```
+{{< /highlight >}}
 Why this sort of thing isn't built into python boggles my mind, so if for some reason you have a better solution, please let me know. Also, don't be fooled by the red herring that is: sys.prefix
 
 Happy hacking,

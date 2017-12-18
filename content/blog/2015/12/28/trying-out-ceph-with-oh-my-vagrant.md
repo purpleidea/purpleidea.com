@@ -3,8 +3,9 @@ date = "2015-12-28 14:59:23"
 title = "Trying out Ceph with Oh-My-Vagrant"
 draft = "false"
 categories = ["technical"]
-tags = ["ceph-deploy", "fedora 23", "hack", "vagrant", "bash", "ceph", "oh-my-vagrant", "planetdevops", "planetfedora", "fedora", "rbd", "devops", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["bash", "ceph", "ceph-deploy", "devops", "fedora", "fedora 23", "hack", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "rbd", "vagrant"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/12/28/trying-out-ceph-with-oh-my-vagrant/"
 +++
 
 <a href="https://www.berrange.com/posts/2015/12/21/ceph-single-node-deployment-on-fedora-23/">Daniel P. Berrangé wrote about trying out a single node ceph cluster.</a> I decided to take his article and turn it into an Oh-My-Vagrant <code>omv.yaml</code> file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.

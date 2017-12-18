@@ -3,8 +3,9 @@ date = "2014-06-06 06:12:19"
 title = "Securely managing secrets for FreeIPA with Puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "fedora", "ipa", "password", "planetdevops", "planetfedora", "puppet", "vagrant", "planetpuppet", "freeipa", "puppet-ipa", "secrets"]
-author = "jamesjustjames"
+tags = ["devops", "fedora", "freeipa", "ipa", "password", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-ipa", "secrets", "vagrant"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/"
 +++
 
 Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.
@@ -66,7 +67,7 @@ In other words, very unlikely.
 <span style="text-decoration:underline;">Testing this easily</span>:
 
 Testing this out is quite straightforward. This process has been integrated with vagrant for easy testing. Start by setting up vagrant if you haven't already:
-<p style="padding-left:30px;"><a href="/post/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a></p>
+<p style="padding-left:30px;"><a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a></p>
 Once you are comfortable with vagrant, follow these steps for using Puppet-IPA:
 ```
 git clone --recursive https://github.com/purpleidea/puppet-ipa
@@ -89,6 +90,4 @@ Hope you enjoyed this.
 Happy hacking,
 
 James
-
-&nbsp;
 

@@ -3,8 +3,9 @@ date = "2013-06-04 23:39:08"
 title = "Collecting duplicate resources in puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["duplicate definition", "exported resources", "hack", "puppet", "technology", "allow duplicates", "collector", "devops", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["allow duplicates", "collector", "devops", "duplicate definition", "exported resources", "hack", "planetpuppet", "puppet", "technology"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/06/04/collecting-duplicate-resources-in-puppet/"
 +++
 
 I could probably write a long design article explaining why <em>identical</em> duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, <a href="https://twitter.com/bodepd">Mr. Bode</a> has already written part one of the hack: <a href="https://github.com/puppetlabs/puppetlabs-stdlib#ensure_resource">ensure_resource</a>.
@@ -16,7 +17,8 @@ Suppose you have a given infrastructure with <em>N</em> vaguely identical nodes.
 <strong>How?</strong>
 
 As I mentioned, <em>ensure_resources</em> is a good enough hack to start. Here's how you take an existing resource, and make it duplicate friendly. Take for example, the bulk of my <em>dhcp::subnet</em> resource:
-```
+
+{{< highlight ruby >}}
 define dhcp::subnet(
       $subnet,
       # [...]
@@ -59,22 +61,26 @@ define dhcp::subnet(
             }
       }
 }
-```
+{{< /highlight >}}
+
 As you can see, I added an <em>$allow_duplicates</em> parameter to my resource. If it is set to true, then when the resource is defined, it parses out a trailing <em><strong>#</strong>comment</em> from the <em>$namevar</em>. This can guarantee uniqueness for the <em>$name</em> (if they happen to be on the same node) but more importantly, it can guarantee uniqueness on a collector, where you will otherwise be unable to workaround the <em>$name</em> collision.
 
 This is how you use this on one of the exporting nodes:
-```
+
+{{< highlight ruby >}}
 @@dhcp::subnet { "dmz#${hostname}":
     subnet => ...,
       range => [...],
       allow_duplicates => '#',
 }
-```
+{{< /highlight >}}
+
 and on the collector:
-```
+{{< highlight ruby >}}
 Dhcp::Subnet <<| tag == 'dhcp' and title != "${dhcp_zone}" |>&gt; {
 }
-```
+{{< /highlight >}}
+
 There are a few things to notice:
 <ol>
 	<li>The <em>$allow_duplicates</em> argument can be set to <em>true</em> (a boolean), or to any string. If you pick a string, then that will be used to "split" out the end comment. It's smart enough to split with a reverse index search so that your name can contain the #'s if need be. By default it looks for a single <strong>#</strong>, but you could replace this with '<em>XXX123HACK</em>' if that was the only unique string match you can manage. Make sure not to use the string value of '<em>true</em>'.</li>

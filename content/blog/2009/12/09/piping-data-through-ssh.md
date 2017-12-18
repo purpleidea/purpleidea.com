@@ -4,7 +4,8 @@ title = "piping data through ssh"
 draft = "false"
 categories = ["technical"]
 tags = ["bash", "linux", "ssh"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/12/09/piping-data-through-ssh/"
 +++
 
 not that what i'm about to tell you is brilliant, new or revolutionary, however i thought i'd mention it in case you're not doing it. also feel free to let me know if there is a better way.

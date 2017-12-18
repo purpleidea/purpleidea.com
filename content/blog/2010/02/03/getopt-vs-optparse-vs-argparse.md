@@ -3,8 +3,9 @@ date = "2010-02-03 12:25:08"
 title = "getopt vs. optparse vs. argparse"
 draft = "false"
 categories = ["technical"]
-tags = ["ivan", "optparse", "programming", "python", "argparse", "getopt"]
-author = "jamesjustjames"
+tags = ["argparse", "getopt", "ivan", "optparse", "programming", "python"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2010/02/03/getopt-vs-optparse-vs-argparse/"
 +++
 
 sooner or later you'll end up needing to do some argument parsing. the foolish end up writing their own yucky parser that ends up having a big if statement filled with things like:

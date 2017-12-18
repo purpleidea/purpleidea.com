@@ -3,11 +3,12 @@ date = "2015-04-08 03:37:18"
 title = "Sharing dev environments with Oh-My-Vagrant"
 draft = "false"
 categories = ["technical"]
-tags = ["gluster", "oh-my-vagrant", "planetfedora", "planetpuppet", "docker", "planetdevops", "puppet", "git", "kubernetes", "ansible", "devops", "fedora", "screencast"]
-author = "jamesjustjames"
+tags = ["ansible", "devops", "docker", "fedora", "git", "gluster", "kubernetes", "oh-my-vagrant", "planetdevops", "planetfedora", "planetpuppet", "puppet", "screencast"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/"
 +++
 
-With <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (omv) you can set up a dev environment in seconds. (Read the <a href="/post/2014/09/03/introducing-oh-my-vagrant/">omv introduction</a> if you've never used it before!) Since everything is defined in a single <code>omv.yaml</code> file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works...
+With <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (omv) you can set up a dev environment in seconds. (Read the <a href="/blog/2014/09/03/introducing-oh-my-vagrant/">omv introduction</a> if you've never used it before!) Since everything is defined in a single <code>omv.yaml</code> file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works...
 
 In the <code>omv.yaml</code> file there is an <code>extern</code> variable. It is a list of each <em>external</em> repository which you'd like to include. Each element in this list is a hash of key value pairs. Currently four are supported: <em>type</em>, <em>system</em>, <em>repository</em>, <em>directory</em>.
 
@@ -17,7 +18,7 @@ An example will help you visualize this:
 :domain: example.com
 :network: 192.168.123.0/24
 :image: fedora-21
-:<strong>extern</strong>:
+:extern:
 - type: git
   system: ansible
   repository: https://github.com/eparis/kubernetes-ansible
@@ -32,7 +33,7 @@ The most important part that I need to mention is the <code>reallyrm</code> vari
 
 Here's a small screencast to show you some examples of this in action:
 
-<a href="https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-extern-screencast.ogv">oh-my-vagrant-extern-screencast.ogv</a>
+<a href="https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-extern-screencast.ogv">oh-my-vagrant-extern-screencast.ogv</a>
 
 I hope you enjoyed this. Please share and enjoy, and I'll be back soon to explain some more of the features! <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/DOCUMENTATION.md">Documentation</a> patches are appreciated!
 

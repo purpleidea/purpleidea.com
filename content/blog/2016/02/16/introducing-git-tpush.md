@@ -3,8 +3,9 @@ date = "2016-02-16 12:15:06"
 title = "Introducing: git tpush"
 draft = "false"
 categories = ["technical"]
-tags = ["ci", "git-tpush", "planetdevops", "bash", "gluster", "planetpuppet", "devops", "puppet", "tpush", "planetfreeipa", "travis", "github", "hub", "tput", "git", "planetfedora", "jenkins", "planetipa"]
-author = "jamesjustjames"
+tags = ["bash", "ci", "devops", "git", "git-tpush", "github", "gluster", "hub", "jenkins", "planetdevops", "planetfedora", "planetfreeipa", "planetipa", "planetpuppet", "puppet", "tpush", "tput", "travis"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/02/16/introducing-git-tpush/"
 +++
 
 On today's issue of "one hour hacks", I'll show you how you can stop your git drive-by's to git master from breaking your CI tests... Let's continue!

@@ -3,14 +3,15 @@ date = "2012-11-14 01:31:43"
 title = "setting timed events in puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["agpl", "devops", "timers", "agplv3+", "idempotent", "puppet", "run once"]
-author = "jamesjustjames"
+tags = ["agpl", "agplv3+", "devops", "idempotent", "puppet", "run once", "timers"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/11/14/setting-timed-events-in-puppet/"
 +++
 
 I've tried to push puppet to its limits, and so far I've succeeded. When you hit <a href="http://projects.puppetlabs.com/issues/1565">the kind of bug that forces you to hack around it</a>, you know you are close. In any case, this isn't about that embarrassing bug, it's about how to set delayed actions in puppet.
 
 Enter puppet-runonce, a module that I've just finished writing. It starts off with the realization that you can exec an action which also writes to a file. If it sees this file, then it knows that it has already completed, and shouldn't run itself again. The relevant parts are here:
-```
+{{< highlight ruby >}}
 define runonce::exec(
     $command = '/bin/true',
     $notify = undef,
@@ -32,11 +33,12 @@ define runonce::exec(
         require => File['/var/lib/puppet/tmp/runonce/exec/'],
     }
 }
-```
+{{< /highlight >}}
+
 This depends on having an isolated namespace per module. I need this in many of my modules, and I have chosen: "<em>/var/lib/puppet/tmp/$modulename</em>". I've added the extra feature that this object can repeatedly run until the <em>$command</em> succeeds or it can run once, and ignore the exit status.
 
 Building a timer is slightly trickier, but follows from the first concept. First create a runonce object which when used, creates a file with a timestamp of "now". Next, create a new exec object which periodically checks the time, and once we're past a certain delta, exec the desired command. That looks something like this:
-```
+{{< highlight ruby >}}
 # when this is first run by puppet, a "timestamp" matching the system clock is
 # saved. every time puppet runs (usually every 30 minutes) it compares the
 # timestamp to the current time, and if this difference exceeds that of the
@@ -78,11 +80,12 @@ define runonce::timer(
         # TODO: add any other parameters here that users wants such as cwd and environment...
     }
 }
-```
+{{< /highlight >}}
+
 The real "magic" is in the power of bash, and its individual elegant pieces. The `<em>date</em>` command makes it easy to import a previous stored value with <em>--file</em>, and a bit of conversion glue and mathematics gives us:
-```
+{{< highlight bash >}}
 /usr/bin/test -e ${startdatefile} && /usr/bin/test $(( `/bin/date +%s` - `/usr/bin/head -n 1 ${startdatefile} | /bin/date --file=- +%s` )) -gt ${deltaseconds}
-```
+{{< /highlight >}}
 It's a big mouthful to digest on one line, however it's probably write only code anyways, and isn't really that complicated anyhow. One downside is that this is only evaluated every time puppet runs, so in other words it has the approximate granularity of 30 minutes. If you're using this for anything precise, then you're insane!
 
 Speaking of sanity, why would anyone want such a thing? My use case is simple: I'm writing a <em>fancy</em> puppet-drbd module, to help me auto-deploy clusters. I always have to manually turn up the initial sync rate to get my cluster happy, but this should be reverted for normal use. The solution is to set an initial sync rate with <em>runonce::exec</em>, and revert it 24 hours later with <em>runonce::timer</em>!

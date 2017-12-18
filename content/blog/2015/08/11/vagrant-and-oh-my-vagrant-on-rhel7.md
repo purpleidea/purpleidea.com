@@ -3,11 +3,12 @@ date = "2015-08-11 15:09:16"
 title = "Vagrant and Oh-My-Vagrant on RHEL7"
 draft = "false"
 categories = ["technical"]
-tags = ["planetipa", "vagrant", "centos7", "omv", "vagrant-libvirt", "freeipa", "gluster", "centos", "fedora", "rhel", "planetdevops", "rhel7", "planetpuppet", "devops", "oh-my-vagrant", "planetfedora", "puppet"]
-author = "jamesjustjames"
+tags = ["centos", "centos7", "devops", "fedora", "freeipa", "gluster", "oh-my-vagrant", "omv", "planetdevops", "planetfedora", "planetipa", "planetpuppet", "puppet", "rhel", "rhel7", "vagrant", "vagrant-libvirt"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/"
 +++
 
-My <a href="https://redhat.com/">employer</a> keeps paying me, which I appreciate, so it's good to spend some time to make sure RHEL7 customers get a great developer experience! So here's how to make vagrant, vagrant-libvirt and <a href="/post/?s=oh-my-vagrant">Oh-My-Vagrant</a> work on <a href="http://red.ht/1Aowjfh">RHEL 7+</a>. The same steps should work for CentOS 7+.
+My <a href="https://redhat.com/">employer</a> keeps paying me, which I appreciate, so it's good to spend some time to make sure RHEL7 customers get a great developer experience! So here's how to make vagrant, vagrant-libvirt and <a href="/tags/oh-my-vagrant/">Oh-My-Vagrant</a> work on <a href="http://red.ht/1Aowjfh">RHEL 7+</a>. The same steps should work for CentOS 7+.
 
 I'll first paste the commands you need to run, and then I'll explain what's happening for those that are interested:
 ```
@@ -51,7 +52,7 @@ wget https://copr.fedoraproject.org/coprs/purpleidea/vagrant-libvirt/repo/epel-7
 sudo cp -a purpleidea-vagrant-libvirt-epel-7.repo /etc/yum.repos.d/
 sudo yum install -y vagrant-libvirt    # noop plugin for oh-my-vagrant dependency
 ```
-Since there isn't a vagrant-libvirt RPM, and because <a href="/post/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">the RPM's for Oh-My-Vagrant</a> depend on that "requires" to install correctly, I built an empty vagrant-libvirt RPM so that Oh-My-Vagrant thinks the dependency has been met in system wide RPM land, when it's actually been met in the user specific home directory space. I couldn't think of a better way to do this, and as a result, you get to read about the exercise that prompted my <a href="/post/2015/08/11/making-an-empty-rpm/">recent "empty RPM" article.</a>
+Since there isn't a vagrant-libvirt RPM, and because <a href="/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">the RPM's for Oh-My-Vagrant</a> depend on that "requires" to install correctly, I built an empty vagrant-libvirt RPM so that Oh-My-Vagrant thinks the dependency has been met in system wide RPM land, when it's actually been met in the user specific home directory space. I couldn't think of a better way to do this, and as a result, you get to read about the exercise that prompted my <a href="/blog/2015/08/11/making-an-empty-rpm/">recent "empty RPM" article.</a>
 ```
 wget https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/repo/epel-7/purpleidea-oh-my-vagrant-epel-7.repo
 sudo cp -a purpleidea-oh-my-vagrant-epel-7.repo /etc/yum.repos.d/
@@ -65,7 +66,7 @@ Lastly if you'd like to reuse your current terminal session, source the <code>/e
 
 You'll need to do an <code>omv init</code> at least once to make sure all the user plugins are installed, and you should be ready for your first <code>vagrant up</code>! Please note, that the above process definitely includes some dirty workarounds until vagrant is more easily consumable in RHEL, but I wanted to get you hacking earlier rather than later!
 
-I hope this article helps you hack it out in RHEL land, be sure to read about <a href="/post/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/">how to build your own <em>custom</em> RHEL vagrant boxes</a> too!
+I hope this article helps you hack it out in RHEL land, be sure to read about <a href="/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/">how to build your own <em>custom</em> RHEL vagrant boxes</a> too!
 
 Happy Hacking,
 

@@ -3,7 +3,8 @@ date = "2009-11-05 11:29:16"
 title = "IPVS + shorewall"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/11/05/ipvs-shorewall/"
 +++
 
 <a href="http://www.linuxvirtualserver.org/">lvs</a> load balancing always felt like an elusive task. here i will document how to get it working with the excellent <a href="http://www.shorewall.net/">shorewall</a> firewall, as an extension to their <a href="http://www.shorewall.net/two-interface.htm">two interface</a> common use case. this was all necessary for a group of grad students that needed to test out and develop some distributed algorithms. it turns out that once you get going, all this is quite easy and fun!
@@ -20,9 +21,11 @@ let's get going. first setup the head node. for networking, you'll need a public
 ```
 # The loopback network interface
 auto lo
-iface lo inet loopback</code>
+iface lo inet loopback
+```
 
-<code># The primary network interface (public)
+```
+# The primary network interface (public)
 auto eth1
 iface eth1 inet static
 address 123.321.52.210
@@ -38,7 +41,8 @@ dns-search something.example.com
 auto eth0
 iface eth0 inet static
 address 192.168.1.254
-netmask 255.255.255.0</code>
+netmask 255.255.255.0
+```
 
 you'll notice that in the two interface default shorewall config, my eth0 is their eth1 and vice-versa. also, i've replaced my hostname and ip block with something invented. sorry! anyways, the tail of dhcpd.conf looks like this:
 ```

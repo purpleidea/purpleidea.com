@@ -3,7 +3,8 @@ date = "2009-06-02 15:06:58"
 title = "coloured tab completion"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/06/02/coloured-tab-completion/"
 +++
 
 i &lt;3 tab completion, coloured grep, and coloured ls, however i would love to see <strong><span style="color:#000080;">coloured</span></strong> tab completion.

@@ -3,8 +3,9 @@ date = "2013-10-15 16:52:29"
 title = "GNOME Montreal Summit"
 draft = "false"
 categories = ["technical"]
-tags = ["abiword", "accessibility", "montreal", "aicd", "planetfedora", "yorba", "pgo", "summit", "hacking hearts", "jhbuild", "geary", "gnome", "gnome boxes", "gnome continuous", "gnome summit", "gtk"]
-author = "jamesjustjames"
+tags = ["abiword", "accessibility", "aicd", "geary", "gnome", "gnome boxes", "gnome continuous", "gnome summit", "gtk", "hacking hearts", "jhbuild", "montreal", "pgo", "planetfedora", "summit", "yorba"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/10/15/gnome-montreal-summit/"
 +++
 
 This October 12th to 14th Montreal hosted the <a href="https://www.gnome.org/">GNOME</a> <del>boston</del> summit. Many thanks to <a href="http://www.canonical.com/">Canonical</a> for sponsoring breakfast, <a href="http://www.savoirfairelinux.com/en/">Savoir Faire Linux</a> for hosting a great <em><a href="https://en.wikipedia.org/wiki/Cinq_%C3%A0_sept">6 à 10</a></em> with fancy snacks, and <a href="http://www.redhat.com/">RedHat</a> for sponsoring a <a href="https://en.wikipedia.org/wiki/Pool_%28cue_sports%29">pool</a> night. What follows is some technical commentary about stuff that went on.

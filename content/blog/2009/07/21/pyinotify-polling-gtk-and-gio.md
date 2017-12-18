@@ -3,8 +3,9 @@ date = "2009-07-21 10:19:52"
 title = "[py]inotify, polling, gtk and gio"
 draft = "false"
 categories = ["technical"]
-tags = ["evanescent", "gio", "gtk", "inotify", "programming", "dbus"]
-author = "jamesjustjames"
+tags = ["dbus", "evanescent", "gio", "gtk", "inotify", "programming"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/07/21/pyinotify-polling-gtk-and-gio/"
 +++
 
 i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel <a href="http://en.wikipedia.org/wiki/Inotify">inotify</a> support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with <a href="http://trac.dbzteam.org/pyinotify">pyinotify</a> and <a href="http://www.pygtk.org/pygtk2reference/gobject-functions.html#function-gobject--io-add-watch">io_add_watch</a>, but on closer inspection into the pyinotify code it turns out that it seems to actually use <a href="http://trac.dbzteam.org/pyinotify/browser/pyinotify.py">polling</a>! (search for: select.poll)
@@ -15,27 +16,29 @@ as a random side effect, it seems that when a file is written, i still see the G
 
 the code i'm using to test all this is:
 
-<code>#!/usr/bin/python
+{{< highlight python >}}
+#!/usr/bin/python
 import gtk
 import gio
 count = 0
 def file_changed(monitor, file, unknown, event):
-&nbsp;&nbsp;global count
-&nbsp;&nbsp;print 'debug: %d' % count
-&nbsp;&nbsp;count = count + 1
-&nbsp;&nbsp;print 'm: %s' % monitor
-&nbsp;&nbsp;print 'f: %s' % file
-&nbsp;&nbsp;print 'u: %s' % unknown
-&nbsp;&nbsp;print 'e: %s' % event
-&nbsp;&nbsp;if event == gio.FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
-&nbsp;&nbsp;&nbsp;&nbsp;print "file finished changing"
-&nbsp;&nbsp;print '#'*79
-&nbsp;&nbsp;print 'n'
+	global count
+	print 'debug: %d' % count
+	count = count + 1
+	print 'm: %s' % monitor
+	print 'f: %s' % file
+	print 'u: %s' % unknown
+	print 'e: %s' % event
+	if event == gio.FILE_MONITOR_EVENT_CHANGES_DONE_HINT:
+		print "file finished changing"
+	print '#'*79
+	print 'n'
 myfile = gio.File('/tmp/gio')
 monitor = myfile.monitor_file()
 monitor.connect("changed", file_changed)
 gtk.main()
-```
+{{< /highlight >}}
+
 (very similar to the aforementioned blog post)
 
 and if you want to see how i'm using it in the particular app, the latest version of evanescent is now <a href="http://www.cs.mcgill.ca/~james/code/">available</a>. (look inside of evanescent-client.py)

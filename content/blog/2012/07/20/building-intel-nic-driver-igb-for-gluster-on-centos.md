@@ -4,7 +4,8 @@ title = "building intel nic driver (igb) for gluster on centos"
 draft = "false"
 categories = ["technical"]
 tags = ["devops", "gluster"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/07/20/building-intel-nic-driver-igb-for-gluster-on-centos/"
 +++
 
 I've been having some strange networking issues with gluster. "Eco__" from #gluster suggested I try an up to date Intel nic driver. Here are the steps I followed to make that happen. No news yet on if that solved the problem.

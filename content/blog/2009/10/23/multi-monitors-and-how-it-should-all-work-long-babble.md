@@ -3,8 +3,9 @@ date = "2009-10-23 21:09:13"
 title = "multi monitors and how it should all work (long babble)"
 draft = "false"
 categories = ["technical"]
-tags = ["window manager", "xmonad", "babble", "compiz", "gnome", "multi-head", "multiple monitors", "reference"]
-author = "jamesjustjames"
+tags = ["babble", "compiz", "gnome", "multi-head", "multiple monitors", "reference", "window manager", "xmonad"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/"
 +++
 
 at work i use two screens for my day to day workflow. i find it's much more efficient for doing work, like coding. i'll often have at least one terminal open, a full screen text editor, and usually a number of references, such as the <a href="http://dbus.freedesktop.org/doc/dbus-specification.html">dbus specification</a> open in a <a href="http://projects.gnome.org/epiphany/">web browser</a>.

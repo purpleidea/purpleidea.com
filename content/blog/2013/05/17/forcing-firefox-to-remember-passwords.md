@@ -3,8 +3,9 @@ date = "2013-05-17 07:39:06"
 title = "Forcing firefox to remember passwords"
 draft = "false"
 categories = ["technical"]
-tags = ["autocomplete", "hack", "pgo", "bookmarklet", "dangerous", "firefox", "save passwords"]
-author = "jamesjustjames"
+tags = ["autocomplete", "bookmarklet", "dangerous", "firefox", "hack", "pgo", "save passwords"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/05/17/forcing-firefox-to-remember-passwords/"
 +++
 
 There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to <em>off</em>.
@@ -16,12 +17,12 @@ It's not that complicated actually, a little bookmarklet (javascript code, store
 I've copied the code here, in the interests of archiving this very useful hack. Here you go:
 
 <strong><span style="text-decoration:underline;">Shortened form</span>:</strong>
-```
+{{< highlight javascript >}}
 javascript:(function(){var%20ac,c,f,fa,fe,fea,x,y,z;ac="autocomplete";c=0;f=document.forms;for(x=0;x<f.length;x++){fa=f[x].attributes;for(y=0;y<fa.length;y++){if(fa[y].name.toLowerCase()==ac){fa[y].value="on";c++;}}fe=f[x].elements;for(y=0;y<fe.length;y++){fea=fe[y].attributes;for(z=0;z<fea.length;z++){if(fea[z].name.toLowerCase()==ac){fea[z].value="on";c++;}}}}alert("Enabled%20'"+ac+"'%20on%20"+c+"%20objects.");})();
-```
+{{< /highlight >}}
 <strong><span style="text-decoration:underline;">Long form</span>:</strong>
-```
-<code><tt>function() {
+{{< highlight javascript >}}
+function() {
    var ac, c, f, fa, fe, fea, x, y, z;
    //ac = autocomplete constant (attribute to search for)
    //c = count of the number of times the autocomplete constant was found
@@ -63,8 +64,8 @@ javascript:(function(){var%20ac,c,f,fa,fe,fea,x,y,z;ac="autocomplete";c=0;f=docu
    }
 
    alert("Enabled '" + ac + "' on " + c + " objects.");
-}</tt></code>
-```
+}
+{{< /highlight >}}
 Happy hacking,
 
 James

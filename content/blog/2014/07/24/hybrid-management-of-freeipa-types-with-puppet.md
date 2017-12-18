@@ -3,8 +3,9 @@ date = "2014-07-24 00:41:08"
 title = "Hybrid management of FreeIPA types with Puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["freeipa", "hiera", "idm", "planetdevops", "planetfedora", "ruby", "difference engine", "fedora", "bash", "vagrant", "planetpuppet", "puppet-gluster", "puppet-ipa", "puppet-ipa+vagrant", "python", "function decorator", "hybrid management", "devops", "puppet"]
-author = "jamesjustjames"
+tags = ["bash", "devops", "difference engine", "fedora", "freeipa", "function decorator", "hiera", "hybrid management", "idm", "planetdevops", "planetfedora", "planetpuppet", "puppet", "puppet-gluster", "puppet-ipa", "puppet-ipa+vagrant", "python", "ruby", "vagrant"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/"
 +++
 
 <em>(Note: this hybrid management technique is being demonstrated in the <a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a> module for <a href="https://www.freeipa.org/">FreeIPA</a>, but the idea could be used for other modules and scenarios too. See below for some use cases...)</em>
@@ -34,7 +35,7 @@ Since the above are contradictory, they can't be reconciled, and a compiler erro
 
 The <em><a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a></em> module exposes a bunch of different types that map to FreeIPA objects. The most common are <a href="https://github.com/purpleidea/puppet-ipa/blob/master/manifests/server/user.pp#L18">users</a>, <a href="https://github.com/purpleidea/puppet-ipa/blob/master/manifests/server/host.pp#L18">hosts</a>, and <a href="https://github.com/purpleidea/puppet-ipa/blob/master/manifests/server/service.pp#L18">services</a>. If you run a dedicated puppet shop, then puppet can be your interface to manage FreeIPA, and life will go on as usual. The caveat is that FreeIPA provides a stunning <em>web-ui</em>, and a powerful <em>cli</em>, and it would be a shame to ignore both of these.
 
-[caption id="attachment_855" align="alignnone" width="584"]<a href="https://ttboj.files.wordpress.com/2014/07/freeipa-screenshot-users-jjj.png"><img class="size-large wp-image-855" src="http://ttboj.files.wordpress.com/2014/07/freeipa-screenshot-users-jjj.png?w=584" alt="The FreeIPA webui is gorgeous. It even gets better in the new 4.0 release." width="584" height="290" /></a> The FreeIPA webui is gorgeous. It even gets better in the new 4.0 release.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="freeipa-screenshot-users-jjj.png"><img class="size-large wp-image-855" src="freeipa-screenshot-users-jjj.png" alt="The FreeIPA webui is gorgeous. It even gets better in the new 4.0 release." width="100%" height="100%" /></a></td></tr><tr><td> The FreeIPA webui is gorgeous. It even gets better in the new 4.0 release.</td></tr></table></br />
 
 <span style="text-decoration:underline;">Hybrid management</span>
 
@@ -110,7 +111,7 @@ ipa::server::host { 'nfs':    # NOTE: adding .${domain} is a good idea....
     watch => true,    # read and understand the docs well
 }
 ```
-If someone were to change one of these parameters, puppet would revert it. This detection happens through an elaborate <a href="https://github.com/purpleidea/puppet-ipa/commit/ba515e13968bf83902735cfb7be33556db6ae4ec">difference engine</a>. This was mentioned briefly in an <a href="/post/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/">earlier article</a>, and is probably worth looking at if you're interested in python and function decorators.
+If someone were to change one of these parameters, puppet would revert it. This detection happens through an elaborate <a href="https://github.com/purpleidea/puppet-ipa/commit/ba515e13968bf83902735cfb7be33556db6ae4ec">difference engine</a>. This was mentioned briefly in an <a href="/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/">earlier article</a>, and is probably worth looking at if you're interested in python and function decorators.
 
 Keep in mind that it logically follows that you must be able to <code>$modify</code> to be able to <code>$watch</code>. If you forget and make this mistake, <em>puppet-ipa</em> will report the error. You can however, have different values of <code>$modify</code> and <code>$watch</code> per individual type.
 
@@ -129,7 +130,7 @@ With this hybrid management feature, a bunch of new use cases are now possible! 
 <span style="text-decoration:underline;">Testing with Vagrant
 </span>
 
-You might want to test this all out. It's all pretty automatic if you've followed along with my <a href="/post/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">earlier vagrant work</a> and my <em><a href="/post/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">puppet-gluster</a></em> work. You don't have to use vagrant, but it's all integrated for you in case that saves you time! The short summary is:
+You might want to test this all out. It's all pretty automatic if you've followed along with my <a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">earlier vagrant work</a> and my <em><a href="/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">puppet-gluster</a></em> work. You don't have to use vagrant, but it's all integrated for you in case that saves you time! The short summary is:
 ```
 $ git clone --recursive https://github.com/purpleidea/puppet-ipa
 $ cd puppet-ipa/vagrant/
@@ -150,6 +151,4 @@ Sorry that I didn't write this article sooner. This feature has been baked in fo
 Happy hacking,
 
 James
-
-&nbsp;
 

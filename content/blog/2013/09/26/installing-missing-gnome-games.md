@@ -3,13 +3,14 @@ date = "2013-09-26 00:43:50"
 title = "Installing missing GNOME games"
 draft = "false"
 categories = ["technical"]
-tags = ["gnome-games", "gaming", "nibbles", "planetfedora", "gnu+linux", "pgo", "gnome"]
-author = "jamesjustjames"
+tags = ["gaming", "gnome", "gnome-games", "gnu+linux", "nibbles", "pgo", "planetfedora"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/26/installing-missing-gnome-games/"
 +++
 
 I just realized that my Fedora 19 installation didn't have any of the GNOME games installed by default any more. I guess there's no love for <a href="https://en.wikipedia.org/wiki/Nibbles_%28video_game%29">nibbles</a>. Here's a quick one-liner to get them all back:
 ```
-$ <strong>sudo yum search game | grep gnome | awk '{print $1}' | xargs sudo yum install -y</strong>
+$ sudo yum search game | grep gnome | awk '{print $1}' | xargs sudo yum install -y
 Loaded plugins: etckeeper, langpacks, refresh-packagekit
 Package gnome-nibbles-3.8.0-2.fc19.x86_64 already installed and latest version
 Resolving Dependencies

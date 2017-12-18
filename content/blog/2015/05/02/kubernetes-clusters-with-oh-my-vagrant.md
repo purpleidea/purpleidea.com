@@ -3,11 +3,12 @@ date = "2015-05-02 00:07:11"
 title = "Kubernetes clusters with Oh-My-Vagrant"
 draft = "false"
 categories = ["technical"]
-tags = ["fedora", "openshift", "atomic", "containers", "docker", "gluster", "google", "kubernetes", "oh-my-vagrant", "planetpuppet", "borg", "pods", "planetdevops", "planetfedora", "screencast", "systemd-nspawn", "devops", "redhat", "json"]
-author = "jamesjustjames"
+tags = ["atomic", "borg", "containers", "devops", "docker", "fedora", "gluster", "google", "json", "kubernetes", "oh-my-vagrant", "openshift", "planetdevops", "planetfedora", "planetpuppet", "pods", "redhat", "screencast", "systemd-nspawn"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/"
 +++
 
-I've added the ability to deploy a <a href="https://github.com/GoogleCloudPlatform/kubernetes">Kubernetes</a> cluster with <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (<em>omv</em>). I've also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a <a href="https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md">rolling update</a>, you can use <em>omv</em> to test this out in minutes! I've recorded a <a href="https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv">screencast</a> (~15 min), if you'd like to see some of this in action.
+I've added the ability to deploy a <a href="https://github.com/GoogleCloudPlatform/kubernetes">Kubernetes</a> cluster with <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (<em>omv</em>). I've also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a <a href="https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md">rolling update</a>, you can use <em>omv</em> to test this out in minutes! I've recorded a <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv">screencast</a> (~15 min), if you'd like to see some of this in action.
 
 <span style="text-decoration:underline;">Background</span>:
 
@@ -58,7 +59,7 @@ Due to the power of the <em>omv</em> project, when you <code>vagrant up</code>, 
 
 You're probably due for a screencast (~15 min). Have a watch, and then if you need review, go back and read what I've written above.
 
-<a href="https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv">https://download.gluster.org/pub/gluster/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv</a>
+<a href="https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv">https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv</a>
 
 (Thanks to the Gluster community for generously hosting this video!)
 
@@ -73,6 +74,4 @@ Building useful applications is harder. In my screencast, you'll see where to pu
 Happy hacking,
 
 James
-
-&nbsp;
 

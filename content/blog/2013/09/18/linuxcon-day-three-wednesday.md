@@ -3,11 +3,12 @@ date = "2013-09-18 23:59:28"
 title = "Linuxcon day three, Wednesday"
 draft = "false"
 categories = ["technical"]
-tags = ["minnowboard", "devops", "linuxcon", "puppet-gluster", "the cloudcast", "beaglebone", "planetdevops", "planetpuppet", "puppet", "gluster"]
-author = "jamesjustjames"
+tags = ["beaglebone", "devops", "gluster", "linuxcon", "minnowboard", "planetdevops", "planetpuppet", "puppet", "puppet-gluster", "the cloudcast"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/09/18/linuxcon-day-three-wednesday/"
 +++
 
-After hacking away on <a title="Linuxcon day one, Monday" href="http://ttboj.wordpress.com/2013/09/18/linuxcon-day-one-monday/">Monday</a> and <a title="Linuxcon day two, Tuesday" href="http://ttboj.wordpress.com/2013/09/18/linuxcon-day-two-tuesday/">Tuesday</a> and meeting fellow nerds IRL, I've landed even more changes to <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>. <a href="https://github.com/purpleidea/puppet-gluster/commits/master">My git master branch now sits at 47 commits.</a>
+After hacking away on <a title="Linuxcon day one, Monday" href="/blog/2013/09/18/linuxcon-day-one-monday/">Monday</a> and <a title="Linuxcon day two, Tuesday" href="/blog/2013/09/18/linuxcon-day-two-tuesday/">Tuesday</a> and meeting fellow nerds IRL, I've landed even more changes to <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>. <a href="https://github.com/purpleidea/puppet-gluster/commits/master">My git master branch now sits at 47 commits.</a>
 ```
 $ git clone https://github.com/purpleidea/puppet-gluster.git
 Cloning into 'puppet-gluster'...

@@ -3,8 +3,9 @@ date = "2013-01-27 15:33:50"
 title = "Renaming a GNOME keyring (for seahorse, the passwords and keyrings application)"
 draft = "false"
 categories = ["technical"]
-tags = ["gnome-keyring", "hacks", "seahorse", "gnome", "pgo"]
-author = "jamesjustjames"
+tags = ["gnome", "gnome-keyring", "hacks", "pgo", "seahorse"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/"
 +++
 
 The GNOME Keyring is a great tool to unify password management across the desktop. Sadly, Firefox is the one application that doesn't support this natively. (Chrome actually does!)
@@ -18,7 +19,7 @@ Usually the "<strong><em>$something</em></strong>", matches the name of the keyr
 	<li>Edit the <em>ubuntu.keyring</em> file. There will be an obvious "display-name" section at the top of the file to edit. I changed it to:
 ```
 [keyring]
-display-name=<strong>ubuntu</strong>
+display-name=ubuntu
 ```
 </li>
 	<li>After restarting seahorse, I now changed the password back to something secure. If this process worked, you should already see the new keyring name in your keychain list.</li>

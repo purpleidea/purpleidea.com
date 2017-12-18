@@ -3,8 +3,9 @@ date = "2016-11-30 23:59:49"
 title = "A revisionist history of configuration management"
 draft = "false"
 categories = ["technical"]
-tags = ["ansible", "planetfedora", "devops", "bash", "cfengine", "systemd-nspawn", "chef", "fedora", "planet", "puppet", "send/recv", "docker", "mgmtconfig", "ruby", "mgmt", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["ansible", "bash", "cfengine", "chef", "devops", "docker", "fedora", "mgmt", "mgmtconfig", "planet", "planetfedora", "planetpuppet", "puppet", "ruby", "send/recv", "systemd-nspawn"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/11/30/a-revisionist-history-of-configuration-management/"
 +++
 
 I've got a brand new core feature in mgmt called <em>send/recv</em> which I plan to show you shortly, but first I'd like to start with some background.
@@ -48,7 +49,7 @@ On the path to autonomous systems, there is certainly a lot of trial and error. 
     <li>Where Docker chose multiple instances for distribution, it lacked coordination.</li>
 </ul>
 
-I believe that instead the answer to all of these is still ahead. When discussing power, I think the main mistake was the lack of a sufficiently advanced resource primitive. The <a href="/post/2016/01/18/next-generation-configuration-mgmt/">event based engine in mgmt</a> is intended to be the main aspect of this solution, but not the whole story. For another piece of this story, I invented something I'm calling <em>send/recv</em>.
+I believe that instead the answer to all of these is still ahead. When discussing power, I think the main mistake was the lack of a sufficiently advanced resource primitive. The <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">event based engine in mgmt</a> is intended to be the main aspect of this solution, but not the whole story. For another piece of this story, I invented something I'm calling <em>send/recv</em>.
 
 <span style="text-decoration:underline;">Send/Recv</span>
 

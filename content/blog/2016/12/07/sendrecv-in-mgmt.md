@@ -3,21 +3,22 @@ date = "2016-12-07 07:00:20"
 title = "Send/Recv in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "planetfedora", "puppet", "refresh", "fedora", "mgmtconfig", "planetpuppet", "mgmt", "notify", "notifications", "password", "planetdevops", "send/recv"]
-author = "jamesjustjames"
+tags = ["devops", "fedora", "mgmt", "mgmtconfig", "notifications", "notify", "password", "planetdevops", "planetfedora", "planetpuppet", "puppet", "refresh", "send/recv"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/12/07/sendrecv-in-mgmt/"
 +++
 
-I previously published "<a href="/post/2016/11/30/a-revisionist-history-of-configuration-management/">A revisionist history of configuration management</a>". I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I <em>will</em> explain Send/Recv in this article, but first a few clarifications to the aforementioned article.
+I previously published "<a href="/blog/2016/11/30/a-revisionist-history-of-configuration-management/">A revisionist history of configuration management</a>". I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I <em>will</em> explain Send/Recv in this article, but first a few clarifications to the aforementioned article.
 
 <span style="text-decoration:underline;">Clarifications</span>
 
 I mentioned that my "revisionist history" was inaccurate, but I failed to mention that it was also not exhaustive! Many things were left out either because they were proprietary, niche, not well-known, of obscure design or simply for brevity. My apologies if you were involved with Bcfg2, Bosh, Heat, Military specifications, SaltStack, SmartFrog, or something else entirely. I'd love it if someone else wrote an "exhaustive history", but I don't think that's possible.
 
-It's also worth re-iterating that without the large variety of software and designs which came before me, I wouldn't have learned or have been able to build anything of value. <a href="https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants">Thank you giants!</a>  By discussing the problems and designs of other tools, then it makes it easier to contrast with and explaining what I'm doing in <a href="/post/2016/01/18/next-generation-configuration-mgmt/">mgmt</a>.
+It's also worth re-iterating that without the large variety of software and designs which came before me, I wouldn't have learned or have been able to build anything of value. <a href="https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants">Thank you giants!</a>  By discussing the problems and designs of other tools, then it makes it easier to contrast with and explaining what I'm doing in <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">mgmt</a>.
 
 <span style="text-decoration:underline;">Notifications</span>
 
-If you're not familiar with the <a href="/post/2016/01/18/next-generation-configuration-mgmt/">directed acyclic graph model for configuration management, you should start by reviewing that material first</a>. It models a system of resources (workers) as the vertices in that DAG, and the edges as the dependencies. We're going to add some additional mechanics to this model.
+If you're not familiar with the <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">directed acyclic graph model for configuration management, you should start by reviewing that material first</a>. It models a system of resources (workers) as the vertices in that DAG, and the edges as the dependencies. We're going to add some additional mechanics to this model.
 
 There is a concept in mgmt called notifications. Any time the state of a resource is successfully changed by the engine, a notification is emitted. These notifications are emitted along any graph edge (dependency) that has been asked to relay them. Edges with the <code>Notify</code> property will do so. These are usually called <code>refresh</code> notifications.
 
@@ -29,7 +30,7 @@ You'll see these notifications in action momentarily.
 
 <span style="text-decoration:underline;">Send/Recv</span>
 
-I mentioned in the <a href="/post/2016/11/30/a-revisionist-history-of-configuration-management/">revisionist history</a> that I felt that Chef opted for <em>raw code</em> as a solution to the lack of power in Puppet. Having resources in mgmt which are <a href="/post/2016/01/18/next-generation-configuration-mgmt/">event-driven</a> is one example of increasing their power. Send/Recv is another mechanism to make the resource primitive more powerful.
+I mentioned in the <a href="/blog/2016/11/30/a-revisionist-history-of-configuration-management/">revisionist history</a> that I felt that Chef opted for <em>raw code</em> as a solution to the lack of power in Puppet. Having resources in mgmt which are <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">event-driven</a> is one example of increasing their power. Send/Recv is another mechanism to make the resource primitive more powerful.
 
 Simply put: Send/Recv is a mechanism where resources can transfer data along graph edges.
 
@@ -74,7 +75,7 @@ This also opens up a range of possibilities for new resource kinds that are clev
 
 <span style="text-decoration:underline;">Diagram</span>
 
-[caption id="attachment_1964" align="aligncenter" width="400"]<a href="https://ttboj.files.wordpress.com/2016/12/linkage.png"><img class="size-full wp-image-1964" src="https://ttboj.files.wordpress.com/2016/12/linkage.png" alt="in this graph, a password resource generates a random string and stores it in a file" width="400" height="100" /></a> in this graph, a password resource generates a random string and stores it in a file; more clever linkages are planned[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="linkage.png"><img class="size-full wp-image-1964" src="linkage.png" alt="in this graph, a password resource generates a random string and stores it in a file" width="100%" height="100%" /></a></td></tr><tr><td> in this graph, a password resource generates a random string and stores it in a file; more clever linkages are planned</td></tr></table></br />
 
 <span style="text-decoration:underline;">Example</span>
 

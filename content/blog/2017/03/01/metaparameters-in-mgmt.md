@@ -3,8 +3,9 @@ date = "2017-03-01 16:11:59"
 title = "Metaparameters in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["noop", "puppet", "counting semaphore", "fedora", "dag", "mgmtconfig", "directed acyclic graph", "gluster", "autoedge", "limit", "delay", "metaparameters", "mgmt", "P/V", "proofs", "autoedges", "autogrouping", "devops", "poll", "semaphore", "token bucket", "burst", "planetfedora", "planetpuppet", "retry"]
-author = "jamesjustjames"
+tags = ["P/V", "autoedge", "autoedges", "autogrouping", "burst", "counting semaphore", "dag", "delay", "devops", "directed acyclic graph", "fedora", "gluster", "limit", "metaparameters", "mgmt", "mgmtconfig", "noop", "planetfedora", "planetpuppet", "poll", "proofs", "puppet", "retry", "semaphore", "token bucket"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2017/03/01/metaparameters-in-mgmt/"
 +++
 
 In <a href="https://github.com/purpleidea/mgmt/">mgmt</a> we have <em>meta parameters</em>. They are similar in concept to what you might be familiar with from other tools, except that they are more clearly defined (in a single struct) and vastly more powerful.
@@ -16,8 +17,8 @@ In mgmt, a meta parameter is a parameter which is codified entirely in the engin
 As of this writing we have seven different kinds of meta parameters:
 
 <ul>
-    <li><a href="/post/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a></li>
-    <li><a href="/post/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a></li>
+    <li><a href="/blog/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a></li>
+    <li><a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a></li>
     <li>Noop</li>
     <li>Retry & Delay</li>
     <li>Poll</li>
@@ -25,7 +26,7 @@ As of this writing we have seven different kinds of meta parameters:
     <li>Sema</li>
 </ul>
 
-The astute reader will note that there are actually nine different meta parameters listed, but I have grouped them into seven categories since some of them are very tightly interconnected. The first two, <a href="/post/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a> and <a href="/post/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a> have been covered in separate articles already, so they won't be discussed here. To learn about the others, please read on...
+The astute reader will note that there are actually nine different meta parameters listed, but I have grouped them into seven categories since some of them are very tightly interconnected. The first two, <a href="/blog/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a> and <a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a> have been covered in separate articles already, so they won't be discussed here. To learn about the others, please read on...
 
 <strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#noop-1"><span style="text-decoration:underline;">Noop</span></a></strong>
 
@@ -34,12 +35,12 @@ Noop stands for no-operation. If it is set to <code>true</code>, we tell the Che
 If you'd like to set the noop state on all resources at runtime, there is a cli flag which you can use to do so. It is unsurprisingly named <code>--noop</code>, and overrides all the resources in the graph. <a href="https://docs.puppet.com/puppet/4.6/metaparameter.html#noop">This is in stark contrast with Puppet which will allow an individual resource definition to override the user's choice!</a>
 
 ```
-james@computer:/tmp$ cat noop.pp 
+james@computer:/tmp$ cat noop.pp
 file { '/tmp/puppet.noop':
     content => "nope, nope, nope!\n",
-    <strong>noop => false</strong>,    # set at the resource level
+    noop => false,    # set at the resource level
 }
-james@computer:/tmp$ time puppet apply noop.pp 
+james@computer:/tmp$ time puppet apply noop.pp
 Notice: Compiled catalog for computer in environment production in 0.29 seconds
 Notice: /Stage[main]/Main/File[/tmp/puppet.noop]/ensure: defined content as '{md5}d8bda32dd3fbf435e5a812b0ba3e9a95'
 Notice: Applied catalog in 0.03 seconds
@@ -47,12 +48,12 @@ Notice: Applied catalog in 0.03 seconds
 real    0m15.862s
 user    0m7.423s
 sys    0m1.260s
-james@computer:/tmp$ file puppet.noop    # <strong>verify it worked</strong>
+james@computer:/tmp$ file puppet.noop    # verify it worked
 puppet.noop: ASCII text
 james@computer:/tmp$ rm -f puppet.noop    # reset
-james@computer:/tmp$ time puppet apply <strong>--noop</strong> noop.pp    # <strong>safe right?</strong>
+james@computer:/tmp$ time puppet apply --noop noop.pp    # safe right?
 Notice: Compiled catalog for computer in environment production in 0.30 seconds
-<strong>Notice: /Stage[main]/Main/File[/tmp/puppet.noop]/ensure: defined content as '{md5}d8bda32dd3fbf435e5a812b0ba3e9a95'</strong>
+Notice: /Stage[main]/Main/File[/tmp/puppet.noop]/ensure: defined content as '{md5}d8bda32dd3fbf435e5a812b0ba3e9a95'
 Notice: Class[Main]: Would have triggered 'refresh' from 1 events
 Notice: Stage[main]: Would have triggered 'refresh' from 1 events
 Notice: Applied catalog in 0.02 seconds
@@ -60,15 +61,15 @@ Notice: Applied catalog in 0.02 seconds
 real    0m15.808s
 user    0m7.356s
 sys    0m1.325s
-james@computer:/tmp$ <strong>cat puppet.noop </strong>
-<strong>nope, nope, nope!</strong>
+james@computer:/tmp$ cat puppet.noop
+nope, nope, nope!
 james@computer:/tmp$
 ```
 If you look closely, Puppet just trolled you by performing an operation when you thought it would be noop! I think the behaviour is incorrect, but if this isn't supposed to be a bug, then I'd sure like to know why!
 
 It's worth mentioning that there is also a <a href="https://github.com/purpleidea/mgmt/blob/master/resources/noop.go#L18"><code>noop</code> resource in mgmt</a> which is similarly named because it does absolutely nothing.
 
-<strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#noop-1"><span style="text-decoration:underline;">Retry &amp; Delay</span></a></strong>
+<strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#retry"><span style="text-decoration:underline;">Retry &amp; Delay</span></a></strong>
 
 In mgmt we can run continuously, which means that it's often more useful to do something interesting when there is a resource failure, rather than simply shutting down completely. As a result, if there is an error during the CheckApply phase of the resource execution, the operation can be retried (<em>retry</em>) a number of times, and there can be a <em>delay</em> between each retry.
 
@@ -90,7 +91,7 @@ This might be very powerful for an <a href="https://aws.amazon.com/"><strong><em
 
 One particularly interesting aspect is that ever since the converged graph detection was improved, we can still converge a graph and shutdown with the <code>converged-timeout</code> functionality while using polling! <a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#poll">This is described in more detail in the documentation.</a>
 
-<a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#limit"><strong><span style="text-decoration:underline;">Limit &amp; Burst</span></strong></a>
+<strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#limit"><span style="text-decoration:underline;">Limit &amp; Burst</span></a></strong>
 
 In mgmt, the events generated by the <em>Watch</em> main loop of a resource do not need to be 1-1 matched with the <em>CheckApply</em> remediation step. This is very powerful because it allows mgmt to collate multiple events into a single <em>CheckApply</em> step which is helpful for when the duration of the <em>CheckApply</em> step is longer than the interval between <em>Watch</em> events that are being generated often.
 
@@ -102,7 +103,7 @@ This doesn't cause us to permanently miss events (and stay un-converged) because
 
 The <em>limit</em> and <em>burst</em> metaparams default to allowing an infinite rate, with zero burst. As it turns out, if you have a non-infinite rate, the burst must be non-zero or you will cause a <em>Validate</em> error. Similarly, a non-zero burst, with an infinite rate is effectively the same as the default. A good rule of thumb is to remember to either set both values or neither. <a href="https://vimeo.com/13497928">This is all because of the mathematical implications of token buckets which I won't explain in this article.</a>
 
-<a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#sema"><strong>Sema</strong></a>
+<strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#sema">Sema</a></strong>
 
 Sema is short for semaphore. In mgmt we have implemented <a href="https://en.wikipedia.org/wiki/Semaphore_(programming)">P/V style counting semaphores</a>. This is a mechanism for reducing parallelism in situations where there are not explicit dependencies between resources. This might be useful for when the number of operations might outnumber the number of CPUs on your machine and you want to avoid starving your other processes. Alternatively, there might be a particular operation that you want to add a mutex (<a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">mutual exclusion</a>) around, which can be represented with a semaphore of size (1) one. Lastly, it was a particularly fun meta parameter to write, and I had been itching to do so for some time.
 
@@ -112,13 +113,13 @@ Valid ids might include: "<code>some_id:42</code>", "<code>hello:13</code>", and
 
 If you would like to force a semaphore globally on all resources, you can pass in the <code>--sema</code> argument with a size integer. This will get appended to the existing semaphores. For example, to simulate Puppet's traditional non-parallel execution, you could specify <code>--sema 1</code>.
 
-Oh, no! Does this mean I can deadlock my graphs? Interestingly enough, this is actually completely safe! The reason is that because all the semaphores exist in the mgmt <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>, and because that DAG represents dependencies that are always respected, there will always be a way to make progress, which eventually unblocks any waiting resources! The trick to doing this is ensuring that each resource always acquires the list of semaphores in alphabetical order. (Actually the order doesn't matter as long as it's consistent across the graph, and alphabetical is as good as any!) Unfortunately, I don't have a formal proof of this, but I was able to convince myself on the <a href="https://en.wikipedia.org/wiki/Back-of-the-envelope_calculation">back of an envelope</a> that it is true! <a href="/post/contact/">Please contact me if you can prove me right or wrong!</a> The one exception is that a counting semaphore of size zero would never let anyone acquire it, so by definition it would permanently block, and as a result is not <em>currently</em> permitted.
+Oh, no! Does this mean I can deadlock my graphs? Interestingly enough, this is actually completely safe! The reason is that because all the semaphores exist in the mgmt <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>, and because that DAG represents dependencies that are always respected, there will always be a way to make progress, which eventually unblocks any waiting resources! The trick to doing this is ensuring that each resource always acquires the list of semaphores in alphabetical order. (Actually the order doesn't matter as long as it's consistent across the graph, and alphabetical is as good as any!) Unfortunately, I don't have a formal proof of this, but I was able to convince myself on the <a href="https://en.wikipedia.org/wiki/Back-of-the-envelope_calculation">back of an envelope</a> that it is true! <a href="/contact/">Please contact me if you can prove me right or wrong!</a> The one exception is that a counting semaphore of size zero would never let anyone acquire it, so by definition it would permanently block, and as a result is not <em>currently</em> permitted.
 
-The last important point to mention is about the interplay between <a href="/post/2016/03/30/automatic-grouping-in-mgmt/">automatic grouping</a> and semaphores. When more than one resource is grouped, they are considered to be part of the same resource. As a result, the resulting list of semaphores is the sum of the individual semaphores, de-duplicated. This ensures that individual locking guarantees aren't broken when multiple resources are combined.
+The last important point to mention is about the interplay between <a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">automatic grouping</a> and semaphores. When more than one resource is grouped, they are considered to be part of the same resource. As a result, the resulting list of semaphores is the sum of the individual semaphores, de-duplicated. This ensures that individual locking guarantees aren't broken when multiple resources are combined.
 
 <span style="text-decoration:underline;">Future</span>
 
-If you have ideas for future meta parameters, please let me know! We'd love to hear about your ideas on our <a href="https://github.com/purpleidea/mgmt/#community">mailing list or on IRC</a>. If you're shy, you can <a href="/post/contact/">contact me privately</a> as well.
+If you have ideas for future meta parameters, please let me know! We'd love to hear about your ideas on our <a href="https://github.com/purpleidea/mgmt/#community">mailing list or on IRC</a>. If you're shy, you can <a href="/contact/">contact me privately</a> as well.
 
 Happy Hacking,
 

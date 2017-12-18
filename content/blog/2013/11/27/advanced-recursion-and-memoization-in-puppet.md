@@ -3,22 +3,24 @@ date = "2013-11-27 00:03:15"
 title = "Advanced recursion and memoization in Puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "planetpuppet", "recursion", "fibonacci", "puppet", "gluster", "memoization", "planetfedora"]
-author = "jamesjustjames"
+tags = ["devops", "fibonacci", "gluster", "memoization", "planetfedora", "planetpuppet", "puppet", "recursion"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/11/27/advanced-recursion-and-memoization-in-puppet/"
 +++
 
-As a follow-up to my original article on <a title="recursion in puppet (for no particular reason)" href="http://ttboj.wordpress.com/2012/11/20/recursion-in-puppet-for-no-particular-reason/">recursion in Puppet</a>, and in my attempt to <a title="Pushing Puppet at Puppet Camp DC, LISA 2013" href="http://ttboj.wordpress.com/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/">Push Puppet (to its limit)</a>, I'll now attempt some more advanced recursion techniques in Puppet.
+As a follow-up to my original article on <a title="recursion in puppet (for no particular reason)" href="/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/">recursion in Puppet</a>, and in my attempt to <a title="Pushing Puppet at Puppet Camp DC, LISA 2013" href="/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/">Push Puppet (to its limit)</a>, I'll now attempt some more advanced recursion techniques in Puppet.
 
 In my original <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/recursion.pp">recursion example</a>, the type does recurse, but the <em>callee</em> cannot return any value to the <em>caller</em> because it is a type, and not strictly a function. This limitation immediately limits the usefulness of this technique, but I'll try to press on! Let's try to write a <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci series</a> function in native Puppet.
 
 For those who aren't familiar, the <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci series</a> function is a canonical computer science <a href="https://en.wikipedia.org/wiki/Recursion">recursion</a> example. It is very easy to write as pseudo-code or to implement in python:
 
-```python
+{{< highlight python >}}
+
 def F(n):
 	if n == 0: return 0
 	elif n == 1: return 1
 	else: return F(n-1)+F(n-2)
-```
+{{< /highlight >}}
 <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/fibonacci.py">You can download this function here.</a> Let's run that script to get a table of the first few values in the Fibonacci series:
 ```
 $ ./fibonacci.py
@@ -36,11 +38,12 @@ F(10) == 55
 F(11) == 89
 F(12) == 144
 F(13) == 233
-<em>...</em>
+...
 ```
 Now, I'll introduce my Puppet implementation:
 
-```ruby
+{{< highlight ruby >}}
+
 #!/usr/bin/puppet apply
 class fibdir {
 	# memoization directory
@@ -125,7 +128,7 @@ define fibonacci(
 fibonacci { 'start':
 	n => 8,
 }
-```
+{{< /highlight >}}
 <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/fibonacci.pp">It is available for download.</a> Try to read through the code yourself first. As you'll see, if called with <em>n == 0</em>, or <em>n == 1</em>, the function creates a file with this value and exits. This is the secret to how the function (the type) passes values around. It first stores them in files, and then loads them in through templates.
 
 Each time this runs, Puppet will complete the next step in the execution. To make this successive execution automatic, I've <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/fibonacci.sh">written a small bash wrapper</a> to do this, but you can run it manually too. If you do use my wrapper, use it with the <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/fibonacci.pp">fibonacci.pp file provided in git</a>.
@@ -134,11 +137,14 @@ The <em>computer scientist</em> might notice that as a side effect, we are actua
 
 The <em>Puppet wizard</em> might notice that I cheated slightly. Take a minute to try to see where...
 
-[caption id="attachment_618" align="alignnone" width="500"]<a href="http://ttboj.files.wordpress.com/2013/11/muppets-clock.png"><img class="size-full wp-image-618" alt="[IMAGE OF TIME PASSING]" src="http://ttboj.files.wordpress.com/2013/11/muppets-clock.png" width="500" height="500" /></a> (IMAGE OF TIME PASSING)[/caption]Have you figured it out? The problem with the current implementation is that it will only work when run locally as a standalone Puppet program. The reason, is that <em>exec</em> types run on the client, and the <em>templates</em> run on the server. This type requires that both of those elements run on the same machine so that the save/load memoization can work correctly. Since this code runs on the same machine, this isn't a problem! This split execution model is one of the features that can confuse new Puppet users.
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="muppets-clock.png"><img class="size-full wp-image-618" alt="[IMAGE OF TIME PASSING]" src="muppets-clock.png" width="100%" height="100%" /></a></td></tr><tr><td>(IMAGE OF TIME PASSING)</td></tr></table></br />
+
+Have you figured it out? The problem with the current implementation is that it will only work when run locally as a standalone Puppet program. The reason, is that <em>exec</em> types run on the client, and the <em>templates</em> run on the server. This type requires that both of those elements run on the same machine so that the save/load memoization can work correctly. Since this code runs on the same machine, this isn't a problem! This split execution model is one of the features that can confuse new Puppet users.
 
 To adapt our function (technically a type) to work in any environment, we need to do some more hacking! We can continue to use our <em>exec</em> type for saving, but a <em>fact</em> needs to be used to <a href="https://github.com/purpleidea/puppet-pushing/blob/master/lib/facter/fibonacci.rb">load in the necessary values</a>:
 
-```ruby
+{{< highlight ruby >}}
+
 require 'facter'
 
 fibdir = '/tmp/fibonacci/'
@@ -164,17 +170,18 @@ results.keys.each do |x|
 		}
 	end
 end
-```
+{{< /highlight >}}
 The templates from the first version of this type need to be replaced with <a href="https://github.com/purpleidea/puppet-pushing/blob/master/manifests/fibonacci.pp">fact variable lookups</a>:
 
-```ruby
+{{< highlight ruby >}}
+
 # these are 'fact' lookups
 $fn1 = getvar("pushing_fibonacci_${minus1}")
 $fn2 = getvar("pushing_fibonacci_${minus2}&quot;)
-```
+{{< /highlight >}}
 You can use git to download all of this code as a <a href="https://github.com/purpleidea/puppet-pushing">module</a>.
 
-I hope you enjoyed this. Please let me know! <a href="#comments">Comment below</a>, or <a href="/post/contact/">send me a message</a>.
+I hope you enjoyed this. Please let me know! <a href="#comments">Comment below</a>, or <a href="/contact/">send me a message</a>.
 
 Happy hacking,
 
@@ -184,5 +191,5 @@ P.S.: While I think this is fun, I wrote this hack to demonstrate some technique
 
 P.P.S.: The word is actually <a href="https://en.wikipedia.org/wiki/Memoization"><em>memoization</em></a>, <strong>not</strong> <em>memorization</em>, despite the similarities between the two words, and the two concepts.
 
-P.P.P.S: <a href="http://www.gluster.org/blog/">Gluster</a> users get extra points if they can figure out how this will lead to a feature for <a title="puppet-gluster" href="http://ttboj.wordpress.com/code/puppet-gluster/">Puppet-Gluster</a>. It's a bit tricky to see if you're not following my <a href="https://github.com/purpleidea/">git commits</a>.
+P.P.P.S: <a href="http://www.gluster.org/blog/">Gluster</a> users get extra points if they can figure out how this will lead to a feature for <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a>. It's a bit tricky to see if you're not following my <a href="https://github.com/purpleidea/">git commits</a>.
 

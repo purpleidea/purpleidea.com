@@ -3,8 +3,9 @@ date = "2012-08-23 16:14:44"
 title = "How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["devops", "keepalived", "vip", "vrrp", "dlm", "gluster", "puppet"]
-author = "jamesjustjames"
+tags = ["devops", "dlm", "gluster", "keepalived", "puppet", "vip", "vrrp"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/"
 +++
 
 I've been working on a puppet module for gluster. Both this, my puppet-gfs2 module, and other puppet clustering modules all share a common problem: How does one make sure that only certain operations happen on one node at a time?
@@ -19,7 +20,7 @@ The inelegant solutions are simple:
 
 Mostly elegant: Thoughts of my other cluster crept into my head. Out of nowhere, I realized the solution was: <a href="http://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol">VRRP</a>! You may use a different mechanism if you like, but at the moment I'm using <a href="http://www.keepalived.org/">keepalived</a>. Keepalived runs on my gluster pool to provide a <a href="http://en.wikipedia.org/wiki/Virtual_IP_address">VIP</a> for the cluster. This allows my clients to use a highly available IP address to download volume files (mount operation) otherwise, if that particular server were down, they wouldn't be about to mount. The trick: I tell each node what the expected VIP for the cluster is, and if that IP is present in a facter $ipaddress_, then I let that node execute!
 
-The code is now <a href="https://github.com/purpleidea/puppet-gluster">available</a>, please have a look, and <a href="/post/#comments">let me know</a> what you think.
+The code is now <a href="https://github.com/purpleidea/puppet-gluster">available</a>, please have a look, and <a href="#comments">let me know</a> what you think.
 
 Happy hacking,
 James

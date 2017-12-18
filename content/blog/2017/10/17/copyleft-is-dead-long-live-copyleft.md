@@ -3,8 +3,9 @@ date = "2017-10-17 21:22:05"
 title = "Copyleft is Dead. Long live Copyleft!"
 draft = "false"
 categories = ["non-technical"]
-tags = ["legal", "mgmt", "planetfedora", "copyleft", "helpwanted", "fedora", "planetpuppet", "mgmtconfig", "planetfreeipa", "puppet", "devops", "gnome", "openstack", "gluster", "gpl", "freeipa", "501c6", "red hat"]
-author = "jamesjustjames"
+tags = ["501c6", "copyleft", "devops", "fedora", "freeipa", "gluster", "gnome", "gpl", "helpwanted", "legal", "mgmt", "mgmtconfig", "openstack", "planetfedora", "planetfreeipa", "planetpuppet", "puppet", "red hat"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2017/10/17/copyleft-is-dead-long-live-copyleft/"
 +++
 
 As you may have noticed, we recently re-licensed <a href="https://github.com/purpleidea/mgmt/">mgmt</a> from the <a href="https://www.gnu.org/licenses/why-affero-gpl.html">AGPL</a> (<em>Affero</em> General Public License) to the regular <a href="https://www.gnu.org/licenses/quick-guide-gplv3.html">GPL</a>. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.

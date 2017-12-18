@@ -3,8 +3,9 @@ date = "2013-03-04 05:00:43"
 title = "A quick anaconda trick"
 draft = "false"
 categories = ["technical"]
-tags = ["kickstart", "fstype", "devops", "anaconda"]
-author = "jamesjustjames"
+tags = ["anaconda", "devops", "fstype", "kickstart"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/03/04/a-quick-anaconda-trick/"
 +++
 
 Here's a quick <a href="https://fedoraproject.org/wiki/Anaconda/Kickstart">anaconda</a> solution that I am now using in some of my kickstart files...

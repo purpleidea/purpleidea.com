@@ -1,21 +1,22 @@
 +++
 date = "2015-07-08 01:14:19"
-title = "Oh-My-Vagrant &quot;Mainstream&quot; mode and COPR RPM&#039;s"
+title = "Oh-My-Vagrant “Mainstream” mode and COPR RPM's"
 draft = "false"
 categories = ["technical"]
-tags = ["vlog", "vscreen", "vsftp", "vup", "mainstream mode", "rpm", "vagrant", "vagrant-libvirt", "fedora", "gluster", "vdestroy", "vp", "planetdevops", "vrsync", "makefile", "oh-my-vagrant", "planetpuppet", "copr", "omv", "VAGRANT_DOTFILE_PATH", "vrm-rf", "VAGRANT_CWD", "vansible", "vfwd", "python", "vcssh", "planetfedora"]
-author = "jamesjustjames"
+tags = ["VAGRANT_CWD", "VAGRANT_DOTFILE_PATH", "copr", "fedora", "gluster", "mainstream mode", "makefile", "oh-my-vagrant", "omv", "planetdevops", "planetfedora", "planetpuppet", "python", "rpm", "vagrant", "vagrant-libvirt", "vansible", "vcssh", "vdestroy", "vfwd", "vlog", "vp", "vrm-rf", "vrsync", "vscreen", "vsftp", "vup"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/"
 +++
 
 Making <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I'll explain how "mainstream" mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)
 
 <strong><span style="text-decoration:underline;">Prerequisites</span>:</strong>
 
-If you haven't read any of the <a href="/post/?s=oh-my-vagrant">previous articles about Oh-My-Vagrant</a>, I'd recommend you start there. Many of the articles include screencasts, and combined with the <a href="https://github.com/purpleidea/oh-my-vagrant/tree/master/examples">examples/</a> folder, this is probably the best way to learn OMV, because the <a href="https://github.com/purpleidea/oh-my-vagrant/issues/79">documentation could use some love</a>.
+If you haven't read any of the <a href="/tags/oh-my-vagrant/">previous articles about Oh-My-Vagrant</a>, I'd recommend you start there. Many of the articles include screencasts, and combined with the <a href="https://github.com/purpleidea/oh-my-vagrant/tree/master/examples">examples/</a> folder, this is probably the best way to learn OMV, because the <a href="https://github.com/purpleidea/oh-my-vagrant/issues/79">documentation could use some love</a>.
 
 <strong><span style="text-decoration:underline;">Installation</span>:</strong>
 
-OMV is now easily installable on Fedora 22 via COPR. It probably works on other distros and versions, but I haven't tested all of those combinations. This is a colossal improvement from when I <a href="/post/2013/12/09/vagrant-on-fedora-with-libvirt/" target="_blank">first posted about this publicly in 2013</a>. There is still <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1221304" target="_blank">one annoying bug</a> that I occasionally hit. Let me know if you can reproduce.
+OMV is now easily installable on Fedora 22 via COPR. It probably works on other distros and versions, but I haven't tested all of those combinations. This is a colossal improvement from when I <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/" target="_blank">first posted about this publicly in 2013</a>. There is still <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1221304" target="_blank">one annoying bug</a> that I occasionally hit. Let me know if you can reproduce.
 
 Install from COPR:
 ```
@@ -223,7 +224,7 @@ james@computer:/tmp/omvtest2$
 ```
 <em>BUT THAT'S NOT ALL...</em>
 
-The existing tools you know and love, like <code>vlog</code>, <a href="/post/2013/12/21/vagrant-vsftp-and-other-tricks/"><code>vsftp</code></a>, <code>vscreen</code>, <a href="/post/2014/01/02/vagrant-clustered-ssh-and-screen/"><code>vcssh</code></a>, <code>vfwd</code>, <code>vansible</code>, have all been modified to work with OMV mainstream mode as well. The same goes for common aliases such as <code>vs</code>, <code>vp</code>, <code>vup</code>, <code>vdestroy</code>, <code>vrsync</code>, and the useful (but occasionally dangerous) <code>vrm-rf</code>. Have a look at the above links on my blog and <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/extras/vagrant.bashrc">the source</a> to see what these do. If it's not clear enough, <a href="#comment">let me know</a>!
+The existing tools you know and love, like <code>vlog</code>, <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/"><code>vsftp</code></a>, <code>vscreen</code>, <a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/"><code>vcssh</code></a>, <code>vfwd</code>, <code>vansible</code>, have all been modified to work with OMV mainstream mode as well. The same goes for common aliases such as <code>vs</code>, <code>vp</code>, <code>vup</code>, <code>vdestroy</code>, <code>vrsync</code>, and the useful (but occasionally dangerous) <code>vrm-rf</code>. Have a look at the above links on my blog and <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/extras/vagrant.bashrc">the source</a> to see what these do. If it's not clear enough, <a href="#comment">let me know</a>!
 
 All of these are now packaged up in the <em>oh-my-vagrant</em> COPR and are installed automatically into <code>/etc/profile.d/oh-my-vagrant.sh</code> for your convenience. Since they're part of the OMV project, you'll get updates when new functions or bug fixes are made.
 
@@ -250,7 +251,8 @@ This made it so I can easily run <code>make srpm</code> to get a new RPM or SRPM
 
 <a href="https://github.com/purpleidea/oh-my-vagrant/commit/6a6d1f2be89ac0ef932f98368fcf672c7a0d95cc">Then I added COPR integration</a>, so a <code>make copr</code> automatically kicks off a new COPR build. This was the interesting part. You'll need a <a href="https://apps.fedoraproject.org/#FAS">Fedora account</a> for this to work. Once you're logged in, if you go to <a href="https://copr.fedoraproject.org/api">https://copr.fedoraproject.org/api</a> you'll be able to download a snippet to put in your <code>~/.config/copr</code> file. Lastly, the work happens in <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/extras/copr-build.py">copr-build.py</a> where the python <em>copr</em> library does the heavy lifting.
 
-```python
+{{< highlight python >}}
+
 #!/usr/bin/python
 
 # README:
@@ -276,7 +278,7 @@ if result.output != "ok":
     print(result.error)
     sys.exit(1)
 print(result.message)
-```
+{{< /highlight >}}
 A build looks like this:
 ```
 james@computer:~/code/oh-my-vagrant$ git tag 0.0.8 # set a new tag
@@ -309,13 +311,15 @@ james@computer:~/code/oh-my-vagrant$
 ```
 A few minutes later, the COPR build page should look like this:
 
-[caption id="attachment_1098" align="aligncenter" width="300"]<a href="https://ttboj.files.wordpress.com/2015/07/omv-copr.png"><img class="size-medium wp-image-1098" src="https://ttboj.files.wordpress.com/2015/07/omv-copr.png?w=300" alt="a screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output" width="300" height="247" /></a> A screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="omv-copr.png"><img class="size-medium wp-image-1098" src="omv-copr.png" alt="a screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output" width="100%" height="100%" /></a></td></tr><tr><td> A screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output.</td></tr></table></br />
 
 There was a bunch of additional fixing and polishing required to get this as seamless as possible for you. Have a look at the <a href="https://github.com/purpleidea/oh-my-vagrant/commits/master">git commits</a> and you'll get an idea of all the work that was done, and you'll probably even learn about some <a href="https://github.com/purpleidea/oh-my-vagrant/commit/853073431d227cbb0ba56aaf4fedd721904de9a8">new</a>, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/cec25b9a9c17a81956cc6457706bab0b358a9708">features</a> I haven't blogged about yet. It was exhausting!
 
-<a href="https://twitter.com/purpleidea/status/618340109738450944" target="_blank"><img class="  wp-image-1091 aligncenter" src="https://ttboj.files.wordpress.com/2015/07/omv-exhausted.png" alt="omv-exhausted" width="521" height="287" /></a>As a result of all this, you can download fresh builds easily. Visit the COPR page to see how things are cooking:
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://twitter.com/purpleidea/status/618340109738450944" target="_blank"><img class="wp-image-1091 aligncenter" src="omv-exhausted.png" alt="omv-exhausted" width="100%" height="100%" /></a></td></tr></table></br />
+
+As a result of all this, you can download fresh builds easily. Visit the COPR page to see how things are cooking:
 <p style="text-align:center;"><strong><a href="https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/">https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/</a></strong></p>
-I'll try to keep this pumping out releases regularly. If I lag behind, please holler at me. In any case, please let me know if you appreciate this work. <a href="#comment">Comment</a>, <a href="https://twitter.com/#!/purpleidea">tweeter</a>, or <a href="/post/contact/">contact me</a>!
+I'll try to keep this pumping out releases regularly. If I lag behind, please holler at me. In any case, please let me know if you appreciate this work. <a href="#comment">Comment</a>, <a href="https://twitter.com/#!/purpleidea">tweeter</a>, or <a href="/contact/">contact me</a>!
 
 Happy Hacking,
 

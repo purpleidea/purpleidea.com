@@ -3,8 +3,9 @@ date = "2013-04-25 04:10:10"
 title = "Upgrading to centos 6.4 with shorewall onboard"
 draft = "false"
 categories = ["technical"]
-tags = ["centos 6.4", "shorewall", "upgrading", "centos", "devops", "selinux"]
-author = "jamesjustjames"
+tags = ["centos", "centos 6.4", "devops", "selinux", "shorewall", "upgrading"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/04/25/upgrading-to-centos-6-4-with-shorewall-onboard/"
 +++
 
 In case you upgrade your CentOS 6.x box to version 6.4, the shorewall service might complain. With a scary message:
@@ -21,6 +22,4 @@ Thanks shorewall-users and
 Happy hacking,
 
 James
-
-&nbsp;
 

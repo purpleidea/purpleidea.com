@@ -3,8 +3,9 @@ date = "2013-07-09 06:41:54"
 title = "a puppet-ipa user type and a new difference engine"
 draft = "false"
 categories = ["technical"]
-tags = ["ipa", "programming", "devops", "difference engine", "puppet", "examples", "planetfedora", "puppet-ipa", "python", "freeipa", "pgo", "planetpuppet"]
-author = "jamesjustjames"
+tags = ["devops", "difference engine", "examples", "freeipa", "ipa", "pgo", "planetfedora", "planetpuppet", "programming", "puppet", "puppet-ipa", "python"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/"
 +++
 
 A simple hack to add a <em>user</em> type to my <a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a> module turned out to cause quite a stir. I've just pushed these changes out for your testing:
@@ -22,6 +23,4 @@ Happy hacking,
 James
 
 PS: This update also adds server configuration globals management which you may find useful. Not all keys are supported, but all the framework and placeholders have been added.
-
-&nbsp;
 

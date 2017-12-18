@@ -3,8 +3,9 @@ date = "2013-06-23 09:22:32"
 title = "Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster"
 draft = "false"
 categories = ["technical"]
-tags = ["cobbler", "kerberos", "NFS", "puppet module", "examples", "gluster", "puppet", "puppet-gluster", "puppet-ipa", "security", "devops", "freeipa", "planetpuppet", "puppet-cobbler", "puppet-nfs", "keytab", "NFSv4"]
-author = "jamesjustjames"
+tags = ["NFS", "NFSv4", "cobbler", "devops", "examples", "freeipa", "gluster", "kerberos", "keytab", "planetpuppet", "puppet", "puppet module", "puppet-cobbler", "puppet-gluster", "puppet-ipa", "puppet-nfs", "security"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/"
 +++
 
 I've been a little slow in making release announcements, so here's some news:
@@ -29,5 +30,5 @@ Happy Hacking!
 
 James
 
-PS: If you're in a giving mood, I'm in the need for some x86_64 compatible test hardware. If you're able to <a title="donate" href="http://ttboj.wordpress.com/donate/">donate</a>, please let me know!
+PS: If you're in a giving mood, I'm in the need for some x86_64 compatible test hardware. If you're able to <a title="donate" href="/donate/">donate</a>, please let me know!
 

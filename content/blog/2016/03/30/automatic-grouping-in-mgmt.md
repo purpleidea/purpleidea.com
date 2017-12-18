@@ -3,17 +3,18 @@ date = "2016-03-30 06:03:47"
 title = "Automatic grouping in mgmt"
 draft = "false"
 categories = ["technical"]
-tags = ["config management", "devops", "puppet", "reachability", "grouping", "parallelism", "planetdevops", "fanotify", "autogrouping", "dnf", "gluster", "planetpuppet", "dag", "mgmt", "planetfedora", "planetipa", "golang", "inotify", "graph", "mgmtconfig", "pkcon", "planetfreeipa", "package", "packagekit", "science", "testing"]
-author = "jamesjustjames"
+tags = ["autogrouping", "config management", "dag", "devops", "dnf", "fanotify", "gluster", "golang", "graph", "grouping", "inotify", "mgmt", "mgmtconfig", "package", "packagekit", "parallelism", "pkcon", "planetdevops", "planetfedora", "planetfreeipa", "planetipa", "planetpuppet", "puppet", "reachability", "science", "testing"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/03/30/automatic-grouping-in-mgmt/"
 +++
 
-In this post, I'll tell you about the recently released "automatic grouping" or "AutoGroup" feature in <em><a href="https://github.com/purpleidea/mgmt/">mgmt</a></em>, a next generation configuration management prototype. If you aren't already familiar with mgmt, I'd recommend you start by reading the <a href="/post/2016/01/18/next-generation-configuration-mgmt/">introductory post</a>, and the <a href="/post/2016/03/14/automatic-edges-in-mgmt/">second post</a>. There's also an <a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">introductory video</a>.
+In this post, I'll tell you about the recently released "automatic grouping" or "AutoGroup" feature in <em><a href="https://github.com/purpleidea/mgmt/">mgmt</a></em>, a next generation configuration management prototype. If you aren't already familiar with mgmt, I'd recommend you start by reading the <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">introductory post</a>, and the <a href="/blog/2016/03/14/automatic-edges-in-mgmt/">second post</a>. There's also an <a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">introductory video</a>.
 
 <span style="text-decoration:underline;">Resources in a graph</span>
 
 Most configuration management systems use something called a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph, or DAG</a>. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges). The arrows must be connected to exactly two vertices, and you're only allowed to move along each arrow in one direction (directed). Lastly, if you start at any vertex in the graph, you must never be able to return to where you started by following the arrows (acyclic). If you can, the graph is not fit for our purpose.
 
-[caption id="attachment_1800" align="aligncenter" width="356"]<a href="/img/356px-directed_acyclic_graph_3-svg.png" rel="attachment wp-att-1800"><img class="size-full wp-image-1800" src="/img/356px-directed_acyclic_graph_3-svg.png" alt="A DAG from Wikipedia" width="356" height="256" /></a> An example DAG from <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">Wikipedia</a>[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="356px-Directed_acyclic_graph_3.svg.png" rel="attachment wp-att-1800"><img class="size-full wp-image-1800" src="356px-Directed_acyclic_graph_3.svg.png" alt="A DAG from Wikipedia" width="100%" height="100%" /></a></td></tr><tr><td> An example DAG from <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">Wikipedia</a></td></tr></table></br />
 
 The graphs in configuration management systems usually represent the dependency relationships (edges) between the resources (vertices) which is important because you might want to declare that you want a certain package installed <em>before</em> you start a service. To represent the kind of work that you want to do, different kinds of resources exist which you can use to specify that work.
 
@@ -25,11 +26,11 @@ It turns out that some resources have a fixed overhead to starting up and runnin
 
 Take for example, a simple graph such as the following:
 
-[caption id="attachment_1801" align="aligncenter" width="584"]<a href="/img/grouping1.png" rel="attachment wp-att-1801"><img class="size-large wp-image-1801" src="/img/grouping1.png?w=584" alt="Simple DAG showing three pkg, two file, and one svc resource" width="584" height="429" /></a> Simple DAG showing one svc, two file, and three pkg resources...[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="grouping1.png" rel="attachment wp-att-1801"><img class="size-large wp-image-1801" src="grouping1.png" alt="Simple DAG showing three pkg, two file, and one svc resource" width="100%" height="100%" /></a></td></tr><tr><td> Simple DAG showing one svc, two file, and three pkg resources...</td></tr></table></br />
 
 We can logically group the three pkg resources together and redraw the graph so that it now looks like this:
 
-[caption id="attachment_1802" align="aligncenter" width="506"]<a href="/img/grouping2.png" rel="attachment wp-att-1802"><img class="size-full wp-image-1802" src="/img/grouping2.png" alt="DAG with the three pkg resources now grouped into one." width="506" height="515" /></a> DAG with the three pkg resources now grouped into one! Overlapping vertices mean that they act as if they're one vertex instead of three![/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="grouping2.png" rel="attachment wp-att-1802"><img class="size-full wp-image-1802" src="grouping2.png" alt="DAG with the three pkg resources now grouped into one." width="100%" height="100%" /></a></td></tr><tr><td> DAG with the three pkg resources now grouped into one! Overlapping vertices mean that they act as if they're one vertex instead of three!</td></tr></table></br />
 
 This all happens automatically of course! It is very important that the new graph is a faithful, logical representation of the original graph, so that the specified dependency relationships are preserved. What this represents, is that when multiple resources are grouped (shown by overlapping vertices in the graph) they run together as a single unit. This is the practical difference between running:
 
@@ -66,7 +67,7 @@ It's worth noting two important points:
     <li>The user might <em>not</em> want a particular resource to get grouped!</li>
 </ol>
 
-You might remember that one of the novel properties of mgmt, is that <a href="/post/2016/01/18/next-generation-configuration-mgmt/">it executes the graph in parallel</a> whenever possible. Although the grouping of resources actually removes some of this parallelism, certain resources such as the pkg resource already have an innate constraint on sequential behaviour, namely: the package manager lock. Since these tools can't operate in parallel, and since each execution has a fixed overhead, it's almost always beneficial to group pkg resources together.
+You might remember that one of the novel properties of mgmt, is that <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">it executes the graph in parallel</a> whenever possible. Although the grouping of resources actually removes some of this parallelism, certain resources such as the pkg resource already have an innate constraint on sequential behaviour, namely: the package manager lock. Since these tools can't operate in parallel, and since each execution has a fixed overhead, it's almost always beneficial to group pkg resources together.
 
 Grouping is also not mandatory, so while it is a sensible default, you can disable grouping per resource with a simple <a href="https://github.com/purpleidea/mgmt/blob/master/DOCUMENTATION.md#autogrouping">meta parameter</a>.
 
@@ -74,15 +75,15 @@ Lastly, it's also worth mentioning that grouping doesn't "magically" happen with
 
 <span style="text-decoration:underline;">File grouping</span>
 
-As I mentioned, only the pkg resource supports grouping at this time. The file resource demonstrates a different use case for resource grouping. Suppose you want to monitor 10000 files in a particular directory, but they are specified individually. This would require far too many <a href="https://en.wikipedia.org/wiki/Inotify">inotify</a> watches than a normal system usually has, so the grouping algorithm could group them into a single resource, which then uses a recursive watcher such as <a href="https://lwn.net/Articles/339253/">fanotify</a> to reduce the watcher count by a factor of 10000. Unfortunately neither the file resource grouping, nor the <a href="https://github.com/fsnotify/fsnotify/issues/114">fanotify support</a> for this exist at the moment. If you'd like to implement either of these, <a href="/post/contact/">please let me know</a>!
+As I mentioned, only the pkg resource supports grouping at this time. The file resource demonstrates a different use case for resource grouping. Suppose you want to monitor 10000 files in a particular directory, but they are specified individually. This would require far too many <a href="https://en.wikipedia.org/wiki/Inotify">inotify</a> watches than a normal system usually has, so the grouping algorithm could group them into a single resource, which then uses a recursive watcher such as <a href="https://lwn.net/Articles/339253/">fanotify</a> to reduce the watcher count by a factor of 10000. Unfortunately neither the file resource grouping, nor the <a href="https://github.com/fsnotify/fsnotify/issues/114">fanotify support</a> for this exist at the moment. If you'd like to implement either of these, <a href="/contact/">please let me know</a>!
 
-If you can think of another resource kind that you'd like to write, or in particular, if you know of one which would work well with resource grouping, <a href="/post/contact/">please contact me</a>!
+If you can think of another resource kind that you'd like to write, or in particular, if you know of one which would work well with resource grouping, <a href="/contact/">please contact me</a>!
 
 <span style="text-decoration:underline;">Science!</span>
 
 I wouldn't be a very good scientist (I'm actually a <a href="https://en.wikipedia.org/wiki/Cardiology">Physiologist</a> by training) if I didn't include some data and a demonstration that this all actually works, and improves performance! What follows will be a good deal of information, so skim through the parts you don't care about.
 
-[caption id="attachment_1805" align="aligncenter" width="584"]<a href="/img/adamsavage-science.png" rel="attachment wp-att-1805"><img class="size-large wp-image-1805" src="/img/adamsavage-science.png?w=584" alt="Science <3 data" width="584" height="362" /></a> Science <3 data[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="adamsavage-science.png" rel="attachment wp-att-1805"><img class="size-large wp-image-1805" src="adamsavage-science.png" alt="Science <3 data" width="100%" height="100%" /></a></td></tr><tr><td> Science <3 data</td></tr></table></br />
 
 I decided to test the following four scenarios:
 
@@ -142,7 +143,7 @@ $ time sudo ./mgmt run --file examples/pkg1.yaml --converged-timeout=0
 21:04:31 pgraph.go:796: Pkg[powertop]: Exited
 21:04:31 main.go:203: Goodbye!
 
-real    <strong>0m13.320s</strong>
+real    0m13.320s
 user    0m0.023s
 sys    0m0.021s
 ```
@@ -154,7 +155,7 @@ Notice: Compiled catalog for computer.example.com in environment production in 0
 Notice: /Stage[main]/Main/Package[powertop]/ensure: created
 Notice: Applied catalog in 10.13 seconds
 
-real    <strong>0m18.254s</strong>
+real    0m18.254s
 user    0m9.211s
 sys    0m2.074s
 ```
@@ -193,7 +194,7 @@ Installed:
 
 Complete!
 
-real    <strong>0m10.406s</strong>
+real    0m10.406s
 user    0m4.954s
 sys    0m0.836s
 ```
@@ -207,7 +208,7 @@ Notice: /Stage[main]/Main/Package[sl]/ensure: created
 Notice: /Stage[main]/Main/Package[cowsay]/ensure: created
 Notice: Applied catalog in 33.02 seconds
 
-real    <strong>0m41.229s</strong>
+real    0m41.229s
 user    0m19.085s
 sys    0m4.046s
 ```
@@ -226,7 +227,7 @@ Testing changes               [=========================]    �
 Installing packages           [=========================]         
 Finished                      [=========================]         
 
-real    <strong>0m14.755s</strong>
+real    0m14.755s
 user    0m0.060s
 sys    0m0.025s
 ```
@@ -262,7 +263,7 @@ $ time sudo ./mgmt run --file examples/autogroup2.yaml --converged-timeout=0
 21:16:16 pgraph.go:796: Pkg[cowsay]: Exited
 21:16:16 main.go:203: Goodbye!
 
-real    <strong>0m15.621s</strong>
+real    0m15.621s
 user    0m0.040s
 sys    0m0.038s
 ```
@@ -272,7 +273,7 @@ My hard work seems to have paid off, because we do indeed see a noticeable impro
 
 In the three package scenario, performance is approximately <strong>2.39 times faster than puppet</strong> for installation. Checking was about <strong>12 times faster!</strong> These ratios are expected to grow with a larger number of resources.
 
-[caption id="attachment_1812" align="aligncenter" width="584"]<a href="/img/mgmt-grouping-analysis.png" rel="attachment wp-att-1812"><img class="size-large wp-image-1812" src="/img/mgmt-grouping-analysis.png?w=584" alt="Sweet graph..." width="584" height="329" /></a> Bigger bars is worse... Puppet is in Red, mgmt is in blue.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="mgmt-grouping-analysis.png" rel="attachment wp-att-1812"><img class="size-large wp-image-1812" src="mgmt-grouping-analysis.png" alt="Sweet graph..." width="100%" height="100%" /></a></td></tr><tr><td> Bigger bars is worse... Puppet is in Red, mgmt is in blue.</td></tr></table></br />
 
 The four groups at the bottom along the x axis correspond to the four scenarios I tested, 1, 2 and 3 corresponding to each run of that scenario, with the average of the three listed there too.
 
@@ -284,7 +285,7 @@ puppet:
 
 ```
 $ time puppet --version 
-<strong>4.2.1</strong>
+4.2.1
 
 real    0m0.659s
 user    0m0.525s
@@ -294,7 +295,7 @@ mgmt:
 
 ```
 $ time ./mgmt --version
-mgmt version <strong>0.0.3</strong>-1-g6f3ac4b
+mgmt version 0.0.3-1-g6f3ac4b
 
 real    0m0.007s
 user    0m0.006s
@@ -304,7 +305,7 @@ pkcon:
 
 ```
 $ time pkcon --version
-<strong>1.0.11</strong>
+1.0.11
 
 real    0m0.013s
 user    0m0.006s
@@ -314,7 +315,7 @@ dnf:
 
 ```
 $ time dnf --version
-<strong>1.1.7</strong>
+1.1.7
   Installed: dnf-0:1.1.7-2.fc23.noarch at 2016-03-17 13:37
   Built    : Fedora Project at 2016-03-09 16:45
 
@@ -352,6 +353,4 @@ I hope that you enjoyed this feature and analysis, and that you'll help contribu
 Happy Hacking,
 
 James
-
-&nbsp;
 

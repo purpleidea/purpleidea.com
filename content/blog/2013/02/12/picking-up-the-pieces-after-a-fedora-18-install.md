@@ -3,8 +3,9 @@ date = "2013-02-12 01:15:38"
 title = "Picking up the pieces after a Fedora 18 install"
 draft = "false"
 categories = ["technical"]
-tags = ["fedora", "fedup", "gnome", "nautilus", "pgo", "fedora18", "nemo", "upgrading"]
-author = "jamesjustjames"
+tags = ["fedora", "fedora18", "fedup", "gnome", "nautilus", "nemo", "pgo", "upgrading"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/"
 +++
 
 I love GNOME and Fedora, but "upgrading" from Fedora 17 to 18 did not go well for me. I recommend you wait until either these are all fixed, or Fedora 19+ suits your needs. Here are a list of problems I had, and some workarounds. Hopefully proper patches to these bugs will get merged quickly, so that you don't need to use these fixes.
@@ -13,7 +14,7 @@ I love GNOME and Fedora, but "upgrading" from Fedora 17 to 18 did not go well fo
 
 <strong><span style="text-decoration:underline;">Workaround</span>:</strong> I did a fresh install. Make sure you have backups first, of course. I didn't feel like spending a lot of time debugging why it broke.
 
-<strong><span style="text-decoration:underline;">Problem</span>:</strong> The <Backspace> key no longer goes "up" in nautilus. I hope this wasn't a "feature removal".
+<strong><span style="text-decoration:underline;">Problem</span>:</strong> The `<Backspace>` key no longer goes "up" in nautilus. I hope this wasn't a "feature removal".
 
 <strong><span style="text-decoration:underline;">Workaround</span>:</strong> Add:
 ```

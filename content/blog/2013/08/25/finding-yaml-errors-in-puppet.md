@@ -3,8 +3,9 @@ date = "2013-08-25 04:31:49"
 title = "Finding YAML errors in puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["yaml", "hiera", "planetpuppet", "tabs", "devops", "puppet"]
-author = "jamesjustjames"
+tags = ["devops", "hiera", "planetpuppet", "puppet", "tabs", "yaml"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/08/25/finding-yaml-errors-in-puppet/"
 +++
 
 I love tabs, they're so much easier to work with, but YAML doesn't like them. I'm constantly adding them in accidentally, and puppet's error message is a bit cryptic:
@@ -20,6 +21,4 @@ Run this one liner on your puppetmaster, and hiera should quickly point out whic
 Happy hacking,
 
 James
-
-&nbsp;
 

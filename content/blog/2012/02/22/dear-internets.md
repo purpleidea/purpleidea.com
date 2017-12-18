@@ -4,7 +4,8 @@ title = "Dear internets"
 draft = "false"
 categories = ["technical"]
 tags = ["hello"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/02/22/dear-internets/"
 +++
 
 Dear internets,

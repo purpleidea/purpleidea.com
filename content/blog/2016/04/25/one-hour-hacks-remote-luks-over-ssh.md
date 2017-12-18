@@ -3,8 +3,9 @@ date = "2016-04-25 13:46:53"
 title = "One hour hacks: Remote LUKS over SSH"
 draft = "false"
 categories = ["technical"]
-tags = ["linux", "planetfedora", "LUKS", "hack", "hacks", "fedora", "one hour hack", "planetpuppet", "ssh", "bash", "gluster", "planetdevops", "devops", "GNU", "mount"]
-author = "jamesjustjames"
+tags = ["GNU", "LUKS", "bash", "devops", "fedora", "gluster", "hack", "hacks", "linux", "mount", "one hour hack", "planetdevops", "planetfedora", "planetpuppet", "ssh"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2016/04/25/one-hour-hacks-remote-luks-over-ssh/"
 +++
 
 I have a <a href="https://gnu.org/">GNU/Linux</a> server which I mount a few <a href="https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup">LUKS</a> encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don't have anything especially sensitive on the drives, but I think it's a good security practice to <a href="http://www.theguardian.com/commentisfree/2013/jul/15/crux-nsa-collect-it-all">encrypt it all</a>, if only to add noise into the system and for solidarity with <a href="https://en.wikipedia.org/wiki/Whistleblower">those</a> who harbour much more sensitive data.
@@ -65,5 +66,5 @@ Happy hacking,
 
 James
 
-PS: One day this sort of thing might be possible in <a href="https://github.com/purpleidea/mgmt/">mgmt</a>. <a href="/post/contact/">Let me know</a> if you want to help work on it!
+PS: One day this sort of thing might be possible in <a href="https://github.com/purpleidea/mgmt/">mgmt</a>. <a href="/contact/">Let me know</a> if you want to help work on it!
 

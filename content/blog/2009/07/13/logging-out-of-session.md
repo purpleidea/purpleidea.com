@@ -3,8 +3,9 @@ date = "2009-07-13 10:05:05"
 title = "logging out of $SESSION"
 draft = "false"
 categories = ["technical"]
-tags = ["programming", "evanescent"]
-author = "jamesjustjames"
+tags = ["evanescent", "programming"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/07/13/logging-out-of-session/"
 +++
 
 the <a href="http://www.cs.mcgill.ca/~james/code/">software</a> (evanescent) that i'm working on is supposed to log out the user from its current X session. originally i had some yucky looking code that ran a kill on gnome-session, which quickly got replaced with:

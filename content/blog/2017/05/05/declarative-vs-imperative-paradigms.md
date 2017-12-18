@@ -3,13 +3,14 @@ date = "2017-05-05 17:35:17"
 title = "Declarative vs. Imperative paradigms"
 draft = "false"
 categories = ["technical"]
-tags = ["puppet", "planetdevops", "planetpuppet", "devops", "remote control", "linearalizable", "planetfedora", "CAS", "imperative", "state", "TCP", "CAP theorem", "idempotent", "linear", "fedora", "declarative", "mgmtconfig", "ACK"]
-author = "jamesjustjames"
+tags = ["ACK", "CAP theorem", "CAS", "TCP", "declarative", "devops", "fedora", "idempotent", "imperative", "linear", "linearalizable", "mgmtconfig", "planetdevops", "planetfedora", "planetpuppet", "puppet", "remote control", "state"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2017/05/05/declarative-vs-imperative-paradigms/"
 +++
 
 Recently, while operating two different remote-controlled appliances, I realized that it was high time for a discussion about declarative and imperative paradigms. Let's start by looking at the two remotes:
 
-[caption id="attachment_2110" align="alignnone" width="1053"]<img class="alignnone size-full wp-image-2110" src="/img/declarative-imperative.png" alt="declarative-imperative" width="1053" height="1405" /> Two different "remotes". The one on the left operates a television, and the one on the right controls a central heating and cooling system.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="declarative-imperative.png"><img class="alignnone size-full wp-image-2110" src="declarative-imperative.png" alt="declarative-imperative" width="100%" height="100%" /></a></td></tr><tr><td>Two different "remotes". The one on the left operates a television, and the one on the right controls a central heating and cooling system.</td></tr></table></br />
 
 At first glance you will notice that one of these remotes is dark, and the other is light. You might also notice that my photography skills are terrible. Neither of these facts is very important to the discussion at hand. Is there anything interesting that you can infer?
 
@@ -59,7 +60,7 @@ In the declarative system it is easy to avoid overwriting another users request 
 
 If multiple endpoints form a <a href="https://en.wikipedia.org/wiki/CAP_theorem">consistent</a> cluster where all members can serve client requests using a declarative tasking system, the client can send the request to one system, and retrieve the status from someone else. This is particularly useful if the operation might take some time, and there is a chance that the initial endpoint was replaced during this interval.
 
-[caption id="attachment_2331" align="alignnone" width="422"]<img class="alignnone size-full wp-image-2331" src="/img/declarative-imperative-diagram.png" alt="declarative-imperative-diagram" width="422" height="532" /> Hand drawn diagram of the scenario. As you can see the user is happy because they are using a declarative paradigm, and are more resistant to failures.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="declarative-imperative-diagram.png"><img class="alignnone size-full wp-image-2331" src="declarative-imperative-diagram.png" alt="declarative-imperative-diagram" width="100%" height="100%" /></a></td></tr><tr><td>Hand drawn diagram of the scenario. As you can see the user is happy because they are using a declarative paradigm, and are more resistant to failures.</td></tr></table></br />
 
 While this could be replicated to some degree with imperative systems, it's much more complicated to keep track of whether an operation occurred or not as it's easier for each cluster member to be able to determine whether the current state matches what's expected.
 

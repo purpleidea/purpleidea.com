@@ -3,8 +3,9 @@ date = "2015-06-12 18:06:55"
 title = "A super privileged Puppet container"
 draft = "false"
 categories = ["technical"]
-tags = ["fedora", "omv", "puppet", "vscreen", "atomic", "dnf", "docker", "oh-my-vagrant", "planetpuppet", "planetdevops", "spc", "devops", "facter", "planetfedora", "spc-puppet-apply", "vagrant", "yum"]
-author = "jamesjustjames"
+tags = ["atomic", "devops", "dnf", "docker", "facter", "fedora", "oh-my-vagrant", "omv", "planetdevops", "planetfedora", "planetpuppet", "puppet", "spc", "spc-puppet-apply", "vagrant", "vscreen", "yum"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/06/12/a-super-privileged-puppet-container/"
 +++
 
 In this new crazy world of <a href="https://en.wikipedia.org/wiki/Docker_%28software%29">containers</a> and immutable hosts, one might still want to run previous generation software such as <a href="https://duckduckgo.com/l/?kh=-1&uddg=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPuppet_(software)">Puppet</a> on a current generation <a href="https://www.projectatomic.io/">Atomic host</a>. This article will explain how you can do that, and offer some <a href="https://github.com/purpleidea/spc-puppet-apply">proof of concept code</a>.

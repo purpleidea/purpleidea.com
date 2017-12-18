@@ -3,7 +3,8 @@ date = "2009-10-23 13:14:43"
 title = "tech support for a keyboard"
 draft = "false"
 categories = ["technical"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2009/10/23/tech-support-for-a-keyboard/"
 +++
 
 so my <a href="http://www.cs.mcgill.ca/">boss</a> was recently kind enough to purchase a new keyboard and mouse combo to attempt to relieve the elbow-and-down pain that i endure due to constant programming and mouse moving. thanks.

@@ -4,7 +4,8 @@ title = "my gluster setup, described"
 draft = "false"
 categories = ["technical"]
 tags = ["devops", "gluster"]
-author = "jamesjustjames"
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/07/19/my-gluster-setup-described/"
 +++
 
 For the last ~two or so years I've played and tested <a href="http://download.gluster.com/pub/gluster/glusterfs/LATEST/CentOS/">gluster</a> on and off and hanging out in the awesome #gluster channel on <a href="http://freenode.net/">Freenode</a>. In case you haven't heard, gluster was <a href="http://www.redhat.com/promo/storage/press-release.html">acquired</a> by RedHat back in October 2011. This post describes my current setup. I urge you to send your comments and suggestions for improvement. I'll update this as needed.

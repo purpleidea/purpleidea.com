@@ -1,10 +1,11 @@
 +++
 date = "2015-11-14 06:50:35"
-title = "Matching arbitrary URL&#039;s to custom Firefox profiles"
+title = "Matching arbitrary URL's to custom Firefox profiles"
 draft = "false"
 categories = ["technical"]
-tags = ["firefox", "gnome", "about:config", "evolution", "default applications", "planetdevops", "gluster", "firefox-redirector", "planetfedora", "gtk", "firefox-profiles", "google docs", "planetpuppet", "bash", "fedora", "protocol-handler", "devops"]
-author = "jamesjustjames"
+tags = ["about:config", "bash", "default applications", "devops", "evolution", "fedora", "firefox", "firefox-profiles", "firefox-redirector", "gluster", "gnome", "google docs", "gtk", "planetdevops", "planetfedora", "planetpuppet", "protocol-handler"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/"
 +++
 
 We're constantly clicking on all sorts of different URL's throughout the day. These clickable links appear in webpages (including in "<a href="https://www.gnu.org/philosophy/who-does-that-server-really-serve.html">web apps</a>" like gmail) in mail clients like <a href="https://en.wikipedia.org/wiki/Evolution_%28software%29">Evolution</a>, in terminals such as <a href="https://wiki.gnome.org/Apps/Terminal">GNOME-terminal</a>, and any other <a href="https://en.wikipedia.org/wiki/GTK%2B">GTK+</a> app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL's are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along. I'm doing all of this on <a href="https://getfedora.org/">Fedora 23</a>, but it should work on other GNU/Linux environments.
@@ -21,11 +22,11 @@ firefox -P
 ```
 This will open up a friendly dialog where you can add a new profile. After you've done this, my dialog now looks like:
 
-[caption id="attachment_1150" align="alignnone" width="445"]<a href="https://ttboj.files.wordpress.com/2015/11/firefox-profiles.png"><img class="size-full wp-image-1150" src="https://ttboj.files.wordpress.com/2015/11/firefox-profiles.png" alt="A view of my firefox profiles as shown by running: firefox -P" width="445" height="347" /></a> A view of my firefox profiles as shown by running: firefox -P[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-profiles.png"><img class="size-full wp-image-1150" src="firefox-profiles.png" alt="A view of my firefox profiles as shown by running: firefox -P" width="100%" height="100%" /></a></td></tr><tr><td> A view of my firefox profiles as shown by running: firefox -P</td></tr></table></br />
 
 to test that it is working, run firefox from the command line:
 ```
-$ firefox https://ttboj.wordpress.com/
+$ firefox https://purpleidea.com/
 $ firefox -P ghttps https://github.com/purpleidea/
 $ firefox https://twitter.com/#!/purpleidea
 $ firefox -P ghttps https://www.gnu.org/philosophy/free-sw.html
@@ -34,11 +35,11 @@ You should get two separate sessions, where the commands with <code>-P ghttps</c
 
 <strong><span style="text-decoration:underline;">Firefox launcher</span>:</strong>
 
-When you run firefox, it usually runs <code>/usr/bin/firefox</code>. I want <a href="/post/2013/03/22/running-your-file-manager-from-a-terminal/">a more clever launcher</a>, so I've created a new bash script named <code>~/bin/firefox</code> which is part of my path. The contents of this file are:
+When you run firefox, it usually runs <code>/usr/bin/firefox</code>. I want <a href="/blog/2013/03/22/running-your-file-manager-from-a-terminal/">a more clever launcher</a>, so I've created a new bash script named <code>~/bin/firefox</code> which is part of my path. The contents of this file are:
 ```
 #!/bin/bash
 # run firefox from a terminal, without being attached to it; similar to nohup
-# thanks to @purpleidea from https://ttboj.wordpress.com/
+# thanks to @purpleidea from https://purpleidea.com/
 # TODO: a better argv parser and more flexible url matching semantics
 # NOTE: first close firefox and make a new profile with `firefox -P`, then set:
 protocol='ghttps' # name of fake protocol
@@ -74,7 +75,7 @@ Make sure the file is executable with <code>chmod u+x ~/bin/firefox</code> and i
 
 Whenever any URL is clicked within GNOME, there is a central "Default Applications" setting which decides what application to run. My settings dialog for this control now looks like:
 
-[caption id="attachment_1152" align="alignnone" width="660"]<a href="https://ttboj.files.wordpress.com/2015/11/gnome-default-applications.png"><img class="size-large wp-image-1152" src="https://ttboj.files.wordpress.com/2015/11/gnome-default-applications.png?w=660" alt="What the GNOME Settings->Details->Default Applications dialog looks like after I made one small change." width="660" height="462" /></a> What the GNOME Settings->Details->Default Applications dialog looks like after I made the change.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="gnome-default-applications.png"><img class="size-large wp-image-1152" src="gnome-default-applications.png" alt="What the GNOME Settings-&gt;Details-&gt;Default Applications dialog looks like after I made one small change." width="100%" height="100%" /></a></td></tr><tr><td> What the GNOME Settings-&gt;Details-&gt;Default Applications dialog looks like after I made the change.</td></tr></table></br />
 
 I had to change the "Web" handler to be a "MyFirefox" instead of the previous default of "Firefox". Those applications are listed in <code>.desktop</code> files which exist on your system. The system wide firefox desktop file is located at: <code>/usr/share/applications/firefox.desktop</code> and although the path to the executable in this file does not set a directory prefix, it unfortunately does not seem to obey my shell $PATH which includes <code>~/bin/</code>. If you know how to set this so <code>.desktop</code> files include <code>~/bin/</code> in their search, then I'd really appreciate it if you left me a comment!
 
@@ -108,7 +109,7 @@ Everything should now be working perfectly, until you click on a link <em>within
 
 Once installed, there is a settings dialog which can add some pattern matching for us. I set up a basic pattern that corresponds to what I wrote in my <code>~/bin/firefox</code> shell script. Here's a screenshot:
 
-[caption id="attachment_1154" align="alignnone" width="660"]<a href="https://ttboj.files.wordpress.com/2015/11/firefox-redirector.png"><img class="size-large wp-image-1154" src="https://ttboj.files.wordpress.com/2015/11/firefox-redirector.png?w=660" alt="A screenshot from the firefox Redirector plugin." width="660" height="654" /></a> A screenshot from the firefox Redirector plugin.[/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-redirector.png"><img class="size-large wp-image-1154" src="firefox-redirector.png" alt="A screenshot from the firefox Redirector plugin." width="100%" height="100%" /></a></td></tr><tr><td> A screenshot from the firefox Redirector plugin.</td></tr></table></br />
 
 You can conveniently import and export your redirects from the plugin, and so I've included the <a href="https://gist.github.com/purpleidea/385ba877f484d04c6974">corresponding <code>.json</code> equivalent</a> for your convenience.
 
@@ -128,16 +129,16 @@ To add a custom protocol, you'll need to dive into your browsers internal settin
 Please note that the leading values (in brackets) are the <em>types</em> that you'll need to use. Omit the semicolons, those separate the key and the corresponding value you should give it. You'll naturally want to use the correct path to your firefox script.
 
 For reasons unknown to me, it's required to set these variables, but the protocol handler still requires that you manually verify this once. To do this, I have provided a sample link to my blog using the fake <em>ghttps</em> protocol:
-<p style="text-align:center;"><a href="//ttboj.wordpress.com/">ghttps://ttboj.wordpress.com/</a></p>
+<p style="text-align:center;"><a href="ghttps://purpleidea.com/">ghttps://purpleidea.com/</a></p>
 When you click on it the first time, you should be prompted with a confirmation dialog that asks you to reconfirm that you're okay running this protocol, and the path to the executable. Browse to the <code>~/bin/firefox</code> and click "Remember my choice for ghttps links". The dialog looked like this:
 
-[caption id="attachment_1159" align="alignnone" width="383"]<a href="https://ttboj.files.wordpress.com/2015/11/firefox-protocol-handler-confirm.png"><img class="size-full wp-image-1159" src="https://ttboj.files.wordpress.com/2015/11/firefox-protocol-handler-confirm.png" alt="You should only need to deal with this dialog once!" width="383" height="421" /></a> You should only need to deal with this dialog once![/caption]
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-protocol-handler-confirm.png"><img class="size-full wp-image-1159" src="firefox-protocol-handler-confirm.png" alt="You should only need to deal with this dialog once!" width="100%" height="100%" /></a></td></tr><tr><td> You should only need to deal with this dialog once!</td></tr></table></br />
 
 If you're using a different protocol, can you make a simple HTML file and open it up in your browser:
 ```
 <html>
-<a href="ghttps://ttboj.wordpress.com/">ghttps://ttboj.wordpress.com/</a>
-</html&gt;
+<a href="ghttps://purpleidea.com/">ghttps://purpleidea.com/</a>
+</html>
 ```
 At this point you may need to restart firefox. Your new protocol handler is now installed! Enjoy automatically handling special URL's.
 

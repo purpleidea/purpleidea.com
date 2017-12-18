@@ -3,8 +3,9 @@ date = "2013-06-18 12:36:54"
 title = "Playing with FreeIPA and puppet"
 draft = "false"
 categories = ["technical"]
-tags = ["freeipa", "krb5", "planetfedora", "ldap", "planetpuppet", "puppet", "puppet module", "devops", "idm", "ipa", "kerberos"]
-author = "jamesjustjames"
+tags = ["devops", "freeipa", "idm", "ipa", "kerberos", "krb5", "ldap", "planetfedora", "planetpuppet", "puppet", "puppet module"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2013/06/18/playing-with-freeipa/"
 +++
 
 So I just rolled a new vm to hack around with <a href="http://www.freeipa.org/">FreeIPA</a>. Here are some things that I've come across so far. I was planning on configuring LDAP, and Kerberos manually, but the included webui looks like a lovely tool to have for the data entry, user administrator type who likes to click on things. Let's explore...
@@ -66,12 +67,10 @@ to your <em>/etc/ipa/default.conf</em>, and restart httpd. <a href="https://git.
 <span style="text-decoration:underline;"><strong>puppet?</strong></span>:
 
 As you might agree, it's nice to have puppet modules to get you up and running. FreeIPA was easy to install, and my puppet module now makes it automatic. I've written a lot of fancy puppet code to manage your IPA resources. It's not quite finished, and more resource types are on the way, but you can follow along at:
-```
+
 <a href="https://github.com/purpleidea/puppet-ipa">https://github.com/purpleidea/puppet-ipa</a>
-```
+
 Happy hacking,
 
 James
-
-&nbsp;
 

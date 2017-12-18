@@ -3,8 +3,9 @@ date = "2012-06-04 22:31:41"
 title = "fedora 14 to 17 upgrade"
 draft = "false"
 categories = ["technical"]
-tags = ["pgo", "upgrade", "fedora", "planetfedora"]
-author = "jamesjustjames"
+tags = ["fedora", "pgo", "planetfedora", "upgrade"]
+author = "purpleidea"
+original_url = "https://ttboj.wordpress.com/2012/06/04/fedora-14-to-17-upgrade/"
 +++
 
 I've been reluctantly dreading the switch to gnome 3 + shell until it's been ironed out a little bit more than gnome 3.0 - finally took the plunge. overall it's working well. here are some (hopefully) useful notes:
