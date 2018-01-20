@@ -1,0 +1,7 @@
+{{/* insert an image into post: src is required, alt and caption are optional */}}
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="{{.Get "src"}}"><img class="alignnone size-full" src="{{.Get "src"}}" {{ if .Get "alt" }}alt="{{.Get "alt"}}"{{ end }} width="100%" height="100%" /></a></td></tr>
+{{- if .Get "caption" -}}
+<tr><td>{{.Get "caption"}}</td>
+{{- end -}}
+</tr></table></br />
