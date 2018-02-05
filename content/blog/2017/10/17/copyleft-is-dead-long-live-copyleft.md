@@ -58,7 +58,7 @@ It's also interesting to note that of the <a href="https://octoverse.github.com/
 
 <span style="text-decoration:underline;">Innovation</span>:
 
-I started mgmt to show that there was still innovation to be done in the automation space, and I think I've <a href="https://roidelapluie.be/blog/2017/02/09/mgmt/">achieved that</a>. I still have more to prove, but I think I'm on the right path. I also wanted to innovate in licensing by showing that the AGPL isn't actually  harmful. I'm sad to say that I've lost that battle, and that maybe it was too hard to innovate in too many different places simultaneously.
+I started mgmt to show that there was still innovation to be done in the automation space, and I think I've <a href="https://roidelapluie.be/blog/2017/02/09/mgmt/">achieved that</a>. I still have more to prove, but I think I'm on the right path. I also wanted to innovate in licensing by showing that the AGPL isn't actually harmful. I'm sad to say that I've lost that battle, and that maybe it was too hard to innovate in too many different places simultaneously.
 
 Red Hat has been my main source of funding for this work up until now, and I'm grateful for that, but I'm sad to say that they've officially set my time quota to zero. Without their support, I just don't have the energy to innovate in both areas. I'm sad to say it, but I'm more interested in the technical advancements than I am in the <a href="https://www.gnu.org/philosophy/free-sw.html">licensing progress</a> it might have brought to our software ecosystem.
 
