@@ -4,6 +4,78 @@ description: ""
 draft: false
 talks: [
   {
+    topic: "Mgmt Config: Containers, Realtime Autonomy, and Scheduling",
+    location: "CfgMgmtCamp.eu 2018, Ghent",
+    location_url: "http://cfgmgmtcamp.eu/schedule/mgmt/mgmt.html",
+    rating: "Unrated",
+    date: "06/Jan/2018",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: The Language",
+    video: "https://www.youtube.com/watch?v=NxObmwZDyrI",
+    location: "CfgMgmtCamp.eu 2018, Ghent",
+    location_url: "http://cfgmgmtcamp.eu/schedule/main/NextGenerationConfigMgmtTheLanguage.html",
+    rating: "Unrated",
+    date: "05/Jan/2018",
+  },
+
+  {
+    topic: "Understanding 26 U.S.C. § 501, and Organizational Governance",
+    video: "https://video.fosdem.org/2018/UA2.220/understanding_usc_501.webm",
+    location: "FOSDEM Legal Devroom, Brussels",
+    location_url: "https://fosdem.org/2018/schedule/event/understanding_usc_501/",
+    rating: "Unrated",
+    date: "04/Jan/2018",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: Reactive Systems",
+    video: "https://video.fosdem.org/2018/UA2.114/mgmt.webm",
+    location: "FOSDEM, Config Management Devroom, Brussels",
+    location_url: "https://fosdem.org/2018/schedule/event/mgmt/",
+    rating: "Unrated",
+    date: "04/Feb/2018",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: Reactive Systems",
+    video: "https://www.youtube.com/watch?v=-FPEK08l1Zk",
+    location: "Devconf.cz, Brno",
+    location_url: "https://devconfcz2018.sched.com/event/DJY8/next-generation-config-mgmt-reactive-systems",
+    rating: "Rated 93%",
+    rating_url: "mgmt-devconfcz2018-rating.pdf",
+    date: "28/Jan/2018",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: Reactive Systems",
+    video: "https://www.youtube.com/watch?v=_9PG64AOQ3w",
+    location: "LCA, Sydney, Australia",
+    location_url: "https://rego.linux.conf.au/schedule/presentation/48/",
+    rating: "TBD",
+    date: "24/Jan/2018",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: Sysadmins",
+    video: "https://www.youtube.com/watch?v=ELq1XOJMIPY",
+    location: "LCA, Sydney, Australia",
+    location_url: "https://rego.linux.conf.au/schedule/presentation/169/",
+    rating: "TBD",
+    date: "23/Jan/2018",
+  },
+
+  {
+    topic: " Next Generation Config Mgmt: Resources",
+    video: "https://www.youtube.com/watch?v=OvgGfW0ilbE",
+    location: "LCA, Sydney, Australia",
+    location_url: "https://rego.linux.conf.au/schedule/presentation/182/",
+    rating: "TBD",
+    date: "22/Jan/2018",
+  },
+
+  {
     topic: "Next Generation Config Mgmt: Monitoring",
     video: "https://www.youtube.com/watch?v=hSVadQLeplU&html5=1",
     location: "OSMC 2017, Nuremberg, Germany",
@@ -201,6 +273,14 @@ talks: [
     location_url: "http://www.codetributhon.com/en/projects/detail/4",
     rating: "Unrated",
     date: "22/Sep/2016",
+  },
+
+  {
+    topic: "When Worlds Collide: The Commoditization of Specialized Technology",
+    location: "IDEA, Philadelphia, United States",
+    location_url: "http://www.ideaontheweb.org/index.php?submenu=Conferences&src=gendocs&ref=2014RedesignPastConferences&category=2014",
+    rating: "Unrated",
+    date: "12/July/2016",
   },
 
   {
