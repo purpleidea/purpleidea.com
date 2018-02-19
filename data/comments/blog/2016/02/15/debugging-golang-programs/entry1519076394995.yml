@@ -1,0 +1,8 @@
+_id: 6c6b3e50-15bd-11e8-968d-8b90fd88d642
+message: "One addition: panic(nil)\r\n\r\nIt adds an easy 'breakpoint' and dumps a stack trace. Instead of 'nil' a string or other object can be provided for context."
+name: aequitas
+email: mgmtconfig@ijohan.nl
+url: ''
+date: 1519076394
+approved: false
+title: Comment
