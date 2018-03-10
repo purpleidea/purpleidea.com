@@ -2,6 +2,8 @@ baseURL = "https://purpleidea.com/"
 languageCode = "en-ca"
 title = "purpleidea.com"
 
+pygmentsCodeFences = true
+
 [author]
   name = "James Shubin"
 
