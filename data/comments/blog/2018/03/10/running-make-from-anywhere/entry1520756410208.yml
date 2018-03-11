@@ -1,0 +1,10 @@
+_id: 03856c60-2505-11e8-af65-d13c8029700e
+message: >-
+  There's a magic git command (that I can't remember) that prints out the top
+  level directory for the repo you are in. You could use that either to stop the
+  loop earlier (avoid hitting $HOME or any other intermediaries), or skip the
+  loop altogether and use it to jump straight to the root Makefile location.
+name: Jonathan Dowland
+email: jon++ttboj@alcopop.org
+url: 'HTTPS://jmtd.net'
+date: 1520756410
