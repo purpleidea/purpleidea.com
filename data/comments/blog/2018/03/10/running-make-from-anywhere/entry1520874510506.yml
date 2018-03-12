@@ -1,0 +1,9 @@
+_id: fcb05d00-2617-11e8-86f6-cd4c706c51a9
+message: "You've hit a name collision between your alias, and a FreeBSD make compatible application.\r\nhttps://www.freebsd.org/doc/en/books/pmake/book.html\r\n\r\nWhile this application is not available in the Linux distro I checked, bash is cross OS, and so it's completions include pmake.\r\n\r\n# grep pmake /usr/share/bash-completion/completions\r\n  complete -F _make make gmake gnumake pmake colormake"
+name: Scott Sullivan
+email: scott@revident.net
+url: ''
+date: 1520874510
+timestamp: 1520874510
+tags:
+  - comment-subscription
