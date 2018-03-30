@@ -94,6 +94,14 @@ talks: [
 
   {
     topic: "Next Generation Config Mgmt: The Language",
+    location: "McGill's Programming Languages Workshop, Montreal, Canada",
+    location_url: "http://complogic.cs.mcgill.ca/workshop17/james.html",
+    rating: "Unrated",
+    date: "27/Oct/2017",
+  },
+
+  {
+    topic: "Next Generation Config Mgmt: The Language",
     location: "DebConf 2017, Montreal, Canada",
     location_url: "https://debconf17.debconf.org/talks/230/",
     rating: "Unrated",
