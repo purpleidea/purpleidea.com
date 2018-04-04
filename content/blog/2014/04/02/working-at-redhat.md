@@ -2,7 +2,7 @@
 date = "2014-04-02 14:27:35"
 title = "Working at RedHat"
 draft = "false"
-categories = ["technical"]
+categories = ["non-technical"]
 tags = ["devops", "fedora", "gluster", "planetdevops", "planetfedora", "planetpuppet", "puppet", "redhat"]
 author = "purpleidea"
 original_url = "https://ttboj.wordpress.com/2014/04/02/working-at-redhat/"

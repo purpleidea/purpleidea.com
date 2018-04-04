@@ -3,7 +3,7 @@ title: Donate
 draft: false
 ---
 
-If you like my blog, and you like my <a title="code" href="https://github.com/purpleidea/">code</a>, please leave me a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=PVQZYUCCYEAC4&amp;lc=CA&amp;item_name=The%20Technical%20Blog%20of%20James&amp;item_number=ttboj&amp;currency_code=CAD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank">tip</a>!
+If you like my blog, and you like my <a title="code" href="https://github.com/purpleidea/">code</a>, please leave me a <a href="https://paypal.me/purpleidea" target="_blank">tip</a>!
 
 Funds and other resources give me more time to spend on code and articles for you!
 
