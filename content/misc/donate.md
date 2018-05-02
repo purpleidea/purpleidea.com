@@ -5,6 +5,8 @@ draft: false
 
 If you like my blog, and you like my <a title="code" href="https://github.com/purpleidea/">code</a>, please leave me a <a href="https://paypal.me/purpleidea" target="_blank">tip</a>!
 
+You can also donate money via my [patreon](https://www.patreon.com/purpleidea).
+
 Funds and other resources give me more time to spend on code and articles for you!
 
 I'm often in need of hardware, so if you have something you can donate or sponsor, please let me know.
