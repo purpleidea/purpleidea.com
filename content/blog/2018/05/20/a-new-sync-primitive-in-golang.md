@@ -45,22 +45,18 @@ Here's what the code looks like. It's surprisingly short.
 
 ```golang
 type SubscribedSignal struct {
-	wg    *sync.WaitGroup
+	wg    sync.WaitGroup
 	exit  chan struct{}
-	mutex *sync.RWMutex
-}
-
-func NewSubscribedSignal() *SubscribedSignal {
-	return &SubscribedSignal{
-		wg:    &sync.WaitGroup{},
-		exit:  make(chan struct{}),
-		mutex: &sync.RWMutex{},
-	}
+	mutex sync.RWMutex
 }
 
 func (obj *SubscribedSignal) Subscribe() (<-chan struct{}, func()) {
 	obj.mutex.Lock()
 	defer obj.mutex.Unlock()
+
+	if obj.exit == nil { // initialize on first use (safe b/c we use a lock)
+		obj.exit = make(chan struct{}) // initialize
+	}
 
 	obj.wg.Add(1)
 	return obj.exit, func() { // cancel/ack function
@@ -76,8 +72,10 @@ func (obj *SubscribedSignal) Send() {
 	obj.mutex.Lock()
 	defer obj.mutex.Unlock()
 
-	close(obj.exit) // send the close signal
-	obj.wg.Wait()   // wait for everyone to ack
+	if obj.exit != nil { // in case we Send before anyone runs Subscribe
+		close(obj.exit) // send the close signal
+	}
+	obj.wg.Wait() // wait for everyone to ack
 
 	obj.exit = make(chan struct{}) // reset
 
@@ -87,7 +85,7 @@ func (obj *SubscribedSignal) Send() {
 
 {{< blog-paragraph-header "Explanation" >}}
 
-You start by creating a single `*SubscribedSignal` with `NewSubscribedSignal()`.
+You start by creating the zero value of the struct with `&SubscribedSignal{}`.
 You can then `Subscribe` to it any number of times. When `Subscribe` returns,
 you can guarantee that you are now successfully subscribed. It will return two
 values:
@@ -125,7 +123,7 @@ Here's a full usage example in the golang testable
 func ExampleSubscribeSync() {
 	fmt.Println("hello")
 
-	x := NewSubscribedSignal()
+	x := &SubscribedSignal{} // pointer b/c can't be copied after first use
 	wg := &sync.WaitGroup{}
 	ready := &sync.WaitGroup{}
 
