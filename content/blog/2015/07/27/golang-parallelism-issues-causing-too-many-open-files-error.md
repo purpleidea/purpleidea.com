@@ -3,7 +3,7 @@ date = "2015-07-27 11:39:45"
 title = "Golang parallelism issues causing “too many open files” error"
 draft = "false"
 categories = ["technical"]
-tags = ["channels", "concurrency", "devops", "fedora", "golang", "goroutine", "parallelism", "planetdevops", "planetfedora", "pointers", "ps1", "race", "sync.WaitGroup", "too many open files"]
+tags = ["channels", "concurrency", "devops", "fedora", "golang", "goroutine", "parallelism", "planetdevops", "planetfedora", "pointers", "race", "sync.WaitGroup", "too many open files"]
 author = "purpleidea"
 original_url = "https://ttboj.wordpress.com/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/"
 +++
