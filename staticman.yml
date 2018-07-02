@@ -46,6 +46,14 @@ comments:
   # Otherwise, entries will be published to the main branch automatically.
   moderation: true
 
+  # The spam bots have become way too proficient. Hopefully this will stop them.
+  # The secret from google needs to be encrypted. Use this special endpoint
+  # https://api.staticman.net/v2/encrypt/YOUR-SECRET to encrypt the secret.
+  reCaptcha:
+    enabled: true
+    siteKey: "6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"
+    secret: "AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW+v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH+7PoyC3x7d4KDLypopDn+HzWowOpAZuvfHE08n+G4omrP5fUfkOrH03A="
+
   # Name of the site. Used in notification emails.
   name: "purpleidea.com"
 
