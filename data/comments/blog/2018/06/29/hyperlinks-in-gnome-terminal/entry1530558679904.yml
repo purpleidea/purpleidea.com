@@ -1,0 +1,6 @@
+_id: b38547f0-7e2b-11e8-a83f-217357700321
+message: "Sometimes a terminal application makes use of the right-click for its own purposes. E.g., vim typically uses right-click to mark the end of a visual selection. Thus when using vim, any URLs in the document are underlined as a hyperlink, but right-clicking doesn't show the terminal's menu.\r\n\r\nTip: in this case, holding Shift down while right-clicking will present the terminal's context menu, allowing you to open the hyperlink."
+name: Robin
+email: robin.a.meade@gmail.com
+url: ''
+date: 1530558679
