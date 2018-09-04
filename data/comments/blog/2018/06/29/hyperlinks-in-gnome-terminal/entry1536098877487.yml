@@ -1,0 +1,11 @@
+_id: fa807f90-b08e-11e8-9ee0-558513fcc2ac
+message: >-
+  Wouldn't it be possible to somehow emulate ACME-like super hyperlinks in vim?
+  See https://matej.ceplovi.cz/blog/design-notes-on-plan9-for-vimspace.html for
+  my thoughts on that. E.g., man: hyperlink or hyperlink jumping to debugger
+  from a traceback (that would be probably even better in bash)? See also
+  https://github.com/plan9-for-vimspace/plan9-for-vimspace
+name: Matěj Cepl
+email: mcepl@cepl.eu
+url: 'https://matej.ceplovi.cz/blog/'
+date: 1536098877
