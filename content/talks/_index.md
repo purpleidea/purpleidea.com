@@ -4,6 +4,15 @@ description: ""
 draft: false
 talks: [
   {
+    topic: "Next Generation Config Mgmt: The Language",
+    video: "https://www.youtube.com/watch?v=1i38c5cooHo",
+    location: "DevOpsDays 2018, Montreal, Canada",
+    location_url: "https://www.devopsdays.org/events/2018-montreal/program/james-shubin/",
+    rating: "Unrated",
+    date: "10/Oct/2018",
+  },
+
+  {
     topic: "Mgmt Config: Containers, Realtime Autonomy, and Scheduling",
     location: "CfgMgmtCamp.eu 2018, Ghent",
     location_url: "http://cfgmgmtcamp.eu/schedule/mgmt/mgmt.html",
