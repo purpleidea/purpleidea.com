@@ -178,7 +178,7 @@ and [donating to my patreon](https://www.patreon.com/purpleidea)!)
 
 No. Most of *my* favourite parts were already dead. When Red Hat switched all of
 our company email to Gmail, it was a big nail in the coffin for many of us. If
-we're lucky, there will now be less internal pressure on the Red Hat exec's to
+we're lucky, there will now be less internal pressure on the Red Hat execs to
 account for their previous investments, and they can instead focus on building
 good products and saving IBM. It's surely hard work to constantly have to
 justify yourself to short-term shareholders and instead focus on long term
