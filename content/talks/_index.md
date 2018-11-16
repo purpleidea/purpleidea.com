@@ -43,7 +43,8 @@ talks: [
     video: "https://video.fosdem.org/2018/UA2.114/mgmt.webm",
     location: "FOSDEM, Config Management Devroom, Brussels",
     location_url: "https://fosdem.org/2018/schedule/event/mgmt/",
-    rating: "Unrated",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2018-feedback.png",
     date: "04/Feb/2018",
   },
 
