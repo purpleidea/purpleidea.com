@@ -1,0 +1,6 @@
+_id: e08393e0-7ce3-11e8-a81e-6fbf56e435fe
+message: "This is super cool and I'm already experimenting with adding this to my own prompt.\r\n\r\nfor your urlencode function though, you might want to consider putting local LANG=C at the top of it since bash is multibyte and locale aware. this will let you split the string by 8bit \"ASCII\" characters so it will urlencode something like the \U0001F4A9 emoji correctly. also printf '%%%02x' \"'$c\" (the ' in front of $c being significant) will make printf emit the hex value of the character so you don't need xxd | while read -r ..."
+name: Anthony
+email: anthony@dedominic.pw
+url: ''
+date: 1530417880
