@@ -17,7 +17,7 @@ tags:
 draft: false
 ---
 
-I've spent about [four years at Red Hat](/blog/2014/04/02/working-at-redhat.md),
+I've spent about [four years at Red Hat](/blog/2014/04/02/working-at-redhat/),
 and now it's time to move on...
 
 *TL;DR:* had to leave Red Hat and start [Patreon](https://www.patreon.com/purpleidea)
