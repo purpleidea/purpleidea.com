@@ -1,0 +1,10 @@
+_id: 0395e930-09a9-11e9-b420-8f2f3c6cd29c
+message: >-
+  You might also be interested in the Slack  plugin
+  (https://github.com/wee-slack/wee-slack) for the Weechat IRC client. It
+  provides a native Slack integration which is pretty good: of course you have
+  to use Weechat as your IRC client.
+name: Steve George
+email: steve@futurile.net
+url: www.futurile.net
+date: 1545895713
