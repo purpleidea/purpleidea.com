@@ -1,0 +1,6 @@
+_id: 0c250390-10b8-11e9-8b9e-49e6dec1932d
+message: "This software is very interesting to me.  I may wish to pick it up where you left off, if not at least do some interesting things with it.  If you are open to conversing, please reach out to me, I have a question about the x11_idle.c file.  When I attempt to import the idle.py package or module, either way I get an error: \r\n\r\nTraceback (most recent call last):\r\n  File \"<stdin>\", line 1, in <module>\r\n  File \"idle/idle.py\", line 26, in <module>\r\n    from _x11_idle import _idle as __idle1\r\nImportError: No module named _x11_idle"
+name: Joshua Lee
+email: pidea@cellbg.com
+url: pytis.com
+date: 1546671828
