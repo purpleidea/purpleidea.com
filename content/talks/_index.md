@@ -3,6 +3,83 @@ title: "Talks"
 description: ""
 draft: false
 talks: [
+
+  {
+    topic: "Mgmt Config: Advanced demos and internals for hackers",
+    location: "CfgMgmtCamp.eu 2019, Ghent",
+    location_url: "https://cfgmgmtcamp.eu/schedule/monday/mgmtadvanced/",
+    rating: "Unrated",
+    date: "04/Feb/2019",
+  },
+
+  {
+    topic: "Mgmt Config: The Road to 0.1",
+    location: "CfgMgmtCamp.eu 2019, Ghent",
+    location_url: "https://cfgmgmtcamp.eu/schedule/monday/mgmtroad/",
+    rating: "Unrated",
+    date: "04/Feb/2019",
+  },
+
+  {
+    topic: "Real-time merging of config management and monitoring (Lightning talk)",
+    video: "https://video.fosdem.org/2019/UB2.252A/real_time_merging_of_config_management_and_monitoring.webm",
+    location: "FOSDEM Monitoring Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/real_time_merging_of_config_management_and_monitoring/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-monitoring-feedback.png",
+    date: "03/Feb/2019",
+  },
+
+  {
+    topic: "Real-time container automation and scheduling",
+    video: "https://video.fosdem.org/2019/UA2.114/containers_mgmt.webm",
+    location: "FOSDEM Containers Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/containers_mgmt/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-containers-feedback.png",
+    date: "03/Feb/2019",
+  },
+
+  {
+    topic: "Real-time virtualization automation",
+    video: "https://video.fosdem.org/2019/H.2213/vai_real_time_virtualization_automation.webm",
+    location: "FOSDEM Virtualization Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/vai_real_time_virtualization_automation/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-virtualization-feedback.png",
+    date: "02/Feb/2019",
+  },
+
+  {
+    topic: "Mgmt Config: A tale of three graphs",
+    video: "https://video.fosdem.org/2019/H.1308/graph_mgmt_config.webm",
+    location: "FOSDEM Graph Processing Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/graph_mgmt_config/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-graph-processing-feedback.png",
+    date: "02/Feb/2019",
+  },
+
+  {
+    topic: "Mgmt Config: The Road to 0.1",
+    video: "https://video.fosdem.org/2019/UB2.252A/mgmt.webm",
+    location: "FOSDEM Infra Management Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/mgmt/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-infra-management-feedback.png",
+    date: "02/Feb/2019",
+  },
+
+  {
+    topic: "A small, FRP DSL for distributed systems",
+    video: "https://video.fosdem.org/2019/K.4.201/mgmtconfig.webm",
+    location: "FOSDEM Minimalistic Languages Devroom, Brussels",
+    location_url: "https://fosdem.org/2019/schedule/event/mgmtconfig/",
+    rating: "Positive!",
+    rating_url: "mgmt-fosdem-2019-minimalistic-languages-feedback.png",
+    date: "02/Feb/2019",
+  },
+
   {
     topic: "Next Generation Config Mgmt: The Language",
     video: "https://www.youtube.com/watch?v=1i38c5cooHo",
