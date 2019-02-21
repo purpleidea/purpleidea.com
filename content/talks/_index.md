@@ -26,7 +26,7 @@ talks: [
     location: "FOSDEM Monitoring Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/real_time_merging_of_config_management_and_monitoring/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-monitoring-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-monitoring-feedback.png",
     date: "03/Feb/2019",
   },
 
@@ -36,7 +36,7 @@ talks: [
     location: "FOSDEM Containers Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/containers_mgmt/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-containers-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-containers-feedback.png",
     date: "03/Feb/2019",
   },
 
@@ -46,7 +46,7 @@ talks: [
     location: "FOSDEM Virtualization Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/vai_real_time_virtualization_automation/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-virtualization-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-virtualization-feedback.png",
     date: "02/Feb/2019",
   },
 
@@ -56,7 +56,7 @@ talks: [
     location: "FOSDEM Graph Processing Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/graph_mgmt_config/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-graph-processing-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-graph-processing-feedback.png",
     date: "02/Feb/2019",
   },
 
@@ -66,7 +66,7 @@ talks: [
     location: "FOSDEM Infra Management Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/mgmt/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-infra-management-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-infra-management-feedback.png",
     date: "02/Feb/2019",
   },
 
@@ -76,7 +76,7 @@ talks: [
     location: "FOSDEM Minimalistic Languages Devroom, Brussels",
     location_url: "https://fosdem.org/2019/schedule/event/mgmtconfig/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2019-minimalistic-languages-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2019-minimalistic-languages-feedback.png",
     date: "02/Feb/2019",
   },
 
@@ -121,7 +121,7 @@ talks: [
     location: "FOSDEM, Config Management Devroom, Brussels",
     location_url: "https://fosdem.org/2018/schedule/event/mgmt/",
     rating: "Positive!",
-    rating_url: "mgmt-fosdem-2018-feedback.png",
+    rating_url: "feedback/mgmt-fosdem-2018-feedback.png",
     date: "04/Feb/2018",
   },
 
@@ -131,7 +131,7 @@ talks: [
     location: "Devconf.cz, Brno",
     location_url: "https://devconfcz2018.sched.com/event/DJY8/next-generation-config-mgmt-reactive-systems",
     rating: "Rated 93%",
-    rating_url: "mgmt-devconfcz2018-rating.pdf",
+    rating_url: "feedback/mgmt-devconfcz-2018-feedback.pdf",
     date: "28/Jan/2018",
   },
 
@@ -140,7 +140,7 @@ talks: [
     video: "https://www.youtube.com/watch?v=_9PG64AOQ3w",
     location: "LCA, Sydney, Australia",
     location_url: "https://rego.linux.conf.au/schedule/presentation/48/",
-    rating: "TBD",
+    rating: "Unrated",
     date: "24/Jan/2018",
   },
 
@@ -149,7 +149,7 @@ talks: [
     video: "https://www.youtube.com/watch?v=ELq1XOJMIPY",
     location: "LCA, Sydney, Australia",
     location_url: "https://rego.linux.conf.au/schedule/presentation/169/",
-    rating: "TBD",
+    rating: "Unrated",
     date: "23/Jan/2018",
   },
 
@@ -158,7 +158,7 @@ talks: [
     video: "https://www.youtube.com/watch?v=OvgGfW0ilbE",
     location: "LCA, Sydney, Australia",
     location_url: "https://rego.linux.conf.au/schedule/presentation/182/",
-    rating: "TBD",
+    rating: "Unrated",
     date: "22/Jan/2018",
   },
 
@@ -167,7 +167,7 @@ talks: [
     video: "https://www.youtube.com/watch?v=hSVadQLeplU&html5=1",
     location: "OSMC 2017, Nuremberg, Germany",
     location_url: "https://osmc.de/events/next-generation-config-mgmt-monitoring/",
-    rating: "TBD",
+    rating: "Unrated",
     date: "22/Nov/2017",
   },
 
@@ -175,7 +175,7 @@ talks: [
     topic: "Next Generation Config Mgmt: Reactive Systems",
     location: "Driving IT 2017, Copenhagen, Denmark",
     location_url: "https://universe.ida.dk/driving-it/speaker/next-generation-config-mgmt-reactive-systems/",
-    rating: "TBD",
+    rating: "Unrated",
     date: "03/Nov/2017",
   },
 
@@ -260,6 +260,7 @@ talks: [
     location: "DevConf.cz, Brno",
     location_url: "https://devconf.cz/schedule.html",
     rating: "Rated 49 stars out of 50 possible",
+    rating_url: "feedback/mgmt-devconfcz-2017-feedback.pdf",
     date: "28/Jan/2017",
   },
 
@@ -310,6 +311,7 @@ talks: [
     location: "HighLoadStrategy, Vilnius",
     location_url: "http://highloadstrategy.com/",
     rating: "Rated #1",
+    rating_url: "feedback/mgmt-vilnius-2016-feedback.png",
     date: "14/Oct/2016",
   },
 
@@ -441,7 +443,7 @@ talks: [
     location: "ConFoo 2016, Montreal",
     location_url: "https://confoo.ca/en/2016/session/vagrant-docker-kubernetes-and-oh-my-vagrant",
     rating: "Rated 97%",
-    rating_url: "omv-mgmt-confoo2016-rating.pdf",
+    rating_url: "feedback/omv-mgmt-confoo-2016-feedback.pdf",
     date: "26/Feb/2016",
   },
 
