@@ -1,0 +1,24 @@
+{{ partial "header.html" . }}
+
+
+	<div class="row">
+		<div class="col-md-9">
+      {{ $page := .Paginate .Data.Pages }}
+      {{ range $page.Pages }}
+			<div class="well well-sm">
+      <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+
+      <p><small>{{ .Description }}</small></p>
+      <p>{{ .Summary }}</p>
+
+      <a class="btn btn-primary btn-xs" href="{{ .Permalink }}">Read More <span class="fa fa-angle-double-right"></span></a>
+			</div>
+      {{ end }}
+		</div>
+
+		<!-- Sidebar -->
+		<div class="col-md-3">
+			{{ partial "menu.html" . }}
+		</div>
+	</div>
+{{ partial "footer.html" . }}
