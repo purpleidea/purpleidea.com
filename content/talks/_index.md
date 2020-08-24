@@ -5,6 +5,53 @@ draft: false
 talks: [
 
   {
+    topic: "Mgmt Config: Autonomous Datacentres",
+    video: "https://www.youtube.com/watch?v=Kd7FAORFtsc",
+    location: "CfgMgmtCamp.eu 2020, Ghent",
+    location_url: "https://fosdem.org/2020/schedule/event/automation/",
+    rating: "Unrated",
+    date: "04/Feb/2020",
+  },
+
+  {
+    topic: "A small, FRP DSL for distributed systems",
+    video: "https://video.fosdem.org/2020/AW1.125/mgmtconfigmore.mp4",
+    location: "FOSDEM Minimalistic Languages Devroom, Brussels",
+    location_url: "https://fosdem.org/2020/schedule/event/automation/",
+    rating: "Positive!",
+    rating_url: "feedback/mgmt-fosdem-2020-minimalistic-languages-feedback.png",
+    date: "02/Feb/2020",
+  },
+
+  {
+    topic: "Mgmt Config: Autonomous Datacentres",
+    video: "https://video.fosdem.org/2020/UA2.120/mgmt.mp4",
+    location: "FOSDEM Infra Management Devroom, Brussels",
+    location_url: "https://fosdem.org/2020/schedule/event/mgmt/",
+    rating: "Positive!",
+    rating_url: "feedback/mgmt-fosdem-2020-infra-feedback.png",
+    date: "01/Feb/2020",
+  },
+
+  {
+    topic: "Over Twenty Years Of Automation",
+    video: "https://video.fosdem.org/2020/Janson/automation.mp4",
+    location: "FOSDEM Main Track (History), Brussels",
+    location_url: "https://fosdem.org/2020/schedule/event/automation/",
+    rating: "Positive!",
+    rating_url: "feedback/mgmt-fosdem-2020-main-feedback.png",
+    date: "01/Feb/2020",
+  },
+
+  {
+    topic: "Mgmt Config: A small, FRP DSL for distributed systems",
+    location: "Lambda Montreal Meetup, Montreal, Canada",
+    location_url: "https://www.meetup.com/lambda-montreal/events/263361543/",
+    rating: "Unrated",
+    date: "21/Aug/2019",
+  },
+
+  {
     topic: "Mgmt Config: Advanced demos and internals for hackers",
     location: "CfgMgmtCamp.eu 2019, Ghent",
     location_url: "https://cfgmgmtcamp.eu/schedule/monday/mgmtadvanced/",
