@@ -1,6 +1,6 @@
 {{/* insert an image into post: src is required, alt, caption and scale are optional */}}
 <table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
-<a href="{{.Get "src"}}"><img class="alignnone size-full" src="{{.Get "src"}}" {{ if .Get "alt" }}alt="{{.Get "alt"}}"{{ end }} {{ if .Get "scale" }}width="{{.Get "scale"}}" height="{{.Get "scale"}}"{{ else }}width="100%" height="100%"{{ end }} /></a></td></tr>
+<a href="{{.Get "src"}}"><img class="alignnone size-full" src="{{.Get "src"}}" {{ if .Get "alt" }}alt="{{.Get "alt"}}"{{ end }} {{ if .Get "scale" }}width="{{.Get "scale"}}"{{ else }}width="100%"{{ end }} /></a></td></tr>
 {{- if .Get "caption" -}}
 <tr><td>{{.Get "caption"}}</td>
 {{- end -}}
