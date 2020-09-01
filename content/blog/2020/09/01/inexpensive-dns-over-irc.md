@@ -198,6 +198,11 @@ key pairs automatically.
 
 {{< blog-paragraph-header "Improvements" >}}
 
+Currently we detect the public IP address by polling. I'd like to avoid having
+to ping an external server (even though it checks a whole list of them to avoid
+SPOF) and I'd also like to avoid polling. If you know of a robust, event-driven
+mechanism to replace this, please let me know!
+
 As discussed, improved caching could be a huge benefit if your use-case requires
 it. More robust cryptographic security could also be added, again, if your
 use-case requires it. Lastly, an [mgmt config](https://github.com/purpleidea/mgmt/)
