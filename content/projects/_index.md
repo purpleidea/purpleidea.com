@@ -4,6 +4,6 @@ description: ""
 draft: false
 ---
 
-Here are some projects which I've worked on.
+Here are some projects I’ve worked on or am working on.
 
-You may click on any of them to learn more!
+Click to learn more!
