@@ -1,3 +1,4 @@
+{{ if not .Params.nocomment }}
 <a name="comments"></a>
 <section class="post-comments">
 	<h3>Comments</h3>
@@ -68,3 +69,4 @@
 	<p><a href="{{ .Site.Params.staticmanPR }}">Click here</a> to see the patch you generated.</p>
 	<p><a href="#" class="btn">OK</a></p>
 </div>
+{{ end }}
