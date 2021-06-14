@@ -15,12 +15,12 @@ some associated photos, and [testimonials](#testimonials).
 
 Daycare staff needed access to live video streams of different areas of the
 daycares so that they can keep watch of everything going on. For this I
-installed a number of PoE cameras alonside custom video viewing screens which
+installed a number of PoE cameras alongside custom video viewing screens which
 were placed around the daycares.
 
 {{< blog-image src="viewscreen2.png" caption="Seeing how its put together." scale="100%" >}}
 
-Each viewing screen system was built from a PoE enabled Rasperry Pi computer,
+Each viewing screen system was built from a PoE enabled Raspberry Pi computer,
 and some custom software. They each display a `3x3` grid of live camera feeds.
 The system is programmed to automatically turn on at the start of opening hours
 and turn off at the end of each day.
