@@ -19,7 +19,7 @@ draft: false
 ---
 
 I'm old school cool. Real hackers chat on open, distributed platforms. Most
-technical discussion can be found on the [Freenode](https://freenode.net/) IRC
+technical discussion can be found on the [Libera.chat](https://libera.chat/) IRC
 network. It's not perfect, but the advantages clearly outweigh the drawbacks.
 
 Recently, I needed to join an existing large "community" on the centralized,
@@ -41,7 +41,7 @@ strategy, but this is now
 
 {{< blog-paragraph-header "The Solution" >}}
 
-Don't use Slack! Move your team to Freenode or run your own private IRC server.
+Don't use Slack! Move your team to Libera.chat or run your own private IRC server.
 This lets everyone use the client of their choice on the [platform](https://www.gnu.org/)
 of their choice.
 
