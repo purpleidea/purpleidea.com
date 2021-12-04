@@ -348,7 +348,7 @@ If you'd like to download the raw data as a text formatted table, and the termin
 
 <span style="text-decoration:underline;">Conclusion</span>
 
-I hope that you enjoyed this feature and analysis, and that you'll help contribute to making it better. Come join our <a href="https://webchat.freenode.net/?channels=#mgmtconfig">IRC</a> channel and say hello! Thanks to those who reviewed my article and pointed out some good places for improvements!
+I hope that you enjoyed this feature and analysis, and that you'll help contribute to making it better. Come join our <a href="https://web.libera.chat/?channels=#mgmtconfig">IRC</a> channel and say hello! Thanks to those who reviewed my article and pointed out some good places for improvements!
 
 Happy Hacking,
 

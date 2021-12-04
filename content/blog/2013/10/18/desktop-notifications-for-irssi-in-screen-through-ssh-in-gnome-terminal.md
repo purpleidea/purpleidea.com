@@ -3,12 +3,12 @@ date = "2013-10-18 06:00:49"
 title = "Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal"
 draft = "false"
 categories = ["technical"]
-tags = ["bash", "desktop notifications", "fnotify", "freenode", "gluster", "gnome-terminal", "irc", "irssi", "notify-send", "pgo", "planetdevops", "planetfedora", "screen", "ssh"]
+tags = ["bash", "desktop notifications", "fnotify", "gluster", "gnome-terminal", "irc", "irssi", "libera", "notify-send", "pgo", "planetdevops", "planetfedora", "screen", "ssh"]
 author = "purpleidea"
 original_url = "https://ttboj.wordpress.com/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/"
 +++
 
-I'm usually on <a href="http://freenode.net/">IRC</a>, but I don't often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it's all done, and you can benefit from my hacking by following along...
+I'm usually on <a href="https://libera.chat/">IRC</a>, but I don't often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it's all done, and you can benefit from my hacking by following along...
 
 <span style="text-decoration:underline;">The Setup</span>
 ```
@@ -65,7 +65,7 @@ Here's a little screenshot (with shameless plug) of the result in action:
 
 Here's an example of how this helps me to be more responsive in channel:
 
-<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify2.png"><img class="size-full wp-image-555" alt="helping out in #gluster" src="irssi-fnotify2.png" width="100%" height="100%" /></a></td></tr><tr><td> helping out in <a href="https://webchat.freenode.net/?channels=#gluster">#gluster</a></td></tr></table></br />
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify2.png"><img class="size-full wp-image-555" alt="helping out in #gluster" src="irssi-fnotify2.png" width="100%" height="100%" /></a></td></tr><tr><td> helping out in <a href="https://web.libera.chat/?channels=#gluster">#gluster</a></td></tr></table></br />
 
 I hope you found this useful.
 

@@ -6,11 +6,11 @@ categories:
   - "technical"
 tags:
   - "dns"
-  - "freenode"
   - "golang"
   - "irc"
   - "irssi"
   - "libc"
+  - "libera"
   - "linux"
   - "nss"
   - "name service switch"
@@ -43,7 +43,7 @@ and when it fails, I'd like to still be able to find that machine so that I or
 
 I realized that I would need a "third-party" to relay the messages. I'd like
 that to be something inexpensive that will be around in another 30 years.
-The only thing that came to mind was IRC! I've been using [Freenode](https://freenode.net/)
+The only thing that came to mind was IRC! I've been using [Libera.chat](https://libera.chat/)
 for many years as a way to exchange quality information with other hackers, and
 I hope it remains available. I decided to use them as my relay. In the horrible
 chance that they ever disappear, I could easily migrate to a different IRC
@@ -215,16 +215,16 @@ please [contact me](https://purpleidea.com/contact/) and let me know.
 A lot of custom configuration can be changed for your own personalized `ircdns`
 builds. I haven't fully documented or implemented that, since it's outside the
 scope of what I needed for my use-case. It currently connects to the #ircdns
-channel on [Freenode](https://freenode.net/), but that can be changed. If you'd
-like some custom builds and a hand setting this up, please let me know! I will
-offer this service for an extremely low price matched to meet your budget. If
-you write [open source](https://www.gnu.org/philosophy/free-sw.html) software
+channel on [Libera.chat](https://libera.chat/), but that can be changed. If
+you'd like some custom builds and a hand setting this up, please let me know! I
+will offer this service for an extremely low price matched to meet your budget.
+If you write [open source](https://www.gnu.org/philosophy/free-sw.html) software
 that I use, then I will probably do it for free.
 
 {{< blog-paragraph-header "Conclusion" >}}
 
 1. Reliable, long-term name resolution relay via IRC protocol. This depends on
-[Freenode](https://freenode.net/) existing, so please send them a few dollars.
+[Libera.chat](https://libera.chat/) existing, so please send them a few dollars.
 
 2. Natively integrated with the venerable *name service switch* so lookups work
 with your existing tools.

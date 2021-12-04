@@ -160,7 +160,7 @@ It would be convenient if there was an easy setup script to automate through the
 
 <strong><span style="text-decoration:underline;">Conclusion</span>:</strong>
 
-I hope you enjoyed this article and this set of techniques! Hopefully you can appreciate how stringing five different techniques together can produce something useful. A big thank you goes out to <a href="https://github.com/SlashLife">SlashLife</a> from the <a href="https://webchat.freenode.net/?channels=#firefox">#firefox</a> IRC channel. This user pointed me to the <a href="https://addons.mozilla.org/en-US/firefox/addon/redirector/">Redirector</a> plugin which was critical for intercepting arbitrary URL's in firefox.
+I hope you enjoyed this article and this set of techniques! Hopefully you can appreciate how stringing five different techniques together can produce something useful. A big thank you goes out to <a href="https://github.com/SlashLife">SlashLife</a> from the <a href="https://web.libera.chat/?channels=#firefox">#firefox</a> IRC channel. This user pointed me to the <a href="https://addons.mozilla.org/en-US/firefox/addon/redirector/">Redirector</a> plugin which was critical for intercepting arbitrary URL's in firefox.
 
 Happy Hacking,
 

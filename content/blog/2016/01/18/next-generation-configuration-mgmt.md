@@ -252,7 +252,7 @@ Amazingly, the cluster converges in <em>less</em> than one second. Admittedly it
 
 <strong><span style="text-decoration:underline;">Community</span></strong>
 
-There's an IRC channel going. It's <a href="https://webchat.freenode.net/?channels=#mgmtconfig">#mgmtconfig on Freenode</a>. Please come hangout! If we get bigger, we'll add a mailing list.
+There's an IRC channel going. It's <a href="https://web.libera.chat/?channels=#mgmtconfig">#mgmtconfig on Libera.chat</a>. Please come hangout! If we get bigger, we'll add a mailing list.
 
 <strong><span style="text-decoration:underline;">Caveats</span></strong>
 

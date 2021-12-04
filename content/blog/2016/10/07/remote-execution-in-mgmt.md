@@ -154,7 +154,7 @@ In this mode, the primary initiator would first connect to one or more secondary
 
 <table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="remote-execution2.png"><img class="aligncenter size-full wp-image-1895" src="remote-execution2.png" alt="remote-execution2" width="100%" height="100%" /></a></td></tr></table></br />
 
-This particular extension hasn't been built, although some of the plumbing has been laid. If you'd like to contribute this feature to the upstream project, please join us in <a href="https://webchat.freenode.net/?channels=#mgmtconfig">#mgmtconfig on Freenode</a> and let us (I'm @<a href="https://twitter.com/purpleidea">purpleidea</a>) know!
+This particular extension hasn't been built, although some of the plumbing has been laid. If you'd like to contribute this feature to the upstream project, please join us in <a href="https://web.libera.chat/?channels=#mgmtconfig">#mgmtconfig on Libera.chat</a> and let us (I'm @<a href="https://twitter.com/purpleidea">purpleidea</a>) know!
 
 <span style="text-decoration:underline;">Docs</span>
 

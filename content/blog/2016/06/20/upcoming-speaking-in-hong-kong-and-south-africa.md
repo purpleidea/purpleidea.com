@@ -18,7 +18,7 @@ I'm looking forward to meeting with many of the hard-working Debian hackers, and
 
 I'll be presenting and demoing many of the new features in mgmt. If you haven't heard about the project, <a href="https://github.com/purpleidea/mgmt/#on-the-web">please read some of the posts about it...</a>
 
-You're also welcome to come join our IRC channel! It's <a href="https://webchat.freenode.net/?channels=#mgmtconfig">#mgmtconfig</a> on Freenode.
+You're also welcome to come join our IRC channel! It's <a href="https://web.libera.chat/?channels=#mgmtconfig">#mgmtconfig</a> on Libera.chat.
 
 Many special thanks to both conference organizers as well as <a href="https://redhat.com/">Red Hat</a> and the <a href="https://community.redhat.com/">OSAS</a> department for sponsoring my travel! Without it, visiting these places and interacting with new continents of hackers would be impossible.
 

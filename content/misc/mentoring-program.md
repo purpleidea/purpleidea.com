@@ -28,7 +28,7 @@ exploration that will also help you to become a better autodidact. This is an
 essential skill if you want to work on modern, high-end technologies.
 
 The course begins by getting you up to speed with the basic `GNU+Linux`
-technology stack, `IRC` and `Freenode`, `git`, `bash`, and a bunch of other
+technology stack, `IRC` and `Libera.chat`, `git`, `bash`, and a bunch of other
 goodies. Over time you'll progress into more novel and difficult challenges and
 topics. Both streams will include programming. If you've never done a single
 line of programming in any language, or don't ever want to do any, then this

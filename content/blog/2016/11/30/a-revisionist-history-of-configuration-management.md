@@ -55,7 +55,7 @@ I believe that instead the answer to all of these is still ahead. When discussin
 
 I'd like to go into this today, but I think I'm going to split this discussion into a separate blog post. Expect something here within a week!
 
-If you hate the suspense, become a contributor and be involved in these discussions! We're hanging out in #mgmtconfig on Freenode. I also hold occasional videoconferences with code contributors where we talk about the future.
+If you hate the suspense, become a contributor and be involved in these discussions! We're hanging out in #mgmtconfig on [Libera.chat](https://libera.chat/). I also hold occasional videoconferences with code contributors where we talk about the future.
 
 <span style="text-decoration:underline;">Thanks</span>
 

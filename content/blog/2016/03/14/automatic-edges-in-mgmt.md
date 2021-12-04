@@ -139,7 +139,7 @@ Lastly, it's also worth noting that users can choose to disable AutoEdges per re
 
 <span style="text-decoration:underline;">Contributing</span>:
 
-Good ideas and designs help, but <a href="https://webchat.freenode.net/?channels=#mgmtconfig">contributors is what will make the project</a>. All sorts of help is appreciated, and you can join in even if you're not an "expert". I'll try and tag "easy" or "first time" patches with the "<a href="https://github.com/purpleidea/mgmt/labels/mgmtlove">mgmtlove</a>" tag. Feel free to work on other issues too, or <a href="https://github.com/purpleidea/mgmt/issues/">suggest something</a> that you think will help! Want to add more interesting resources! Anyone want to write a libvirt resource? How about a network resource? Use your imagination!
+Good ideas and designs help, but <a href="https://web.libera.chat/?channels=#mgmtconfig">contributors is what will make the project</a>. All sorts of help is appreciated, and you can join in even if you're not an "expert". I'll try and tag "easy" or "first time" patches with the "<a href="https://github.com/purpleidea/mgmt/labels/mgmtlove">mgmtlove</a>" tag. Feel free to work on other issues too, or <a href="https://github.com/purpleidea/mgmt/issues/">suggest something</a> that you think will help! Want to add more interesting resources! Anyone want to write a libvirt resource? How about a network resource? Use your imagination!
 
 Lastly, thanks to both <a href="https://github.com/hughsie/">Richard</a> and <a href="https://github.com/ximion/">Matthias Klumpp</a> in particular from the <a href="https://github.com/hughsie/PackageKit/">PackageKit project</a> for their help so far, and to everyone else who has contributed in some way.
 
