@@ -5,6 +5,13 @@ draft: false
 talks: [
 
   {
+    topic: "Security hacks for non-hackers (or hackers in training)",
+    location: "Private Event, Montreal, Canada",
+    rating: "Unrated",
+    date: "18/Nov/2021",
+  },
+
+  {
     topic: "Mgmt Config: Autonomous Datacentres",
     video: "https://www.youtube.com/watch?v=Kd7FAORFtsc",
     location: "CfgMgmtCamp.eu 2020, Ghent",
