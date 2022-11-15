@@ -18,6 +18,8 @@ their testimonials.
 
 {{< blockquote text="James introduced me to the world of GNU+Linux and has guided me through learning its ins and outs. Ever since, I truly can't imagine going back to proprietary operating systems. Through hacking with him, he has helped me learn the best practices of free / open source development, which is an invaluable skill that can be hard to learn all alone." author="Adam" >}}
 
+{{< blockquote text="James is a great mentor since on top of being knowledgable he is also able to effectively understand the skills that you can improve on and guide you towards the goal of becoming a better hacker based on your current skill level. He also has the ability to know when to give hints and when not to give hints which enriched my learning experience under him. I was happy to have him as a mentor since I could see my skills in Golang and Git increase significantly. He is also a fun person to hack with so the more you can meet with him the better." author="Raunak" >}}
+
 ### More Information
 
 More information about the program is [available here](/misc/mentoring-program/).
