@@ -14,6 +14,7 @@ pygmentsCodeFences = true
 [params]
   github = "https://github.com/purpleidea/"
   twitter = "https://twitter.com/purpleidea"
+  mastodon = "https://mastodon.social/@purpleidea"
   publickeyfile = "static/james@shubin.ca.asc"
 
   # https://api.staticman.net/v2/entry/{GITHUB USERNAME}/{GITHUB REPOSITORY}/{BRANCH}/{PROPERTY (optional)}
