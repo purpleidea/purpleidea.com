@@ -7,4 +7,4 @@ publish:
 
 server:
 	# runs a server on localhost for testing
-	hugo server -D
+	./bin/hugo server -D
