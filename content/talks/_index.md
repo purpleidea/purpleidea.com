@@ -5,6 +5,15 @@ draft: false
 talks: [
 
   {
+    topic: "Mgmt Config: The Road to 0.1 (What's left?)",
+    video: "https://www.youtube.com/watch?v=FeRGRj8w0BU",
+    location: "CfgMgmtCamp.eu 2023, Ghent",
+    location_url: "https://cfp.cfgmgmtcamp.org/2023/talk/LBWE3R/",
+    rating: "Unrated",
+    date: "06/Feb/2023",
+  },
+
+  {
     topic: "Security hacks for non-hackers (or hackers in training)",
     location: "Private Event, Montreal, Canada",
     rating: "Unrated",
