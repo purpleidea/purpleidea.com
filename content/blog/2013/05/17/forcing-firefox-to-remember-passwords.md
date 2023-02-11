@@ -72,3 +72,7 @@ James
 
 PS: Best friends forever if you can get firefox to natively integrate with the gnome-keyring. No I don't want to force it to myself, get this code merged upstream please!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

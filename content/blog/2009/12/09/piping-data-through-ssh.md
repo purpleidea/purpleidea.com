@@ -18,3 +18,7 @@ i <em>could</em> first send it to a temp file, scp that over, and then remove th
 
 which gives me the added bonus of seeing the contents fly by my screen as they get sent through tee.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

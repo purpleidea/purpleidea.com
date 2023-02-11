@@ -30,3 +30,7 @@ james@dazzle:~$
 ```
 the problem as it turns out is that the glob character `*' (the asterisk) doesn't expand to include dot files unless you have the shopt variable set. so you can either use to workaround shown above or set it. personally i'll keep mine off.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

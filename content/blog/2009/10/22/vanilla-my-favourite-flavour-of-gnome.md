@@ -16,3 +16,7 @@ so how do i get rid of these horrible things ? i really liked the look of the no
 
 and when i log into x there is a "gnome (without ubuntu specific components)" option that i can choose. it seems to work and i'm running it now. hope this tip is helpful to you. thanks to martin pitt for making it easier for us to <a href="http://www.piware.de/2009/02/the-stracciatella-gnome-session/">choose</a>.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

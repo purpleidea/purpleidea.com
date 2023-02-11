@@ -31,3 +31,7 @@ sort -V -k 2 -o $(METADATA) $(METADATA)		# sort by version key
 
 The full Makefile can be found inside of the <a href="http://www.cs.mcgill.ca/~james/code/">bash-tutor</a> tarball.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -68,3 +68,7 @@ James
 
 PS: One day this sort of thing might be possible in <a href="https://github.com/purpleidea/mgmt/">mgmt</a>. <a href="/contact/">Let me know</a> if you want to help work on it!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

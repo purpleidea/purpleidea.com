@@ -24,3 +24,7 @@ James
 
 PS: This update also adds server configuration globals management which you may find useful. Not all keys are supported, but all the framework and placeholders have been added.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

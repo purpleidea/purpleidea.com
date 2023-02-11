@@ -22,3 +22,7 @@ James
 
 [1] He seems to have a trusting, inclusive policy, so I hope to not disappoint :)
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

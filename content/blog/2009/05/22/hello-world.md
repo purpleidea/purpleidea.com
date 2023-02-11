@@ -12,3 +12,7 @@ hello! this blog is intended to be a place where ramblings and discoveries, by a
 
 if that didn't make too much sense, perhaps i could rephrase it.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

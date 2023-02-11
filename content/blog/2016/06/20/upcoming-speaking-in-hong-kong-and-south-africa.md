@@ -28,3 +28,7 @@ James
 
 PS: We now have a <a href="https://twitter.com/mgmtconfig">community run twitter account</a>. Check us out!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

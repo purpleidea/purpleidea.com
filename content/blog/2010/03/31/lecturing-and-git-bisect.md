@@ -20,3 +20,7 @@ I was recently asked to give a lecture for the <a href="http://www.cs.mcgill.ca/
 
 <span style="background-color:#ffffff;">I hope everyone enjoyed the lecture, and I always appreciate feedback!</span>
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

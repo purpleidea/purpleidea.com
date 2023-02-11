@@ -291,3 +291,7 @@ Some early peer reviews suggested this might be a "puppet-killer". In fact, I ac
 
 Lastly, but most importantly, thanks to everyone who has discussed these ideas with me, reviewed this article, and contributed in so many ways. You're awesome!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

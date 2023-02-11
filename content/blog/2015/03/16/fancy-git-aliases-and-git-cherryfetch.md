@@ -52,3 +52,7 @@ James
 
 <strong>Update:</strong> I've updated the alias so that it works with N commits. Thanks to <a href="https://twitter.com/dev_el_ops"> David Schmitt</a> for pointing it out, and <a href="https://twitter.com/felis_rex">Felix Frank</a> for finding a nicer solution!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -95,3 +95,7 @@ James
 
 PS: [1] One side note, in the general case for custom resources, I actually think that by default duplicate parameters should be required, but that a resource could provide an optional function such as <em>is_matched</em> which would take as input the two parameter hash trees, and decide if they're "functionally equivalent". This would let an individual resource decide if it matters that you specified <em>thing=&gt;yes</em> in one and <em>thing=&gt;true</em> in the other. Functionally it matters that duplicate resources don't have conflicting effects. I'm sure this would be particularly bug prone, and probably cause thrashing in some cases, which is why, by default the parameters should all match. <em>&lt;/babble&gt;</em>
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -20,3 +20,7 @@ James
 
 PS: If you have some comments about this blog, please don't be shy, <a href="/contact/">send them my way</a>.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

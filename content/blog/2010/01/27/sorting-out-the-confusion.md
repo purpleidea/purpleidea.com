@@ -14,3 +14,7 @@ in other news, i'd like to reference an already pretty well referenced, but prob
 
 hth: <span style="background-color:#ffffff;"><a href="http://gstreamer.freedesktop.org/documentation/splitup.html">http://gstreamer.freedesktop.org/documentation/splitup.html</a></span>
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

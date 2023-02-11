@@ -40,3 +40,7 @@ i would love to hear your thoughts, and if anyone knows of projects with great g
 
 ps: <a href="http://www.compiz-fusion.org/">compiz</a> has a "multi output mode" but i'm not sure exactly what it does and if it helps with any of this.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

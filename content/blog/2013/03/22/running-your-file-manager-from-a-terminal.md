@@ -51,3 +51,7 @@ PS: If you plan to do this for gedit, you probably want to preserve stdin, so th
 { `/usr/bin/gedit "$@" &> /dev/null`; } < /dev/stdin &    # accept stdin too!
 {{< /highlight >}}
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

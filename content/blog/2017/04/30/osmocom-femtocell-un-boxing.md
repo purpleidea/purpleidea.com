@@ -32,3 +32,7 @@ James
 
 Disclaimer: I received the above femtocell for free, but I was not asked to publish this article and the opinions stated are my own.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

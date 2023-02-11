@@ -106,3 +106,7 @@ James
 
 PS: I also updated the blog's theme. Let me know if you hate it.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

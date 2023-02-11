@@ -44,3 +44,7 @@ James
 
 PS: If you hack on Evolution, and write a good feature that I like, or fix a bug that affects me, I'm happy to feature you on this blog and tweet about you as soon as your code hits <a href="https://git.gnome.org/browse/evolution/">git master</a>! &lt;/free promotion for good hackers!&gt;
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

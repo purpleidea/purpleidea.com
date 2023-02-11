@@ -56,3 +56,7 @@ this above example should all be pasted into a file and run; the call to waitpid
 
 hope this took the learning curve and guessing out of using the new subprocess module, (even though it actually has existed for a while...)
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

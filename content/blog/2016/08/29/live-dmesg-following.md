@@ -47,3 +47,7 @@ James
 
 PS: Since this is a facility that provides events, we could eventually write an <a href="/tags/mgmtconfig/">mgmt config</a> "fact" or resource around it!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

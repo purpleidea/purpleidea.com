@@ -76,3 +76,7 @@ James
 
 I was probably thinking more about how I would be using mgmt, and not about the greater ecosystem. If you'd like to build or use a hosted mgmt solution, please let me know!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -213,3 +213,7 @@ james@computer:/tmp/ftest$ sha1sum ~/code/oh-my-vagrant/extras/.rpmbuild/RPMS/no
 ```
 While the two sha1sums aren't identical (probably due to timestamps or some other variant) the two RPM's should be functionally identical.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

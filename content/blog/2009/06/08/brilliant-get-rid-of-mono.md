@@ -12,3 +12,7 @@ fedora announces that they'll be replacing potentially patent encumbered mono ba
 with any luck we'll be able to replace <a href="http://f-spot.org/">f-spot</a>, and <a href="http://banshee-project.org/">banshee</a> too. have a look at:
 <p style="padding-left:30px;"><a href="http://santanu-sinha.blogspot.com/2009/06/solang.html">http://santanu-sinha.blogspot.com/2009/06/solang.html</a></p>
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

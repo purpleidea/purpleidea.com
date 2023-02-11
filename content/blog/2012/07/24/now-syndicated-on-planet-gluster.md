@@ -17,3 +17,7 @@ James
 
 PS: My main <a href="/blog/">blog</a> will still contain other technical articles not relating to gluster, should that be useful to you.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -196,3 +196,7 @@ James
 
 PS: Special thanks to David Caplan for the great networking discussions we had!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

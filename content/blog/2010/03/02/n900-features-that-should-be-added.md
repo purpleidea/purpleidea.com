@@ -31,3 +31,7 @@ i decided i'd compile a short list of features / functionality which should be a
 </ul>
 unfortunately i haven't mentioned this phones positive features-- many before me have-- there are many! overall it's a nice package and i look forward to seeing improvements to the above.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

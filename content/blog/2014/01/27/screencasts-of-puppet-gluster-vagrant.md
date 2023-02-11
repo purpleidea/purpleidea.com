@@ -47,3 +47,7 @@ James
 
 PS: Please note, you may not sell, edit, redistribute, perform, or host these videos elsewhere without my permission. I especially <strong><em>don't</em></strong> want to see them on <span style="text-decoration:underline;">youtube</span> until Google let's me <em>unlink</em> my youtube account! If you do want my permission to use these videos for something, <a title="contact" href="/contact/">contact me</a>, and we can work something out. I'll surely allow it if it's not for something evil. If you'd rather have an interactive, live demo, let me know!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

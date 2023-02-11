@@ -84,3 +84,7 @@ James
 
 <span style="text-decoration:underline;">Disclaimer</span>: I have not tried the 8TB Seagate HDD's, or the Supermicro 90 x 3.5" servers, but if you are building a petabyte scale cluster with GlusterFS/Puppet-Gluster, I'd like to hear about it!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

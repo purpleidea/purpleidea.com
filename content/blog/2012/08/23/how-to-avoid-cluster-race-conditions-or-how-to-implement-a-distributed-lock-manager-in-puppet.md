@@ -29,3 +29,7 @@ PS: Inelegant modes 1 and 2 are still available. For mode 1, set "vip" in your c
 
 PPS: I haven't had a change to thoroughly test this, so be warned of any dust bunnies you might find.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

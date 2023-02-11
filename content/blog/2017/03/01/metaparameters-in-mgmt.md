@@ -127,3 +127,7 @@ James
 
 [1] This is a bit of an apples vs. flame-throwers comparison because I'm comparing the mgmt <em>engine</em> meta parameters with the puppet <em>language</em> meta parameters, but I think it's worth mentioning because there's a clear separation between the two in mgmt, where as the separation is much more blurry in the puppet scenario. It's also true that the mgmt language might grow a concept of language-level meta parameters which has a partial set that only maps partially to engine meta parameters, but this is a discussion for another day!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

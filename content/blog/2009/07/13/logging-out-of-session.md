@@ -37,3 +37,7 @@ hth
 
 ps: i'm unable to indent code in wordpress (i'm sure it's my fault somehow) so the above code was trimmed to give you the right idea, without being complete. leave a message if you want some source files.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

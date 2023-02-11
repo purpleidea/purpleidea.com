@@ -197,3 +197,7 @@ PS: The "other" slash, <strong>isn't</strong> called "forward slash", it's just 
 
 PPS: Yes, I say "golang", no "go". I think it's shitty that <a href="https://en.wikipedia.org/wiki/Go!_%28programming_language%29#Conflict_with_Google">google basically ripped off the go! name</a>. I guess <a href="https://github.com/golang/go/issues/9">David lost this one</a>.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

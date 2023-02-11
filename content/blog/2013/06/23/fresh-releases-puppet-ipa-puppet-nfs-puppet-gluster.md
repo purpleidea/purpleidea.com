@@ -32,3 +32,7 @@ James
 
 PS: If you're in a giving mood, I'm in the need for some x86_64 compatible test hardware. If you're able to <a title="donate" href="/donate/">donate</a>, please let me know!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

@@ -34,3 +34,7 @@ James
 
 PS: matlab also supports installs that use a licensing server. This module doesn't support these at the moment, but you're welcome to send me a patch. What a waste of hardware!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

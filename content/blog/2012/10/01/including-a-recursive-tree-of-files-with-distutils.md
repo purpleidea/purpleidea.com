@@ -32,3 +32,7 @@ Strangely, I couldn't find this solution when searching the Internets, so I had 
 Happy hacking,
 James
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

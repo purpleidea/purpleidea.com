@@ -100,3 +100,7 @@ which serves the current directory with a text file named "NODE1" and "NODE2" re
 
 i hope this meets everyones needs for documentation and knowledge; i couldn't have done this without great ipvs <a href="http://www.ultramonkey.org/papers/lvs_tutorial/">reference</a> or the amazing <a href="http://shorewall.net/">shorewall</a>.
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

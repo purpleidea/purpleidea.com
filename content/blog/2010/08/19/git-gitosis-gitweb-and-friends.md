@@ -78,3 +78,7 @@ If you haven't yet used this tool, then go have a <a href="http://joey.kitenet.n
 
 Happy hacking!
 
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}
