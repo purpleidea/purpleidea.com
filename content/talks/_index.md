@@ -5,6 +5,24 @@ draft: false
 talks: [
 
   {
+    topic: "Mgmt Config: Lambdas Are Here",
+    video: "https://www.youtube.com/watch?v=vBt9lpGD4bc",
+    location: "CfgMgmtCamp.eu 2024, Ghent",
+    location_url: "https://cfp.cfgmgmtcamp.org/2024/talk/ACHRWJ/",
+    rating: "Unrated",
+    date: "05/Feb/2024",
+  },
+
+  {
+    topic: "Single binary, full-stack provisioning",
+    video: "https://video.fosdem.org/2024/ud2218a/fosdem-2024-2575-single-binary-full-stack-provisioning.mp4",
+    location: "FOSDEM Golang Devroom, Brussels",
+    location_url: "https://fosdem.org/2024/schedule/event/fosdem-2024-2575-single-binary-full-stack-provisioning/",
+    rating: "Unrated?",
+    date: "03/Feb/2024",
+  },
+
+  {
     topic: "Mgmt Config: The Road to 0.1 (What's left?)",
     video: "https://www.youtube.com/watch?v=FeRGRj8w0BU",
     location: "CfgMgmtCamp.eu 2023, Ghent",
