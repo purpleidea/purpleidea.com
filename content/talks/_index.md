@@ -18,7 +18,8 @@ talks: [
     video: "https://video.fosdem.org/2024/ud2218a/fosdem-2024-2575-single-binary-full-stack-provisioning.mp4",
     location: "FOSDEM Golang Devroom, Brussels",
     location_url: "https://fosdem.org/2024/schedule/event/fosdem-2024-2575-single-binary-full-stack-provisioning/",
-    rating: "Unrated?",
+    rating: "Positive!",
+    rating_url: "feedback/mgmt-fosdem-2024-golang-feedback.png",
     date: "03/Feb/2024",
   },
 
