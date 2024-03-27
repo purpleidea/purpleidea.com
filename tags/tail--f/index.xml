@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tail  F on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/tail--f/</link>
+    <description>Recent content in Tail  F on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 29 Aug 2016 09:00:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/tail--f/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Live dmesg following</title>
+      <link>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</link>
+      <pubDate>Mon, 29 Aug 2016 09:00:39 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</guid>
+      <description>All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.
+Around the time I wrote that article, I remember wanting to stream dmesg output too! The functionality wasn&amp;rsquo;t available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!
+Most GNU/Linux distros are probably running a new enough version by now, and you can now dmesg &amp;ndash;follow (or dmesg -w):</description>
+    </item>
+    
+    <item>
+      <title>continuous display of log files (better tail -f)</title>
+      <link>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</link>
+      <pubDate>Sun, 18 Nov 2012 01:02:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</guid>
+      <description>All good sysadmins know about using tail -f to follow a log file. I use this all the time to follow /var/log/messages and my gluster logs in particular. Maybe everyone already knows this, but it deserves a PSA: after a certain amount of time (~days) it seems that new messages don&amp;rsquo;t appear!
+What happens by default is that tail -f follows the file descriptor, not the file name, so when your log files get rotated, the file descriptor still points to the (now renamed) file which no longer gets updates any more.</description>
+    </item>
+    
+  </channel>
+</rss>

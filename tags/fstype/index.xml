@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fstype on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fstype/</link>
+    <description>Recent content in Fstype on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 04 Mar 2013 05:00:43 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/fstype/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A quick anaconda trick</title>
+      <link>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</link>
+      <pubDate>Mon, 04 Mar 2013 05:00:43 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</guid>
+      <description>Here&amp;rsquo;s a quick anaconda solution that I am now using in some of my kickstart files&amp;hellip;
+I wanted to bootstrap a machine and do all the partitioning and logical volume creation, but not format or mount one of the logical volumes. The magic parameter I needed was:
+--fstype=none  This seems to work perfectly for me. It&amp;rsquo;s not 100% intuitive to me, but it does work. I hope it&amp;rsquo;s not an accidental bug in the anaconda code!</description>
+    </item>
+    
+  </channel>
+</rss>

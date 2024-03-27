@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stereo on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/stereo/</link>
+    <description>Recent content in Stereo on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 18 Jul 2016 16:41:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/stereo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:
+ Someone should consider probing this USB port.The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.</description>
+    </item>
+    
+  </channel>
+</rss>

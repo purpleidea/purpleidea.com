@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Create_resources on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/create_resources/</link>
+    <description>Recent content in Create_resources on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 17 Nov 2013 04:25:01 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/create_resources/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Iteration in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</link>
+      <pubDate>Sun, 17 Nov 2013 04:25:01 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</guid>
+      <description>People often ask how to do iteration in Puppet. Most Puppet users have a background in imperative programming, and are already very familiar with for loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a declarative, domain-specific language. In general, DSL&amp;rsquo;s aren&amp;rsquo;t always Turing complete, nor do they need to support loops, but this doesn&amp;rsquo;t mean you can&amp;rsquo;t iterate.
+Until recently, Puppet didn&amp;rsquo;t have an explicit looping construct, and it is quite possible to build complex modules without using this new construct.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recursion on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/recursion/</link>
+    <description>Recent content in Recursion on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Nov 2013 00:03:15 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/recursion/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Advanced recursion and memoization in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</link>
+      <pubDate>Wed, 27 Nov 2013 00:03:15 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</guid>
+      <description>As a follow-up to my original article on recursion in Puppet, and in my attempt to Push Puppet (to its limit), I&amp;rsquo;ll now attempt some more advanced recursion techniques in Puppet.
+In my original recursion example, the type does recurse, but the callee cannot return any value to the caller because it is a type, and not strictly a function. This limitation immediately limits the usefulness of this technique, but I&amp;rsquo;ll try to press on!</description>
+    </item>
+    
+    <item>
+      <title>Iteration in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</link>
+      <pubDate>Sun, 17 Nov 2013 04:25:01 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</guid>
+      <description>People often ask how to do iteration in Puppet. Most Puppet users have a background in imperative programming, and are already very familiar with for loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a declarative, domain-specific language. In general, DSL&amp;rsquo;s aren&amp;rsquo;t always Turing complete, nor do they need to support loops, but this doesn&amp;rsquo;t mean you can&amp;rsquo;t iterate.
+Until recently, Puppet didn&amp;rsquo;t have an explicit looping construct, and it is quite possible to build complex modules without using this new construct.</description>
+    </item>
+    
+    <item>
+      <title>recursion in puppet (for no particular reason)</title>
+      <link>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</link>
+      <pubDate>Tue, 20 Nov 2012 06:25:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</guid>
+      <description>I&amp;rsquo;m working on some fancy puppet &amp;ldquo;code&amp;rdquo;, and I realized recursion could be very useful. I decided to try out a little hack to see if I could get it to work. I&amp;rsquo;ll jump right into the code: #!/usr/bin/puppet define recursion( $count ) { notify { &amp;#34;count-${count}&amp;#34;: } $minus1 = inline_template(&amp;#39;&amp;lt;%= count.to_i - 1 %&amp;gt;&amp;#39;) if &amp;#34;${minus1}&amp;#34; == &amp;#39;0&amp;#39; { notify { &amp;#39;done counting!&amp;#39;: } } else { # recurse recursion { &amp;#34;count-${minus1}&amp;#34;: count =&amp;gt; $minus1, } } } # kick it off.</description>
+    </item>
+    
+  </channel>
+</rss>

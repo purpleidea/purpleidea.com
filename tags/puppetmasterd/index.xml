@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppetmasterd on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/puppetmasterd/</link>
+    <description>Recent content in Puppetmasterd on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 17 Jan 2013 03:03:36 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/puppetmasterd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SElinux causes pain when using puppet 2.x with hiera</title>
+      <link>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</link>
+      <pubDate>Thu, 17 Jan 2013 03:03:36 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</guid>
+      <description>So hiera wasn&amp;rsquo;t working when used through my puppetmaster. It worked perfectly when I was running my scripts manually with: puppet apply site.pp but the moment I switched over to regular puppetmasterd usage, everything went dead.
+I realized a while back, that I could always expect some hiera failures from time to time. Whether this is hiera&amp;rsquo;s fault or not is irrelevant, the relevant part is that I quickly added:</description>
+    </item>
+    
+  </channel>
+</rss>

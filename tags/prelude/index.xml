@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Prelude on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/prelude/</link>
+    <description>Recent content in Prelude on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 31 Mar 2010 10:13:48 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/prelude/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>lecturing and git-bisect</title>
+      <link>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</link>
+      <pubDate>Wed, 31 Mar 2010 10:13:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</guid>
+      <description>I was recently asked to give a lecture for the PRELUDE series at McGill. Here was my abstract:  I don&amp;rsquo;t like computers, and neither should you. We spend too much time figuring out how to talk to them, instead of having them figure out how to understand us. There&amp;rsquo;s a big discontinuity between what software is providing, and the killer features we want! We&amp;rsquo;re not completely lost though. There are a lot of good tools and methodologies available!</description>
+    </item>
+    
+  </channel>
+</rss>

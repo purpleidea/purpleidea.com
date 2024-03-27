@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hacks on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hacks/</link>
+    <description>Recent content in Hacks on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 06 Jan 2017 05:57:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/hacks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ten minute hacks: Process pause &amp; resume</title>
+      <link>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</link>
+      <pubDate>Fri, 06 Jan 2017 05:57:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</guid>
+      <description>I&amp;rsquo;m old school and still rocking an old X220 laptop because I didn&amp;rsquo;t like the new ones. My battery life isn&amp;rsquo;t as great as I&amp;rsquo;d like it to be, but it gets worse when some &amp;ldquo;webapp&amp;rdquo; (which I&amp;rsquo;d much rather have as a native GTK+ app) causes Firefox to rev my CPU with their websocket (hi gmail!) poller.
+This seems to happen most often on planes or when I&amp;rsquo;m disconnected from the internet.</description>
+    </item>
+    
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:
+ Someone should consider probing this USB port.The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.</description>
+    </item>
+    
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>Hi there,
+I hope you enjoyed my &amp;ldquo;Pushing Puppet (to its limit)&amp;rdquo; talk and demos from Puppet Camp D.C., LISA 2013. As requested, I&amp;rsquo;ve posted the code and slides.
+Here is the code: https://github.com/purpleidea/puppet-pushing
+This module will require three modules as dependencies. The dependencies are:  My Puppet-Common module https://github.com/purpleidea/puppet-common My Puppet-Runonce module https://github.com/purpleidea/puppet-runonce My Puppet-FSM module https://github.com/purpleidea/puppet-fsm  Each example doesn&amp;rsquo;t require all the dependencies, so if you&amp;rsquo;re only interested in the FSM, you only need that module.</description>
+    </item>
+    
+    <item>
+      <title>Renaming a GNOME keyring (for seahorse, the passwords and keyrings application)</title>
+      <link>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</link>
+      <pubDate>Sun, 27 Jan 2013 15:33:50 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</guid>
+      <description>The GNOME Keyring is a great tool to unify password management across the desktop. Sadly, Firefox is the one application that doesn&amp;rsquo;t support this natively. (Chrome actually does!)
+Seahorse is a useful tool to browse and manage your keyrings. Each keyring is physically stored in: ~/.gnome2/keyrings/$something.keyring
+Usually the &amp;ldquo;$something&amp;rdquo;, matches the name of the keyring, however the real name comes from within the file. I had an older ubuntu machine running GNOME, and I wanted to import my keyring.</description>
+    </item>
+    
+    <item>
+      <title>recursion in puppet (for no particular reason)</title>
+      <link>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</link>
+      <pubDate>Tue, 20 Nov 2012 06:25:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</guid>
+      <description>I&amp;rsquo;m working on some fancy puppet &amp;ldquo;code&amp;rdquo;, and I realized recursion could be very useful. I decided to try out a little hack to see if I could get it to work. I&amp;rsquo;ll jump right into the code: #!/usr/bin/puppet define recursion( $count ) { notify { &amp;#34;count-${count}&amp;#34;: } $minus1 = inline_template(&amp;#39;&amp;lt;%= count.to_i - 1 %&amp;gt;&amp;#39;) if &amp;#34;${minus1}&amp;#34; == &amp;#39;0&amp;#39; { notify { &amp;#39;done counting!&amp;#39;: } } else { # recurse recursion { &amp;#34;count-${minus1}&amp;#34;: count =&amp;gt; $minus1, } } } # kick it off.</description>
+    </item>
+    
+  </channel>
+</rss>

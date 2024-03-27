@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tab Close Button on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/tab-close-button/</link>
+    <description>Recent content in Tab Close Button on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 26 Nov 2012 05:42:20 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/tab-close-button/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>visible close buttons on every firefox tab (including the last one)</title>
+      <link>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</link>
+      <pubDate>Mon, 26 Nov 2012 05:42:20 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</guid>
+      <description>After hacking around with a few firefox internals the other day, I decided there was another little annoyance that I had&amp;hellip; When I&amp;rsquo;m acting insane and using my mouse to open and close tabs, the per tab close button disappears when there is only one tab left! This is apparently a feature, and while I can respect it as a default, it certainly isn&amp;rsquo;t an option for me. Thankfully, there are a lot of common minded individuals on the net, and the (hack) solution already existed.</description>
+    </item>
+    
+  </channel>
+</rss>

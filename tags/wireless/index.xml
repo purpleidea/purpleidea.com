@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wireless on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/wireless/</link>
+    <description>Recent content in Wireless on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 21 Dec 2018 07:45:00 -0500</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/wireless/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A guide to fighting with a Cisco access point</title>
+      <link>https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/</link>
+      <pubDate>Fri, 21 Dec 2018 07:45:00 -0500</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/</guid>
+      <description>In my hands is a Cisco AIR-CAP-3502-E-A-K9 that I saved from the landfill. After about eight hours of suffering, and what was surely a cancer causing dose of RF-radiation, I now know:
+1) How to convince this access point to provide me with wifi.
+2) Why Cisco products are probably best left in the garbage.
+What follows is my setup guide and review for using a Cisco Aironet device. This guide will likely be useful with other models of Cisco devices, but use your own best judgment.</description>
+    </item>
+    
+  </channel>
+</rss>

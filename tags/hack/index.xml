@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hack on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hack/</link>
+    <description>Recent content in Hack on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 06 Jan 2017 05:57:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/hack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ten minute hacks: Process pause &amp; resume</title>
+      <link>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</link>
+      <pubDate>Fri, 06 Jan 2017 05:57:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</guid>
+      <description>I&amp;rsquo;m old school and still rocking an old X220 laptop because I didn&amp;rsquo;t like the new ones. My battery life isn&amp;rsquo;t as great as I&amp;rsquo;d like it to be, but it gets worse when some &amp;ldquo;webapp&amp;rdquo; (which I&amp;rsquo;d much rather have as a native GTK+ app) causes Firefox to rev my CPU with their websocket (hi gmail!) poller.
+This seems to happen most often on planes or when I&amp;rsquo;m disconnected from the internet.</description>
+    </item>
+    
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:
+ Someone should consider probing this USB port.The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.</description>
+    </item>
+    
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>Daniel P. Berrangé wrote about trying out a single node ceph cluster. I decided to take his article and turn it into an Oh-My-Vagrant omv.yaml file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.
+If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the omv.yaml file that I&amp;rsquo;ve just published and run omv up.</description>
+    </item>
+    
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>Master SDN hacker Flavio sent me some tunes. They were sitting on my desktop in a folder:
+$ ls ~/Desktop/ uncopyrighted_tunes_from_flavio/  I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the nautilus file browser to select which folder to play, and the totem music/video player to do the playing.
+Drop a file named totem into:
+~/.local/share/nautilus/scripts/  with the contents:
+#!/bin/bash # o hai from purpleidea exec totem -- &amp;quot;$@&amp;quot;  and make it executable with:</description>
+    </item>
+    
+    <item>
+      <title>Finite state machines in puppet</title>
+      <link>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</link>
+      <pubDate>Sat, 28 Sep 2013 06:09:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</guid>
+      <description>In my attempt to push puppet to its limits, (for no particular reason), to develop more powerful puppet modules, tobuild in a distributed lock manager, and to be more dynamic, I&amp;rsquo;m now attempting to build a Finite State Machine (FSM) in puppet.
+Is this a real finite state machine, and why would you do this?
+Computer science professionals might not approve of the purity level, but they will hopefully appreciate the hack value.</description>
+    </item>
+    
+    <item>
+      <title>Collecting duplicate resources in puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</link>
+      <pubDate>Tue, 04 Jun 2013 23:39:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</guid>
+      <description>I could probably write a long design article explaining why identical duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, Mr. Bode has already written part one of the hack: ensure_resource.
+Why?
+Suppose you have a given infrastructure with N vaguely identical nodes.</description>
+    </item>
+    
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.
+Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    
+    <item>
+      <title>Mothers day hacks</title>
+      <link>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</link>
+      <pubDate>Sun, 12 May 2013 07:32:45 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</guid>
+      <description>Firstly Happy Mother&amp;rsquo;s day to my mother.
+Google is, as usual, busily releasing doodles. Today, the doodle takes you through a Rube Goldberg -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:
+3 * 3 * 3 * 3 = 81  different permutations. At the end of the process, you can print your image.</description>
+    </item>
+    
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support releasing early and often, for some value of $early and $often. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;
+I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many.</description>
+    </item>
+    
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!
+I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections.</description>
+    </item>
+    
+  </channel>
+</rss>

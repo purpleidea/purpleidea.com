@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tcp on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/tcp/</link>
+    <description>Recent content in Tcp on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 05 May 2017 17:35:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Declarative vs. Imperative paradigms</title>
+      <link>https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/</link>
+      <pubDate>Fri, 05 May 2017 17:35:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/</guid>
+      <description>Recently, while operating two different remote-controlled appliances, I realized that it was high time for a discussion about declarative and imperative paradigms. Let&amp;rsquo;s start by looking at the two remotes:
+Two different &amp;ldquo;remotes&amp;rdquo;. The one on the left operates a television, and the one on the right controls a central heating and cooling system.At first glance you will notice that one of these remotes is dark, and the other is light.</description>
+    </item>
+    
+  </channel>
+</rss>

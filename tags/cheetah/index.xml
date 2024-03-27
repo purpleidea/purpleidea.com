@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cheetah on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/cheetah/</link>
+    <description>Recent content in Cheetah on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 21 Jul 2009 16:59:50 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/cheetah/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>cheetah == fortran</title>
+      <link>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</link>
+      <pubDate>Tue, 21 Jul 2009 16:59:50 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</guid>
+      <description>turns out the cheetah python templating engine (2.0 since year 2006) is quite reminiscent of fortran (since the 1950&amp;rsquo;s) in their use of the #slurp directive (cheetah) and the $ string. either one, when appended to the end of a string, remove the implicit newline which usually gets printed. it took me ages to figure out how to suppress newline printing back when i did someone&amp;rsquo;s fortran homework, now i&amp;rsquo;ve had to struggle with it all over again.</description>
+    </item>
+    
+  </channel>
+</rss>

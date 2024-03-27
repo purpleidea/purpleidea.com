@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/python/</link>
+    <description>Recent content in Python on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jul 2015 01:14:19 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>Making Oh-My-Vagrant (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)
+Prerequisites:
+If you haven&amp;rsquo;t read any of the previous articles about Oh-My-Vagrant, I&amp;rsquo;d recommend you start there.</description>
+    </item>
+    
+    <item>
+      <title>Introducing: Silent counter</title>
+      <link>https://purpleidea.com/blog/2015/02/09/introducing-silent-counter/</link>
+      <pubDate>Mon, 09 Feb 2015 07:31:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/02/09/introducing-silent-counter/</guid>
+      <description>You might want to write code that can tell how many iterations have passed since some action occurred. Alternatively, you might want to know if it&amp;rsquo;s the first time a machine has run Puppet. To do these types of things, you might wish to have a monotonically increasing counter in your Puppet manifest. Since one did not exist, I set out to build one!
+The code:
+If you just want to try the code, and skip the ramble, you can include common::counter into your manifest.</description>
+    </item>
+    
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>The fact that we manage the switches in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of silicon which happens to be able to dramatically speed up the switching bandwidth.
+ beware of proprietary silicon, it&amp;rsquo;s absurd!That tiny bit of silicon is known as an ASIC, or an application specific integrated circuit, and one particularly well performing ASIC (which is present in many commercially available switches) is called the Trident.</description>
+    </item>
+    
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>I had an itch to scratch, and I wanted to get a bit more familiar with Openshift. I had used it in the past, but it was time to have another go. The app and the code are now available. Feel free to check out: https://pdfdoc-purpleidea.rhcloud.com/ This is a simple app that takes the URL of a markdown file on GitHub, and outputs a pandoc converted PDF. I wanted to use pandoc specifically, because it produces PDF&amp;rsquo;s that were beautifully created with LaTeX.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>Introducing Puppet Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</link>
+      <pubDate>Mon, 24 Mar 2014 18:37:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</guid>
+      <description>Puppet is missing a number of much-needed features. That&amp;rsquo;s the bad news. The good news is that I&amp;rsquo;ve been able to write some of these as modules that don&amp;rsquo;t need to change the Puppet core! This is an article about one of these features.
+Posit: It&amp;rsquo;s not possible to apply all of your Puppet manifests in a single run.
+I believe that this holds true for the current implementation of Puppet.</description>
+    </item>
+    
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:
+3 files changed, 1401 insertions(+), 215 deletions(-)  You should now have a highly capable user type, along with some quick examples.
+I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    
+    <item>
+      <title>adding range support to python&#39;s http server to kickstart with anaconda</title>
+      <link>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</link>
+      <pubDate>Thu, 14 Mar 2013 00:34:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</guid>
+      <description>I&amp;rsquo;ve been working on automatic installs using kickstart and puppet. I&amp;rsquo;m using a modified python httpserver because it&amp;rsquo;s lightweight, and easy to integrate into my existing python code base. The server was churning away perfectly until anaconda started downloading the full rpm&amp;rsquo;s for installation. What was going wrong?  Traceback (most recent call last): [&amp;hellip;] error: [Errno 32] Broken pipe BorkedError: See TTBOJ for explanation and discussion  As it turns out, anaconda first downloads the headers, and then later requests the full rpm with an http range request.</description>
+    </item>
+    
+    <item>
+      <title>How to send and receive files like a professional</title>
+      <link>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</link>
+      <pubDate>Mon, 04 Feb 2013 10:56:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</guid>
+      <description>Everyone needs to send and receive files sometimes. Traditionally people send files as email attachments. This still works great, and supports encryption, but many mail servers are slow and cap the upper file size limit.
+ICQ was a great solution back in the 1990&amp;rsquo;s, but those days are now over. (I still remember my number.)
+A lot of folks use dropbox, which requires a dropbox account, and for you to trust them with your files.</description>
+    </item>
+    
+    <item>
+      <title>including a recursive tree of files with distutils</title>
+      <link>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</link>
+      <pubDate>Mon, 01 Oct 2012 06:17:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</guid>
+      <description>It turns out it is non trivial (afaict) to include a tree of files (a directory) in a python distutils data_files argument. Here&amp;rsquo;s how I managed to do it, while also allowing the programmer to include manual entries: NAME = &amp;#39;project_name&amp;#39; distutils.core.setup( # ... data_files=[ (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;README&amp;#39;]), (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;files/somefile&amp;#39;]), (&amp;#39;share/%s/templates&amp;#39; % NAME, [ &amp;#39;files/templates/template1.tmpl&amp;#39;, &amp;#39;files/templates/template2.tmpl&amp;#39;, ]), ] + [(&amp;#39;share/%s/%s&amp;#39; % (NAME, x[0]), map(lambda y: x[0]+&amp;#39;/&amp;#39;+y, x[2])) for x in os.</description>
+    </item>
+    
+    <item>
+      <title>finding your software install $prefix from inside python</title>
+      <link>https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/</link>
+      <pubDate>Thu, 20 Sep 2012 04:12:00 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/</guid>
+      <description>Good python software developers tend to use distutils and include a setup.py with their code. The problem I often encounter is finding out which prefix your software has been installed in from within the python code. This might be necessary if you want to interact with some data that you&amp;rsquo;ve installed into: $prefix/share/projectname/ Here are the various steps:
+1) Distutils: NAME=&amp;#39;someproject&amp;#39; distutils.core.setup( name=NAME, version=&amp;#39;0.1&amp;#39;, author=&amp;#39;James Shubin&amp;#39;, author_email=&amp;#39;secret@purpleidea.com&amp;#39;, url=&amp;#39;https://purpleidea.com/&amp;#39;, description=&amp;#39;This is an example project&amp;#39;, # http://pypi.</description>
+    </item>
+    
+    <item>
+      <title>getopt vs. optparse vs. argparse</title>
+      <link>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</link>
+      <pubDate>Wed, 03 Feb 2010 12:25:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</guid>
+      <description>sooner or later you&amp;rsquo;ll end up needing to do some argument parsing. the foolish end up writing their own yucky parser that ends up having a big if statement filled with things like:
+if len(sys.argv) &amp;gt; 1
+in it. don&amp;rsquo;t do this unless you have a really good excuse.
+sooner or later, someone directs you to getopt, and you happily continue on with buggy manual parsing thinking you&amp;rsquo;ve &amp;ldquo;found the way&amp;rdquo;.</description>
+    </item>
+    
+    <item>
+      <title>the python subprocess module</title>
+      <link>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</link>
+      <pubDate>Wed, 07 Oct 2009 10:24:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</guid>
+      <description>i&amp;rsquo;m sure that i won&amp;rsquo;t be able to tell you anything revolutionary which can&amp;rsquo;t be found out by reading the manual, but i thought i would clarify it, and by showing you a specific example which i needed.
+subprocess.Popen accepts a bunch or args, one of which is the shell argument, which is False by default. If you specify shell=True then the first argument of popen should be a string which is what gets parsed by the shell and then eventually run.</description>
+    </item>
+    
+    <item>
+      <title>the power to yield a better console interface</title>
+      <link>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</link>
+      <pubDate>Thu, 20 Aug 2009 13:15:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</guid>
+      <description>as part of a different project, i needed to duplicate some existing terminal magic in python. what i needed to write was something similar to the getch() function in curses. it can be found in: ncurses*/base/lib_getch.c after doing an: apt-get source libncurses5
+what&amp;rsquo;s the magic? i need to stay in a continuous loop reading from the file descriptor, however i want to return periodically so that gobject doesn&amp;rsquo;t block and the interface can remain responsive.</description>
+    </item>
+    
+    <item>
+      <title>cheetah == fortran</title>
+      <link>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</link>
+      <pubDate>Tue, 21 Jul 2009 16:59:50 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</guid>
+      <description>turns out the cheetah python templating engine (2.0 since year 2006) is quite reminiscent of fortran (since the 1950&amp;rsquo;s) in their use of the #slurp directive (cheetah) and the $ string. either one, when appended to the end of a string, remove the implicit newline which usually gets printed. it took me ages to figure out how to suppress newline printing back when i did someone&amp;rsquo;s fortran homework, now i&amp;rsquo;ve had to struggle with it all over again.</description>
+    </item>
+    
+  </channel>
+</rss>

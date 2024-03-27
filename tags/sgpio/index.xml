@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sgpio on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/sgpio/</link>
+    <description>Recent content in Sgpio on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 17 Jun 2013 18:11:02 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/sgpio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>puppet lsi hardware raid module</title>
+      <link>https://purpleidea.com/blog/2013/06/17/puppet-lsi-hardware-raid-module/</link>
+      <pubDate>Mon, 17 Jun 2013 18:11:02 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/17/puppet-lsi-hardware-raid-module/</guid>
+      <description>In response to some discussion in the gluster community, I am releasing my puppet-lsi module. It&amp;rsquo;s quite simple, but it is very useful for rebuilding machines. It could do a lot more, but I wanted to depend on the proprietary LSI tools as little as possible. Running megacli with puppet would be a very doable hack, but I&amp;rsquo;m not sure enough devops out there who would use that feature.
+Usage is straightforward if you like the sensible defaults:</description>
+    </item>
+    
+  </channel>
+</rss>

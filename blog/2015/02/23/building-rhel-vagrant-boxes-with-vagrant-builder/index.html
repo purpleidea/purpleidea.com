@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Building RHEL Vagrant Boxes with Vagrant-Builder - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/font-awesome.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+	
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Building RHEL Vagrant Boxes with Vagrant-Builder</strong><br><small></small></h3>
+					<hr>
+					<p><a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">Vagrant</a> is a great tool for development, but <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux">Red Hat Enterprise Linux</a> (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they&rsquo;re running in production.</p>
+
+<p>Secondly, when hacking on projects that have a long initial setup phase (eg: a long rpm install) it would be excellent if hackers could roll their own modified base boxes, so that certain common operations could be re-factored out into the base image.</p>
+
+<p>This all changes today.</p>
+
+<p><em>Please continue reading if you&rsquo;d like to know how :)</em></p>
+
+<p><span style="text-decoration:underline;">Subscriptions</span>:</p>
+
+<p>In order to use RHEL, you first need a <a href="http://red.ht/1Aowjfh">subscription</a>. If you don&rsquo;t already have one, go sign up&hellip; I&rsquo;ll wait. You do have to pay money, but in return, you&rsquo;re funding my salary (and many others) so that we can build you lots of <a href="https://github.com/purpleidea/">great hacks</a>.</p>
+
+<p><span style="text-decoration:underline;">Prerequisites</span>:</p>
+
+<p>I&rsquo;ll be working through this whole process on a <a href="https://getfedora.org/">Fedora 21</a> laptop. It should probably work on different OS versions and flavours, but I haven&rsquo;t tested it. Please test, and let me know your results! You&rsquo;ll also need <code>virt-install</code> and <code>virt-builder</code> installed:</p>
+
+<pre><code>$ sudo yum install -y /usr/bin/virt-{install,builder}
+</code></pre>
+
+<p><span style="text-decoration:underline;">Step one</span>:</p>
+
+<p>Login to <a href="https://access.redhat.com/">https://access.redhat.com/</a> and check that you have a <a href="https://access.redhat.com/management/subscriptions">valid subscription available</a>. This should look like this:</p>
+
+<p><table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="subscriptions.png"><img class="size-medium wp-image-1028" src="subscriptions.png" alt="A view of my available subscriptions." width="100%" height="100%" /></a></td></tr><tr><td> A view of my available subscriptions.</td></tr></table></br /></p>
+
+<p>If everything looks good, you&rsquo;ll need to download an ISO image of RHEL. First head to the <a href="https://access.redhat.com/downloads/">downloads</a> section and find the RHEL product:</p>
+
+<p><table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="downloads.png"><img class="size-medium wp-image-1029" src="downloads.png" alt="A view of my available product downloads." width="100%" height="100%" /></a></td></tr><tr><td> A view of my available product downloads.</td></tr></table></br /></p>
+
+<p>In the RHEL download section, you&rsquo;ll find a number of variants. You want the RHEL 7.0 Binary DVD:</p>
+
+<p><table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="downloads2.png"><img class="size-medium wp-image-1030" src="downloads2.png" alt="A view of the available RHEL downloads." width="100%" height="100%" /></a></td></tr><tr><td> A view of the available RHEL downloads.</td></tr></table></br /></p>
+
+<p>After it has finished downloading, verify the SHA-256 hash is correct, and continue to step two!</p>
+
+<pre><code>$ sha256sum rhel-server-7.0-x86_64-dvd.iso
+85a9fedc2bf0fc825cc7817056aa00b3ea87d7e111e0cf8de77d3ba643f8646c  rhel-server-7.0-x86_64-dvd.iso
+</code></pre>
+
+<p><span style="text-decoration:underline;">Step two</span>:</p>
+
+<p>Grab a copy of <a href="https://github.com/purpleidea/vagrant-builder">vagrant-builder</a>:</p>
+
+<pre><code>$ git clone https://github.com/purpleidea/vagrant-builder
+Cloning into 'vagrant-builder'...
+[...]
+Checking connectivity... done.
+</code></pre>
+
+<p>I&rsquo;m pleased to announce that it now has some <a href="https://github.com/purpleidea/vagrant-builder/blob/master/DOCUMENTATION.md">documentation</a>! (Patches are welcome to improve it!)</p>
+
+<p>Since we&rsquo;re going to use it to build RHEL images, you&rsquo;ll need to put your subscription manager credentials in <code>~/.vagrant-builder/auth.sh</code>:</p>
+
+<pre><code>$ cat ~/.vagrant-builder/auth.sh
+# these values are used by vagrant-builder
+USERNAME='purpleidea@redhat.com' # replace with your access.redhat.com username
+PASSWORD='&lt;a href=&quot;http://bash.org/?244321&quot;&gt;hunter2&lt;/a&gt;'               # replace with your access.redhat.com password
+</code></pre>
+
+<p>This is a simple shell script that gets sourced, so you could instead replace the static values with a script that calls out to the GNOME Keyring. This is left as an exercise to the reader.</p>
+
+<p>To build the image, we&rsquo;ll be working in the <code>v7/</code> directory. This directory supports common OS families and versions that have high commonality, and this includes Fedora 20, Fedora 21, CentOS 7.0, and RHEL 7.0.</p>
+
+<p>Put the downloaded RHEL ISO in the <code>iso/</code> directory. To allow qemu to see this file, you&rsquo;ll need to add some acl&rsquo;s:</p>
+
+<pre><code>$ sudo -s # do this as root
+$ cd /home/
+$ getfacl james # james is my home directory
+# file: james
+# owner: james
+# group: james
+user::rwx
+group::---
+other::---
+$ setfacl -m u:qemu:r-x james # this is the important line
+$ getfacl james
+# file: james
+# owner: james
+# group: james
+user::rwx
+user:qemu:r-x
+group::---
+mask::r-x
+other::---
+</code></pre>
+
+<p>If you have an unusually small <code>/tmp</code> directory, it might also be an issue. You&rsquo;ll need at least 6GiB free, but a bit extra is a good idea. Check your free space first:</p>
+
+<pre><code>$ df -h /tmp
+Filesystem Size Used Avail Use% Mounted on
+tmpfs 1.9G 1.3M 1.9G 1% /tmp
+</code></pre>
+
+<p>Let&rsquo;s increase this a bit:</p>
+
+<pre><code>$ sudo mount -o remount,size=8G /tmp
+$ df -h /tmp
+Filesystem Size Used Avail Use% Mounted on
+tmpfs 8.0G 1.3M 8.0G 1% /tmp
+</code></pre>
+
+<p>You&rsquo;re now ready to build an image&hellip;</p>
+
+<p><span style="text-decoration:underline;">Step three</span>:</p>
+
+<p>In the <code>versions/</code> directory, you&rsquo;ll see that I have provided a <a href="https://github.com/purpleidea/vagrant-builder/blob/master/v7/versions/rhel-7.0-iso.sh"><code>rhel-7.0-iso.sh</code></a> script. You&rsquo;ll need to run it from its parent directory. This will take a while, and will cause two sudo prompts, which are required for <code>virt-install</code>. One downside to this process is that your <a href="https://access.redhat.com/">https://access.redhat.com/</a> password will be briefly shown in the <code>virt-builder</code> output. Patches to fix this are welcome!</p>
+
+<pre><code>$ pwd
+/home/james/code/vagrant-builder/v7
+$ time ./versions/rhel-7.0-iso.sh
+[...]
+real    38m49.777s
+user    13m20.910s
+sys     1m13.832s
+$ echo $?
+0
+</code></pre>
+
+<p>With any luck, this should eventually complete successfully. This uses your cpu&rsquo;s virtualization instructions, so if they&rsquo;re not enabled, this will be a lot slower. It also uses the network, which in <a href="https://en.wikipedia.org/wiki/Net_neutrality">North America</a>, means you&rsquo;re in for a wait. Lastly, the <code>xz</code> compression utility will use a bunch of cpu building the <code>virt-builder</code> base image. On my laptop, this whole process took about 30 minutes. The above run was done without an SSD and took a bit longer.</p>
+
+<p>The good news is that most of hard work is now done and won&rsquo;t need to be repeated! If you want to see the fruits of your CPU labour, have a look in: <code>~/tmp/builder/rhel-7.0-iso/</code>.</p>
+
+<pre><code>$ ls -lAhGs
+total 4.1G
+1.7G -rw-r--r--. 1 james 1.7G Feb 23 18:48 box.img
+1.7G -rw-r--r--. 1 james  41G Feb 23 18:48 builder.img
+ 12K -rw-rw-r--. 1 james  10K Feb 23 18:11 docker.tar
+4.0K -rw-rw-r--. 1 james  388 Feb 23 18:39 index
+4.0K -rw-rw-r--. 1 james   64 Feb 23 18:11 metadata.json
+652M -rw-rw-r--. 1 james 652M Feb 23 18:50 rhel-7.0-iso.box
+200M -rw-r--r--. 1 james 200M Feb 23 18:28 rhel-7.0.xz
+</code></pre>
+
+<p>As you can see, we&rsquo;ve produced a bunch of files. The <code>rhel-7.0-iso.box</code> is your RHEL 7.0 vagrant base box! <em>Congratulations!</em></p>
+
+<p><span style="text-decoration:underline;">Step four</span>:</p>
+
+<p>If you haven&rsquo;t ever installed vagrant, you&rsquo;ll pleased to know that as of last week, vagrant and vagrant-libvirt RPM&rsquo;s have hit Fedora 21! I started trying to <a href="/blog/2014/04/02/working-at-redhat/">convince the RPM wizards about a year ago</a>, and we finally have something that is quite usable! Hopefully we&rsquo;ll iterate on any packaging bugs, and keep this great work going! There are now only three things you need to do to get a working vagrant-libvirt setup on Fedora 21:
+<ol>
+    <li><code>$ yum install -y vagrant-libvirt</code></li>
+    <li>Source this <code>.bashrc</code> add-on from: <a href="https://gist.github.com/purpleidea/8071962">https://gist.github.com/purpleidea/8071962</a></li>
+    <li>Add a <a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">vagrant.pkla file as mentioned here</a></li>
+</ol>
+Now that we&rsquo;re now in well-known vagrant territory. Adding the box into vagrant is a simple:</p>
+
+<pre><code>$ vagrant box add rhel-7.0-iso.box --name rhel-7.0
+</code></pre>
+
+<p><span style="text-decoration:underline;">Using the box effectively</span>:</p>
+
+<p>Having a base box is great, but having to manage subscription-manager manually isn&rsquo;t fun in a DevOps environment. Enter <a href="/blog/2014/09/03/introducing-oh-my-vagrant/">Oh-My-Vagrant (omv)</a>. You can use omv to automatically register and unregister boxes! Edit the <code>omv.yaml</code> file so that the <em>image</em> variable refers to the base box you just built, enter your <a href="https://access.redhat.com/">https://access.redhat.com/</a> username and password, and <code>vagrant up</code> away!</p>
+
+<pre><code>$ cat omv.yaml 
+---
+:domain: example.com
+:network: 192.168.123.0/24
+:image: rhel-7.0
+:boxurlprefix: ''
+:sync: rsync
+:folder: ''
+:extern: []
+:puppet: false
+:classes: []
+:docker: false
+:cachier: false
+:vms: []
+:namespace: omv
+:count: 2
+:username: 'purpleidea@redhat.com'
+:password: 'hunter2'
+:poolid: true
+:repos: []
+$ vs
+Current machine states:
+
+omv1                      not created (libvirt)
+omv2                      not created (libvirt)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+</code></pre>
+
+<p>You might want to set <code>repos</code> to be:</p>
+
+<pre><code>['rhel-7-server-rpms', 'rhel-7-server-extras-rpms']
+</code></pre>
+
+<p>but it depends on what subscriptions you want or have available. If you&rsquo;d like to store your credentials in an external file, you can do so like this:</p>
+
+<pre><code>$ cat ~/.config/oh-my-vagrant/auth.yaml
+---
+:username: purpleidea@redhat.com
+:password: hunter2
+</code></pre>
+
+<p>Here&rsquo;s an actual run to see the subscription-manager action:</p>
+
+<pre><code>$ vup omv1
+[...]
+==&gt; omv1: The system has been registered with ID: 00112233-4455-6677-8899-aabbccddeeff
+==&gt; omv1: Installed Product Current Status:
+==&gt; omv1: Product Name: Red Hat Enterprise Linux Server
+==&gt; omv1: Status:       Subscribed
+$ # the above lines shows that your machine has been registered
+$ vscreen root@omv1
+[root@omv1 ~]# echo thanks purpleidea!
+thanks purpleidea!
+[root@omv1 ~]# exit
+</code></pre>
+
+<p>Make sure to unregister when you are permanently done with a machine, otherwise your subscriptions will be left idle. This happens automatically on vagrant destroy when using Oh-My-Vagrant:</p>
+
+<pre><code>$ vdestroy omv1 # make sure to unregister when you are done
+Unlocking shell provisioning for: omv1...
+Running 'subscription-manager unregister' on: omv1...
+Connection to 192.168.121.26 closed.
+System has been unregistered.
+==&gt; omv1: Removing domain...
+</code></pre>
+
+<p><span style="text-decoration:underline;">Idempotence</span>:</p>
+
+<p>One interesting aspect of this build process, is that it&rsquo;s mostly <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>. It&rsquo;s able to do this, because it uses GNU Make to ensure that only out of date steps or missing targets are run. As a result, if the build process fails part way through, you&rsquo;ll only have to repeat the failed steps! This speeds up debugging and iterative development enormously!</p>
+
+<p>To prove this to you, here is what a second run looks like (after the first successful run):</p>
+
+<pre><code>$ time ./versions/rhel-7.0-iso.sh 
+
+real    0m0.029s
+user    0m0.013s
+sys    0m0.017s
+</code></pre>
+
+<p>As you can see it completes almost instantly.</p>
+
+<p><span style="text-decoration:underline;">Variants</span>:</p>
+
+<p>To build a variant of the base image that we just built, create a <code>versions/*.sh</code> file, and modify the variables to add your changes in. If you start with a copy of the <code>~/tmp/builder/${VERSION}-${POSTFIX}</code> folder, then you shouldn&rsquo;t need to repeat the initial steps. Hint: <a href="https://en.wikipedia.org/wiki/Btrfs">btrfs</a> is excellent at <a href="https://lwn.net/Articles/331808/">reflinking</a> data, so you don&rsquo;t unnecessarily store multiple copies!</p>
+
+<p><span style="text-decoration:underline;">Plumbing Pipeline</span>:</p>
+
+<p>What actually happens behind the scenes? Most of the magic happens in the <a href="https://github.com/purpleidea/vagrant-builder/blob/master/v7/Makefile#L21">Makefile</a>. The relevant series of transforms is as follows:
+<ol>
+    <li>virt-install: install from iso</li>
+    <li>virt-sysprep: remove unneeded junk</li>
+    <li>virt-sparsify: make sparse</li>
+    <li>xz &ndash;best: compress into builder format</li>
+    <li>virt-builder: use builder to bake vagrant box</li>
+    <li>qemu-img convert: convert to correct format</li>
+    <li>tar -cvz: tar up into vagrant box format</li>
+</ol>
+There are some intermediate dependency steps that I didn&rsquo;t mention, so feel free to explore the <a href="https://github.com/purpleidea/vagrant-builder/">source</a>.</p>
+
+<p><span style="text-decoration:underline;">Future work</span>:
+<ul>
+    <li>Some of the above steps in the pipeline are actually bundled under the same target. It&rsquo;s not a huge issue, but it could be changed if someone feels strongly about it.</li>
+    <li>Virt-builder can&rsquo;t run docker commands during build. This would be very useful for pre-populating images with docker containers.</li>
+    <li>Oh-My-Vagrant, needs to have its DNS management switched to use vagrant-hostmanager instead of puppet resource commands.</li>
+</ul>
+<span style="text-decoration:underline;">Disclaimers</span>:</p>
+
+<p>While I expect you&rsquo;ll love using these RHEL base boxes with Vagrant, the above builder methodology is currently <em>not</em> officially supported, and I can&rsquo;t guarantee that the RHEL vagrant dev environments will be either. I&rsquo;m putting this out there for the early (DevOps) adopters who want to hack on this and who didn&rsquo;t want to invent their own build tool chain. If you do have issues, please leave a <a href="#comments">comment</a> here, or submit a <a href="https://github.com/purpleidea/vagrant-builder/issues">vagrant-builder issue</a>.</p>
+
+<p><span style="text-decoration:underline;">Thanks</span>:</p>
+
+<p>Special thanks to <a href="https://rwmj.wordpress.com/">Richard WM Jones</a> and <a href="https://github.com/ptoscano">Pino Toscano</a> for their great work on virt-builder that <a href="https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants">this is based on</a>. Additional thanks to <a href="https://github.com/rbarlow">Randy Barlow</a> for encouraging me to work on this. Thanks to Red Hat for continuing to pay my salary :)</p>
+
+<p><span style="text-decoration:underline;">Subscriptions</span>?</p>
+
+<p>If I&rsquo;ve convinced you that you want some RHEL subscriptions, <a href="http://red.ht/1Aowjfh">please go have a look</a>, and please let Red Hat know that you appreciated this post and my work.</p>
+
+<p>Happy Hacking!</p>
+
+<p>James</p>
+
+<p><strong>UPDATE:</strong> I&rsquo;ve tested that this process also works with the new <em>RHEL 7.1</em> release!
+<strong>UPDATE:</strong> I&rsquo;ve <a href="https://github.com/purpleidea/vagrant-builder/commit/e99f888a5cde5ad152c8e27b37c8202763bc9357">tested</a> that this process also works with the new <em>RHEL 7.2</em> release!</p>
+
+<p><br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>February 23, 2015<br>
+				<small>1883 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/acl">acl</a> <a class="label label-default" href="/tags/btrfs">btrfs</a> <a class="label label-default" href="/tags/centos">centos</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/oh-my-vagrant">oh-my-vagrant</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/qemu">qemu</a> <a class="label label-default" href="/tags/red-hat-enterprise-linux">red hat enterprise linux</a> <a class="label label-default" href="/tags/rhel">rhel</a> <a class="label label-default" href="/tags/setfacl">setfacl</a> <a class="label label-default" href="/tags/subscription-manager">subscription-manager</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-boxes">vagrant boxes</a> <a class="label label-default" href="/tags/vagrant-builder">vagrant-builder</a> <a class="label label-default" href="/tags/virt-builder">virt-builder</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/"><small>https://ttboj.wordpress.com/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa fa-github-square fa-2x"></i></a>
+
+
+
+			<a rel="me" href="https://mastodon.social/@purpleidea" class="btn btn-xs" style="background-color:#0000ff;color:#000000"><i class="fa fa-mastodon-square fa-2x"><b>M</b></i></a>
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2024 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a> &middot;
+				<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder.md" style="color:grey">Edit this page</a>
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

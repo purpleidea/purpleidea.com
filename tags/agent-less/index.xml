@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agent Less on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/agent-less/</link>
+    <description>Recent content in Agent Less on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 07 Oct 2016 15:33:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/agent-less/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.
+Prior knowledge
+If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    
+  </channel>
+</rss>

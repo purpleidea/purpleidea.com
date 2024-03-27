@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/github/</link>
+    <description>Recent content in Github on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 16 Feb 2016 12:15:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing: git tpush</title>
+      <link>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</link>
+      <pubDate>Tue, 16 Feb 2016 12:15:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</guid>
+      <description>On today&amp;rsquo;s issue of &amp;ldquo;one hour hacks&amp;rdquo;, I&amp;rsquo;ll show you how you can stop your git drive-by&amp;rsquo;s to git master from breaking your CI tests&amp;hellip; Let&amp;rsquo;s continue!
+The problem:
+Sometimes I&amp;rsquo;ve got a shitty one-line patch that I want to push to git master. I&amp;rsquo;m usually right, and everything tests out fine, but usually isn&amp;rsquo;t always, and then I look silly while I frantically try to fix git master on a project that I maintain.</description>
+    </item>
+    
+    <item>
+      <title>puppet gluster module now in git</title>
+      <link>https://purpleidea.com/blog/2012/07/27/puppet-gluster-module-now-in-git/</link>
+      <pubDate>Fri, 27 Jul 2012 00:48:50 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/07/27/puppet-gluster-module-now-in-git/</guid>
+      <description>The thoughtful bodepd has been kind enough to help me get my puppet-gluster module off the ground and publicized a bit too. My first few commits have been all clean up to get my initial hacking up to snuff with the puppet style guidelines. Sadly, I love indenting my code with tabs, and this is against the puppet rules :(
+ http://www.emacswiki.org/emacs/TabsSpacesBothI&amp;rsquo;ll be accepting patches by email, but I&amp;rsquo;d prefer discussion first, especially since I&amp;rsquo;ve got a few obvious things brewing in my mental queue that should hit master shortly.</description>
+    </item>
+    
+  </channel>
+</rss>

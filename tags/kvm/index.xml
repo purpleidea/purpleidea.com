@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kvm on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/kvm/</link>
+    <description>Recent content in Kvm on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 25 Apr 2012 01:22:22 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/kvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IPMI for linux professionals</title>
+      <link>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</link>
+      <pubDate>Wed, 25 Apr 2012 01:22:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</guid>
+      <description>The nostalgia of serial console servers, kvm&amp;rsquo;s and switched PDU&amp;rsquo;s is hopefully no longer visible in your server room. If not, you must definitely start playing catch up. Please forgive my ignorance, but these things might still be common for big windows shops, however if that&amp;rsquo;s the case, you&amp;rsquo;ve got an entirely different set of problems ;)
+IPMI is an IP based protocol that allows you to talk directly to a little computer, usually built in to your server.</description>
+    </item>
+    
+  </channel>
+</rss>

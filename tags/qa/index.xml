@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Qa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/qa/</link>
+    <description>Recent content in Qa on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 16 Jan 2014 20:28:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/qa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing GlusterFS during “Glusterfest”</title>
+      <link>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</link>
+      <pubDate>Thu, 16 Jan 2014 20:28:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</guid>
+      <description>The GlusterFS community is having a &amp;ldquo;test day&amp;rdquo;. Puppet-Gluster+Vagrant is a great tool to help with this, and it has now been patched to support alpha, beta, qa, and rc releases! Because it was built so well (*cough*, shameless plug), it only took one patch.
+Okay, first make sure that your Puppet-Gluster+Vagrant setup is working properly. I have only tested this on Fedora 20. Please read: Automatically deploying GlusterFS with Puppet-Gluster+Vagrant!</description>
+    </item>
+    
+  </channel>
+</rss>

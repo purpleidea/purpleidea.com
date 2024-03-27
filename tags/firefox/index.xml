@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Firefox on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/firefox/</link>
+    <description>Recent content in Firefox on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 14 Nov 2015 06:50:35 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/firefox/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Matching arbitrary URL&#39;s to custom Firefox profiles</title>
+      <link>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</link>
+      <pubDate>Sat, 14 Nov 2015 06:50:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</guid>
+      <description>We&amp;rsquo;re constantly clicking on all sorts of different URL&amp;rsquo;s throughout the day. These clickable links appear in webpages (including in &amp;ldquo;web apps&amp;rdquo; like gmail) in mail clients like Evolution, in terminals such as GNOME-terminal, and any other GTK+ app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&amp;rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along.</description>
+    </item>
+    
+    <item>
+      <title>Captive web portals are considered harmful</title>
+      <link>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</link>
+      <pubDate>Thu, 27 Nov 2014 00:46:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</guid>
+      <description>Recently, when I tried to access http://slashdot.org/ in Firefox, I would see my browser title bar flash briefly to &amp;ldquo;AT&amp;amp;T GUI&amp;rdquo;, and then I would get redirected to: http://slashdot.org/cgi-bin/redirect.ha which returns slashdot&amp;rsquo;s custom error 404 page! What is going on? (Read on for answer&amp;hellip;)  Did slashdot mess up their mod_rewrite config? (Nope, works fine in a different browser&amp;hellip;) Did my HTTPS everywhere extension go crazy? (Nope, still broken when disabled&amp;hellip;) Are my HTTP requests being MITM-ed?</description>
+    </item>
+    
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.
+Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    
+    <item>
+      <title>Fixing jerky scrolling in Firefox</title>
+      <link>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</link>
+      <pubDate>Thu, 11 Apr 2013 05:53:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</guid>
+      <description>Fedora did a lovely job of updating me to the latest version (v. 20) of Firefox. One problem I found, was that scrolling on certain pages was quite jerky. Performance was worse (or more likely) on pages with a frameset, and pages which were long. Pages with many images made this problem worse.
+It turns out that the workaround is to disable hardware acceleration:
+After you&amp;rsquo;ve unchecked this box, restart Firefox, and scrolling is now considerably smoother.</description>
+    </item>
+    
+    <item>
+      <title>visible close buttons on every firefox tab (including the last one)</title>
+      <link>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</link>
+      <pubDate>Mon, 26 Nov 2012 05:42:20 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</guid>
+      <description>After hacking around with a few firefox internals the other day, I decided there was another little annoyance that I had&amp;hellip; When I&amp;rsquo;m acting insane and using my mouse to open and close tabs, the per tab close button disappears when there is only one tab left! This is apparently a feature, and while I can respect it as a default, it certainly isn&amp;rsquo;t an option for me. Thankfully, there are a lot of common minded individuals on the net, and the (hack) solution already existed.</description>
+    </item>
+    
+    <item>
+      <title>more rows and columns on firefox new tab page</title>
+      <link>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</link>
+      <pubDate>Sat, 24 Nov 2012 19:09:37 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</guid>
+      <description>Firefox has a &amp;ldquo;new tab&amp;rdquo; speed dial type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.
+My one gripe is that it only shows you a default grid of 3 x 3. You can easily change that if you look in the secret preferences. Open a new tab and type in: about:config, accept the warning, and then search for: browser.</description>
+    </item>
+    
+  </channel>
+</rss>

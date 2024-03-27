@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Libvirt on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/libvirt/</link>
+    <description>Recent content in Libvirt on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 14 Mar 2016 00:50:48 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/libvirt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been two months since I announced mgmt, and now it&amp;rsquo;s time to continue the story by telling you more about the design of what&amp;rsquo;s now in git master. Before I get into those details, let me quickly recap what&amp;rsquo;s happened since then.
+Mgmt community recap:
+ I gave the first public presentation about mgmt at CfgMgmtCamp. I repeated the talk at DevConf.cz. The video recording is available. Felix wrote about his work cross compiling puppet code to mgmt.</description>
+    </item>
+    
+    <item>
+      <title>Thanking Oh-My-Vagrant contributors for version 1.0.0</title>
+      <link>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</link>
+      <pubDate>Tue, 18 Aug 2015 03:12:26 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</guid>
+      <description>The Oh-My-Vagrant project became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.
+james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count 188 james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1) commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371 Author: James Shubin &amp;lt;james@shubin.ca&amp;gt; Date: Thu Aug 28 01:08:03 2014 -0400 Initial commit of vagrant-puppet-docker-template... This is an attempt to prototype a default environment for vagrant+puppet+docker hacking.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!
+Background:
+This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt, and have even been submitting, patches and issues! (This &amp;ldquo;closed&amp;rdquo; issue needs solving!) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.
+Default provider:
+I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt</title>
+      <link>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</link>
+      <pubDate>Mon, 09 Dec 2013 20:14:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</guid>
+      <description>Apparently lots of people are using Vagrant these days, so I figured I&amp;rsquo;d try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I&amp;rsquo;ve done. I did this on Fedora 19. Feel free to suggest improvements.
+Intro:
+Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like Puppet. It&amp;rsquo;s often used for development.</description>
+    </item>
+    
+  </channel>
+</rss>

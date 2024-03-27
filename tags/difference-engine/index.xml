@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Difference Engine on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/difference-engine/</link>
+    <description>Recent content in Difference Engine on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 24 Jul 2014 00:41:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/difference-engine/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:
+3 files changed, 1401 insertions(+), 215 deletions(-)  You should now have a highly capable user type, along with some quick examples.
+I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    
+  </channel>
+</rss>

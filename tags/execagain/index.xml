@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Execagain on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/execagain/</link>
+    <description>Recent content in Execagain on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 24 Mar 2014 18:37:23 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/execagain/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing Puppet Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</link>
+      <pubDate>Mon, 24 Mar 2014 18:37:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</guid>
+      <description>Puppet is missing a number of much-needed features. That&amp;rsquo;s the bad news. The good news is that I&amp;rsquo;ve been able to write some of these as modules that don&amp;rsquo;t need to change the Puppet core! This is an article about one of these features.
+Posit: It&amp;rsquo;s not possible to apply all of your Puppet manifests in a single run.
+I believe that this holds true for the current implementation of Puppet.</description>
+    </item>
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

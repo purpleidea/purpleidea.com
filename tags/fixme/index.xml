@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fixme on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fixme/</link>
+    <description>Recent content in Fixme on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 08 Apr 2013 21:27:29 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/fixme/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support releasing early and often, for some value of $early and $often. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;
+I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many.</description>
+    </item>
+    
+  </channel>
+</rss>

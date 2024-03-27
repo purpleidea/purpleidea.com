@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apt Get on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/apt-get/</link>
+    <description>Recent content in Apt Get on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 14 Mar 2016 00:50:48 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/apt-get/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been two months since I announced mgmt, and now it&amp;rsquo;s time to continue the story by telling you more about the design of what&amp;rsquo;s now in git master. Before I get into those details, let me quickly recap what&amp;rsquo;s happened since then.
+Mgmt community recap:
+ I gave the first public presentation about mgmt at CfgMgmtCamp. I repeated the talk at DevConf.cz. The video recording is available. Felix wrote about his work cross compiling puppet code to mgmt.</description>
+    </item>
+    
+    <item>
+      <title>why linux is powerful or: how to erase half your system and then fix it</title>
+      <link>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</link>
+      <pubDate>Wed, 14 Oct 2009 16:00:57 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</guid>
+      <description>after a brief bout of stupidity i quickly realized that my makefile had gone awry and was quickly eating through my filesystem.
+after ^C killing it, it seems i only took out most of /lib/* and /usr/sbin/* &amp;ndash; who needs those anyways&amp;hellip; apparently almost everyone.
+what happened next. well it turns out i was lucky and had a few shells and a webbrowser open&amp;ndash; attempts to launch new programs will fail, but existing programs are already loaded in memory so i was able to work.</description>
+    </item>
+    
+  </channel>
+</rss>

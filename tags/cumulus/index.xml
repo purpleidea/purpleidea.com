@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cumulus on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/cumulus/</link>
+    <description>Recent content in Cumulus on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Nov 2014 02:23:52 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/cumulus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>The fact that we manage the switches in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of silicon which happens to be able to dramatically speed up the switching bandwidth.
+ beware of proprietary silicon, it&amp;rsquo;s absurd!That tiny bit of silicon is known as an ASIC, or an application specific integrated circuit, and one particularly well performing ASIC (which is present in many commercially available switches) is called the Trident.</description>
+    </item>
+    
+  </channel>
+</rss>

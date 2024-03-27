@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Https on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/https/</link>
+    <description>Recent content in Https on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 27 Nov 2014 00:46:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/https/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Captive web portals are considered harmful</title>
+      <link>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</link>
+      <pubDate>Thu, 27 Nov 2014 00:46:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</guid>
+      <description>Recently, when I tried to access http://slashdot.org/ in Firefox, I would see my browser title bar flash briefly to &amp;ldquo;AT&amp;amp;T GUI&amp;rdquo;, and then I would get redirected to: http://slashdot.org/cgi-bin/redirect.ha which returns slashdot&amp;rsquo;s custom error 404 page! What is going on? (Read on for answer&amp;hellip;)  Did slashdot mess up their mod_rewrite config? (Nope, works fine in a different browser&amp;hellip;) Did my HTTPS everywhere extension go crazy? (Nope, still broken when disabled&amp;hellip;) Are my HTTP requests being MITM-ed?</description>
+    </item>
+    
+  </channel>
+</rss>

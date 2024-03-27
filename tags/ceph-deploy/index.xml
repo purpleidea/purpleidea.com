@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ceph Deploy on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ceph-deploy/</link>
+    <description>Recent content in Ceph Deploy on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 28 Dec 2015 14:59:23 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/ceph-deploy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>Daniel P. Berrangé wrote about trying out a single node ceph cluster. I decided to take his article and turn it into an Oh-My-Vagrant omv.yaml file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.
+If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the omv.yaml file that I&amp;rsquo;ve just published and run omv up.</description>
+    </item>
+    
+  </channel>
+</rss>

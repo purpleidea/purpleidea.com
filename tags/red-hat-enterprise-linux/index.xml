@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Red Hat Enterprise Linux on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/red-hat-enterprise-linux/</link>
+    <description>Recent content in Red Hat Enterprise Linux on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 23 Feb 2015 22:48:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/red-hat-enterprise-linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building RHEL Vagrant Boxes with Vagrant-Builder</title>
+      <link>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</link>
+      <pubDate>Mon, 23 Feb 2015 22:48:39 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</guid>
+      <description>Vagrant is a great tool for development, but Red Hat Enterprise Linux (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they&amp;rsquo;re running in production.
+Secondly, when hacking on projects that have a long initial setup phase (eg: a long rpm install) it would be excellent if hackers could roll their own modified base boxes, so that certain common operations could be re-factored out into the base image.</description>
+    </item>
+    
+  </channel>
+</rss>

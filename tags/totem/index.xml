@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Totem on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/totem/</link>
+    <description>Recent content in Totem on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 26 Jun 2014 00:01:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/totem/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>Master SDN hacker Flavio sent me some tunes. They were sitting on my desktop in a folder:
+$ ls ~/Desktop/ uncopyrighted_tunes_from_flavio/  I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the nautilus file browser to select which folder to play, and the totem music/video player to do the playing.
+Drop a file named totem into:
+~/.local/share/nautilus/scripts/  with the contents:
+#!/bin/bash # o hai from purpleidea exec totem -- &amp;quot;$@&amp;quot;  and make it executable with:</description>
+    </item>
+    
+  </channel>
+</rss>

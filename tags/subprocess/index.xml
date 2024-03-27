@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Subprocess on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/subprocess/</link>
+    <description>Recent content in Subprocess on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 07 Oct 2009 10:24:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/subprocess/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>the python subprocess module</title>
+      <link>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</link>
+      <pubDate>Wed, 07 Oct 2009 10:24:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</guid>
+      <description>i&amp;rsquo;m sure that i won&amp;rsquo;t be able to tell you anything revolutionary which can&amp;rsquo;t be found out by reading the manual, but i thought i would clarify it, and by showing you a specific example which i needed.
+subprocess.Popen accepts a bunch or args, one of which is the shell argument, which is False by default. If you specify shell=True then the first argument of popen should be a string which is what gets parsed by the shell and then eventually run.</description>
+    </item>
+    
+  </channel>
+</rss>

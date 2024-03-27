@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash Tutor on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bash-tutor/</link>
+    <description>Recent content in Bash Tutor on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 31 Mar 2010 10:13:48 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/bash-tutor/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>lecturing and git-bisect</title>
+      <link>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</link>
+      <pubDate>Wed, 31 Mar 2010 10:13:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</guid>
+      <description>I was recently asked to give a lecture for the PRELUDE series at McGill. Here was my abstract:  I don&amp;rsquo;t like computers, and neither should you. We spend too much time figuring out how to talk to them, instead of having them figure out how to understand us. There&amp;rsquo;s a big discontinuity between what software is providing, and the killer features we want! We&amp;rsquo;re not completely lost though. There are a lot of good tools and methodologies available!</description>
+    </item>
+    
+    <item>
+      <title>scary cool bash scripting inside a Makefile</title>
+      <link>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</link>
+      <pubDate>Wed, 31 Mar 2010 10:05:21 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</guid>
+      <description>Makefiles are both scary and wonderful. When both these adjectives are involved, it often makes for interesting hacking. This is likely the reason I use bash.
+In any case, I digress, back to real work. I use Makefiles as a general purpose tool to launch any of a number of shell scripts which I use to maintain my code, and instead of actually having external shell scripts, I just build any necessary bash right into the Makefile.</description>
+    </item>
+    
+  </channel>
+</rss>

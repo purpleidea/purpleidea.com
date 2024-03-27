@@ -1,0 +1,58 @@
+---
+title: Unequivocal Ideas
+draft: true
+---
+
+From time-to-time, I've encountered situations where I thought that something
+_should_ absolutely be so. There are many situations where I might not agree
+with something, but that I realize opinions may differ. What follows is a list
+of things that _should be_ unequivocably so. Sadly, some of them aren't. If you
+find someone who disagrees with something on this list, it must only be because:
+
+1. They're evil, corrupt, or don't have good intentions.
+2. I misunderstood some aspect, perspective or finer detail. Please
+[contact me](/contact/) to let me know what I got wrong.
+
+I'll give a description and short summary for each of the listed items. I
+suspect that most of the time, issues with the list will be due to #1. If
+something on this list can be corrected in real life, please help fix these
+issues in our world! Lastly, if you've got an idea that you think should be on
+this list, please [let me know](/contact/). Please keep in mind that this list
+is both non-exhaustive, and is also meant to be non-controversial. That is, any
+reasonable person should agree about these points. For example, believing that
+[the Earth is not flat](https://en.wikipedia.org/wiki/Flat_Earth) is fair game
+for this list, where as the existence of [extraterrestrial life](https://en.wikipedia.org/wiki/Extraterrestrial_life)
+is not, since we can't unequivocably say we haven't experienced any.
+
+I'll update this as often as I can remember to, and when I encounter new ideas.
+Each item can be clicked on to expand its contents. With that, here the list:
+
+{{< ideaanchor name="idea1" text="Online terms of service must be easily made available for print or download." >}}
+A friend decided to sign-up with an online stock trading service called
+_Questrade_. Their site was very modern looking. To sign up they were first
+required to give all sorts of personal information including a social insurance
+number, home address, and so on. Finally at the end of this privacy nightmare,
+they're told to agree to **five** different agreements! Each is a long
+scrollable document with no easy or obvious way to download or print any of
+them! Have a look:
+
+<br /><table><tr style="border: 1px solid black"><td>
+{{< blog-image src="questrade1.png" caption="These are javascript links, they don't open in a new window!" scale="100%" >}}
+</td></tr><tr style="border: 1px solid black"><td>
+{{< blog-image src="questrade2.png" caption="You can copy+paste, but you'd lose most of the tables and formatting, and the documents are unreasonably long." scale="100%" >}}
+</td></tr></table><br />
+
+If you want to do business online, that's okay, but with the ease at which it is
+to update your [terms of service](https://en.wikipedia.org/wiki/Terms_of_service)
+and pretend something wasn't in there, you should at least make it obvious for
+end-users to save a copy, even though some of the conditions are probably
+overbearing and should be illegal in their own right.
+{{< ideaanchorclose >}}
+
+{{< ideaanchor name="idea2" text="Idea 2..." >}}
+Short commentary about idea 2.
+{{< ideaanchorclose >}}
+
+{{< ideaanchor name="idea3" text="Idea 3..." >}}
+Short commentary about idea 3.
+{{< ideaanchorclose >}}

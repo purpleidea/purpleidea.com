@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Memoization on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/memoization/</link>
+    <description>Recent content in Memoization on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Nov 2013 00:03:15 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/memoization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Advanced recursion and memoization in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</link>
+      <pubDate>Wed, 27 Nov 2013 00:03:15 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</guid>
+      <description>As a follow-up to my original article on recursion in Puppet, and in my attempt to Push Puppet (to its limit), I&amp;rsquo;ll now attempt some more advanced recursion techniques in Puppet.
+In my original recursion example, the type does recurse, but the callee cannot return any value to the caller because it is a type, and not strictly a function. This limitation immediately limits the usefulness of this technique, but I&amp;rsquo;ll try to press on!</description>
+    </item>
+    
+  </channel>
+</rss>

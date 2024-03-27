@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Talks on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/talks/</link>
+    <description>Recent content in Talks on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 20 Sep 2013 16:23:12 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/talks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gluster Community Day, Thursday</title>
+      <link>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</link>
+      <pubDate>Fri, 20 Sep 2013 16:23:12 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</guid>
+      <description>I&amp;rsquo;m here in New Orleans hacking up a storm and getting to meet fellow gluster users IRL. John Mark Walker started off with a great &amp;ldquo;State of the GlusterFS union&amp;rdquo; style talk.
+Today Louis (semiosis) gave a great talk about running glusterfs on amazon. It was highly pragmatic and he explained how he chose the number of bricks per host. The talk will be posted online shortly.
+Marco Ceppi from Canonical gave a talk about juju and gluster.</description>
+    </item>
+    
+  </channel>
+</rss>

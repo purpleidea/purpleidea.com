@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Clusvcadm on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/clusvcadm/</link>
+    <description>Recent content in Clusvcadm on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 03 Jan 2013 04:25:15 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/clusvcadm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Clustering virtual machines with rgmanager and clusvcadm</title>
+      <link>https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/</link>
+      <pubDate>Thu, 03 Jan 2013 04:25:15 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/</guid>
+      <description>This could be a post detailing how to host clustered virtual machines with rgmanager and clusvcadm, but that is a longer story and there is much work to do. For now, I will give you a short version including an informative &amp;ldquo;gotcha&amp;rdquo;.
+With my cluster up and running, I added a virtual machine entry to my cluster.conf:
+&amp;lt;vm name=&amp;quot;test1&amp;quot; domain=&amp;quot;somedomain&amp;quot; path=&amp;quot;/shared/vm/&amp;quot; autostart=&amp;quot;0&amp;quot; exclusive=&amp;quot;0&amp;quot; recovery=&amp;quot;restart&amp;quot; use_virsh=&amp;quot;1&amp;quot; /&amp;gt;  This goes inside the  block.</description>
+    </item>
+    
+    <item>
+      <title>How I broke (and fixed) my rgmanager service</title>
+      <link>https://purpleidea.com/blog/2012/12/31/how-i-broke-and-fixed-my-rgmanager-service/</link>
+      <pubDate>Mon, 31 Dec 2012 00:34:45 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/12/31/how-i-broke-and-fixed-my-rgmanager-service/</guid>
+      <description>Rgmanager, clustat and clusvcadm are useful tools in cluster land. I recently built a custom resource which I added to one of my service chains. Upon inspecting clustat, I noticed:
+[root@server1 ~]# clustat Member Status: Quorate Member Name ID Status ------ ---- ---- ------ server1 1 Online, Local, rgmanager server2 2 Online, rgmanager Service Name Owner (Last) State ------- ---- ----- ------ ----- service:service-main-server1 (server1) failed  Looking at /var/log/messages, I found:</description>
+    </item>
+    
+  </channel>
+</rss>

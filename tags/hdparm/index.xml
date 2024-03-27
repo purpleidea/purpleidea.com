@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hdparm on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hdparm/</link>
+    <description>Recent content in Hdparm on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 02 Nov 2009 23:21:57 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/hdparm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>scary man pages</title>
+      <link>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</link>
+      <pubDate>Mon, 02 Nov 2009 23:21:57 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</guid>
+      <description>while doing a little reading and research, i ended up reading a bit of the hdparm man page. never in my life have i read such a scary man page. i guess it is appropriate for halloween, but it came 2 days late in my case. as a result of my being so impressed with the sheer amount of warnings in the manual, i have decided to compile them here.  &amp;ndash;dco-restore Reset all drive settings, features, and accessible capacities back to factory defaults and full capabilities.</description>
+    </item>
+    
+  </channel>
+</rss>

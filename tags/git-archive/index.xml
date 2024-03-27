@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git Archive on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/git-archive/</link>
+    <description>Recent content in Git Archive on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 23 Jul 2015 20:32:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/git-archive/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git archive with submodules and tar magic</title>
+      <link>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</link>
+      <pubDate>Thu, 23 Jul 2015 20:32:27 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</guid>
+      <description>Git submodules are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&amp;rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&amp;rsquo;ve used them in projects like puppet-gluster, oh-my-vagrant, and others. If you&amp;rsquo;re not familiar with them, do a bit of reading and come back later, I&amp;rsquo;ll wait.
+I recently did some work packaging Oh-My-Vagrant as RPM&amp;rsquo;s.</description>
+    </item>
+    
+  </channel>
+</rss>

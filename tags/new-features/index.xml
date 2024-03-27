@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>New Features on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/new-features/</link>
+    <description>Recent content in New Features on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 08 Sep 2013 04:51:14 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/new-features/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>New puppet-gluster features before Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</link>
+      <pubDate>Sun, 08 Sep 2013 04:51:14 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</guid>
+      <description>Hey there,
+I&amp;rsquo;ve done a bit of puppet-gluster hacking lately to try to squeeze some extra features and testing in before Linuxcon. Here&amp;rsquo;s a short list:  SELinux fixes to keep Dan Walsh happy :) Ping and status checks before volume creation. Now puppet-gluster will be less noisy about failures or missing executions that are due to the necessary incremental nature of puppet-gluster runs. You&amp;rsquo;ll need multiple puppet runs to get a complete setup, so don&amp;rsquo;t let puppet complain part way through.</description>
+    </item>
+    
+  </channel>
+</rss>

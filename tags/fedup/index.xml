@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fedup on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fedup/</link>
+    <description>Recent content in Fedup on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 04 Aug 2013 05:02:18 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/fedup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Upgrading from Fedora 18 to Fedora 19</title>
+      <link>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</link>
+      <pubDate>Sun, 04 Aug 2013 05:02:18 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</guid>
+      <description>It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. Fedora 18 was one of the worst releases ever, so I figured it could only get better. I ran my backups as usual, however this time I didn&amp;rsquo;t seem to need them, the upgrade process went off without a hitch! I used the fedup-cli process over the network. I always run these things inside of screen.</description>
+    </item>
+    
+    <item>
+      <title>Picking up the pieces after a Fedora 18 install</title>
+      <link>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</link>
+      <pubDate>Tue, 12 Feb 2013 01:15:38 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</guid>
+      <description>I love GNOME and Fedora, but &amp;ldquo;upgrading&amp;rdquo; from Fedora 17 to 18 did not go well for me. I recommend you wait until either these are all fixed, or Fedora 19+ suits your needs. Here are a list of problems I had, and some workarounds. Hopefully proper patches to these bugs will get merged quickly, so that you don&amp;rsquo;t need to use these fixes.
+Problem: Boot fails after upgrade from Fedora 17 to Fedora 18.</description>
+    </item>
+    
+  </channel>
+</rss>

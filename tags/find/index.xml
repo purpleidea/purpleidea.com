@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Find on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/find/</link>
+    <description>Recent content in Find on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 30 Sep 2014 01:05:07 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/find/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    
+  </channel>
+</rss>

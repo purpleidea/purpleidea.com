@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Autocomplete on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/autocomplete/</link>
+    <description>Recent content in Autocomplete on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 17 May 2013 07:39:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/autocomplete/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.
+Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    
+  </channel>
+</rss>

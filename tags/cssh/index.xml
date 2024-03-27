@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cssh on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/cssh/</link>
+    <description>Recent content in Cssh on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 02 Jan 2014 00:40:49 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/cssh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (cssh) and screen with vagrant. I decided to expand on my vsftp script. First read:  Vagrant on Fedora with libvirt
+ and  Vagrant vsftp and other tricks
+ to get up to speed on the background information.
+Vagrant screen:
+First, a simple screen hack&amp;hellip; I often use my vssh alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with sudo-ing to root and then running screen each time.</description>
+    </item>
+    
+  </channel>
+</rss>

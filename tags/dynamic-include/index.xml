@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dynamic Include on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/dynamic-include/</link>
+    <description>Recent content in Dynamic Include on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 16 Jan 2013 07:29:14 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/dynamic-include/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dynamically including classes in puppet</title>
+      <link>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</link>
+      <pubDate>Wed, 16 Jan 2013 07:29:14 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</guid>
+      <description>As you might already know, I like pushing the boundaries of what puppet is able to do. Today, I realized that I needed to include a class by variable name. A simple way to do this is possible with:
+$foo = &#39;world&#39; class { &amp;quot;hello::${foo}::params&amp;quot;: }  I then realized that you could also do this with the standard include keyword:
+$foo = &#39;world&#39; include &amp;quot;hello::${foo}::params&amp;quot;  If you&amp;rsquo;re really insane enough to need to have your include depend on a variable, then this should suit your needs.</description>
+    </item>
+    
+  </channel>
+</rss>

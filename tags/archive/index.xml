@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Archive on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/archive/</link>
+    <description>Recent content in Archive on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 22 Oct 2014 17:22:56 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/archive/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing Evolution&#39;s git master and GNOME continuous</title>
+      <link>https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/</link>
+      <pubDate>Wed, 22 Oct 2014 17:22:56 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/</guid>
+      <description>I&amp;rsquo;ve wanted a feature in Evolution for a while. It was formally requested in 2002, and it just recently got fixed in git master. I only started publicly groaning about this missing feature in 2013, and mcrha finally patched it. I tested the feature and found a small bug, mcrha patched that too, and I finally re-tested it. Now I&amp;rsquo;m blogging about this process so that you can get involved too!</description>
+    </item>
+    
+  </channel>
+</rss>

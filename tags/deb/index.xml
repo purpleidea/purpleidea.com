@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deb on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/deb/</link>
+    <description>Recent content in Deb on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 14 Mar 2016 00:50:48 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/deb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been two months since I announced mgmt, and now it&amp;rsquo;s time to continue the story by telling you more about the design of what&amp;rsquo;s now in git master. Before I get into those details, let me quickly recap what&amp;rsquo;s happened since then.
+Mgmt community recap:
+ I gave the first public presentation about mgmt at CfgMgmtCamp. I repeated the talk at DevConf.cz. The video recording is available. Felix wrote about his work cross compiling puppet code to mgmt.</description>
+    </item>
+    
+    <item>
+      <title>Bittorent sync for repository mirroring</title>
+      <link>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</link>
+      <pubDate>Mon, 23 Sep 2013 02:06:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</guid>
+      <description>Theron Conrey writes about using: BitTorrent Sync as Geo-Replication for Storage We got a chance to talk about this idea at Linuxcon. I&amp;rsquo;m not entirely convinced there aren&amp;rsquo;t some problem edge cases with this solution, but I think it will be hard to tell as long as the BitTorrent sync library is proprietary. I did come up with a special case of Theron&amp;rsquo;s idea that I believe could work well.</description>
+    </item>
+    
+  </channel>
+</rss>

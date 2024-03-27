@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dangerous on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/dangerous/</link>
+    <description>Recent content in Dangerous on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 20 Jan 2014 11:46:31 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/dangerous/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!
+Status quo:
+Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.
+Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    
+    <item>
+      <title>scary cool bash scripting inside a Makefile</title>
+      <link>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</link>
+      <pubDate>Wed, 31 Mar 2010 10:05:21 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</guid>
+      <description>Makefiles are both scary and wonderful. When both these adjectives are involved, it often makes for interesting hacking. This is likely the reason I use bash.
+In any case, I digress, back to real work. I use Makefiles as a general purpose tool to launch any of a number of shell scripts which I use to maintain my code, and instead of actually having external shell scripts, I just build any necessary bash right into the Makefile.</description>
+    </item>
+    
+    <item>
+      <title>scary man pages</title>
+      <link>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</link>
+      <pubDate>Mon, 02 Nov 2009 23:21:57 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</guid>
+      <description>while doing a little reading and research, i ended up reading a bit of the hdparm man page. never in my life have i read such a scary man page. i guess it is appropriate for halloween, but it came 2 days late in my case. as a result of my being so impressed with the sheer amount of warnings in the manual, i have decided to compile them here.  &amp;ndash;dco-restore Reset all drive settings, features, and accessible capacities back to factory defaults and full capabilities.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Strace on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/strace/</link>
+    <description>Recent content in Strace on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 26 Oct 2013 16:02:12 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/strace/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Easier strace of scripts with pidof -x</title>
+      <link>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</link>
+      <pubDate>Sat, 26 Oct 2013 16:02:12 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</guid>
+      <description>Here&amp;rsquo;s a one minute read, about a trick which I discovered today:
+When running an strace, it&amp;rsquo;s common to do something like:
+strace -p&amp;lt;pid&amp;gt;  Smarter hackers know that they can use some bash magic and do:
+strace -p`pidof &amp;lt;process name&amp;gt;`  However, if you&amp;rsquo;re tracing a script named foo.py, this won&amp;rsquo;t work because the real process is the script&amp;rsquo;s interpreter, and pidof python, might return other unrelated python scripts.</description>
+    </item>
+    
+  </channel>
+</rss>

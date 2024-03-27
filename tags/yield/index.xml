@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yield on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/yield/</link>
+    <description>Recent content in Yield on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 20 Aug 2009 13:15:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/yield/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>the power to yield a better console interface</title>
+      <link>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</link>
+      <pubDate>Thu, 20 Aug 2009 13:15:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</guid>
+      <description>as part of a different project, i needed to duplicate some existing terminal magic in python. what i needed to write was something similar to the getch() function in curses. it can be found in: ncurses*/base/lib_getch.c after doing an: apt-get source libncurses5
+what&amp;rsquo;s the magic? i need to stay in a continuous loop reading from the file descriptor, however i want to return periodically so that gobject doesn&amp;rsquo;t block and the interface can remain responsive.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Exit Code on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/exit-code/</link>
+    <description>Recent content in Exit Code on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 29 Jan 2014 19:43:44 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/exit-code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Show the exit status in your $PS1</title>
+      <link>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</link>
+      <pubDate>Wed, 29 Jan 2014 19:43:44 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</guid>
+      <description>As an update to my earlier article, a friend gave me an idea of how to make my $PS1 even better&amp;hellip; First, the relevant part of my ~/.bashrc:
+ps1_prompt() { local ps1_exit=$? if [ $ps1_exit -eq 0 ]; then #ps1_status=`echo -e &amp;#34;\[\033[32m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[\033[0m\]&amp;#34;` 	ps1_status=&amp;#39;\$&amp;#39; else ps1_status=`echo -e &amp;#34;\[\033[1;31m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[\033[0m\]&amp;#34;` fi ps1_git=&amp;#39;&amp;#39; if [ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;&amp;#39; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;master&amp;#39; ]; then ps1_git=&amp;#34; (\[\033[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[\033[0m\])&amp;#34; fi PS1=&amp;#34;${debian_chroot:+($debian_chroot)}\u@\h:\[\033[01;34m\]\w\[\033[00m\]${ps1_git}${ps1_status}&amp;#34; } # preserve earlier PROMPT_COMMAND entries.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Multi Head on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/multi-head/</link>
+    <description>Recent content in Multi Head on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 23 Oct 2009 21:09:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/multi-head/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>multi monitors and how it should all work (long babble)</title>
+      <link>https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/</link>
+      <pubDate>Fri, 23 Oct 2009 21:09:13 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/</guid>
+      <description>at work i use two screens for my day to day workflow. i find it&amp;rsquo;s much more efficient for doing work, like coding. i&amp;rsquo;ll often have at least one terminal open, a full screen text editor, and usually a number of references, such as the dbus specification open in a web browser.
+i recently just realized that one of the reasons multiple monitors are so useful to me, isn&amp;rsquo;t because of the increased screen real estate (although that certaintly is an important factor) but because of how the window manager deals with the windows.</description>
+    </item>
+    
+  </channel>
+</rss>

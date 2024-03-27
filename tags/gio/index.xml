@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gio on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gio/</link>
+    <description>Recent content in Gio on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 21 Jul 2009 10:19:52 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/gio/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[py]inotify, polling, gtk and gio</title>
+      <link>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</link>
+      <pubDate>Tue, 21 Jul 2009 10:19:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</guid>
+      <description>i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel inotify support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with pyinotify and io_add_watch, but on closer inspection into the pyinotify code it turns out that it seems to actually use polling! (search for: select.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Killer Feature on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/killer-feature/</link>
+    <description>Recent content in Killer Feature on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 14 May 2013 01:41:23 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/killer-feature/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Overriding attributes of collected exported resources</title>
+      <link>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</link>
+      <pubDate>Tue, 14 May 2013 01:41:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</guid>
+      <description>This post is about a particularly elegant (and crucial) feature in puppet exported resources: attribute overriding. If you&amp;rsquo;re not already familiar with exported resources, you should start there, as they are the killer feature that makes configuration management with puppet awesome. (I haven&amp;rsquo;t found any explicit docs about this feature either, so feel free to comment if you know where they&amp;rsquo;re hidden.)
+Setup: I&amp;rsquo;ve got a virtual machine which exports a resource to N different nodes.</description>
+    </item>
+    
+  </channel>
+</rss>

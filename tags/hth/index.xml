@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hth on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hth/</link>
+    <description>Recent content in Hth on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Jan 2010 13:03:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/hth/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>sorting out the confusion</title>
+      <link>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</link>
+      <pubDate>Wed, 27 Jan 2010 13:03:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</guid>
+      <description>if i&amp;rsquo;ve been silent as of late, it&amp;rsquo;s because i&amp;rsquo;ve been furiously coding away. i&amp;rsquo;ve got what i think are some elegant implementations cooking, and with any luck my extra work will pay off in hours and days and months of time saved down the road. i&amp;rsquo;ve got a few interesting (interesting with respect to your average rating of the blog posts on this site) posts cooking in my mind, and hopefully they&amp;rsquo;ll appear shortly!</description>
+    </item>
+    
+  </channel>
+</rss>

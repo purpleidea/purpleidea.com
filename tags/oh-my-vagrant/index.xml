@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Oh My Vagrant on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/oh-my-vagrant/</link>
+    <description>Recent content in Oh My Vagrant on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 07 Oct 2016 15:33:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/oh-my-vagrant/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.
+Prior knowledge
+If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    
+    <item>
+      <title>Upcoming speaking</title>
+      <link>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</link>
+      <pubDate>Mon, 18 Jan 2016 00:32:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</guid>
+      <description>I&amp;rsquo;ve got a few upcoming speaking engagements. If you&amp;rsquo;ll be attending one of these events, come see me or any of the other excellent speakers!
+Please remember to check the official schedules in case there are any changes!
+I&amp;rsquo;ll be speaking at the Brussels CentOS Dojo: Automated Infrastructure Testing with Oh-My-Vagrant &amp;hellip;and the CentOS CI Time/date unconfirmed: I&amp;rsquo;ll be showing some CI tricks, and showing you how the CentOS CI is the perfect CI for multi-machine test environments.</description>
+    </item>
+    
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>Daniel P. Berrangé wrote about trying out a single node ceph cluster. I decided to take his article and turn it into an Oh-My-Vagrant omv.yaml file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.
+If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the omv.yaml file that I&amp;rsquo;ve just published and run omv up.</description>
+    </item>
+    
+    <item>
+      <title>Thanking Oh-My-Vagrant contributors for version 1.0.0</title>
+      <link>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</link>
+      <pubDate>Tue, 18 Aug 2015 03:12:26 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</guid>
+      <description>The Oh-My-Vagrant project became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.
+james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count 188 james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1) commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371 Author: James Shubin &amp;lt;james@shubin.ca&amp;gt; Date: Thu Aug 28 01:08:03 2014 -0400 Initial commit of vagrant-puppet-docker-template... This is an attempt to prototype a default environment for vagrant+puppet+docker hacking.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant and Oh-My-Vagrant on RHEL7</title>
+      <link>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</link>
+      <pubDate>Tue, 11 Aug 2015 15:09:16 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</guid>
+      <description>My employer keeps paying me, which I appreciate, so it&amp;rsquo;s good to spend some time to make sure RHEL7 customers get a great developer experience! So here&amp;rsquo;s how to make vagrant, vagrant-libvirt and Oh-My-Vagrant work on RHEL 7+. The same steps should work for CentOS 7+.
+I&amp;rsquo;ll first paste the commands you need to run, and then I&amp;rsquo;ll explain what&amp;rsquo;s happening for those that are interested:
+# run these commands, and then get hacking!</description>
+    </item>
+    
+    <item>
+      <title>Git archive with submodules and tar magic</title>
+      <link>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</link>
+      <pubDate>Thu, 23 Jul 2015 20:32:27 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</guid>
+      <description>Git submodules are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&amp;rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&amp;rsquo;ve used them in projects like puppet-gluster, oh-my-vagrant, and others. If you&amp;rsquo;re not familiar with them, do a bit of reading and come back later, I&amp;rsquo;ll wait.
+I recently did some work packaging Oh-My-Vagrant as RPM&amp;rsquo;s.</description>
+    </item>
+    
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>Making Oh-My-Vagrant (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)
+Prerequisites:
+If you haven&amp;rsquo;t read any of the previous articles about Oh-My-Vagrant, I&amp;rsquo;d recommend you start there.</description>
+    </item>
+    
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>In this new crazy world of containers and immutable hosts, one might still want to run previous generation software such as Puppet on a current generation Atomic host. This article will explain how you can do that, and offer some proof of concept code.
+The atomic host doesn&amp;rsquo;t provide a yum or dnf command, because the software is pre-baked into a read-only /usr/ partition. To &amp;ldquo;install&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>I&amp;rsquo;ve added the ability to deploy a Kubernetes cluster with Oh-My-Vagrant (omv). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a rolling update, you can use omv to test this out in minutes! I&amp;rsquo;ve recorded a screencast (~15 min), if you&amp;rsquo;d like to see some of this in action.</description>
+    </item>
+    
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>The Oh-My-Vagrant (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, omv can be used to help this happen more naturally.
+Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:</description>
+    </item>
+    
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>With Oh-My-Vagrant (omv) you can set up a dev environment in seconds. (Read the omv introduction if you&amp;rsquo;ve never used it before!) Since everything is defined in a single omv.yaml file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;
+In the omv.yaml file there is an extern variable.</description>
+    </item>
+    
+    <item>
+      <title>Building RHEL Vagrant Boxes with Vagrant-Builder</title>
+      <link>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</link>
+      <pubDate>Mon, 23 Feb 2015 22:48:39 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</guid>
+      <description>Vagrant is a great tool for development, but Red Hat Enterprise Linux (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they&amp;rsquo;re running in production.
+Secondly, when hacking on projects that have a long initial setup phase (eg: a long rpm install) it would be excellent if hackers could roll their own modified base boxes, so that certain common operations could be re-factored out into the base image.</description>
+    </item>
+    
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>If you&amp;rsquo;re a reader of my code or of this blog, it&amp;rsquo;s no secret that I hack on a lot of puppet and vagrant. Recently I&amp;rsquo;ve fooled around with a bit of docker, too. I realized that the vagrant, environments I built for puppet-gluster and puppet-ipa needed to be generalized, and they needed new features too. Therefore&amp;hellip;
+Introducing: Oh My Vagrant!
+Oh My Vagrant is an attempt to provide an easy to use development environment so that you can be up and hacking quickly, and focusing on the real devops problems.</description>
+    </item>
+    
+  </channel>
+</rss>

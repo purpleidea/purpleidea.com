@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bootstrap on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bootstrap/</link>
+    <description>Recent content in Bootstrap on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 18 Oct 2014 16:43:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/bootstrap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>I had an itch to scratch, and I wanted to get a bit more familiar with Openshift. I had used it in the past, but it was time to have another go. The app and the code are now available. Feel free to check out: https://pdfdoc-purpleidea.rhcloud.com/ This is a simple app that takes the URL of a markdown file on GitHub, and outputs a pandoc converted PDF. I wanted to use pandoc specifically, because it produces PDF&amp;rsquo;s that were beautifully created with LaTeX.</description>
+    </item>
+    
+  </channel>
+</rss>

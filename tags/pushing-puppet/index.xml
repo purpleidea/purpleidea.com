@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pushing Puppet on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/pushing-puppet/</link>
+    <description>Recent content in Pushing Puppet on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 05 Nov 2013 15:00:19 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/pushing-puppet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>Hi there,
+I hope you enjoyed my &amp;ldquo;Pushing Puppet (to its limit)&amp;rdquo; talk and demos from Puppet Camp D.C., LISA 2013. As requested, I&amp;rsquo;ve posted the code and slides.
+Here is the code: https://github.com/purpleidea/puppet-pushing
+This module will require three modules as dependencies. The dependencies are:  My Puppet-Common module https://github.com/purpleidea/puppet-common My Puppet-Runonce module https://github.com/purpleidea/puppet-runonce My Puppet-FSM module https://github.com/purpleidea/puppet-fsm  Each example doesn&amp;rsquo;t require all the dependencies, so if you&amp;rsquo;re only interested in the FSM, you only need that module.</description>
+    </item>
+    
+  </channel>
+</rss>

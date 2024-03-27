@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Math on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/math/</link>
+    <description>Recent content in Math on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Aug 2014 05:52:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rough data density calculations</title>
+      <link>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</link>
+      <pubDate>Wed, 27 Aug 2014 05:52:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</guid>
+      <description>Seagate has just publicly announced 8TB HDD&amp;rsquo;s in a 3.5&amp;rdquo; form factor. I decided to do some rough calculations to understand the density a bit better&amp;hellip;
+Note: I have decided to ignore the distinction between Terabytes (TB) and Tebibytes (TiB), since I always work in base 2, but I hate the -bi naming conventions. Seagate is most likely announcing an 8TB HDD, which is actually smaller than a true 8TiB drive.</description>
+    </item>
+    
+  </channel>
+</rss>

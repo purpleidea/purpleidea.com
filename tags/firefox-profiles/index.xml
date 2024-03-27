@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Firefox Profiles on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/firefox-profiles/</link>
+    <description>Recent content in Firefox Profiles on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 14 Nov 2015 06:50:35 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/firefox-profiles/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Matching arbitrary URL&#39;s to custom Firefox profiles</title>
+      <link>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</link>
+      <pubDate>Sat, 14 Nov 2015 06:50:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</guid>
+      <description>We&amp;rsquo;re constantly clicking on all sorts of different URL&amp;rsquo;s throughout the day. These clickable links appear in webpages (including in &amp;ldquo;web apps&amp;rdquo; like gmail) in mail clients like Evolution, in terminals such as GNOME-terminal, and any other GTK+ app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&amp;rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along.</description>
+    </item>
+    
+  </channel>
+</rss>

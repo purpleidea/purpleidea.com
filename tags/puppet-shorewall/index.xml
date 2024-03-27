@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppet Shorewall on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/puppet-shorewall/</link>
+    <description>Recent content in Puppet Shorewall on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Nov 2014 02:23:52 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/puppet-shorewall/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>The fact that we manage the switches in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of silicon which happens to be able to dramatically speed up the switching bandwidth.
+ beware of proprietary silicon, it&amp;rsquo;s absurd!That tiny bit of silicon is known as an ASIC, or an application specific integrated circuit, and one particularly well performing ASIC (which is present in many commercially available switches) is called the Trident.</description>
+    </item>
+    
+    <item>
+      <title>Puppet-Gluster now available as RPM</title>
+      <link>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</link>
+      <pubDate>Thu, 27 Mar 2014 20:32:41 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</guid>
+      <description>I&amp;rsquo;ve been afraid of RPM and package maintaining [1] for years, but thanks to Kaleb Keithley, I have finally made some RPM&amp;rsquo;s that weren&amp;rsquo;t generated from a high level tool. Now that I have the boilerplate done, it&amp;rsquo;s a relatively painless process!
+In case you don&amp;rsquo;t know kkeithley, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a $BEVERAGE.</description>
+    </item>
+    
+    <item>
+      <title>first release of puppet-shorewall</title>
+      <link>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</link>
+      <pubDate>Mon, 21 Oct 2013 00:07:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</guid>
+      <description>Oh, hi there.
+In case you&amp;rsquo;re interested, I&amp;rsquo;ve just made a first release of my puppet-shorewall module. This isn&amp;rsquo;t meant as an exhaustive shorewall module, but it does provide most of the usual functionality that most users need.
+In particular, it&amp;rsquo;s the module dependency that I use for many of my other puppet modules that provide firewalling. This is probably where you&amp;rsquo;re most likely to consume it.
+In general most modules just implement shorewall::rule, so if you really don&amp;rsquo;t want to use this code, you can implement that signature yourself, or not use automatic firewalling.</description>
+    </item>
+    
+  </channel>
+</rss>

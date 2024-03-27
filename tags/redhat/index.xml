@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redhat on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/redhat/</link>
+    <description>Recent content in Redhat on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 30 Oct 2018 08:39:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/redhat/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The End of a Red Giant</title>
+      <link>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</link>
+      <pubDate>Tue, 30 Oct 2018 08:39:00 -0400</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</guid>
+      <description>As I&amp;rsquo;m sure you&amp;rsquo;ve now heard, Red Hat is being acquired by IBM.
+Reactions have ranged from:
+ The first two emotions everyone experienced.to:
+ The classic humourous response.to:
+ The classy response.to:
+ The thing we&amp;#39;re all curious about.to everything in between. If someone were to leak me a copy of the memo-list 2018-October.txt.gz mailman archive, I&amp;rsquo;d sure love to see that! (Of course I&amp;rsquo;m joking and I wouldn&amp;rsquo;t actually ask anyone to do this.</description>
+    </item>
+    
+    <item>
+      <title>Leaving Red Hat</title>
+      <link>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</link>
+      <pubDate>Wed, 04 Apr 2018 06:27:35 -0500</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</guid>
+      <description>I&amp;rsquo;ve spent about four years at Red Hat, and now it&amp;rsquo;s time to move on&amp;hellip;
+TL;DR: had to leave Red Hat and start Patreon to fund mgmt.
+What follows is a bit of historical rambling, and some forward looking statements.
+Retrospective:
+Long-time readers of my blog will know that I was very active in the puppet ecosystem for many years. I learned a lot while writing puppet code, and while building some of my outrageous puppet hacks.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>I&amp;rsquo;ve added the ability to deploy a Kubernetes cluster with Oh-My-Vagrant (omv). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a rolling update, you can use omv to test this out in minutes! I&amp;rsquo;ve recorded a screencast (~15 min), if you&amp;rsquo;d like to see some of this in action.</description>
+    </item>
+    
+    <item>
+      <title>Working at RedHat</title>
+      <link>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</link>
+      <pubDate>Wed, 02 Apr 2014 14:27:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</guid>
+      <description>So this happened:
+ James just James at RedHat headquarters in North Carolina wearing his new red hat.RedHat made me an offer, and I am happy to say that I have just started this week!
+I am proud to have joined a company that employs many of the worlds foremost, highly professional and clever hackers. It is indubitably the best Free Software [1] / Open Source company out there, and they ship some of the greatest and most elegant software available.</description>
+    </item>
+    
+    <item>
+      <title>Puppet-Gluster and me at Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</link>
+      <pubDate>Mon, 02 Sep 2013 05:50:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</guid>
+      <description>John Mark Walker, (from Redhat) has been kind enough to invite me to speak at the Linuxcon Gluster Workshop in New Orleans. I&amp;rsquo;ll be speaking about puppet-gluster, giving demos, and hopefully showing off some new features. I&amp;rsquo;m also looking forward to meeting up with gluster expert Joe Julian.
+If there are features that puppet-gluster is missing, or you have a use case that I haven&amp;rsquo;t covered, please let me know, and I&amp;rsquo;ll try to work on it for you ahead of the conference.</description>
+    </item>
+    
+  </channel>
+</rss>

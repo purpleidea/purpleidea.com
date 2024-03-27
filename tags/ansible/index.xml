@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ansible on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ansible/</link>
+    <description>Recent content in Ansible on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Nov 2016 23:59:49 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>I&amp;rsquo;ve got a brand new core feature in mgmt called send/recv which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.
+History
+This is my historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.
+Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, CFEngine burst onto the scene with the first real solution to this problem.</description>
+    </item>
+    
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.
+I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+    
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>With Oh-My-Vagrant (omv) you can set up a dev environment in seconds. (Read the omv introduction if you&amp;rsquo;ve never used it before!) Since everything is defined in a single omv.yaml file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;
+In the omv.yaml file there is an extern variable.</description>
+    </item>
+    
+  </channel>
+</rss>

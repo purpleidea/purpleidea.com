@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nohup on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/nohup/</link>
+    <description>Recent content in Nohup on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 22 Mar 2013 23:34:59 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/nohup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:
+james@computer:~/some/awesome/directory$ nautilus . Initializing nautilus-open-terminal extension Shutting down nautilus-open-terminal extension james@computer:~/some/awesome/directory$  This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it.</description>
+    </item>
+    
+  </channel>
+</rss>

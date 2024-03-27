@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Virt Builder on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/virt-builder/</link>
+    <description>Recent content in Virt Builder on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 23 Feb 2015 22:48:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/virt-builder/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building RHEL Vagrant Boxes with Vagrant-Builder</title>
+      <link>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</link>
+      <pubDate>Mon, 23 Feb 2015 22:48:39 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</guid>
+      <description>Vagrant is a great tool for development, but Red Hat Enterprise Linux (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they&amp;rsquo;re running in production.
+Secondly, when hacking on projects that have a long initial setup phase (eg: a long rpm install) it would be excellent if hackers could roll their own modified base boxes, so that certain common operations could be re-factored out into the base image.</description>
+    </item>
+    
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!
+Status quo:
+Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    
+  </channel>
+</rss>
