@@ -129,19 +129,27 @@ that you want to provision.
 
 Here's how you use the tool:
 
-1. Download the binary from [here](https://github.com/purpleidea/mgmt/releases/tag/0.0.25).
+1. Download the latest binary from [here](https://github.com/purpleidea/mgmt/releases/).
 
 2. In a terminal make it executable.
 
 3. Run it as root. I'll explain why later.
 
-Those three terminal commands:
+Those terminal commands:
 
-`wget https://github.com/purpleidea/mgmt/releases/download/0.0.25/mgmt-linux-amd64-0.0.25 -O mgmt`
+```bash
+# get the latest version automatically:
+version=$(wget -q https://api.github.com/repos/purpleidea/mgmt/releases/latest -O - | grep '"tag_name": ' | cut -d '"' -f 4,4)
 
-`chmod u+x mgmt`
+# download
+wget https://github.com/purpleidea/mgmt/releases/download/${version}/mgmt-linux-amd64-${version} -O mgmt
 
-`sudo ./mgmt provisioner`
+# make executable
+chmod u+x mgmt
+
+# run it!
+sudo ./mgmt provisioner
+```
 
 Your provisioner is now running! By default, the tool will attempt to provision
 a [Fedora](https://getfedora.org/) workstation for the `x86_64` architecture.
@@ -171,7 +179,7 @@ want to use for the new machine and press enter.
 At this point the tool will startup and then download some initial files to use
 for provisioning. After a short while (~2 min) depending on the speed of your
 computer and internet connection, a bunch of things will scroll past your screen
-and you eventually see some text like:
+and you will eventually see some text like:
 
 ```
 12:34:56 engine: print[ready]: Msg: ready to provision!
@@ -314,10 +322,10 @@ unnecessary output from the user.
 
 I've got quite a lot planned to improve upon this. Today is the beginning of
 what I considered minimally viable. There are big upcoming changes both in the
-`mgmt` tool, and in this provisioning project. Among the first is that you might
-have noticed that type unification can take about ~1.5 min in some cases. This
-delay should drastically decrease once I spend some time to implement some
-optimizations, if they haven't already landed.
+`mgmt` tool, and in this provisioning project. Among the first is that we want
+to implement a faster type unification algorithm. It can take upwards of ~1.5
+min in some cases, and this delay should drastically decrease once I spend some
+time to implement a better algorithm if it hasn't already landed.
 
 {{< blog-paragraph-header "Are there any bugs?" >}}
 
