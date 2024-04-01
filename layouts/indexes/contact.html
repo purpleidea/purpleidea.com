@@ -46,8 +46,10 @@
 		</div>
 	</div>
 {{ partial "footer.html" . }}
-	<!-- from: https://keybase.io/kbpgp_public/releases/kbpgp-2.0.8-signed-release.zip -->
-	<script src="/js/kbpgp/kbpgp-2.0.8-min.js"></script>
+	<!-- from: https://github.com/keybase/kbpgp/blob/master/rel/kbpgp-2.1.0-min.js -->
+	<!--<script src="/js/kbpgp/kbpgp-2.1.0-min.js"></script>-->
+	<!--<script src="/js/kbpgp/kbpgp-2.1.0.js"></script>-->
+	<script src="/js/kbpgp/kbpgp-2.1.0-modified.js"></script>
 	<!-- from: https://raw.githubusercontent.com/caolan/async/master/dist/async.min.js -->
 	<script src="/js/async.min.js"></script>
 	<script>
@@ -61,6 +63,7 @@
 			function(err, user) {
 				if (err) {
 					console.log("could not load public key, message not sent");
+					console.log("error: ", err);
 					window.alert("could not load public key, message not sent");
 					return
 				}
