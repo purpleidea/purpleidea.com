@@ -356,7 +356,7 @@ talks: [
 
   {
     topic: "Next Generation Config Mgmt",
-    video: "https://www.youtube.com/watch?v=MmpwOQAb_SE&html5=1",
+    video: "https://www.youtube.com/watch?v=0vO93ni1zos",
     location: "NLUUG, Bunnik",
     location_url: "https://www.nluug.nl/activiteiten/events/nj16/abstracts/ab07.html",
     rating: "Unrated",
@@ -389,7 +389,7 @@ talks: [
 
   {
     topic: "Next Generation Config Mgmt",
-    video: "https://vimeo.com/191493409",
+    video: "https://www.youtube.com/watch?v=-4g14KUVPVk",
     location: "HighLoadStrategy, Vilnius",
     location_url: "http://highloadstrategy.com/",
     rating: "Rated #1",
@@ -415,7 +415,7 @@ talks: [
 
   {
     topic: "Next Generation Config Mgmt",
-    video: "https://www.youtube.com/watch?v=jB992Zb3nH0&html5=1",
+    video: "https://www.youtube.com/watch?v=_TowsFAWWRA",
     location: "SystemdConf, Berlin",
     location_url: "https://cfp.systemd.io/en/systemdconf_2016/public/events/1",
     rating: "Unrated",

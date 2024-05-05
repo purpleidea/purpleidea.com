@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="generator" content="Hugo 0.59.1" />
+
+        <title>Augeas resource for mgmt - Julien Pivotto</title>
+    </head>
+    <body class="bg-faded">
+        <nav class="navbar is-info">
+    <div class="container">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            roidelapluie
+        </a>
+        <div class="navbar-burger" data-target="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="navbar-menu" id="navMenu">
+        
+        <div class="navbar-start">
+            
+            
+            <a class="navbar-item " href="/">
+                        About me
+                    </a>
+                
+                
+            
+            <a class="navbar-item  is-active" href="/blog/">
+                        Blogs
+                    </a>
+                
+                
+            
+            <a class="navbar-item " href="/exherbo/">
+                        Exherbo
+                    </a>
+                
+                
+            
+            <a class="navbar-item " href="/talk/">
+                        Talks
+                    </a>
+                
+                
+            
+            <a class="navbar-item " href="/wiki/">
+                        Wikis
+                    </a>
+                
+                
+        </div>
+        <div class="navbar-end">
+                
+                
+                    
+                    
+                    <a class="navbar-item  is-active" href="/en">
+                        en
+                    </a>
+                
+                
+                    
+                    
+                    <a class="navbar-item " href="/fr">
+                        fr
+                    </a>
+                
+        </div>
+    </div>
+    </div>
+</nav>
+
+
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Blog
+            </h1>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+<h1 class="title"><a href="/blog/2017/02/14/mgmt-augeas/" class="text-gray-dark">
+    Augeas resource for mgmt
+</a></h1>
+<div class="content text-justify">
+    
+
+<p>Last week, I joined the <a href="https://github.com/purpleidea/mgmt">mgmt</a> hackathon,
+just after Config Management Camp Ghent. It helped me understanding how mgmt
+actually works and that helped me to introduce two improvements in the codebase:
+prometheus support, and an augeas resource.</p>
+
+<p>I will blog later about the prometheus support, today I will focus about the
+Augeas resource.</p>
+
+<h2 id="defining-a-resource">Defining a resource</h2>
+
+<p>Currently, mgmt does not have a DSL, it only uses plain yaml.</p>
+
+<p>Here is how you define an Augeas resource:</p>
+
+<pre><code>---
+graph: mygraph
+resources:
+  augeas:
+  - name: sshd_config
+    lens: Sshd.lns
+    file: &quot;/etc/ssh/sshd_config&quot;
+    sets:
+      - path: X11Forwarding
+        value: no
+edges:
+</code></pre>
+
+<p>As you can see, the augeas resource takes several parameters:</p>
+
+<ul>
+<li>lens: the lens file to load</li>
+<li>file: the path to the file that we want to change</li>
+<li>sets: the paths/values that we want to change</li>
+</ul>
+
+<p>Setting file will create a Watcher, which means that each time you change that
+file, mgmt will check if it is still aligned with what you want.</p>
+
+<h2 id="code">Code</h2>
+
+<p>The code can be found there: <a href="https://github.com/purpleidea/mgmt/pull/128/files">https://github.com/purpleidea/mgmt/pull/128/files</a></p>
+
+<p>We are using go bindings for Augeas: <a href="https://github.com/dominikh/go-augeas/">https://github.com/dominikh/go-augeas/</a>
+Unfortunately, those bindings only support a recent version of Augeas. It was
+needed to vendor it to make it build on travis.</p>
+
+<h2 id="future-plans">Future plans</h2>
+
+<p>Future plans regarding this resource is to add some parameters, probably a
+parameter to use as Puppet &ldquo;onlyif&rdquo; parameter, and a &ldquo;rm&rdquo; parameter.</p>
+
+</div>
+<div class="message">
+    <div class="message-body has-text-centered">
+        <a href="/blog/2017/02/14/mgmt-augeas/">Permalink</a>. Category: Linux. Tags: automation planet-inuits.<br/>
+        First published on Tue 14 February 2017.
+    </div>
+</div>
+
+    </div>
+</section>
+        <footer class="footer">
+            <div class="container">
+            <div class="content has-text-centered">
+                <p>Content written by Julien Pivotto, licensed under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/deed.en_US">Creative Commons Attribution 4.0 International License</a>. Conference logos are property of their owners are used here as fair use.
+</p>
+                <p>Proudly generated by <a href="http://gohugo.io/">Hugo 0.59.1</a>, using <a href="http://bulma.io/">Bulma</a>, <a href="https://github.com/twitter/twemoji">Twemoji</a> (licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>) and <a href="http://pygments.org/">Pygments</a>.
+</p>
+                <p>This page has been generated on 2021-05-02.
+</p>
+            </div>
+            </div>
+        </footer>
+        <link rel="stylesheet" href="/css/bulma.css">
+        <link rel="stylesheet" href="/css/twemoji.css">
+        <script type="text/javascript" src="/js/bulma.js"></script>
+        <script type="text/javascript" src="/js/twemoji.min.js"></script>
+        <script type="text/javascript">
+twemoji.parse(document.body);
+        </script>
+    </body>
+</html>
+
