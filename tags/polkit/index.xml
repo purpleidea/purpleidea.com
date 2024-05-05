@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Polkit on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/polkit/</link>
+    <description>Recent content in Polkit on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 13 May 2014 18:58:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/polkit/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!
+Background:
+This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt</title>
+      <link>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</link>
+      <pubDate>Mon, 09 Dec 2013 20:14:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</guid>
+      <description>Apparently lots of people are using Vagrant these days, so I figured I&amp;rsquo;d try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I&amp;rsquo;ve done. I did this on Fedora 19. Feel free to suggest improvements.
+Intro:
+Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like Puppet. It&amp;rsquo;s often used for development.</description>
+    </item>
+    
+  </channel>
+</rss>

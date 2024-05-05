@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bad on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bad/</link>
+    <description>Recent content in Bad on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 14 Oct 2009 16:00:57 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/bad/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>why linux is powerful or: how to erase half your system and then fix it</title>
+      <link>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</link>
+      <pubDate>Wed, 14 Oct 2009 16:00:57 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</guid>
+      <description>after a brief bout of stupidity i quickly realized that my makefile had gone awry and was quickly eating through my filesystem.
+after ^C killing it, it seems i only took out most of /lib/* and /usr/sbin/* &amp;ndash; who needs those anyways&amp;hellip; apparently almost everyone.
+what happened next. well it turns out i was lucky and had a few shells and a webbrowser open&amp;ndash; attempts to launch new programs will fail, but existing programs are already loaded in memory so i was able to work.</description>
+    </item>
+    
+  </channel>
+</rss>

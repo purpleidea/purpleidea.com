@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>File Roller on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/file-roller/</link>
+    <description>Recent content in File Roller on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 12 Jul 2017 10:09:46 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/file-roller/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Extracting movies from libreoffice</title>
+      <link>https://purpleidea.com/blog/2017/07/12/extracting-movies-from-libreoffice/</link>
+      <pubDate>Wed, 12 Jul 2017 10:09:46 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/07/12/extracting-movies-from-libreoffice/</guid>
+      <description>I have a short movie that I imported into a libreoffice presentation. I wanted a copy of that movie back, but I couldn&amp;rsquo;t figure out how to extract a copy. In desperation, I figured I&amp;rsquo;d try opening the file with file-roller, the GNOME archive manager.
+james@computer:/tmp$ file mgmt-berlin-osdc-17may2017.odp mgmt-berlin-osdc-17may2017.odp: OpenDocument Presentation james@computer:/tmp$ mkdir out james@computer:/tmp$ file-roller -f mgmt-berlin-osdc-17may2017.odp -e out/ [snip] james@computer:/tmp$ cd out/ james@computer:/tmp/out$ ls Configurations2/ Media/ meta.xml Pictures/ styles.</description>
+    </item>
+    
+  </channel>
+</rss>

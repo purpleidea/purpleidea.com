@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Polar Bears on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/polar-bears/</link>
+    <description>Recent content in Polar Bears on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 17 Feb 2014 18:23:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/polar-bears/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Building a snow shelter</title>
+      <link>https://purpleidea.com/blog/2014/02/17/building-a-snow-shelter/</link>
+      <pubDate>Mon, 17 Feb 2014 18:23:27 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/02/17/building-a-snow-shelter/</guid>
+      <description>To give you a break from the usual GNU/Linux/DevOps/Puppet/GlusterFS drab, I&amp;rsquo;ve decided to have a go at writing a different kind of technical article. This article will show you how to build the traditional Canadian snow dwelling known as a quinzee. If you will be travelling to Canada, I recommended that you read through this article ahead of time, so that you don&amp;rsquo;t offend your host by being unfamiliar with their traditional living accommodations.</description>
+    </item>
+    
+  </channel>
+</rss>

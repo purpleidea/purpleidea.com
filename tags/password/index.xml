@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Password on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/password/</link>
+    <description>Recent content in Password on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 07 Dec 2016 07:00:20 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/password/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Send/Recv in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</link>
+      <pubDate>Wed, 07 Dec 2016 07:00:20 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</guid>
+      <description>I previously published &amp;ldquo;A revisionist history of configuration management&amp;rdquo;. I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I will explain Send/Recv in this article, but first a few clarifications to the aforementioned article.
+Clarifications
+I mentioned that my &amp;ldquo;revisionist history&amp;rdquo; was inaccurate, but I failed to mention that it was also not exhaustive! Many things were left out either because they were proprietary, niche, not well-known, of obscure design or simply for brevity.</description>
+    </item>
+    
+    <item>
+      <title>Securely managing secrets for FreeIPA with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</link>
+      <pubDate>Fri, 06 Jun 2014 06:12:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</guid>
+      <description>Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.
+In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer.</description>
+    </item>
+    
+  </channel>
+</rss>

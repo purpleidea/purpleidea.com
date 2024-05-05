@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Making an empty RPM - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/font-awesome.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+	
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Making an empty RPM</strong><br><small></small></h3>
+					<hr>
+					<p>I am definitely not an RPM expert, in fact, I&rsquo;m afraid of it, but with recent tools such as <a href="https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/">COPR</a>, and <a href="/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/">my glorious Makefile</a>, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.</p>
+
+<p><table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="cat-typing.gif"><img class="size-full wp-image-1128" src="cat-typing.gif" alt="A video of what my work building this RPM looked like." width="100%" height="100%" /></a></td></tr><tr><td> A video of my journey building this RPM.</td></tr></table></br /></p>
+
+<p>Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM. As a result, I wanted to build as small an RPM as possible. This took me down a much longer path than I thought it would.</p>
+
+<p><span style="text-decoration:underline;">Step 1: The empty spec file</span></p>
+
+<p>I thought this would be easy. It turns out it was not. Here&rsquo;s what happened&hellip;</p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ cat vagrant-libvirt.spec
+%global project_version 0.0.24
+
+Name:       vagrant-libvirt
+Version:    0.0.24
+Release:    noop
+Summary:    A fake vagrant-libvirt RPM
+License:    AGPLv3+
+BuildArch:  noarch
+
+Requires:   vagrant &gt;= 1.6.5
+
+%description
+A fake vagrant-libvirt RPM
+
+%prep
+%setup -c -q -T -D -a 0
+
+%build
+
+%install
+
+%files
+
+%changelog
+james@computer:/tmp/rpmbuild$ rpmbuild -bs vagrant-libvirt.spec 
+error: No &quot;Source:&quot; tag in the spec file
+</code></pre>
+
+<p>Amazingly, <code>rpmbuild</code> fails to build without specifying a Source0 directive. Gah&hellip; As an aside, yes the License field was also required, or it won&rsquo;t build either! So let&rsquo;s create a dummy RPM to use as the source!</p>
+
+<p><span style="text-decoration:underline;">Step 2: The empty tarball</span></p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ tar -cjf vagrant-libvirt-noop.tar.bz2
+tar: Cowardly refusing to create an empty archive
+Try 'tar --help' or 'tar --usage' for more information.
+</code></pre>
+
+<p>Apparently <code>tar</code> doesn&rsquo;t want to cooperate either! Maybe these utilities have some sort of ingrained existential fear of nothingness? I can work around this though.</p>
+
+<p><span style="text-decoration:underline;">Step 3: The empty file</span></p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ echo hello &gt; README
+james@computer:/tmp/rpmbuild$ tar -cjf vagrant-libvirt-noop.tar.bz2 README
+james@computer:/tmp/rpmbuild$ echo $?
+0
+james@computer:/tmp/rpmbuild$ cat vagrant-libvirt.spec
+%global project_version 0.0.24
+
+Name:       vagrant-libvirt
+Version:    0.0.24
+Release:    noop
+Summary:    A fake vagrant-libvirt RPM
+License:    AGPLv3+
+Source0:    vagrant-libvirt-noop.tar.bz2
+BuildArch:  noarch
+
+Requires:   vagrant &gt;= 1.6.5
+
+%description
+A fake vagrant-libvirt RPM
+
+%prep
+%setup -c -q -T -D -a 0
+
+%build
+
+%install
+
+%files
+
+%changelog
+</code></pre>
+
+<p>Okay great! Now to build the RPM&hellip;</p>
+
+<p><span style="text-decoration:underline;">Step 4: The empty RPM</span></p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ mkdir SOURCES
+james@computer:/tmp/rpmbuild$ mv vagrant-libvirt-noop.tar.bz2 SOURCES/
+james@computer:/tmp/rpmbuild$ rpmbuild --define &quot;_topdir $(pwd)/&quot; -bs vagrant-libvirt.spec
+Wrote: /tmp/rpmbuild/SRPMS/vagrant-libvirt-0.0.24-noop.src.rpm
+james@computer:/tmp/rpmbuild$ rpmbuild --define &quot;_topdir $(pwd)/&quot; -bb vagrant-libvirt.spec
+Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.dUivHv
++ umask 022
++ cd /tmp/rpmbuild//BUILD
++ cd /tmp/rpmbuild/BUILD
++ /usr/bin/mkdir -p vagrant-libvirt-0.0.24
++ cd vagrant-libvirt-0.0.24
++ /usr/bin/bzip2 -dc /tmp/rpmbuild/SOURCES/vagrant-libvirt-noop.tar.bz2
++ /usr/bin/tar -xf -
++ STATUS=0
++ '[' 0 -ne 0 ']'
++ /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
++ exit 0
+Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.kLSHn2
++ umask 022
++ cd /tmp/rpmbuild//BUILD
++ cd vagrant-libvirt-0.0.24
++ exit 0
+Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.xTiM4y
++ umask 022
++ cd /tmp/rpmbuild//BUILD
++ '[' /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64 '!=' / ']'
++ rm -rf /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64
+++ dirname /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64
++ mkdir -p /tmp/rpmbuild/BUILDROOT
++ mkdir /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64
++ cd vagrant-libvirt-0.0.24
++ /usr/lib/rpm/find-debuginfo.sh --strict-build-id -m --run-dwz --dwz-low-mem-die-limit 10000000 --dwz-max-die-limit 110000000 /tmp/rpmbuild//BUILD/vagrant-libvirt-0.0.24
+/usr/lib/rpm/sepdebugcrcfix: Updated 0 CRC32s, 0 CRC32s did match.
++ /usr/lib/rpm/check-rpaths /usr/lib/rpm/check-buildroot
++ /usr/lib/rpm/brp-compress
++ /usr/lib/rpm/brp-strip-static-archive /usr/bin/strip
++ /usr/lib/rpm/brp-python-bytecompile /usr/bin/python 1
++ /usr/lib/rpm/brp-python-hardlink
++ /usr/lib/rpm/redhat/brp-java-repack-jars
+Processing files: vagrant-libvirt-0.0.24-noop.noarch
+Checking for unpackaged file(s): /usr/lib/rpm/check-files /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64
+Wrote: /tmp/rpmbuild/RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
+Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.0lR0a6
++ umask 022
++ cd /tmp/rpmbuild//BUILD
++ cd vagrant-libvirt-0.0.24
++ /usr/bin/rm -rf /tmp/rpmbuild/BUILDROOT/vagrant-libvirt-0.0.24-noop.x86_64
++ exit 0
+james@computer:/tmp/rpmbuild$
+</code></pre>
+
+<p>This worked too! It has some interesting output though&hellip;</p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ rpm -qlp RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
+(contains no files)
+james@computer:/tmp/rpmbuild$ ls -lAh RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
+-rw-rw-r--. 1 james 5.5K Aug 11 11:53 RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
+james@computer:/tmp/rpmbuild$
+</code></pre>
+
+<p>As you can see this has created an empty RPM, but which is about 5k in size. While this worked, builds submitted in COPR don&rsquo;t generate any output. I suppose this is a bug in COPR, but in the meantime, I still wanted something working. I added some nonsense to the spec file to continue.</p>
+
+<p><span style="text-decoration:underline;">Step 5: The final product</span></p>
+
+<pre><code>james@computer:/tmp/rpmbuild$ cat vagrant-libvirt.spec 
+%global project_version 0.0.24
+
+Name:       vagrant-libvirt
+Version:    0.0.24
+Release:    noop
+Summary:    A fake vagrant-libvirt RPM
+License:    AGPLv3+
+Source0:    vagrant-libvirt-noop.tar.bz2
+BuildArch:  noarch
+
+Requires:   vagrant &gt;= 1.6.5
+
+%description
+A fake vagrant-libvirt RPM
+
+%prep
+%setup -c -q -T -D -a 0
+
+%build
+
+%install
+rm -rf %{buildroot}
+# _datadir is typically /usr/share/
+install -d -m 0755 %{buildroot}/%{_datadir}/vagrant-libvirt/
+echo &quot;This is a phony vagrant-libvirt package.&quot; &gt; %{buildroot}/%{_datadir}/vagrant-libvirt/README
+
+%files
+%{_datadir}/vagrant-libvirt/README
+
+%changelog
+</code></pre>
+
+<p>After running the usual build commands, and sticking an SRPM up <a href="https://copr.fedoraproject.org/coprs/purpleidea/vagrant-libvirt/">in COPR, this builds</a> and installs as expected! Phew! There might a manual way to do this with cpio, but I wanted to use the official tools, and avoid hacking the spec.</p>
+
+<p>Perhaps there is a simpler way to workaround all of this, but until I find it, I hope you&rsquo;ve enjoyed my story,</p>
+
+<p>Happy Hacking!</p>
+
+<p>James</p>
+
+<p><strong>UPDATE:</strong> Reader <a href="https://twitter.com/beddari/status/631174766171410432">Jan pointed out</a>, that you could use <a href="https://github.com/jordansissel/fpm/">fpm</a> to accomplish the same thing with a one-liner. The modified one-liner is:</p>
+
+<pre><code>fpm -s empty -t rpm -d 'vagrant &gt;= 1.6.5' -n vagrant-libvirt -v 0.0.24 --iteration noop
+</code></pre>
+
+<p>This is a much shorter and more elegant solution, with the one exception that fpm doesn&rsquo;t currently produce SRPMS, which are needed so that a trusted build service like COPR distributes them to the users.</p>
+
+<p>Here&rsquo;s the full output and comparison and anyways:</p>
+
+<pre><code>james@computer:/tmp/ftest$ fpm -s empty -t rpm -d 'vagrant &gt;= 1.6.5' -n vagrant-libvirt -v 0.0.24 --iteration noop
+no value for epoch is set, defaulting to nil {:level=&gt;:warn}
+no value for epoch is set, defaulting to nil {:level=&gt;:warn}
+Created package {:path=&gt;&quot;vagrant-libvirt-0.0.24-noop.x86_64.rpm&quot;}
+james@computer:/tmp/ftest$ sha1sum vagrant-libvirt-0.0.24-noop.x86_64.rpm 61b1c200d2efa87d790a2243ccbc4c4ebb7ef64d  vagrant-libvirt-0.0.24-noop.x86_64.rpm
+james@computer:/tmp/ftest$ sha1sum ~/code/oh-my-vagrant/extras/.rpmbuild/RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm 
+5f2abb15264de6c1c7f09039945cd7bbd3a96404  /home/james/code/oh-my-vagrant/extras/.rpmbuild/RPMS/noarch/vagrant-libvirt-0.0.24-noop.noarch.rpm
+</code></pre>
+
+<p>While the two sha1sums aren&rsquo;t identical (probably due to timestamps or some other variant) the two RPM&rsquo;s should be functionally identical.</p>
+
+<p><br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>August 11, 2015<br>
+				<small>956 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/copr">copr</a> <a class="label label-default" href="/tags/cpio">cpio</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fpm">fpm</a> <a class="label label-default" href="/tags/freeipa">freeipa</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/kickstart">kickstart</a> <a class="label label-default" href="/tags/makefile">makefile</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetfreeipa">planetfreeipa</a> <a class="label label-default" href="/tags/planetipa">planetipa</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/rpm">rpm</a> <a class="label label-default" href="/tags/rpmbuild">rpmbuild</a> <a class="label label-default" href="/tags/spec">spec</a> <a class="label label-default" href="/tags/srpm">srpm</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/08/11/making-an-empty-rpm/"><small>https://ttboj.wordpress.com/2015/08/11/making-an-empty-rpm/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa fa-github-square fa-2x"></i></a>
+
+
+
+			<a rel="me" href="https://mastodon.social/@purpleidea" class="btn btn-xs" style="background-color:#0000ff;color:#000000"><i class="fa fa-mastodon-square fa-2x"><b>M</b></i></a>
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/08/11/making-an-empty-rpm">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2024 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a> &middot;
+				<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/08/11/making-an-empty-rpm.md" style="color:grey">Edit this page</a>
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

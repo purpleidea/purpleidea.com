@@ -1,6 +1,0 @@
-{{/* a good approximation of this in markdown is:
-##### <u>**foo**</u>:
-*/}}
-{{/* the trailing colon should only be present when we don't end with a special char:
-*/}}
-<br /><span style="text-decoration:underline; font-weight: bold;">{{.Get 0}}</span>{{if (and (eq (strings.TrimSuffix "." (.Get 0)) (.Get 0)) (eq (strings.TrimSuffix "?" (.Get 0)) (.Get 0))) }}:{{ end }}<br /><br />

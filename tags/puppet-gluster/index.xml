@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppet Gluster on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/puppet-gluster/</link>
+    <description>Recent content in Puppet Gluster on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 23 Jul 2015 20:32:27 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/puppet-gluster/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git archive with submodules and tar magic</title>
+      <link>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</link>
+      <pubDate>Thu, 23 Jul 2015 20:32:27 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</guid>
+      <description>Git submodules are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&amp;rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&amp;rsquo;ve used them in projects like puppet-gluster, oh-my-vagrant, and others. If you&amp;rsquo;re not familiar with them, do a bit of reading and come back later, I&amp;rsquo;ll wait.
+I recently did some work packaging Oh-My-Vagrant as RPM&amp;rsquo;s.</description>
+    </item>
+    
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>I had an itch to scratch, and I wanted to get a bit more familiar with Openshift. I had used it in the past, but it was time to have another go. The app and the code are now available. Feel free to check out: https://pdfdoc-purpleidea.rhcloud.com/ This is a simple app that takes the URL of a markdown file on GitHub, and outputs a pandoc converted PDF. I wanted to use pandoc specifically, because it produces PDF&amp;rsquo;s that were beautifully created with LaTeX.</description>
+    </item>
+    
+    <item>
+      <title>Continuous integration for Puppet modules</title>
+      <link>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</link>
+      <pubDate>Fri, 10 Oct 2014 15:34:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</guid>
+      <description>I just patched puppet-gluster and puppet-ipa to bring their infrastructure up to date with the current state of affairs&amp;hellip;
+What&amp;rsquo;s new?  Better README&amp;rsquo;s Rake syntax checking (fewer oopsies) CI (testing) with travis on git push (automatic testing for everyone) Use of .pmtignore to ignore files from puppet module packages (finally) Pushing modules to the forge with blacksmith (sweet!)  This last point deserves another mention. Puppetlabs created the &amp;ldquo;forge&amp;rdquo; to try to provide some sort of added value to their stewardship.</description>
+    </item>
+    
+    <item>
+      <title>Rough data density calculations</title>
+      <link>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</link>
+      <pubDate>Wed, 27 Aug 2014 05:52:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</guid>
+      <description>Seagate has just publicly announced 8TB HDD&amp;rsquo;s in a 3.5&amp;rdquo; form factor. I decided to do some rough calculations to understand the density a bit better&amp;hellip;
+Note: I have decided to ignore the distinction between Terabytes (TB) and Tebibytes (TiB), since I always work in base 2, but I hate the -bi naming conventions. Seagate is most likely announcing an 8TB HDD, which is actually smaller than a true 8TiB drive.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>Hiera data in modules and OS independent puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</link>
+      <pubDate>Wed, 04 Jun 2014 03:47:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</guid>
+      <description>Earlier this year, R.I.Pienaar released his brilliant data in modules hack, a few months ago, I got the chance to start implementing it in Puppet-Gluster, and today I have found the time to blog about it.
+What is it?
+R.I.&amp;rsquo;s hack lets you store hiera data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly params.pp, and replace it with something file based that is elegant and hierarchical.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!
+Background:
+This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Keeping git submodules in sync with your branches</title>
+      <link>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</link>
+      <pubDate>Tue, 06 May 2014 19:34:13 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</guid>
+      <description>This is a quick trick for making working with git submodules more magic.
+One day you might find that using git submodules is needed for your project. It&amp;rsquo;s probably not necessary for everyday hacking, but if you&amp;rsquo;re glue-ing things together, it can be quite useful. Puppet-Gluster uses this technique to easily include all the dependencies needed for a Puppet-Gluster+Vagrant automatic deployment.
+If you&amp;rsquo;re a good hacker, you develop things in separate feature branches.</description>
+    </item>
+    
+    <item>
+      <title>Puppet-Gluster now available as RPM</title>
+      <link>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</link>
+      <pubDate>Thu, 27 Mar 2014 20:32:41 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</guid>
+      <description>I&amp;rsquo;ve been afraid of RPM and package maintaining [1] for years, but thanks to Kaleb Keithley, I have finally made some RPM&amp;rsquo;s that weren&amp;rsquo;t generated from a high level tool. Now that I have the boilerplate done, it&amp;rsquo;s a relatively painless process!
+In case you don&amp;rsquo;t know kkeithley, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a $BEVERAGE.</description>
+    </item>
+    
+    <item>
+      <title>Introducing Puppet Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</link>
+      <pubDate>Mon, 24 Mar 2014 18:37:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</guid>
+      <description>Puppet is missing a number of much-needed features. That&amp;rsquo;s the bad news. The good news is that I&amp;rsquo;ve been able to write some of these as modules that don&amp;rsquo;t need to change the Puppet core! This is an article about one of these features.
+Posit: It&amp;rsquo;s not possible to apply all of your Puppet manifests in a single run.
+I believe that this holds true for the current implementation of Puppet.</description>
+    </item>
+    
+    <item>
+      <title>Speaking at SCALE today!</title>
+      <link>https://purpleidea.com/blog/2014/02/21/speaking-at-scale-today/</link>
+      <pubDate>Fri, 21 Feb 2014 13:54:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/02/21/speaking-at-scale-today/</guid>
+      <description>I&amp;rsquo;ll be giving a talk at SCALE today about automatically deploying GlusterFS with Puppet-Gluster and Vagrant. I&amp;rsquo;ll be giving some live demos, and this will cover some of the material from:
+Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!
+and it will contain excerpts from:
+Screencasts of Puppet-Gluster + Vagrant
+I&amp;rsquo;ll also be talking about some new upcoming features, and am happy to answer all of your questions!
+The talk will be part of Infrastructure.</description>
+    </item>
+    
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!
+Status quo:
+Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    
+    <item>
+      <title>Testing GlusterFS during “Glusterfest”</title>
+      <link>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</link>
+      <pubDate>Thu, 16 Jan 2014 20:28:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</guid>
+      <description>The GlusterFS community is having a &amp;ldquo;test day&amp;rdquo;. Puppet-Gluster+Vagrant is a great tool to help with this, and it has now been patched to support alpha, beta, qa, and rc releases! Because it was built so well (*cough*, shameless plug), it only took one patch.
+Okay, first make sure that your Puppet-Gluster+Vagrant setup is working properly. I have only tested this on Fedora 20. Please read: Automatically deploying GlusterFS with Puppet-Gluster+Vagrant!</description>
+    </item>
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt</title>
+      <link>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</link>
+      <pubDate>Mon, 09 Dec 2013 20:14:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</guid>
+      <description>Apparently lots of people are using Vagrant these days, so I figured I&amp;rsquo;d try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I&amp;rsquo;ve done. I did this on Fedora 19. Feel free to suggest improvements.
+Intro:
+Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like Puppet. It&amp;rsquo;s often used for development.</description>
+    </item>
+    
+    <item>
+      <title>Documentation for Puppet-Gluster</title>
+      <link>https://purpleidea.com/blog/2013/11/20/documentation-for-puppet-gluster/</link>
+      <pubDate>Wed, 20 Nov 2013 06:36:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/20/documentation-for-puppet-gluster/</guid>
+      <description>Ironically, one of the reasons that I started writing Puppet code, was so that I could spend more time designing and building, and less time writing documentation. I suppose I&amp;rsquo;m a victim of my success, because Puppet-Gluster has grown large enough to warrant its own documentation.
+So I gave in, and put together some documentation.
+It&amp;rsquo;s available as markdown, and, also as a pdf. As before, there is an examples/ directory which you might want to use as additional reference.</description>
+    </item>
+    
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>Hi there,
+I hope you enjoyed my &amp;ldquo;Pushing Puppet (to its limit)&amp;rdquo; talk and demos from Puppet Camp D.C., LISA 2013. As requested, I&amp;rsquo;ve posted the code and slides.
+Here is the code: https://github.com/purpleidea/puppet-pushing
+This module will require three modules as dependencies. The dependencies are:  My Puppet-Common module https://github.com/purpleidea/puppet-common My Puppet-Runonce module https://github.com/purpleidea/puppet-runonce My Puppet-FSM module https://github.com/purpleidea/puppet-fsm  Each example doesn&amp;rsquo;t require all the dependencies, so if you&amp;rsquo;re only interested in the FSM, you only need that module.</description>
+    </item>
+    
+    <item>
+      <title>Speaking at LISA 2013 about Puppet and GlusterFS</title>
+      <link>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</link>
+      <pubDate>Sun, 03 Nov 2013 19:40:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</guid>
+      <description>I&amp;rsquo;m speaking at LISA 2013, the &amp;ldquo;Large Installation System Administration&amp;rdquo; conference. This conference runs all week in Washington. I&amp;rsquo;ll be giving two talks during the week, and attending at least one BOF.
+My first talk is on Monday during the Gluster Community Day. I&amp;rsquo;ll be speaking about puppet-gluster, and giving a live demo. I&amp;rsquo;ll be showing some new features too. If you&amp;rsquo;d like to talk more about puppet-gluster, or want to attend the talk, give me a shout, or sign up at the above Gluster Community Day link.</description>
+    </item>
+    
+    <item>
+      <title>Finite state machines in puppet</title>
+      <link>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</link>
+      <pubDate>Sat, 28 Sep 2013 06:09:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</guid>
+      <description>In my attempt to push puppet to its limits, (for no particular reason), to develop more powerful puppet modules, tobuild in a distributed lock manager, and to be more dynamic, I&amp;rsquo;m now attempting to build a Finite State Machine (FSM) in puppet.
+Is this a real finite state machine, and why would you do this?
+Computer science professionals might not approve of the purity level, but they will hopefully appreciate the hack value.</description>
+    </item>
+    
+    <item>
+      <title>Bittorent sync for repository mirroring</title>
+      <link>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</link>
+      <pubDate>Mon, 23 Sep 2013 02:06:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</guid>
+      <description>Theron Conrey writes about using: BitTorrent Sync as Geo-Replication for Storage We got a chance to talk about this idea at Linuxcon. I&amp;rsquo;m not entirely convinced there aren&amp;rsquo;t some problem edge cases with this solution, but I think it will be hard to tell as long as the BitTorrent sync library is proprietary. I did come up with a special case of Theron&amp;rsquo;s idea that I believe could work well.</description>
+    </item>
+    
+    <item>
+      <title>Gluster Community Day, Thursday</title>
+      <link>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</link>
+      <pubDate>Fri, 20 Sep 2013 16:23:12 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</guid>
+      <description>I&amp;rsquo;m here in New Orleans hacking up a storm and getting to meet fellow gluster users IRL. John Mark Walker started off with a great &amp;ldquo;State of the GlusterFS union&amp;rdquo; style talk.
+Today Louis (semiosis) gave a great talk about running glusterfs on amazon. It was highly pragmatic and he explained how he chose the number of bricks per host. The talk will be posted online shortly.
+Marco Ceppi from Canonical gave a talk about juju and gluster.</description>
+    </item>
+    
+    <item>
+      <title>Linuxcon day three, Wednesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:59:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</guid>
+      <description>After hacking away on Monday and Tuesday and meeting fellow nerds IRL, I&amp;rsquo;ve landed even more changes to puppet-gluster. My git master branch now sits at 47 commits.
+$ git clone https://github.com/purpleidea/puppet-gluster.git Cloning into &#39;puppet-gluster&#39;... remote: Counting objects: 317, done. remote: Compressing objects: 100% (144/144), done. remote: Total 317 (delta 187), reused 275 (delta 148) Receiving objects: 100% (317/317), 82.17 KiB | 12.00 KiB/s, done. Resolving deltas: 100% (187/187), done. $ cd puppet-gluster/ $ git log | grep &#39;^commit&#39; | wc -l 47 $ git log | head commit &amp;lt;a href=&amp;quot;https://github.</description>
+    </item>
+    
+    <item>
+      <title>Linuxcon day two, Tuesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:05:05 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</guid>
+      <description>Continuing on from yesterday, I&amp;rsquo;ve met even more interesting people. I chatted with Dianne Mueller about some interesting ideas for gluster+openshift. More to come on that front soon. Hung out with Jono Bacon and talked a bit about puppet-gluster on Ubuntu. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks.</description>
+    </item>
+    
+    <item>
+      <title>Linuxcon day one, Monday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</link>
+      <pubDate>Wed, 18 Sep 2013 22:32:16 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</guid>
+      <description>I&amp;rsquo;m here in New Orleans at Linux Con, hacking on puppet-gluster and talking to lots of interesting folks. I&amp;rsquo;ve met gluster hacker Theron Conrey, and my host John Mark Walker, Fedora and Raspberry Pi experts Spot and Ruth Suehle, and many others too.
+The hotel is very nice. The bathroom sink has two taps of course, but both of them are hot. The New Orleans heat is probably the cause of this.</description>
+    </item>
+    
+    <item>
+      <title>New puppet-gluster features before Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</link>
+      <pubDate>Sun, 08 Sep 2013 04:51:14 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</guid>
+      <description>Hey there,
+I&amp;rsquo;ve done a bit of puppet-gluster hacking lately to try to squeeze some extra features and testing in before Linuxcon. Here&amp;rsquo;s a short list:  SELinux fixes to keep Dan Walsh happy :) Ping and status checks before volume creation. Now puppet-gluster will be less noisy about failures or missing executions that are due to the necessary incremental nature of puppet-gluster runs. You&amp;rsquo;ll need multiple puppet runs to get a complete setup, so don&amp;rsquo;t let puppet complain part way through.</description>
+    </item>
+    
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:
+I&amp;rsquo;ve just released the third stage of my puppet-ipa module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my puppet-nfs module to allow you to easily setup and run an NFSv4 kerberized server and client.
+While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a puppet-nfs module to make your /etc/exports management easier.</description>
+    </item>
+    
+  </channel>
+</rss>

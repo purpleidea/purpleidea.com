@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gnu&#43;linux on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gnu&#43;linux/</link>
+    <description>Recent content in Gnu&#43;linux on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 26 Sep 2013 00:43:50 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/gnu+linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Installing missing GNOME games</title>
+      <link>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</link>
+      <pubDate>Thu, 26 Sep 2013 00:43:50 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</guid>
+      <description>I just realized that my Fedora 19 installation didn&amp;rsquo;t have any of the GNOME games installed by default any more. I guess there&amp;rsquo;s no love for nibbles. Here&amp;rsquo;s a quick one-liner to get them all back:
+$ sudo yum search game | grep gnome | awk &#39;{print $1}&#39; | xargs sudo yum install -y Loaded plugins: etckeeper, langpacks, refresh-packagekit Package gnome-nibbles-3.8.0-2.fc19.x86_64 already installed and latest version Resolving Dependencies --&amp;gt; Running transaction check ---&amp;gt; Package gnome-chess.</description>
+    </item>
+    
+  </channel>
+</rss>

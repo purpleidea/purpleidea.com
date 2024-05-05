@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hiera on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hiera/</link>
+    <description>Recent content in Hiera on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 24 Jul 2014 00:41:08 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/hiera/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>Hiera data in modules and OS independent puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</link>
+      <pubDate>Wed, 04 Jun 2014 03:47:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</guid>
+      <description>Earlier this year, R.I.Pienaar released his brilliant data in modules hack, a few months ago, I got the chance to start implementing it in Puppet-Gluster, and today I have found the time to blog about it.
+What is it?
+R.I.&amp;rsquo;s hack lets you store hiera data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly params.pp, and replace it with something file based that is elegant and hierarchical.</description>
+    </item>
+    
+    <item>
+      <title>Finding YAML errors in puppet</title>
+      <link>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</link>
+      <pubDate>Sun, 25 Aug 2013 04:31:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</guid>
+      <description>I love tabs, they&amp;rsquo;re so much easier to work with, but YAML doesn&amp;rsquo;t like them. I&amp;rsquo;m constantly adding them in accidentally, and puppet&amp;rsquo;s error message is a bit cryptic:
+Error: Could not retrieve catalog from remote server: Error 400 on SERVER: malformed format string - %S at /etc/puppet/manifests/foo.pp:18 on node bar.example.com  This happens during a puppet run, which in my case loads up YAML files. The tricky part was that the error wasn&amp;rsquo;t at all related to the foo.</description>
+    </item>
+    
+    <item>
+      <title>Automatic hiera lookups in puppet 3.x</title>
+      <link>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</link>
+      <pubDate>Wed, 20 Feb 2013 00:43:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</guid>
+      <description>Dear readers,
+I&amp;rsquo;ve started the slow migration of code from puppet 2.6 all the way to 3.x+. There were a few things I wasn&amp;rsquo;t clear on, so hopefully this will help to discuss these and make your migration easier!
+I used hiera in 2.6, and I actually like it a lot so far. I was concerned that automatic lookups would pull in values that I wasn&amp;rsquo;t expecting. This is not the case or a worry.</description>
+    </item>
+    
+    <item>
+      <title>SElinux causes pain when using puppet 2.x with hiera</title>
+      <link>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</link>
+      <pubDate>Thu, 17 Jan 2013 03:03:36 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</guid>
+      <description>So hiera wasn&amp;rsquo;t working when used through my puppetmaster. It worked perfectly when I was running my scripts manually with: puppet apply site.pp but the moment I switched over to regular puppetmasterd usage, everything went dead.
+I realized a while back, that I could always expect some hiera failures from time to time. Whether this is hiera&amp;rsquo;s fault or not is irrelevant, the relevant part is that I quickly added:</description>
+    </item>
+    
+    <item>
+      <title>Dynamically including classes in puppet</title>
+      <link>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</link>
+      <pubDate>Wed, 16 Jan 2013 07:29:14 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</guid>
+      <description>As you might already know, I like pushing the boundaries of what puppet is able to do. Today, I realized that I needed to include a class by variable name. A simple way to do this is possible with:
+$foo = &#39;world&#39; class { &amp;quot;hello::${foo}::params&amp;quot;: }  I then realized that you could also do this with the standard include keyword:
+$foo = &#39;world&#39; include &amp;quot;hello::${foo}::params&amp;quot;  If you&amp;rsquo;re really insane enough to need to have your include depend on a variable, then this should suit your needs.</description>
+    </item>
+    
+  </channel>
+</rss>

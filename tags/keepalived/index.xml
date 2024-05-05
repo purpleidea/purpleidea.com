@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Keepalived on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/keepalived/</link>
+    <description>Recent content in Keepalived on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 16 Jan 2014 20:28:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/keepalived/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Testing GlusterFS during “Glusterfest”</title>
+      <link>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</link>
+      <pubDate>Thu, 16 Jan 2014 20:28:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</guid>
+      <description>The GlusterFS community is having a &amp;ldquo;test day&amp;rdquo;. Puppet-Gluster+Vagrant is a great tool to help with this, and it has now been patched to support alpha, beta, qa, and rc releases! Because it was built so well (*cough*, shameless plug), it only took one patch.
+Okay, first make sure that your Puppet-Gluster+Vagrant setup is working properly. I have only tested this on Fedora 20. Please read: Automatically deploying GlusterFS with Puppet-Gluster+Vagrant!</description>
+    </item>
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>preventing duplicate parameter values in puppet types</title>
+      <link>https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/</link>
+      <pubDate>Wed, 07 Nov 2012 18:30:31 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/</guid>
+      <description>I am writing a keepalived module for puppet. It will naturally be called: &amp;ldquo;puppet-keepalived&amp;rdquo;, and I will be releasing the code in the near future! In any case, if you&amp;rsquo;re familiar with VRRP, you&amp;rsquo;ll know that each managed link (eg: resource or VIP) has a common routerid and password which are shared among all members in the group. It is important that these parameters are unique across the type definitions on a single node.</description>
+    </item>
+    
+    <item>
+      <title>How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet</title>
+      <link>https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/</link>
+      <pubDate>Thu, 23 Aug 2012 16:14:44 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/</guid>
+      <description>I&amp;rsquo;ve been working on a puppet module for gluster. Both this, my puppet-gfs2 module, and other puppet clustering modules all share a common problem: How does one make sure that only certain operations happen on one node at a time?
+The inelegant solutions are simple:  Specify manually (in puppet) which node the &amp;ldquo;master&amp;rdquo; is, and have it carry out all the special operations. Downside: Single point of failure for your distributed cluster, and you&amp;rsquo;ve also written ugly asymmetrical code.</description>
+    </item>
+    
+  </channel>
+</rss>

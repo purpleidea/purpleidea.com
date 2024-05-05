@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openshift on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/openshift/</link>
+    <description>Recent content in Openshift on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 02 May 2015 00:07:11 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>I&amp;rsquo;ve added the ability to deploy a Kubernetes cluster with Oh-My-Vagrant (omv). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a rolling update, you can use omv to test this out in minutes! I&amp;rsquo;ve recorded a screencast (~15 min), if you&amp;rsquo;d like to see some of this in action.</description>
+    </item>
+    
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>I had an itch to scratch, and I wanted to get a bit more familiar with Openshift. I had used it in the past, but it was time to have another go. The app and the code are now available. Feel free to check out: https://pdfdoc-purpleidea.rhcloud.com/ This is a simple app that takes the URL of a markdown file on GitHub, and outputs a pandoc converted PDF. I wanted to use pandoc specifically, because it produces PDF&amp;rsquo;s that were beautifully created with LaTeX.</description>
+    </item>
+    
+    <item>
+      <title>Linuxcon day two, Tuesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:05:05 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</guid>
+      <description>Continuing on from yesterday, I&amp;rsquo;ve met even more interesting people. I chatted with Dianne Mueller about some interesting ideas for gluster+openshift. More to come on that front soon. Hung out with Jono Bacon and talked a bit about puppet-gluster on Ubuntu. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fedora 20 on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fedora-20/</link>
+    <description>Recent content in Fedora 20 on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 13 May 2014 18:58:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/fedora-20/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!
+Background:
+This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

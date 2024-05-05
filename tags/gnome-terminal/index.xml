@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gnome Terminal on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gnome-terminal/</link>
+    <description>Recent content in Gnome Terminal on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 20 Mar 2014 18:01:24 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/gnome-terminal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Preserving your working directory in gnome-terminal</title>
+      <link>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</link>
+      <pubDate>Thu, 20 Mar 2014 18:01:24 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</guid>
+      <description>I use gnome-terminal for most of my hacking. In fact, I use it so much, that I&amp;rsquo;ll often have multiple tabs open for a particular project. Here&amp;rsquo;s my workflow:  Control+Alt+t (My shortcut to open a new gnome-terminal window.) cd ~/code/some_cool_hack/ # directory of some cool hack Control-Shift-t (Shortcut to open a new gnome-terminal tab.) Hack, hack, hack&amp;hellip;  The problem is that the new tab that I&amp;rsquo;ve created will have a $PWD of ~, instead of keeping the $PWD of ~/code/some_cool_hack/, which is the project I&amp;rsquo;m working on!</description>
+    </item>
+    
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>I&amp;rsquo;m usually on IRC, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;
+The Setup
+Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi  This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run irssi in a screen session on an SSH server that I manage, and I use gnome-terminal on my laptop.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Indentation on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/indentation/</link>
+    <description>Recent content in Indentation on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 09 Mar 2010 17:17:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/indentation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>getting gedit to work like magic</title>
+      <link>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</link>
+      <pubDate>Tue, 09 Mar 2010 17:17:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</guid>
+      <description>i use gnu/linux. it&amp;rsquo;s probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using gedit for editing text. i still use vim, echo (gnu bash) and emacs (but only for org-mode).
+vim is really, really great. but for day to day full-screen coding, i love working in gedit. i only have one [1] longstanding gripe, and today i believe that it is solved.</description>
+    </item>
+    
+  </channel>
+</rss>

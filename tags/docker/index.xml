@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/docker/</link>
+    <description>Recent content in Docker on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Nov 2016 23:59:49 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>I&amp;rsquo;ve got a brand new core feature in mgmt called send/recv which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.
+History
+This is my historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.
+Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, CFEngine burst onto the scene with the first real solution to this problem.</description>
+    </item>
+    
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>In this new crazy world of containers and immutable hosts, one might still want to run previous generation software such as Puppet on a current generation Atomic host. This article will explain how you can do that, and offer some proof of concept code.
+The atomic host doesn&amp;rsquo;t provide a yum or dnf command, because the software is pre-baked into a read-only /usr/ partition. To &amp;ldquo;install&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>I&amp;rsquo;ve added the ability to deploy a Kubernetes cluster with Oh-My-Vagrant (omv). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a rolling update, you can use omv to test this out in minutes! I&amp;rsquo;ve recorded a screencast (~15 min), if you&amp;rsquo;d like to see some of this in action.</description>
+    </item>
+    
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>The Oh-My-Vagrant (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, omv can be used to help this happen more naturally.
+Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:</description>
+    </item>
+    
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>With Oh-My-Vagrant (omv) you can set up a dev environment in seconds. (Read the omv introduction if you&amp;rsquo;ve never used it before!) Since everything is defined in a single omv.yaml file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;
+In the omv.yaml file there is an extern variable.</description>
+    </item>
+    
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>If you&amp;rsquo;re a reader of my code or of this blog, it&amp;rsquo;s no secret that I hack on a lot of puppet and vagrant. Recently I&amp;rsquo;ve fooled around with a bit of docker, too. I realized that the vagrant, environments I built for puppet-gluster and puppet-ipa needed to be generalized, and they needed new features too. Therefore&amp;hellip;
+Introducing: Oh My Vagrant!
+Oh My Vagrant is an attempt to provide an easy to use development environment so that you can be up and hacking quickly, and focusing on the real devops problems.</description>
+    </item>
+    
+  </channel>
+</rss>

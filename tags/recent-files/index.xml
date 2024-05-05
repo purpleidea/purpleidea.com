@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recent Files on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/recent-files/</link>
+    <description>Recent content in Recent Files on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 07 Mar 2013 18:38:45 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/recent-files/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!
+I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections.</description>
+    </item>
+    
+  </channel>
+</rss>

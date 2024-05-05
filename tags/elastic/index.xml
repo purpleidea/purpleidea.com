@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elastic on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/elastic/</link>
+    <description>Recent content in Elastic on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 20 Jun 2016 12:28:51 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/elastic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatic clustering in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/</link>
+      <pubDate>Mon, 20 Jun 2016 12:28:51 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/</guid>
+      <description>In mgmt, deploying and managing your clustered config management infrastructure needs to be as automatic as the infrastructure you&amp;rsquo;re using mgmt to manage. With mgmt, instead of a centralized data store, we function as a distributed system, built on top of etcd and the raft protocol.
+In this article, I&amp;rsquo;ll cover how this feature works.
+Foreword:
+Mgmt is a next generation configuration management project. If you haven&amp;rsquo;t heard of it yet, or you don&amp;rsquo;t remember why we use a distributed database, start by reading the previous articles:</description>
+    </item>
+    
+  </channel>
+</rss>

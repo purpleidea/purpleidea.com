@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ram on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ram/</link>
+    <description>Recent content in Ram on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 02 Feb 2014 15:15:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/ram/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Scathing review of the Lenovo X240</title>
+      <link>https://purpleidea.com/blog/2014/02/02/scathing-review-of-the-lenovo-x240/</link>
+      <pubDate>Sun, 02 Feb 2014 15:15:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/02/02/scathing-review-of-the-lenovo-x240/</guid>
+      <description>I&amp;rsquo;m using a Lenovo X201 with 8GiB of RAM. Apart from some minor issues, I&amp;rsquo;ve been very satisfied with this laptop. It&amp;rsquo;s over four years old, and so I decided to see what&amp;rsquo;s available on the horizon. I did not buy an X240 because of the following reasons:
+The X240 has only one slot for RAM and thus supports a maximum of 8GiB.
+I think it&amp;rsquo;s pretty ridiculous for any successor to the X230 to support less RAM.</description>
+    </item>
+    
+  </channel>
+</rss>

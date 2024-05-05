@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yaml on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/yaml/</link>
+    <description>Recent content in Yaml on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 04 Jun 2014 03:47:23 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/yaml/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hiera data in modules and OS independent puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</link>
+      <pubDate>Wed, 04 Jun 2014 03:47:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</guid>
+      <description>Earlier this year, R.I.Pienaar released his brilliant data in modules hack, a few months ago, I got the chance to start implementing it in Puppet-Gluster, and today I have found the time to blog about it.
+What is it?
+R.I.&amp;rsquo;s hack lets you store hiera data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly params.pp, and replace it with something file based that is elegant and hierarchical.</description>
+    </item>
+    
+    <item>
+      <title>Iteration in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</link>
+      <pubDate>Sun, 17 Nov 2013 04:25:01 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</guid>
+      <description>People often ask how to do iteration in Puppet. Most Puppet users have a background in imperative programming, and are already very familiar with for loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a declarative, domain-specific language. In general, DSL&amp;rsquo;s aren&amp;rsquo;t always Turing complete, nor do they need to support loops, but this doesn&amp;rsquo;t mean you can&amp;rsquo;t iterate.
+Until recently, Puppet didn&amp;rsquo;t have an explicit looping construct, and it is quite possible to build complex modules without using this new construct.</description>
+    </item>
+    
+    <item>
+      <title>Finding YAML errors in puppet</title>
+      <link>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</link>
+      <pubDate>Sun, 25 Aug 2013 04:31:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</guid>
+      <description>I love tabs, they&amp;rsquo;re so much easier to work with, but YAML doesn&amp;rsquo;t like them. I&amp;rsquo;m constantly adding them in accidentally, and puppet&amp;rsquo;s error message is a bit cryptic:
+Error: Could not retrieve catalog from remote server: Error 400 on SERVER: malformed format string - %S at /etc/puppet/manifests/foo.pp:18 on node bar.example.com  This happens during a puppet run, which in my case loads up YAML files. The tricky part was that the error wasn&amp;rsquo;t at all related to the foo.</description>
+    </item>
+    
+    <item>
+      <title>Automatic hiera lookups in puppet 3.x</title>
+      <link>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</link>
+      <pubDate>Wed, 20 Feb 2013 00:43:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</guid>
+      <description>Dear readers,
+I&amp;rsquo;ve started the slow migration of code from puppet 2.6 all the way to 3.x+. There were a few things I wasn&amp;rsquo;t clear on, so hopefully this will help to discuss these and make your migration easier!
+I used hiera in 2.6, and I actually like it a lot so far. I was concerned that automatic lookups would pull in values that I wasn&amp;rsquo;t expecting. This is not the case or a worry.</description>
+    </item>
+    
+  </channel>
+</rss>

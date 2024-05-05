@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Red Hat on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/red-hat/</link>
+    <description>Recent content in Red Hat on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 17 Oct 2017 21:22:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/red-hat/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Copyleft is Dead. Long live Copyleft!</title>
+      <link>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</link>
+      <pubDate>Tue, 17 Oct 2017 21:22:05 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</guid>
+      <description>As you may have noticed, we recently re-licensed mgmt from the AGPL (Affero General Public License) to the regular GPL. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.
+Disclaimer:
+I am not a lawyer, and these are not necessarily the opinions of my employer. I think I&amp;rsquo;m knowledgeable in this area, but I&amp;rsquo;m happy to be corrected in the comments.</description>
+    </item>
+    
+  </channel>
+</rss>

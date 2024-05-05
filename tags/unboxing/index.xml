@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unboxing on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/unboxing/</link>
+    <description>Recent content in Unboxing on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 30 Apr 2017 17:56:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/unboxing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Osmocom femtocell un-boxing</title>
+      <link>https://purpleidea.com/blog/2017/04/30/osmocom-femtocell-un-boxing/</link>
+      <pubDate>Sun, 30 Apr 2017 17:56:13 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/04/30/osmocom-femtocell-un-boxing/</guid>
+      <description>LaForge and the fine folks at Osmocom (Sysmocom) recently had a femtocell giveaway. I didn&amp;rsquo;t expect to have much time to hack on things, but they were still quite generous in sending me one. It arrived, and I took some un-boxing photos for anyone who is curious.
+A box arrived in the mail&amp;hellip;Which recurses into an inner box&amp;hellip;Inner box is box like.Finally&amp;hellip; The unit is displayed.Here it is in all its glory.</description>
+    </item>
+    
+  </channel>
+</rss>

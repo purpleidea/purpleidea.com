@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vanilla on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vanilla/</link>
+    <description>Recent content in Vanilla on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 22 Oct 2009 17:14:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/vanilla/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>vanilla: my favourite flavour of gnome</title>
+      <link>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</link>
+      <pubDate>Thu, 22 Oct 2009 17:14:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</guid>
+      <description>after a recent upgrade to ubuntu 9.04, it seems that i&amp;rsquo;ve been pushed into using some &amp;ldquo;unfeatures&amp;rdquo; that i didn&amp;rsquo;t ask for. well apparently they won&amp;rsquo;t be unfeatures forever, but for me, notify-osd and indicator-applet aren&amp;rsquo;t quite ready for my consumption. i realize that ubuntu is trying to improve the desktop experience, but i&amp;rsquo;m going to need to wait for some more polish first.
+so how do i get rid of these horrible things ?</description>
+    </item>
+    
+  </channel>
+</rss>

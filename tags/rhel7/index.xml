@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rhel7 on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/rhel7/</link>
+    <description>Recent content in Rhel7 on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 11 Aug 2015 15:09:16 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/rhel7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vagrant and Oh-My-Vagrant on RHEL7</title>
+      <link>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</link>
+      <pubDate>Tue, 11 Aug 2015 15:09:16 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</guid>
+      <description>My employer keeps paying me, which I appreciate, so it&amp;rsquo;s good to spend some time to make sure RHEL7 customers get a great developer experience! So here&amp;rsquo;s how to make vagrant, vagrant-libvirt and Oh-My-Vagrant work on RHEL 7+. The same steps should work for CentOS 7+.
+I&amp;rsquo;ll first paste the commands you need to run, and then I&amp;rsquo;ll explain what&amp;rsquo;s happening for those that are interested:
+# run these commands, and then get hacking!</description>
+    </item>
+    
+  </channel>
+</rss>

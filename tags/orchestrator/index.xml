@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Orchestrator on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/orchestrator/</link>
+    <description>Recent content in Orchestrator on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 07 Oct 2016 15:33:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/orchestrator/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.
+Prior knowledge
+If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.
+I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+    
+  </channel>
+</rss>

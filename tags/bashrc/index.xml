@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bashrc on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bashrc/</link>
+    <description>Recent content in Bashrc on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 10 Oct 2013 22:16:28 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/bashrc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Show current git branch in PS1 when branch is not master</title>
+      <link>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</link>
+      <pubDate>Thu, 10 Oct 2013 22:16:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</guid>
+      <description>Short post, long command&amp;hellip;
+I&amp;rsquo;ve decided to start showing the current git branch in my PS1. However, since I don&amp;rsquo;t want to know when I&amp;rsquo;m on master, I had to write a new PS1 that I haven&amp;rsquo;t yet seen anywhere. Add the following to your .bashrc: PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &amp;#39; if [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then . /usr/share/git-core/contrib/completion/git-prompt.sh PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w$([ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;&amp;#34; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;master&amp;#34; ] &amp;amp;&amp;amp; (echo -e &amp;#34; (\[33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[33[0m\])&amp;#34;) || echo &amp;#34;&amp;#34;)\$ &amp;#39; fi</description>
+    </item>
+    
+  </channel>
+</rss>

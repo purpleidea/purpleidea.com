@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Proofs on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/proofs/</link>
+    <description>Recent content in Proofs on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 01 Mar 2017 16:11:59 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/proofs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Metaparameters in mgmt</title>
+      <link>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</link>
+      <pubDate>Wed, 01 Mar 2017 16:11:59 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</guid>
+      <description>In mgmt we have meta parameters. They are similar in concept to what you might be familiar with from other tools, except that they are more clearly defined (in a single struct) and vastly more powerful.
+In mgmt, a meta parameter is a parameter which is codified entirely in the engine, and which can be used by any resource. In contrast with Puppet, require/before are considered meta parameters, whereas in mgmt, the equivalent is a graph edge, which is not a meta parameter.</description>
+    </item>
+    
+  </channel>
+</rss>

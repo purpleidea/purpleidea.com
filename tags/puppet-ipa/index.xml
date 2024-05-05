@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppet Ipa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/puppet-ipa/</link>
+    <description>Recent content in Puppet Ipa on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 10 Oct 2014 15:34:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/puppet-ipa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Continuous integration for Puppet modules</title>
+      <link>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</link>
+      <pubDate>Fri, 10 Oct 2014 15:34:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</guid>
+      <description>I just patched puppet-gluster and puppet-ipa to bring their infrastructure up to date with the current state of affairs&amp;hellip;
+What&amp;rsquo;s new?  Better README&amp;rsquo;s Rake syntax checking (fewer oopsies) CI (testing) with travis on git push (automatic testing for everyone) Use of .pmtignore to ignore files from puppet module packages (finally) Pushing modules to the forge with blacksmith (sweet!)  This last point deserves another mention. Puppetlabs created the &amp;ldquo;forge&amp;rdquo; to try to provide some sort of added value to their stewardship.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>Securely managing secrets for FreeIPA with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</link>
+      <pubDate>Fri, 06 Jun 2014 06:12:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</guid>
+      <description>Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.
+In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer.</description>
+    </item>
+    
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>Hi there,
+I hope you enjoyed my &amp;ldquo;Pushing Puppet (to its limit)&amp;rdquo; talk and demos from Puppet Camp D.C., LISA 2013. As requested, I&amp;rsquo;ve posted the code and slides.
+Here is the code: https://github.com/purpleidea/puppet-pushing
+This module will require three modules as dependencies. The dependencies are:  My Puppet-Common module https://github.com/purpleidea/puppet-common My Puppet-Runonce module https://github.com/purpleidea/puppet-runonce My Puppet-FSM module https://github.com/purpleidea/puppet-fsm  Each example doesn&amp;rsquo;t require all the dependencies, so if you&amp;rsquo;re only interested in the FSM, you only need that module.</description>
+    </item>
+    
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:
+3 files changed, 1401 insertions(+), 215 deletions(-)  You should now have a highly capable user type, along with some quick examples.
+I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:
+I&amp;rsquo;ve just released the third stage of my puppet-ipa module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my puppet-nfs module to allow you to easily setup and run an NFSv4 kerberized server and client.
+While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a puppet-nfs module to make your /etc/exports management easier.</description>
+    </item>
+    
+  </channel>
+</rss>

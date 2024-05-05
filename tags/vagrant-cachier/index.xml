@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vagrant Cachier on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vagrant-cachier/</link>
+    <description>Recent content in Vagrant Cachier on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jan 2014 23:00:22 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/vagrant-cachier/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt, and have even been submitting, patches and issues! (This &amp;ldquo;closed&amp;rdquo; issue needs solving!) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.
+Default provider:
+I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using vagrant-libvirt.</description>
+    </item>
+    
+  </channel>
+</rss>

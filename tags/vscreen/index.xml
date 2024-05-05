@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vscreen on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vscreen/</link>
+    <description>Recent content in Vscreen on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jul 2015 01:14:19 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/vscreen/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>Making Oh-My-Vagrant (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)
+Prerequisites:
+If you haven&amp;rsquo;t read any of the previous articles about Oh-My-Vagrant, I&amp;rsquo;d recommend you start there.</description>
+    </item>
+    
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>In this new crazy world of containers and immutable hosts, one might still want to run previous generation software such as Puppet on a current generation Atomic host. This article will explain how you can do that, and offer some proof of concept code.
+The atomic host doesn&amp;rsquo;t provide a yum or dnf command, because the software is pre-baked into a read-only /usr/ partition. To &amp;ldquo;install&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.</description>
+    </item>
+    
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>I decided to record some screencasts to show how easy it is to deploy GlusterFS using Puppet-Gluster+Vagrant. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!
+If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!</description>
+    </item>
+    
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (cssh) and screen with vagrant. I decided to expand on my vsftp script. First read:  Vagrant on Fedora with libvirt
+ and  Vagrant vsftp and other tricks
+ to get up to speed on the background information.
+Vagrant screen:
+First, a simple screen hack&amp;hellip; I often use my vssh alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with sudo-ing to root and then running screen each time.</description>
+    </item>
+    
+  </channel>
+</rss>

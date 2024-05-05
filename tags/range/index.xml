@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Range on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/range/</link>
+    <description>Recent content in Range on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 14 Mar 2013 00:34:19 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/range/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>adding range support to python&#39;s http server to kickstart with anaconda</title>
+      <link>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</link>
+      <pubDate>Thu, 14 Mar 2013 00:34:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</guid>
+      <description>I&amp;rsquo;ve been working on automatic installs using kickstart and puppet. I&amp;rsquo;m using a modified python httpserver because it&amp;rsquo;s lightweight, and easy to integrate into my existing python code base. The server was churning away perfectly until anaconda started downloading the full rpm&amp;rsquo;s for installation. What was going wrong?  Traceback (most recent call last): [&amp;hellip;] error: [Errno 32] Broken pipe BorkedError: See TTBOJ for explanation and discussion  As it turns out, anaconda first downloads the headers, and then later requests the full rpm with an http range request.</description>
+    </item>
+    
+  </channel>
+</rss>

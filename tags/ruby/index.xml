@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ruby on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ruby/</link>
+    <description>Recent content in Ruby on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Nov 2016 23:59:49 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>I&amp;rsquo;ve got a brand new core feature in mgmt called send/recv which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.
+History
+This is my historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.
+Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, CFEngine burst onto the scene with the first real solution to this problem.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+  </channel>
+</rss>

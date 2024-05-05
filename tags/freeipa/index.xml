@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Freeipa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/freeipa/</link>
+    <description>Recent content in Freeipa on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 17 Oct 2017 21:22:05 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Copyleft is Dead. Long live Copyleft!</title>
+      <link>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</link>
+      <pubDate>Tue, 17 Oct 2017 21:22:05 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</guid>
+      <description>As you may have noticed, we recently re-licensed mgmt from the AGPL (Affero General Public License) to the regular GPL. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.
+Disclaimer:
+I am not a lawyer, and these are not necessarily the opinions of my employer. I think I&amp;rsquo;m knowledgeable in this area, but I&amp;rsquo;m happy to be corrected in the comments.</description>
+    </item>
+    
+    <item>
+      <title>Seen in downtown Montreal...</title>
+      <link>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</link>
+      <pubDate>Wed, 03 Aug 2016 01:59:23 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</guid>
+      <description>The Technical Blog of James was seen on an outdoor electronic display in downtown Montreal! Thanks to one of my readers for sending this in.
+ I guess the smart phone revolution is over, and people are taking to reading my articles on bigger screens! The &amp;ldquo;poutine&amp;rdquo; is decent proof that this is probably Montreal.If you&amp;rsquo;ve got access to a large electronic display, put up the blog, snap a photo, and send it my way!</description>
+    </item>
+    
+    <item>
+      <title>Vagrant and Oh-My-Vagrant on RHEL7</title>
+      <link>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</link>
+      <pubDate>Tue, 11 Aug 2015 15:09:16 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</guid>
+      <description>My employer keeps paying me, which I appreciate, so it&amp;rsquo;s good to spend some time to make sure RHEL7 customers get a great developer experience! So here&amp;rsquo;s how to make vagrant, vagrant-libvirt and Oh-My-Vagrant work on RHEL 7+. The same steps should work for CentOS 7+.
+I&amp;rsquo;ll first paste the commands you need to run, and then I&amp;rsquo;ll explain what&amp;rsquo;s happening for those that are interested:
+# run these commands, and then get hacking!</description>
+    </item>
+    
+    <item>
+      <title>Making an empty RPM</title>
+      <link>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</link>
+      <pubDate>Tue, 11 Aug 2015 13:25:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</guid>
+      <description>I am definitely not an RPM expert, in fact, I&amp;rsquo;m afraid of it, but with recent tools such as COPR, and my glorious Makefile, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.
+ A video of my journey building this RPM.Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM.</description>
+    </item>
+    
+    <item>
+      <title>Continuous integration for Puppet modules</title>
+      <link>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</link>
+      <pubDate>Fri, 10 Oct 2014 15:34:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</guid>
+      <description>I just patched puppet-gluster and puppet-ipa to bring their infrastructure up to date with the current state of affairs&amp;hellip;
+What&amp;rsquo;s new?  Better README&amp;rsquo;s Rake syntax checking (fewer oopsies) CI (testing) with travis on git push (automatic testing for everyone) Use of .pmtignore to ignore files from puppet module packages (finally) Pushing modules to the forge with blacksmith (sweet!)  This last point deserves another mention. Puppetlabs created the &amp;ldquo;forge&amp;rdquo; to try to provide some sort of added value to their stewardship.</description>
+    </item>
+    
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)
+The error message that puppet hackers are probably most familiar is:
+Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com  Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    
+    <item>
+      <title>Securely managing secrets for FreeIPA with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</link>
+      <pubDate>Fri, 06 Jun 2014 06:12:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</guid>
+      <description>Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.
+In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer.</description>
+    </item>
+    
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:
+3 files changed, 1401 insertions(+), 215 deletions(-)  You should now have a highly capable user type, along with some quick examples.
+I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:
+I&amp;rsquo;ve just released the third stage of my puppet-ipa module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my puppet-nfs module to allow you to easily setup and run an NFSv4 kerberized server and client.
+While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a puppet-nfs module to make your /etc/exports management easier.</description>
+    </item>
+    
+    <item>
+      <title>Playing with FreeIPA and puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</link>
+      <pubDate>Tue, 18 Jun 2013 12:36:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</guid>
+      <description>So I just rolled a new vm to hack around with FreeIPA. Here are some things that I&amp;rsquo;ve come across so far. I was planning on configuring LDAP, and Kerberos manually, but the included webui looks like a lovely tool to have for the data entry, user administrator type who likes to click on things. Let&amp;rsquo;s explore&amp;hellip;
+/etc/hosts:
+FreeIPA is choosy about how your /etc/hosts is formatted. It requires an entry that has a particular order, that is:</description>
+    </item>
+    
+  </channel>
+</rss>

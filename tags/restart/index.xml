@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Restart on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/restart/</link>
+    <description>Recent content in Restart on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 29 May 2014 02:18:35 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/restart/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Restarting GNOME shell via SSH</title>
+      <link>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</link>
+      <pubDate>Thu, 29 May 2014 02:18:35 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</guid>
+      <description>When GNOME shell breaks, you get to keep both pieces. The nice thing about shell failures in GNOME 3, is that if you&amp;rsquo;re able to do a restart, the active windows are mostly not disturbed. The common way to do this is to type ALT-F2, r, &amp;lt;ENTER&amp;gt;.
+Unfortunately, you can&amp;rsquo;t always type that in if your shell is very borked. If you are lucky enough to have SSH access, and another machine, you can log in remotely and run this script:</description>
+    </item>
+    
+  </channel>
+</rss>

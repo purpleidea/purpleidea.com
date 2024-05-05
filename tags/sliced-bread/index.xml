@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sliced Bread on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/sliced-bread/</link>
+    <description>Recent content in Sliced Bread on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 19 Aug 2010 11:03:46 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/sliced-bread/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>git, gitosis, gitweb and friends...</title>
+      <link>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</link>
+      <pubDate>Thu, 19 Aug 2010 11:03:46 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</guid>
+      <description>In case it wasn&amp;rsquo;t already obvious, I am a huge fan of git, and often prefer it over sliced bread. Recently to help a small team of programmers collaborate, I decided to setup a private git server for them to use. By no claim of mine is the following tutorial unique, however I am writing this to aid those who had trouble following otheronline tutorials.
+Goal: Setup a central git server for private or public source sharing, without having to give everyone a separate shell account.</description>
+    </item>
+    
+  </channel>
+</rss>

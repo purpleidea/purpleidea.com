@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Systemd on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/systemd/</link>
+    <description>Recent content in Systemd on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 10 Sep 2020 08:00:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/systemd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>James is available for hire!</title>
+      <link>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</link>
+      <pubDate>Thu, 10 Sep 2020 08:00:00 -0400</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</guid>
+      <description>TL;DR: I&amp;rsquo;m available for hire. Experienced at Linux/Golang/Mentoring/etc. More information below!
+
+  A drawing of me coding away.  A photo of me giving a talk to a sold-out crowd. Background:
+Two years ago, I left my job at Red Hat to work on mgmt config full-time. I&amp;rsquo;m still passionate about this project, and I&amp;rsquo;m proud of the progress that has been made in the last two years, but it&amp;rsquo;s time for me to explore new opportunities as well.</description>
+    </item>
+    
+    <item>
+      <title>Inexpensive Dynamic DNS over IRC</title>
+      <link>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</link>
+      <pubDate>Tue, 01 Sep 2020 17:08:00 -0400</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</guid>
+      <description>The one thing that I&amp;rsquo;ve been using for longer than ssh is dynamic dns. In this article I&amp;rsquo;ll explain how I built an inexpensive, reliable, private alternative to the mainstream tools commonly available today using only golang and IRC.
+Background:
+I&amp;rsquo;ve had an account with dyndns.org for a long time. They used to be free, but then they cut off the free tier, but left existing accounts alone, until they eventually cut all the non-payers off entirely.</description>
+    </item>
+    
+    <item>
+      <title>Live dmesg following</title>
+      <link>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</link>
+      <pubDate>Mon, 29 Aug 2016 09:00:39 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</guid>
+      <description>All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.
+Around the time I wrote that article, I remember wanting to stream dmesg output too! The functionality wasn&amp;rsquo;t available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!
+Most GNU/Linux distros are probably running a new enough version by now, and you can now dmesg &amp;ndash;follow (or dmesg -w):</description>
+    </item>
+    
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been two months since I announced mgmt, and now it&amp;rsquo;s time to continue the story by telling you more about the design of what&amp;rsquo;s now in git master. Before I get into those details, let me quickly recap what&amp;rsquo;s happened since then.
+Mgmt community recap:
+ I gave the first public presentation about mgmt at CfgMgmtCamp. I repeated the talk at DevConf.cz. The video recording is available. Felix wrote about his work cross compiling puppet code to mgmt.</description>
+    </item>
+    
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.
+I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+    
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>The fact that we manage the switches in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of silicon which happens to be able to dramatically speed up the switching bandwidth.
+ beware of proprietary silicon, it&amp;rsquo;s absurd!That tiny bit of silicon is known as an ASIC, or an application specific integrated circuit, and one particularly well performing ASIC (which is present in many commercially available switches) is called the Trident.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Open Source on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/open-source/</link>
+    <description>Recent content in Open Source on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 28 Dec 2020 08:27:35 -0500</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/open-source/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Working at Amazon</title>
+      <link>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</link>
+      <pubDate>Mon, 28 Dec 2020 08:27:35 -0500</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</guid>
+      <description>TL;DR: I&amp;rsquo;ve got a new job working for Amazon, in the &amp;ldquo;Open Source Program Office&amp;rdquo;. I&amp;rsquo;m now an Amazoner! More information below&amp;hellip;  The Amazon. Source: https://en.wikipedia.org/wiki/Amazon_rainforestBackground:
+A little over three months ago, I decided to get back into full-time work. For the past 2.5 years since I left my job at Red Hat, I&amp;rsquo;ve been mostly working full-time on Mgmt Config and my DevOps/SWE Mentoring Program. To do such things, I had to live off of my savings, which isn&amp;rsquo;t sustainable long-term.</description>
+    </item>
+    
+  </channel>
+</rss>

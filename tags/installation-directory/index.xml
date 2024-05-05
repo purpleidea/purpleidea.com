@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Installation Directory on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/installation-directory/</link>
+    <description>Recent content in Installation Directory on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 01 Oct 2012 06:17:58 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/installation-directory/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>including a recursive tree of files with distutils</title>
+      <link>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</link>
+      <pubDate>Mon, 01 Oct 2012 06:17:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</guid>
+      <description>It turns out it is non trivial (afaict) to include a tree of files (a directory) in a python distutils data_files argument. Here&amp;rsquo;s how I managed to do it, while also allowing the programmer to include manual entries: NAME = &amp;#39;project_name&amp;#39; distutils.core.setup( # ... data_files=[ (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;README&amp;#39;]), (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;files/somefile&amp;#39;]), (&amp;#39;share/%s/templates&amp;#39; % NAME, [ &amp;#39;files/templates/template1.tmpl&amp;#39;, &amp;#39;files/templates/template2.tmpl&amp;#39;, ]), ] + [(&amp;#39;share/%s/%s&amp;#39; % (NAME, x[0]), map(lambda y: x[0]+&amp;#39;/&amp;#39;+y, x[2])) for x in os.</description>
+    </item>
+    
+  </channel>
+</rss>

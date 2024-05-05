@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inventions on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/inventions/</link>
+    <description>Recent content in Inventions on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 24 Oct 2012 04:08:38 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/inventions/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multifile mode for text editors</title>
+      <link>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</link>
+      <pubDate>Wed, 24 Oct 2012 04:08:38 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</guid>
+      <description>Dear internets,
+I&amp;rsquo;m a sysadmin/architect, which means I spend a good amount of time coding in puppet and other languages. Puppet is a great tool, however the puppet community is a bit anal strict about their style policies. I can respect this because I understand how important uniformity is when many developers are sharing code.
+(On a side note, I absolutely can&amp;rsquo;t stand using spaces for indentation, but that&amp;rsquo;s another story.</description>
+    </item>
+    
+  </channel>
+</rss>

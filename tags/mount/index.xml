@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mount on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/mount/</link>
+    <description>Recent content in Mount on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 25 Apr 2016 13:46:53 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/mount/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    
+  </channel>
+</rss>

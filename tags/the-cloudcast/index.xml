@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Cloudcast on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/the-cloudcast/</link>
+    <description>Recent content in The Cloudcast on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 18 Sep 2013 23:59:28 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/the-cloudcast/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linuxcon day three, Wednesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:59:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</guid>
+      <description>After hacking away on Monday and Tuesday and meeting fellow nerds IRL, I&amp;rsquo;ve landed even more changes to puppet-gluster. My git master branch now sits at 47 commits.
+$ git clone https://github.com/purpleidea/puppet-gluster.git Cloning into &#39;puppet-gluster&#39;... remote: Counting objects: 317, done. remote: Compressing objects: 100% (144/144), done. remote: Total 317 (delta 187), reused 275 (delta 148) Receiving objects: 100% (317/317), 82.17 KiB | 12.00 KiB/s, done. Resolving deltas: 100% (187/187), done. $ cd puppet-gluster/ $ git log | grep &#39;^commit&#39; | wc -l 47 $ git log | head commit &amp;lt;a href=&amp;quot;https://github.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Screencasts on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/screencasts/</link>
+    <description>Recent content in Screencasts on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 27 Jan 2014 16:13:10 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/screencasts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>I decided to record some screencasts to show how easy it is to deploy GlusterFS using Puppet-Gluster+Vagrant. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!
+If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reachability on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/reachability/</link>
+    <description>Recent content in Reachability on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Mar 2016 06:03:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/reachability/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Automatic grouping in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</link>
+      <pubDate>Wed, 30 Mar 2016 06:03:47 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</guid>
+      <description>In this post, I&amp;rsquo;ll tell you about the recently released &amp;ldquo;automatic grouping&amp;rdquo; or &amp;ldquo;AutoGroup&amp;rdquo; feature in mgmt, a next generation configuration management prototype. If you aren&amp;rsquo;t already familiar with mgmt, I&amp;rsquo;d recommend you start by reading the introductory post, and the second post. There&amp;rsquo;s also an introductory video.
+Resources in a graph
+Most configuration management systems use something called a directed acyclic graph, or DAG. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges).</description>
+    </item>
+    
+  </channel>
+</rss>

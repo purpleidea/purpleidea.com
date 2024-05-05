@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mailman on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/mailman/</link>
+    <description>Recent content in Mailman on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 27 Nov 2014 20:28:54 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/mailman/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Replying to mailing lists with Evolution</title>
+      <link>https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/</link>
+      <pubDate>Thu, 27 Nov 2014 20:28:54 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/</guid>
+      <description>I use the Evolution mail client. It does have a few annoying bugs, but it has a plethora of great features too! Hopefully this post will inspire you to help hack on this piece of software and fix the bugs!
+Mailing list etiquette:
+When replying to mailing lists, it&amp;rsquo;s typically very friendly to include the email address of the person you&amp;rsquo;re replying to in the to or cc fields along with the mailing list address.</description>
+    </item>
+    
+  </channel>
+</rss>

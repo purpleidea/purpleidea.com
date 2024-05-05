@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gnome3 on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gnome3/</link>
+    <description>Recent content in Gnome3 on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 05 Jul 2012 18:56:40 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/gnome3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>gnome3&#43;others glipper/klipper replacement</title>
+      <link>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</link>
+      <pubDate>Thu, 05 Jul 2012 18:56:40 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</guid>
+      <description>So a friend of mine uses kde4 for its klipper feature. Turns out he&amp;rsquo;s right that it&amp;rsquo;s an awesome feature! I realized I couldn&amp;rsquo;t let gnome3 take second place to a clipboard app, so after a bit of searching&amp;hellip;
+$ sudo yum install gnome-shell-extension-gpaste gpaste xsel  Next hit up: https://extensions.gnome.org/local/ to flip on the extension. I had to first type: ALT-F2, &amp;ldquo;r&amp;rdquo; (to restart the gnome shell). Don&amp;rsquo;t worry your apps won&amp;rsquo;t die.</description>
+    </item>
+    
+  </channel>
+</rss>

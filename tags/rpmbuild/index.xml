@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rpmbuild on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/rpmbuild/</link>
+    <description>Recent content in Rpmbuild on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 11 Aug 2015 13:25:58 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/rpmbuild/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Making an empty RPM</title>
+      <link>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</link>
+      <pubDate>Tue, 11 Aug 2015 13:25:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</guid>
+      <description>I am definitely not an RPM expert, in fact, I&amp;rsquo;m afraid of it, but with recent tools such as COPR, and my glorious Makefile, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.
+ A video of my journey building this RPM.Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM.</description>
+    </item>
+    
+  </channel>
+</rss>

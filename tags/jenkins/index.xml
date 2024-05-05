@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jenkins on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/jenkins/</link>
+    <description>Recent content in Jenkins on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 16 Feb 2016 12:15:06 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing: git tpush</title>
+      <link>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</link>
+      <pubDate>Tue, 16 Feb 2016 12:15:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</guid>
+      <description>On today&amp;rsquo;s issue of &amp;ldquo;one hour hacks&amp;rdquo;, I&amp;rsquo;ll show you how you can stop your git drive-by&amp;rsquo;s to git master from breaking your CI tests&amp;hellip; Let&amp;rsquo;s continue!
+The problem:
+Sometimes I&amp;rsquo;ve got a shitty one-line patch that I want to push to git master. I&amp;rsquo;m usually right, and everything tests out fine, but usually isn&amp;rsquo;t always, and then I look silly while I frantically try to fix git master on a project that I maintain.</description>
+    </item>
+    
+    <item>
+      <title>Continuous integration for Puppet modules</title>
+      <link>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</link>
+      <pubDate>Fri, 10 Oct 2014 15:34:53 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</guid>
+      <description>I just patched puppet-gluster and puppet-ipa to bring their infrastructure up to date with the current state of affairs&amp;hellip;
+What&amp;rsquo;s new?  Better README&amp;rsquo;s Rake syntax checking (fewer oopsies) CI (testing) with travis on git push (automatic testing for everyone) Use of .pmtignore to ignore files from puppet module packages (finally) Pushing modules to the forge with blacksmith (sweet!)  This last point deserves another mention. Puppetlabs created the &amp;ldquo;forge&amp;rdquo; to try to provide some sort of added value to their stewardship.</description>
+    </item>
+    
+  </channel>
+</rss>

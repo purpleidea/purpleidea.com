@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nss on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/nss/</link>
+    <description>Recent content in Nss on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 01 Sep 2020 17:08:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/nss/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Inexpensive Dynamic DNS over IRC</title>
+      <link>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</link>
+      <pubDate>Tue, 01 Sep 2020 17:08:00 -0400</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</guid>
+      <description>The one thing that I&amp;rsquo;ve been using for longer than ssh is dynamic dns. In this article I&amp;rsquo;ll explain how I built an inexpensive, reliable, private alternative to the mainstream tools commonly available today using only golang and IRC.
+Background:
+I&amp;rsquo;ve had an account with dyndns.org for a long time. They used to be free, but then they cut off the free tier, but left existing accounts alone, until they eventually cut all the non-payers off entirely.</description>
+    </item>
+    
+  </channel>
+</rss>

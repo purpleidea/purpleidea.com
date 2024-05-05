@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vagrant Libvirt on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vagrant-libvirt/</link>
+    <description>Recent content in Vagrant Libvirt on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 18 Aug 2015 03:12:26 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/vagrant-libvirt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Thanking Oh-My-Vagrant contributors for version 1.0.0</title>
+      <link>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</link>
+      <pubDate>Tue, 18 Aug 2015 03:12:26 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</guid>
+      <description>The Oh-My-Vagrant project became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.
+james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count 188 james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1) commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371 Author: James Shubin &amp;lt;james@shubin.ca&amp;gt; Date: Thu Aug 28 01:08:03 2014 -0400 Initial commit of vagrant-puppet-docker-template... This is an attempt to prototype a default environment for vagrant+puppet+docker hacking.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant and Oh-My-Vagrant on RHEL7</title>
+      <link>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</link>
+      <pubDate>Tue, 11 Aug 2015 15:09:16 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</guid>
+      <description>My employer keeps paying me, which I appreciate, so it&amp;rsquo;s good to spend some time to make sure RHEL7 customers get a great developer experience! So here&amp;rsquo;s how to make vagrant, vagrant-libvirt and Oh-My-Vagrant work on RHEL 7+. The same steps should work for CentOS 7+.
+I&amp;rsquo;ll first paste the commands you need to run, and then I&amp;rsquo;ll explain what&amp;rsquo;s happening for those that are interested:
+# run these commands, and then get hacking!</description>
+    </item>
+    
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>Making Oh-My-Vagrant (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)
+Prerequisites:
+If you haven&amp;rsquo;t read any of the previous articles about Oh-My-Vagrant, I&amp;rsquo;d recommend you start there.</description>
+    </item>
+    
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>The Oh-My-Vagrant (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, omv can be used to help this happen more naturally.
+Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:</description>
+    </item>
+    
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>If you&amp;rsquo;re a reader of my code or of this blog, it&amp;rsquo;s no secret that I hack on a lot of puppet and vagrant. Recently I&amp;rsquo;ve fooled around with a bit of docker, too. I realized that the vagrant, environments I built for puppet-gluster and puppet-ipa needed to be generalized, and they needed new features too. Therefore&amp;hellip;
+Introducing: Oh My Vagrant!
+Oh My Vagrant is an attempt to provide an easy to use development environment so that you can be up and hacking quickly, and focusing on the real devops problems.</description>
+    </item>
+    
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!
+Background:
+This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>I decided to record some screencasts to show how easy it is to deploy GlusterFS using Puppet-Gluster+Vagrant. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!
+If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!</description>
+    </item>
+    
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!
+Status quo:
+Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)
+I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:   Vagrant on Fedora with libvirt   Vagrant vsftp and other tricks   Vagrant clustered SSH and &amp;lsquo;screen&amp;rsquo;   Once you&amp;rsquo;re comfortable with the material in the above articles, we can continue&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt, and have even been submitting, patches and issues! (This &amp;ldquo;closed&amp;rdquo; issue needs solving!) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.
+Default provider:
+I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using vagrant-libvirt.</description>
+    </item>
+    
+  </channel>
+</rss>

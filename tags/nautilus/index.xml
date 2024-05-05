@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nautilus on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/nautilus/</link>
+    <description>Recent content in Nautilus on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 30 Sep 2014 01:05:07 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/nautilus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>Master SDN hacker Flavio sent me some tunes. They were sitting on my desktop in a folder:
+$ ls ~/Desktop/ uncopyrighted_tunes_from_flavio/  I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the nautilus file browser to select which folder to play, and the totem music/video player to do the playing.
+Drop a file named totem into:
+~/.local/share/nautilus/scripts/  with the contents:
+#!/bin/bash # o hai from purpleidea exec totem -- &amp;quot;$@&amp;quot;  and make it executable with:</description>
+    </item>
+    
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:
+james@computer:~/some/awesome/directory$ nautilus . Initializing nautilus-open-terminal extension Shutting down nautilus-open-terminal extension james@computer:~/some/awesome/directory$  This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it.</description>
+    </item>
+    
+    <item>
+      <title>Picking up the pieces after a Fedora 18 install</title>
+      <link>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</link>
+      <pubDate>Tue, 12 Feb 2013 01:15:38 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</guid>
+      <description>I love GNOME and Fedora, but &amp;ldquo;upgrading&amp;rdquo; from Fedora 17 to 18 did not go well for me. I recommend you wait until either these are all fixed, or Fedora 19+ suits your needs. Here are a list of problems I had, and some workarounds. Hopefully proper patches to these bugs will get merged quickly, so that you don&amp;rsquo;t need to use these fixes.
+Problem: Boot fails after upgrade from Fedora 17 to Fedora 18.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kickstart on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/kickstart/</link>
+    <description>Recent content in Kickstart on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 07 Oct 2016 15:33:17 +0000</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/kickstart/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.
+Prior knowledge
+If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    
+    <item>
+      <title>Making an empty RPM</title>
+      <link>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</link>
+      <pubDate>Tue, 11 Aug 2015 13:25:58 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</guid>
+      <description>I am definitely not an RPM expert, in fact, I&amp;rsquo;m afraid of it, but with recent tools such as COPR, and my glorious Makefile, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.
+ A video of my journey building this RPM.Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM.</description>
+    </item>
+    
+    <item>
+      <title>adding range support to python&#39;s http server to kickstart with anaconda</title>
+      <link>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</link>
+      <pubDate>Thu, 14 Mar 2013 00:34:19 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</guid>
+      <description>I&amp;rsquo;ve been working on automatic installs using kickstart and puppet. I&amp;rsquo;m using a modified python httpserver because it&amp;rsquo;s lightweight, and easy to integrate into my existing python code base. The server was churning away perfectly until anaconda started downloading the full rpm&amp;rsquo;s for installation. What was going wrong?  Traceback (most recent call last): [&amp;hellip;] error: [Errno 32] Broken pipe BorkedError: See TTBOJ for explanation and discussion  As it turns out, anaconda first downloads the headers, and then later requests the full rpm with an http range request.</description>
+    </item>
+    
+    <item>
+      <title>A quick anaconda trick</title>
+      <link>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</link>
+      <pubDate>Mon, 04 Mar 2013 05:00:43 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</guid>
+      <description>Here&amp;rsquo;s a quick anaconda solution that I am now using in some of my kickstart files&amp;hellip;
+I wanted to bootstrap a machine and do all the partitioning and logical volume creation, but not format or mount one of the logical volumes. The magic parameter I needed was:
+--fstype=none  This seems to work perfectly for me. It&amp;rsquo;s not 100% intuitive to me, but it does work. I hope it&amp;rsquo;s not an accidental bug in the anaconda code!</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>X on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/x/</link>
+    <description>Recent content in X on purpleidea.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 16 Jun 2021 00:40:00 -0400</lastBuildDate>
+    
+	<atom:link href="https://purpleidea.com/tags/x/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Magic typing with shortcuts on Linux</title>
+      <link>https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/</link>
+      <pubDate>Wed, 16 Jun 2021 00:40:00 -0400</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/</guid>
+      <description>Ever find yourself typing more characters than is necessary when using some annoying application or website? Here&amp;rsquo;s a quick hack around that.
+Intro:
+There&amp;rsquo;s a magic program called xdotool written by Jordan Sissel that solves this problem. I&amp;rsquo;ve known about his excellent work for years, but only today did I learn he also wrote xdotool. It&amp;rsquo;s named as such because it tells the X server to do something for you.</description>
+    </item>
+    
+    <item>
+      <title>Fixing jerky scrolling in Firefox</title>
+      <link>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</link>
+      <pubDate>Thu, 11 Apr 2013 05:53:28 +0000</pubDate>
+      
+      <guid>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</guid>
+      <description>Fedora did a lovely job of updating me to the latest version (v. 20) of Firefox. One problem I found, was that scrolling on certain pages was quite jerky. Performance was worse (or more likely) on pages with a frameset, and pages which were long. Pages with many images made this problem worse.
+It turns out that the workaround is to disable hardware acceleration:
+After you&amp;rsquo;ve unchecked this box, restart Firefox, and scrolling is now considerably smoother.</description>
+    </item>
+    
+  </channel>
+</rss>
