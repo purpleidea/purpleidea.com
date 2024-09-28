@@ -9,8 +9,10 @@
 {{ with .Site.Params.github }}
 			<a href="{{ . }}" class="btn btn-primary btn-xs"><i class="fa fa-github-square fa-2x"></i></a>
 {{ end }}
-{{ if and .RSSLink (hasPrefix .Dir "blog/") }}
-			<a href="{{ .RSSLink }}" style="background:#f26522" class="btn btn-primary btn-xs"><i class="fa fa-rss-square fa-2x"></i></a>
+{{ if hasPrefix .Section "blog" }}
+	{{ with .OutputFormats.Get "rss" }}
+		<a href="{{ .RelPermalink }}" style="background:#f26522" class="btn btn-primary btn-xs"><i class="fa fa-rss-square fa-2x"></i></a>
+	{{ end }}
 {{ end }}
 {{ with .Site.Params.mastodon }}
 			<a rel="me" href="{{ . }}" class="btn btn-xs" style="background-color:#0000ff;color:#000000"><i class="fa fa-mastodon-square fa-2x"><b>M</b></i></a>
