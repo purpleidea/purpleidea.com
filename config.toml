@@ -4,14 +4,12 @@ title = "purpleidea.com"
 
 pygmentsCodeFences = true
 
-[author]
-  name = "James Shubin"
-
 [taxonomies]
   tag = "tags"
   category = "categories"
 
 [params]
+  author = "James Shubin"
   github = "https://github.com/purpleidea/"
   twitter = "https://twitter.com/purpleidea"
   mastodon = "https://mastodon.social/@purpleidea"
