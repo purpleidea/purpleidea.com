@@ -23,3 +23,8 @@ pygmentsCodeFences = true
   # https://api.staticman.net/v2/encrypt/YOUR-SECRET to encrypt the secret.
   staticmanCaptchaSiteKey = "6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"
   staticmanCaptchaSecret = "AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW+v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH+7PoyC3x7d4KDLypopDn+HzWowOpAZuvfHE08n+G4omrP5fUfkOrH03A="
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
