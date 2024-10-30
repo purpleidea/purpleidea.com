@@ -25,7 +25,8 @@ rm -rf public/*
 echo "Generating site"
 #hugo
 #~/code/gopath/bin/hugo
-./bin/hugo
+#./bin/hugo
+/usr/bin/hugo
 
 echo "purpleidea.com" > public/CNAME
 
