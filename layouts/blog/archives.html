@@ -6,13 +6,13 @@
 {{ if .Content }}
 				<h4>{{ .Content }}</h4><br />
 {{ end }}
-				<h4><strong>Archives</strong></h4><br />
-				<ul class="list-unstyled">
-					{{ range .Data.Pages }}
-						{{ .Render "li" }}
-					{{ end}}
-				</ul>
 			</div>
+
+{{ range where .Site.Pages "Section" "blog" }}
+	{{ if and (ne .RelPermalink "/blog/archives/") (ne .RelPermalink "/blog/") }}
+{{ .Render "li-box" }}
+	{{ end}}
+{{ end }}
 		</div>
 
 		<!-- Sidebar -->
