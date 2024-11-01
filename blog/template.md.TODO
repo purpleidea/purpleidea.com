@@ -1,0 +1,31 @@
+---
+# get with: `date --rfc-3339=seconds`
+date: 2021-10-99 05:00:00-04:00
+title: "XXX"
+description: "XXX"
+categories:
+  - "technical"
+tags:
+  - "planetfedora"
+
+draft: false
+---
+
+XXX
+
+{{< blog-paragraph-header "Intro" >}}
+
+{{< blog-image src="image.png" caption="XXX" scale="100%" >}}
+
+{{< blog-paragraph-header "Conclusion" >}}
+
+XXX
+
+Happy Hacking,
+
+James
+
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}

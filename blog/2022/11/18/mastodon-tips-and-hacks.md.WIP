@@ -1,0 +1,60 @@
+---
+# get with: `date --rfc-3339=seconds`
+date: 2022-11-17 20:59:50-05:00
+title: "Mastodon tips and hacks"
+description: "A collection of tips and hacks for new Mastodon users"
+categories:
+  - "technical"
+tags:
+  - "gnu"
+  - "linux"
+  - "planetfedora"
+  - "wayland"
+  - "X"
+  - "xdotool"
+  - "ydotool"
+
+draft: false
+---
+
+You might be reading this because you've decided to try [Mastodon](https://en.wikipedia.org/wiki/Mastodon_(software)).
+The recent purchase of twitter by Elon Musk has spurred a whole bunch of people
+to create and use Mastodon accounts. I'm pretty excited about this because I
+think depending on proprietary software and services should be avoided when
+possible. It's bittersweet because I found the twitter social graph to be quite
+beneficial to me. Let's see what we can do about that.
+
+{{< blog-image src="screenshot-twitter-elon-musk.png" caption="Why is everyone so mad at Elon Musk? He's encouraged more people to use Free Software! ;)" scale="100%" >}}
+
+{{< blog-paragraph-header "The Graph" >}}
+
+import/export
+
+{{< blog-paragraph-header "Your Domain" >}}
+
+.well-known
+
+{{< blog-paragraph-header "Github Pages" >}}
+
+
+{{< blog-paragraph-header "Mobile" >}}
+
+{{< blog-paragraph-header "Notifications" >}}
+
+{{< blog-paragraph-header "Verification" >}}
+
+{{< blog-paragraph-header "Bookmark Follow Hack" >}}
+
+{{< blog-paragraph-header "Conclusion" >}}
+
+I hope this was useful to you! I hope it made you think about hacks that can
+make your daily work go by easier. That's the power of GNU and Linux.
+
+Happy Hacking,
+
+James
+
+{{< mastodon-follow-purpleidea >}}
+{{< twitter-follow-purpleidea >}}
+{{< github-support-purpleidea >}}
+{{< patreon-support-purpleidea >}}
