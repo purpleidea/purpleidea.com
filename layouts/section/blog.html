@@ -6,7 +6,7 @@
 				<h4>{{ .Content }}</h4><br />
 			</div>
 
-		{{ range .Data.Pages }}
+		{{ range first 25 .Data.Pages }}
 			{{ .Render "summary" }}
 		{{ end }}
 		</div>
