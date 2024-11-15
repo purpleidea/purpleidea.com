@@ -49,8 +49,8 @@ Run mgmt:
 
 ```
 root@debian:~/mgmt# time ./mgmt run --file examples/pkg1.yaml 
-18:58:25 main.go:65: This is: mgmt, version: 0.0.2-41-g963f025<em>
-[snip]</em>
+18:58:25 main.go:65: This is: mgmt, version: 0.0.2-41-g963f025
+[snip]
 18:18:44 pkg.go:208: Pkg[powertop]: CheckApply(true)
 18:18:44 pkg.go:259: Pkg[powertop]: Apply
 18:18:44 pkg.go:266: Pkg[powertop]: Set: installed...
@@ -109,14 +109,14 @@ Here's a small demo:
 ```
 james@fedora:~$ ./mgmt run --file examples/autoedges3.yaml 
 20:00:38 main.go:65: This is: mgmt, version: 0.0.2-42-gbfe6192
-<em>[snip]</em>
+[snip]
 20:00:38 configwatch.go:54: Watching: examples/autoedges3.yaml
 20:00:38 config.go:248: Compile: Adding AutoEdges...
 20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -> Svc[drbd]
 20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -> File[file1]
 20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -> File[file2]
 20:00:38 main.go:149: Graph: Vertices(4), Edges(3)
-<em>[snip]</em>
+[snip]
 ```
 Here we define four resources: pkg (<code>drbd-utils</code>), svc (<code>drbd</code>), and two files (<code>/etc/drbd.conf</code> and <code>/etc/drbd.d/</code>), both of which happen to be listed inside the RPM package! The AutoEdge magic works out these dependencies for us by examining the package data, and as you can see, adds the three edges. Unfortunately, there is no elegant way that I know of to add an automatic relationship between the svc and any of these files at this time. Suggestions welcome.
 

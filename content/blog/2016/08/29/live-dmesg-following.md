@@ -31,7 +31,7 @@ As an added bonus, you can access this via <code>journalctl --dmesg --follow</co
 
 ```
 $ journalctl -kf
-<em>[snip]</em>
+[snip]
 Aug 28 19:58:13 hostname unknown: All your base are belong to us.
 ```
 <table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="all-your-base.png"><img class="size-full wp-image-1870" src="all-your-base.png" alt="Now we have a dmesg version too! https://www.youtube.com/watch?v=8fvTxv46ano&html5=1" width="100%" height="100%" /></a></td></tr><tr><td> Now we have a <a href="https://www.youtube.com/watch?v=8fvTxv46ano&html5=1">dmesg version</a> too!</td></tr></table></br />
