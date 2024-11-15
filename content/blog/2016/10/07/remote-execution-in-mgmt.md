@@ -138,7 +138,7 @@ For this particular example, since we export and collect resources through the t
 You'll see this occurring with this message in the logs:
 
 ```
-18:00:44 remote.go:973: Remote: Copied over new graph definition: examples/remote2b.yaml</strong>
+18:00:44 remote.go:973: Remote: Copied over new graph definition: examples/remote2b.yaml
 ```
 While you might not necessarily want to use this functionality on a production machine, it will definitely make your interactive hacking sessions more useful, in particular because you never need to re-run parts of the graph which have already converged!
 

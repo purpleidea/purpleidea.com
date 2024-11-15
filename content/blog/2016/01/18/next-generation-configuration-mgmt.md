@@ -41,6 +41,7 @@ This is the first major design improvement that the <em>mgmt</em> tool implement
 In practice this is particularly powerful since most servers under configuration management typically combine different modules, many of which have no inter-dependencies.
 
 An example is the best way to show off this feature. Here we have a set of four long (10 second) running processes or <em>exec</em> resources. Three of them form a linear dependency chain, while the fourth has no dependencies or prerequisites. I've asked the system to exit after it has been converged for five seconds. As you can see in the example, it is finished five seconds after the limiting resource should be completed, which is the longest running delay to complete in the whole process. That limiting chain took 30 seconds, which we can see in the log as being from three 10 second executions. The logical total of about 35 seconds as expected is shown at the end:
+
 ```
 $ time ./mgmt run --file graph8.yaml --converged-timeout=5 --graphviz=example1.dot
 22:55:04 This is: mgmt, version: 0.0.1-29-gebc1c60
@@ -71,6 +72,7 @@ user    0m0.008s
 sys     0m0.008s
 $
 ```
+
 Note that I've edited the example slightly to remove some unnecessary log entries for readability sake, and I have also added some comments and emphasis, but aside from that, this is actual output! The tool also generated <a href="https://en.wikipedia.org/wiki/Graphviz">graphviz</a> output which may help you better understand the problem:
 
 <table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="example1-dot.png" rel="attachment wp-att-1338"><img class="aligncenter size-full wp-image-1338" src="example1-dot.png" alt="example1.dot" width="100%" height="100%" /></a></td></tr><tr><td> This example is obviously contrived, but is designed to illustrate the capability of the <em>mgmt</em> tool.</td></tr></table></br />
@@ -100,6 +102,7 @@ Astute config mgmt hackers might end up realizing three interesting consequences
 	<li>A monitoring system (read: nagios and friends) could probably be built with this architecture, thus demonstrating that my world view of configuration management is actually a generalized version of system monitoring! They're the same discipline!</li>
 </ol>
 Here is a small real-world example to demonstrate this feature. I have started the agent, and I have told it to create three files (f1, f2, f3) with the contents seen below, and also, to ensure that file f4 is not present. As you can see the <em>mgmt</em> system responds quite quickly:
+
 ```
 james@computer:/tmp/mgmt$ ls
 f1  f2  f3
@@ -117,6 +120,7 @@ james@computer:/tmp/mgmt$ ls
 f1  f2  f3
 james@computer:/tmp/mgmt$
 ```
+
 That's fast!
 
 <strong>3) <span style="text-decoration:underline;">Distributed topology</span></strong>
@@ -158,6 +162,7 @@ An example demonstrates this best.
 	<li>For demonstration purposes, I startup the <em>mgmt</em> engine first on A, then B, and finally C, all the while running various terminal commands to keep you up-to-date.</li>
 </ul>
 As before, I've trimmed the logs and annotated the output for clarity:
+
 ```
 james@computer:/tmp$ rm -rf /tmp/mgmt* # clean out everything
 james@computer:/tmp$ mkdir /tmp/mgmt{A..C} # make the example dirs
@@ -244,6 +249,7 @@ james@computer:/tmp$ tree /tmp/mgmt*
 0 directories, 24 files
 james@computer:/tmp$
 ```
+
 Amazingly, the cluster converges in <em>less</em> than one second. Admittedly it didn't have large amounts of <a href="https://en.wikipedia.org/wiki/Input/output">IO</a> to do, but since those are fixed constants, it still shows how fast this approach should be. Feel free to do your own tests to verify.
 
 <strong><span style="text-decoration:underline;">Code</span></strong>
