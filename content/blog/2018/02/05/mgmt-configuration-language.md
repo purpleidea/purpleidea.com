@@ -167,13 +167,15 @@ Some of the ways we help enforce safety are due to the fact that we are:
 	- this makes it much easier to ensure that data isn't silently changed or corrupted
 
 ##### Example:
-```
+
+```mcl
 $x = "hello"
 $x = "nope, nope"		# the duplicate use of $x would be a compile error
 ```
 
 ##### Example:
-```
+
+```mcl
 $x = "hello"
 if true {
 	$x = "i am shadowed"	# this is allowed, but not a good practice to intentionally shadow
@@ -187,7 +189,8 @@ file "/tmp/foo" {
 ```
 
 ##### Example:
-```
+
+```mcl
 if "true" {	# compile error, condition contains a string!
 	# whatever
 }
@@ -235,29 +238,32 @@ Hopefully you will learn to love this paradigm as I have, and it will let you
 model and build very powerful programs. Let's look at some examples:
 
 ##### Example:
-```
+
+```mcl
 # this program outputs a single resource
 # it will only ever stream a new graph to the engine if the source code changes
 # after the graph is sent to the engine, the engine will create a single file on disk
 $x = 42
 file "/tmp/answer" {
-	content => printf("the answer to life, the universe, and everything is: %d", $x)
+	content => printf("the answer to life, the universe, and everything is: %d", $x),
 }
 ```
 
 ##### Example:
-```
+
+```mcl
 # this program outputs a new graph every second, since the datetime() function
 # runs with a 1 second precision, in fact, if you watch the contents of this
 # text file that is created, you'll note that it changes every second as well!
 $x = datetime()
 file "/tmp/seconds-since-1970" {
-	content => printf("there have been %d seconds since 1970", $x)
+	content => printf("there have been %d seconds since 1970", $x),
 }
 ```
 
 ##### Example:
-```
+
+```mcl
 # this program outputs a new graph every five seconds, since most kernels happen
 # to recalculate the 1 minute load average every five seconds!
 $x = load()
@@ -272,7 +278,8 @@ file "/tmp/current-load-average" {
 
 <!--
 ##### Example:
-```
+
+```mcl
 # TODO: this hasn't all been implemented yet...
 # this program creates a file which is present about 1/6th of the time...
 $x = random()	# returns a stream of values in [0, 1]
@@ -318,7 +325,7 @@ values to populate all the resources and other statements.
 Let's look at a short sample program and its corresponding graph. Remember the
 earlier "read-only fridays" example from earlier? Here it is again:
 
-```
+```mcl
 $endofweek = "friday"
 
 pkg "db" {
@@ -396,7 +403,7 @@ actually represents the current value.
 
 Here's a short example that demonstrates the past dates and times:
 
-```
+```mcl
 # in a terminal run: watch -n 0.1 'cat /tmp/mgmt/history'
 # to see what happens to the file in real-time
 $dt = datetime()
@@ -453,7 +460,7 @@ the load elsewhere so that each customer has a well performing virtual host. We
 can do this dynamically because of our reactive language and the power that
 comes when we integrate it with powerful resources such as [`virt`](https://github.com/purpleidea/mgmt/blob/master/resources/virt.go).
 
-```
+```mcl
 $theload = load()
 $threshold = 1.5	# change me if you like
 
