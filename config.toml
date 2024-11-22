@@ -28,3 +28,12 @@ pygmentsCodeFences = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+
+  [markup.highlight]
+    #style = "solarized-light"
+    #style = "paraiso-light"
+    #style = "pastel-on-dark"
+    style = "emacs"
+    #style = "github"
+    codeFences = true
+    guessSyntax = true
