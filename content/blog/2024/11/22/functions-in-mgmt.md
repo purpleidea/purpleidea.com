@@ -20,7 +20,7 @@ draft: false
 
 It's been a little while since I introduced the
 [Mgmt Configuration Language](/blog/2018/02/05/mgmt-configuration-language/). I
-original wrote this article in 2019, and as I was working on it alongside the
+originally wrote this article in 2019, and as I was working on it alongside the
 code for functions, when I realized that lambdas didn't work properly. It took
 some time to finally solve that properly. Since then I've been working to get [mgmt](https://github.com/purpleidea/mgmt/)
 production ready. It's properly useful for production now, and so it's time for
@@ -31,7 +31,7 @@ go...
 
 I'd like to introduce some of the missing features that weren't available when
 the language was first introduced. If you haven't already read that [post](/blog/2018/02/05/mgmt-configuration-language/),
-and [the post](blog/2019/07/26/class-and-include-in-mgmt/) on classes, please
+and [the post](/blog/2019/07/26/class-and-include-in-mgmt/) on classes, please
 start there and come back when you're finished. In this article we'll learn
 about functions.
 
@@ -40,7 +40,7 @@ about functions.
 [_Mgmt_](https://github.com/purpleidea/mgmt/) has different kinds of functions
 in its `mcl` language. The built-in functions can be present in the global scope
 or provided by one of the [core](https://github.com/purpleidea/mgmt/tree/master/lang/core)
-packages. Most of the functions are [pure](https://en.wikipedia.org/wiki/Pure_function),
+modules. Most of the functions are [pure](https://en.wikipedia.org/wiki/Pure_function),
 although there are a few inconsequential exceptions. A brilliant programmer
 friend of mine believes that the literature might refer to this model as:
 "imperative shell, functional core". I'm not entirely acquainted with how
@@ -74,7 +74,7 @@ $sq2 = func($x, $y) {
 }
 
 $x1 = sq1(3, 4) # 3^2 + 4 = 13
-$x2 = $sq2(7, -7) # 7^2 + 2 = 42
+$x2 = $sq2(7, -7) # 7^2 - 7 = 42
 
 print "fn1" {
 	msg => fmt.printf("sq1: %d", $x1),
@@ -120,7 +120,7 @@ As it turns out, it is! There is no conflict, because the scope has a separate
 map to store function definitions, variable definitions (which may be either
 function values or ordinary values) and class definitions. While it might be
 confusing if you have one of each that are all named `foo`, it's still perfectly
-legal. You can even have an `import` that imports a package named `foo`, and it
+legal. You can even have an `import` that imports a module named `foo`, and it
 will not conflict with the other named nodes. Don't worry that you haven't seen
 `import` yet. We'll get to that in a future article, but it should be easy for
 you to make some assumptions for now.
@@ -224,8 +224,8 @@ reasons) the user from specifying a specific type.
 
 {{< blog-paragraph-header "Polymorphic Functions" >}}
 
-Interestingly, you can't have polymorphic lambda's. The following code is
-**NOT** valid, but if you remove either invocation then it will work:
+Interestingly, you can't have polymorphic lambdas. The following code is **NOT**
+valid, but if you remove either invocation, then it will work:
 
 ```mcl
 # polymorphic lambda variables (not supported!)
@@ -251,11 +251,11 @@ print "t2" {
 ```
 
 {{< alert type="info" >}}
-This example is not possible because while the `+` (plus) operator supports
-adding integers and floats, and even concatenating of strings, the **variable**
+This example is not possible because, while the `+` (plus) operator supports
+adding integers and floats, and even concatenation of strings, the **variable**
 `$double` must have a single type, which happens to be a function! If you want
 to write this kind of code, instead declare the `double` function as a statement
-instead which will work.
+which will work.
 {{< /alert >}}
 
 {{< blog-paragraph-header "Recursive Functions" >}}
@@ -293,10 +293,10 @@ print "nope2" {
 ```
 
 While this looks like it would be a lot of fun, and as you can see I considered
-it carefully, it is not supported. Similar functions that co-recurse as well as
-lambda variants are all caught by the compiler and rejected. It's easy to catch
+it carefully, it is not supported. Similar functions that co-recurse, as well as
+lambda variants, are all caught by the compiler and rejected. It's easy to catch
 these things, because in an `FRP`, they would not form a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)!
-A simple topological sort catches this and this code will error with:
+A simple topological sort will catch this, and as such, this code errors with:
 `could not set scope: recursive reference while setting scope: not a dag`.
 
 {{< blog-paragraph-header "Returning Functions" >}}
@@ -466,7 +466,7 @@ graph. This is because we perform an intelligent "light copy" when running
 `call`, and anything that is a bound constant, remains that way. Enjoy the
 memory gains!
 
-(As a quick aside, a future compiler optimization will actually simply this
+(As a quick aside, a future compiler optimization will actually simplify this
 graph substantially. I haven't been blocked or constrained by the lack of this
 optimization yet, so it hasn't been prioritized, but there is lots of exciting
 work left to do in `mgmt`!)
@@ -507,7 +507,7 @@ $fn = func($x) { # notable because concrete type is fn(t1) t2, where t1 != t2
 	len($x)
 }
 $in1 = ["a", "bb", "ccc",]
-# NOTE: a future version of mgmt may rename iter.map to list.iter (list package)
+# NOTE: a future version of mgmt may rename iter.map to list.iter (list module)
 $out1 = iter.map($in1, $fn)	# takes a lambda, and is implemented as a core lib!
 
 print "example" {
@@ -534,7 +534,7 @@ $fn = func($x) { # notable because concrete type is fn(t1) t2, where t1 != t2
 	len($x)
 }
 $in1 = if $mod { ["a", "bb", "ccc",] } else { ["zzzzzz", "yyyyy", "xxxx",] }
-# NOTE: a future version of mgmt may rename iter.map to list.iter (list package)
+# NOTE: a future version of mgmt may rename iter.map to list.iter (list module)
 $out1 = iter.map($in1, $fn)	# takes a lambda, and is implemented as a core lib!
 
 print "example" {
