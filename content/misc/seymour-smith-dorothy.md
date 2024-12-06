@@ -33,14 +33,14 @@ please [contact](/contact/) me.
 <hr />
 
 <a name="leona"></a>
-[![front cover](leona/Seymour Smith - Dorothy - 1.jpg "front cover")](leona/Seymour Smith - Dorothy - 1.jpg)
+<a alt="front cover" href="leona/Seymour Smith - Dorothy - 1.jpg"><img src="leona/Seymour Smith - Dorothy - 1.jpg"></a>
 <!-- page two is blank -->
-[![page 3](leona/Seymour Smith - Dorothy - 3.jpg "page 3")](leona/Seymour Smith - Dorothy - 3.jpg)
-[![page 4](leona/Seymour Smith - Dorothy - 4.jpg "page 4")](leona/Seymour Smith - Dorothy - 4.jpg)
-[![page 5](leona/Seymour Smith - Dorothy - 5.jpg "page 5")](leona/Seymour Smith - Dorothy - 5.jpg)
-[![page 6](leona/Seymour Smith - Dorothy - 6.jpg "page 6")](leona/Seymour Smith - Dorothy - 6.jpg)
-[![page 7](leona/Seymour Smith - Dorothy - 7.jpg "page 8")](leona/Seymour Smith - Dorothy - 7.jpg)
-[![back cover](leona/Seymour Smith - Dorothy - 8.jpg "back cover")](leona/Seymour Smith - Dorothy - 8.jpg)
+<a alt="page 3" href="leona/Seymour Smith - Dorothy - 3.jpg"><img src="leona/Seymour Smith - Dorothy - 3.jpg"></a>
+<a alt="page 4" href="leona/Seymour Smith - Dorothy - 4.jpg"><img src="leona/Seymour Smith - Dorothy - 4.jpg"></a>
+<a alt="page 5" href="leona/Seymour Smith - Dorothy - 5.jpg"><img src="leona/Seymour Smith - Dorothy - 5.jpg"></a>
+<a alt="page 6" href="leona/Seymour Smith - Dorothy - 6.jpg"><img src="leona/Seymour Smith - Dorothy - 6.jpg"></a>
+<a alt="page 7" href="leona/Seymour Smith - Dorothy - 7.jpg"><img src="leona/Seymour Smith - Dorothy - 7.jpg"></a>
+<a alt="back cover" href="leona/Seymour Smith - Dorothy - 8.jpg"><img src="leona/Seymour Smith - Dorothy - 8.jpg"></a>
 
 [[Mirror]](https://imgur.com/a/AGvCl)
 
