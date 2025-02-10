@@ -5,6 +5,43 @@ draft: false
 talks: [
 
   {
+    topic: "Abnormal DevOps Roundtable @ CfgMgmtCamp 2025",
+    video: "https://www.youtube.com/watch?v=lslYvSebqF8",
+    location: "Abnormal DevOps Iterations Podcast, Ghent, Belgium",
+    location_url: "https://example42.com/AbnormalDevOpsIterations/018/",
+    rating: "Unrated",
+    date: "04/Feb/2025",
+  },
+
+  {
+    topic: "Mgmt Config: Running in Production and Best Practices",
+    video: "https://www.youtube.com/watch?v=0Oa7CWx4TEA",
+    location: "CfgMgmtCamp.eu 2025, Ghent",
+    location_url: "https://cfp.cfgmgmtcamp.org/ghent2025/talk/DQUHEL/",
+    rating: "Unrated",
+    date: "03/Feb/2024",
+  },
+
+  {
+    topic: "Docs Straight from the Code: AST-Powered Automation",
+    video: "https://video.fosdem.org/2025/k4201/fosdem-2025-6143-docs-straight-from-the-code-ast-powered-automation.mp4",
+    location: "FOSDEM Docs Devroom, Brussels",
+    location_url: "https://fosdem.org/2025/schedule/event/fosdem-2025-6143-docs-straight-from-the-code-ast-powered-automation/",
+    rating: "Positive!",
+    rating_url: "feedback/mgmt-fosdem-2025-docs-feedback.png",
+    date: "01/Feb/2025",
+  },
+
+  {
+    topic: "Mgmt, Reactive Automation, and the Future of Infrastructure",
+    video: "https://www.youtube.com/watch?v=8wwQCuK5ZcA",
+    location: "Abnormal DevOps Iterations Podcast",
+    location_url: "https://example42.com/AbnormalDevOpsIterations/016/",
+    rating: "Unrated",
+    date: "14/Jan/2025",
+  },
+
+  {
     topic: "Mgmt Config: Lambdas Are Here",
     video: "https://www.youtube.com/watch?v=vBt9lpGD4bc",
     location: "CfgMgmtCamp.eu 2024, Ghent",
