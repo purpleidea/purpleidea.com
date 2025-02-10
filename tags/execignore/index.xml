@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Execignore on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/execignore/</link>
+    <description>Recent content in Execignore on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 02 Mar 2024 19:54:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/execignore/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bash $PATH filtering</title>
+      <link>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</link>
+      <pubDate>Sat, 02 Mar 2024 19:54:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</guid>
+      <description>As most modern GNU+Linux distro users already know, you get a lot of tools included for free! Many of these may clutter up your $PATH and make bash tab completion more difficult than it has to be. Here&amp;rsquo;s a way to improve this!&#xA;A mess:&#xA;Here&amp;rsquo;s what I see when I tab-complete cd&amp;lt;TAB&amp;gt;:&#xA;james@computer:~$ cd cd cddb_query cd-info cd-read cd-convert cd-drive cd-it8 cdrecord cd-create-profile cd-fix-profile cdmkdir cdtmpmkdir cdda-player cd-iccdump cd-paranoia I genuinely only use three of those commands.</description>
+    </item>
+  </channel>
+</rss>

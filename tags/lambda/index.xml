@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lambda on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/lambda/</link>
+    <description>Recent content in Lambda on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 22 Nov 2024 18:16:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mgmt Configuration Language: Functions</title>
+      <link>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</link>
+      <pubDate>Fri, 22 Nov 2024 18:16:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been a little while since I introduced the Mgmt Configuration Language. I originally wrote this article in 2019, and as I was working on it alongside the code for functions, when I realized that lambdas didn&amp;rsquo;t work properly. It took some time to finally solve that properly. Since then I&amp;rsquo;ve been working to get mgmt production ready. It&amp;rsquo;s properly useful for production now, and so it&amp;rsquo;s time for me to catch up on my documentation.</description>
+    </item>
+  </channel>
+</rss>

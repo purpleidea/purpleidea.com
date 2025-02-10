@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sysctl on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/sysctl/</link>
+    <description>Recent content in Sysctl on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 17 Nov 2024 15:52:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/sysctl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Better dmesg in five minutes</title>
+      <link>https://purpleidea.com/blog/2024/11/17/better-dmesg/</link>
+      <pubDate>Sun, 17 Nov 2024 15:52:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/17/better-dmesg/</guid>
+      <description>I last wrote about dmesg in 2016. It has mostly not changed since then, but I&amp;rsquo;ve changed my setup slightly. Here&amp;rsquo;s a short article about what I did so that you can do it too, and so that I can remember for the next time.&#xA;Previously:&#xA;Previous I had a bash alias which looked like this:&#xA;alias dmesg=&amp;#39;dmesg --follow || dmesg&amp;#39; since some machines didn&amp;rsquo;t yet support the --follow flag.</description>
+    </item>
+  </channel>
+</rss>
