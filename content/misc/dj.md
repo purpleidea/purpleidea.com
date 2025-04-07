@@ -13,3 +13,5 @@ Beats and occasional slow jams.
 If you'd like to hire me to play at your bar, club, or venue, please [contact me](/contact/).
 I'm happy to play weddings, funerals, and other private events as well.
 I'm happy to perform at fundraising events for non-profits at cost if I can.
+
+{{< figure src="dj.jpg" link="dj.png" width="100%" height="100%" >}}
