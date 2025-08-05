@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Branch on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/branch/</link>
+    <description>Recent content in Branch on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 28 Jan 2024 17:04:30 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/branch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git branch filtering</title>
+      <link>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</link>
+      <pubDate>Sun, 28 Jan 2024 17:04:30 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</guid>
+      <description>If you have more than one git branch up in the air at the same time, having a system to track them and filter them is essential. Here are the stages I went through with git branch.&#xA;xkcd reminds us that we&amp;#39;re insane Prefixes:&#xA;My first tip involves using a memorable prefix. For new features I name my branches with feat/. For example feat/my-new-feature. Yes the slash and the dashes are treated like any regular character.</description>
+    </item>
+  </channel>
+</rss>
