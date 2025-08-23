@@ -28,16 +28,17 @@ exploration that will also help you to become a better autodidact. This is an
 essential skill if you want to work on modern, high-end technologies.
 
 The course begins by getting you up to speed with the basic `GNU+Linux`
-technology stack, `IRC` and `Libera.chat`, `git`, `bash`, and a bunch of other
+technology stack, `IRC` (and/or `Matrix`), `git`, `bash`, and a bunch of other
 goodies. Over time you'll progress into more novel and difficult challenges and
 topics. Both streams will include programming. If you've never done a single
 line of programming in any language, or don't ever want to do any, then this
 program might not be for you.
 
-You'll require a computer to complete this program. You'll need hardware that is
-at least as new as an `X220`, and preferably something less than five years old.
-You'll need to be able to erase it completely, so make sure your data is backed
-up elsewhere. You'll need routine access to the internet in order to participate
+You'll require a computer to complete this program. You'll need hardware that
+has at least 16GiB of RAM, is UEFI-capable and has a 64-bit CPU. Something that
+is not more than five years old is ideal. You'll need to be able to erase it
+completely to install a modern Linux distro, so make sure your data is backed up
+elsewhere. You'll need routine access to the internet in order to participate
 in the program.
 
 The program runs at your own pace, but requires a weekly time commitment. You
@@ -65,22 +66,37 @@ repercussions. This is meant to filter out participants that aren't truly
 committed. The fee depends on your individual circumstances. It might be $100,
 $10,000, more, or even less.
 
-During the program you'll get hands-on experiences writing patches for one of my
-[Free Software projects](http://github.com/purpleidea/). You will learn a great
-deal during the patch review process, and the time spent on your contributions
-helps offset the cost of my time training you.
+This program does not guarantee that it will help you find a job, however I will
+offer to help you find a job, and give you some advice during this process if
+you so desire.
+
+You may not use any AI/LLM type tools during your time in the program. This
+includes time when you aren't coding or working on the mentorship. While these
+tools may be useful, the goal is to teach you how to think and find information
+by yourself, rather than relying on "stochastic search engines" to do that work
+for you.
+
+During the program you'll get hands-on experiences writing patches for the
+[mgmt config project](https://github.com/purpleidea/mgmt/). I hope that you will
+learn a great deal during the patch review process, and the time you spend
+making contributions helps offset the cost of my time training you.
 
 As this is a personal endeavour, I might discontinue the program and I reserve
-the right to kick you out of the program at any time. Hopefully this doesn't
-happen, but I can't offer a guarantee otherwise.
+the right to kick you out of the program at any time for any reason. Hopefully
+this doesn't happen, but I can't offer a guarantee otherwise.
 
 The opportunity is available to anyone without regard to their [race, national
 or ethnic origin, colour, religion, sex, age, mental or physical disability,
 sexual orientation, marital status or citizenship](http://www.justice.gc.ca/eng/rp-pr/cp-pm/just/06.html).
 
+You need to have at least a basic working (reading, writing, speaking)
+proficiency in English to be able to effectively do the program. It doesn't
+matter if it's your first language or twentieth.
+
 If you're interested and you'd like to join, please [contact me](/contact/) and
-tell me why you think you'd be a good candidate to join. The opportunities are
-only available for candidates who are honest, hard-working, dependable and nice.
+tell me why you think you'd be a good candidate to join and what your goals are.
+The opportunities are only available for candidates who are honest,
+hard-working, dependable and nice.
 
 Happy hacking, Happy learning,
 
