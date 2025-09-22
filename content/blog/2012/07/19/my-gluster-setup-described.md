@@ -44,6 +44,7 @@ Let me know what other nitpick details you want to know about and I'll post them
 Happy Hacking,
 James
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

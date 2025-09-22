@@ -13,6 +13,7 @@ Sometimes the interfaces you need just aren't well documented, but <span style=
 <span style="background-color:#ffffff;">
 </span>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

@@ -12,6 +12,7 @@ turns out the <a href="http://www.cheetahtemplate.org/">cheetah</a> python templ
 
 i'm not a language designer, but it never seemed like the best idea to me! but what do i know? i hope this saves someone an hour of searching.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

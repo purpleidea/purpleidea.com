@@ -43,6 +43,7 @@ gtk.main()
 
 and if you want to see how i'm using it in the particular app, the latest version of evanescent is now <a href="http://www.cs.mcgill.ca/~james/code/">available</a>. (look inside of evanescent-client.py)
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

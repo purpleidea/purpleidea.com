@@ -20,6 +20,7 @@ as part of the bigger scheme, i wanted to write a console like interface for tal
 
 code: http://www.cs.mcgill.ca/~james/code/greadline.tar
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

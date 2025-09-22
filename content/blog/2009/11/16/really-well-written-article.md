@@ -14,6 +14,7 @@ i'm sure that most (if not all) of the technically inclined readers know about t
 
 as an aside, i really liked Knuth's suggestion; in the meantime let's use the stupid kibi's.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

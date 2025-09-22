@@ -18,6 +18,7 @@ James
 
 PS: I had a previous blog, but that server was taken down. It has been merged into this one!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

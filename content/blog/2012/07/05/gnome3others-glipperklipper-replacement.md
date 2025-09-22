@@ -22,6 +22,7 @@ $ echo this will be seen in gpaste | xsel
 
 Happy hacking!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

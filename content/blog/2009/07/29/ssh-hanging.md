@@ -10,6 +10,7 @@ original_url = "https://ttboj.wordpress.com/2009/07/29/ssh-hanging/"
 
 i'm sure everyone who has used ssh has experienced this, but couldn't put their finger on what was happening exactly. <a href="http://www.snailbook.com/faq/background-jobs.auto.html">this</a> article explains.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

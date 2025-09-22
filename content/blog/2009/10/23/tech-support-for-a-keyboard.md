@@ -17,6 +17,7 @@ i suppose it would be easy to hack up a little osd notifier that tells me when t
 
 ps: the reason this is titled "tech support for a keyboard" was because i had to call their surprisingly unhelpful keyboard support department to figure out that there wasn't a hidden indicator light. never thought i would need to call in for something like that.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

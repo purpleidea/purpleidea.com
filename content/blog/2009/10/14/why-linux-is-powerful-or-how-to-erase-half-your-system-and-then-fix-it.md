@@ -102,6 +102,7 @@ do-release-upgrade
 
 and now things are looking great. luckily no important user files were squished, and hopefully this is a good reference for you. i hopefully won't have to reference it again for all the dpkg commands i'll forget.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

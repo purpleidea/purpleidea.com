@@ -36,6 +36,7 @@ James
 
 EDIT: tru_tru from #gluster pointed out that this module actually exists in <a href="http://elrepo.org">elrepo</a>, the wonderful people who also provide drbd modules. I haven't tested it, but I'm sure it's excellent.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

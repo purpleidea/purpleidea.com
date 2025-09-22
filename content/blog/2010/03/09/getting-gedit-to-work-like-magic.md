@@ -27,6 +27,7 @@ install these, restart gedit, enable them, and happy coding!
 
 <a href="http://code.google.com/p/gedit-autotab/"></a><span style="background-color:#ffffff;">[4] <a href="http://library.gnome.org/users/gedit/stable/gedit-modelines-plugin.html.en">http://library.gnome.org/users/gedit/stable/gedit-modelines-plugin.html.en</a></span>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

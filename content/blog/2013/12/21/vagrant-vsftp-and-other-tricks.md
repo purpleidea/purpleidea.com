@@ -245,6 +245,7 @@ PPS: Heh heh heh...
 
 PPPS: Get it? Vagrant -&gt; Oscar the Grouch -&gt; Muppets -&gt; Puppet
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

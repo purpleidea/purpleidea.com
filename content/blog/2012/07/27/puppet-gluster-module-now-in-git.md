@@ -25,6 +25,7 @@ git clone https://github.com/purpleidea/puppet-gluster.git
 Happy hacking,
 James
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

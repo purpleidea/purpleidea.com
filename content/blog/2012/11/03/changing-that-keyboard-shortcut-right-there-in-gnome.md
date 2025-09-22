@@ -28,6 +28,7 @@ PS: If you're curious, I used this to change the gnome-terminal and gedit cycle 
 
 Source: <a href="http://library.gnome.org/users/evolution/3.3/change-keyboard-shortcuts.html.en">http://library.gnome.org/users/evolution/3.3/change-keyboard-shortcuts.html.en</a>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

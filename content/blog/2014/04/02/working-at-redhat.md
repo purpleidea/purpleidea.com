@@ -22,6 +22,7 @@ James
 
 [1] <em><a href="https://www.gnu.org/philosophy/selling.html">Since free software is not a matter of price, a low price doesn't make the software free, or even closer to free. So if you are redistributing copies of free software, you might as well charge a substantial fee and make some money. Redistributing free software is a good and legitimate activity; if you do it, you might as well make a profit from it.</a></em>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

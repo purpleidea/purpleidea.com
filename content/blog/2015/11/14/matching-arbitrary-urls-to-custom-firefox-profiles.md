@@ -168,6 +168,7 @@ James
 
 PS: I'd like to apologize for not posting anything in the last three months! I've been busy hacking on something big, which I'll hope to announce soon. Stay tuned and thanks for reading this far!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

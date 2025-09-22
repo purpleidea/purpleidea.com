@@ -186,6 +186,7 @@ James
 
 PS: No, I couldn't think of a better name than git-tpush, if you don't like it feel free to rename it yourself!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

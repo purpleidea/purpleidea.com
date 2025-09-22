@@ -271,6 +271,7 @@ James
 <strong>UPDATE:</strong> I've tested that this process also works with the new <em>RHEL 7.1</em> release!
 <strong>UPDATE:</strong> I've <a href="https://github.com/purpleidea/vagrant-builder/commit/e99f888a5cde5ad152c8e27b37c8202763bc9357">tested</a> that this process also works with the new <em>RHEL 7.2</em> release!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

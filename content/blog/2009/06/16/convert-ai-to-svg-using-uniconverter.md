@@ -11,6 +11,7 @@ needed to convert a proprietary vector .ai adobe illustrator file to the open .s
 
 <code>$ uniconverter Martlet.ai Martlet.svg</code>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

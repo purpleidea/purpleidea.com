@@ -120,6 +120,7 @@ James
 
 PS: Thanks to <a href="https://github.com/bmbouter">Brian Bouterse</a> for encouraging me to focus on community, and for inspiring me to write this post!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

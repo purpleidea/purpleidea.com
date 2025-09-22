@@ -193,6 +193,7 @@ P.P.S.: The word is actually <a href="https://en.wikipedia.org/wiki/Memoization"
 
 P.P.P.S: <a href="http://www.gluster.org/blog/">Gluster</a> users get extra points if they can figure out how this will lead to a feature for <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a>. It's a bit tricky to see if you're not following my <a href="https://github.com/purpleidea/">git commits</a>.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

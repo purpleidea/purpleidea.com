@@ -718,6 +718,7 @@ James
 
 [https://github.com/purpleidea/mgmt/](https://github.com/purpleidea/mgmt/)
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

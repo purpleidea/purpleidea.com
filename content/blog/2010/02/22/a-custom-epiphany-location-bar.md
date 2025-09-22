@@ -29,6 +29,7 @@ widget_class "*.EphyLocationEntry.*" style "Epiphany_Locationbar"
 
 thanks to <a href="http://raphael.slinckx.net/blog/2006-03-01/epiphany-url-entry-in-monospace">raphael</a> for the original post, and the #epiphany developers.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

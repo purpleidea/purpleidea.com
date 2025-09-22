@@ -18,6 +18,7 @@ James
 
 PS: I might have a few stickers to give out too! Ask me next time you see me if you'd like one! Alternatively, use the artwork to make your own and share with your friends!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

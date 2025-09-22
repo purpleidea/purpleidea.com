@@ -95,6 +95,7 @@ Both this module and my drbd module will be released in the near future. All of 
 Happy hacking,
 James
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

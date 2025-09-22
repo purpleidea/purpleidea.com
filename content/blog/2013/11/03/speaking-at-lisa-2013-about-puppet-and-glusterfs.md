@@ -26,6 +26,7 @@ PS: If you're at LISA 2013, and you want to buy me dinner and get some light Pup
 
 <a href="speaking-at-lisa-2013-about-puppet-and-glusterfs/lisa13_banner_125_speaker.png"><img alt="I'm speaking at LISA 2013" src="speaking-at-lisa-2013-about-puppet-and-glusterfs/lisa13_banner_125_speaker.png" width="100%" height="100%" /></a>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

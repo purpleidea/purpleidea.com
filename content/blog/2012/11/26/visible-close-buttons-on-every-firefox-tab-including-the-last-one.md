@@ -28,6 +28,7 @@ James
 
 PS: In case it's not blatantly obvious, I didn't invent any of this, but I am writing about it for your enjoyment, and for my own lousy memory.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

@@ -100,6 +100,7 @@ PS: Be careful when writing <code>Makefile</code>'s. They can be dangerous if u
 
 <strong>UPDATE:</strong> This technique now exists in it's own repo here: <a href="https://github.com/purpleidea/vagrant-builder">https://github.com/purpleidea/vagrant-builder</a>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

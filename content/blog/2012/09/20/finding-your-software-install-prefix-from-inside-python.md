@@ -166,6 +166,7 @@ Why this sort of thing isn't built into python boggles my mind, so if for some r
 Happy hacking,
 James
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

@@ -32,6 +32,7 @@ James
 
 <strong>[2]</strong> wizard as in an <a href="http://www.catb.org/jargon/html/W/wizard.html">awesome, talented, hacker</a>.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

@@ -131,6 +131,7 @@ James
 
 <strong>EDIT</strong>: I've updated the article to use the new recommended directory naming convention of 'params' instead of 'tree'. <a href="https://github.com/purpleidea/puppet-gluster/commit/b9709099a6402b19b403200221b1537e23e38dd1">Example</a>.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

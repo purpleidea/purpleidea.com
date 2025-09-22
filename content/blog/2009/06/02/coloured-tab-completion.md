@@ -19,6 +19,7 @@ ps: maybe this could take off, and then someone could also define a system (or u
 
 pps: and yes it's colour, not color :P
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

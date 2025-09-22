@@ -12,6 +12,7 @@ original_url = "https://ttboj.wordpress.com/2009/05/27/server-fault/"
 
 Go have a look, ask a question, answer a question and have fun!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

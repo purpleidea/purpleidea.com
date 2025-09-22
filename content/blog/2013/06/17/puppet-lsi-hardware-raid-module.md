@@ -30,6 +30,7 @@ James
 
 PS: The most useful feature of this module, is that it sets up monitoring of your RAID, and lets you access the management daemon through the now installed LSI services.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

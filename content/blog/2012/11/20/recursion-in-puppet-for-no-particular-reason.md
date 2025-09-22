@@ -72,6 +72,7 @@ James
 
 <strong>EDIT</strong>: <a title="Advanced recursion and memoization in Puppet" href="/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/">A follow up is now available.</a>
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

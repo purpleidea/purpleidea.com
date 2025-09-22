@@ -67,6 +67,7 @@ has now officially been replaced with the much more dangerous:
 ```
 have fun kiddies!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

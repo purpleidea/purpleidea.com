@@ -20,6 +20,7 @@ James
 
 PS: Now if firefox would only integrate natively with gnome-keyring like chrome and <a href="http://projects.gnome.org/epiphany/">epiphany</a> already do!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

@@ -24,6 +24,7 @@ there's a new kid in town, and it's called <a href="http://code.google.com/p/arg
 
 thanks to <a href="http://www.cs.mcgill.ca/~isavov/">ivan</a> for getting me to check out argparse in the first place.
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

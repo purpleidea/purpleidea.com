@@ -23,6 +23,7 @@ I believe that <a href="http://projects.puppetlabs.com/users/811">Dan Bode</a> a
 Happy hacking,
 James
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}

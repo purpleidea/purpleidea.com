@@ -12,6 +12,7 @@ new <a href="http://www.cs.mcgill.ca/~james/code/">evanescent</a> released. get 
 
 ps: easy one line installation too!
 
+{{< m9rx-hire-james >}}
 {{< mastodon-follow-purpleidea >}}
 {{< twitter-follow-purpleidea >}}
 {{< github-support-purpleidea >}}
