@@ -1,7 +1,7 @@
 ---
 title: "Les Garderies K.I.D.S. Infrastructure"
 image: "les-garderies-kids.png"
-ordering: "d"
+ordering: "e"
 draft: false
 ---
 
