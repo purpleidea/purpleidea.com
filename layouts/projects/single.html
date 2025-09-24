@@ -2,6 +2,10 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div class="well well-sm">
+				{{ if .Params.image }}
+					<a href="{{ .Permalink }}"><img width="100%" src="{{ .RelPermalink }}/{{ .Params.image }}" alt="{{ .Title }}"/></a><br>
+				{{ end }}
+
 					<h3><strong>{{ .Title }}</strong><br><small>{{ .Description }}</small></h3>
 					<hr>
 					{{ .Content }}
