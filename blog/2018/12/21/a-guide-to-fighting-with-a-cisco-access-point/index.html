@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How eight hours with Cisco Aironet gear made me angry for life">
+	<meta name="author" content="James Shubin">
+
+	<title>A guide to fighting with a Cisco access point - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>A guide to fighting with a Cisco access point</strong><br><small>How eight hours with Cisco Aironet gear made me angry for life</small></h3>
+					<hr>
+					<p>In my hands is a <strong>Cisco AIR-CAP-3502-E-A-K9</strong> that I saved from the landfill.
+After about eight hours of suffering, and what was surely a cancer causing dose
+of <a href="https://en.wikipedia.org/wiki/Radio_frequency">RF-radiation</a>, I now know:</p>
+<ol>
+<li>
+<p>How to convince this access point to provide me with wifi.</p>
+</li>
+<li>
+<p>Why Cisco products are probably best left in the garbage.</p>
+</li>
+</ol>
+<p>What follows is my setup guide and review for using a Cisco Aironet device. This
+guide will likely be useful with other models of Cisco devices, but use your own
+best judgment.</p>
+<p><em>Warning:</em> this article contains some rants which I hope Cisco will take as
+constructive criticism to help turn their tanker ship of a company around before
+it sinks to the bottom of the ocean where it currently belongs.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Hardware</span>:<br /><br />
+
+<p>This is the Cisco device in my possession:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-front.jpg"><img class="alignnone size-full" src="cisco-front.jpg"  width="100%" /></a></td></tr><tr><td>The front of the AP has a beautiful LED that can change colours and flash.</td></tr></table></br />
+
+<p>It is heavy, and made of metal. It feels like quality. It supports dual band
+<a href="https://en.wikipedia.org/wiki/IEEE_802.11n-2009">802.11n</a>, and probably has a
+feature to cook a grilled cheese sandwhich between the six antennas. My friends
+in the radiology department refuse to go anywhere near it ;)</p>
+<p>On the back it has an ethernet port which can run the thing with <a href="https://en.wikipedia.org/wiki/Power_over_Ethernet">PoE</a>,
+and it has the dreaded Cisco console port. Please note the cryptographic export
+warning label, as restricted countries should take note: I&rsquo;m certain this device
+was built as a ruse to annoy the user, so you&rsquo;re better off to avoid this one.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-back.jpg"><img class="alignnone size-full" src="cisco-back.jpg"  width="100%" /></a></td></tr><tr><td>Beware the dreaded cisco console port.</td></tr></table></br />
+
+<p>You&rsquo;ll almost certainly need the proprietary Cisco cable and a serial to USB
+adapter. Cisco includes a cable with every device, and so any business or
+university that mistakenly bought Cisco probably has thrown out hundreds of
+these. Ask them nicely and they&rsquo;ll probably give you one for free. (That&rsquo;s how I
+got mine.)</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="console-cable.jpg"><img class="alignnone size-full" src="console-cable.jpg"  width="100%" /></a></td></tr><tr><td>The cables look like this, and they&#39;re always this colour.</td></tr></table></br />
+
+<p>Plug this into a serial to USB adapter and you&rsquo;re in business!</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="serial-to-usb.jpg"><img class="alignnone size-full" src="serial-to-usb.jpg"  width="100%" /></a></td></tr><tr><td>Every hacker should probably own one of these devices. You can borrow mine if you&#39;re a hacker-in-training.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Serial devices</span>:<br /><br />
+
+<p>I&rsquo;ve always had bad luck with serial port connections. On Linux you&rsquo;re basically
+supposed to use <code>minicom</code> or <code>screen</code>, and I&rsquo;ve never once been able to read and
+write to a serial port with either! I also tried <code>tio</code> with no success, and
+eventually found a new player by the name of <code>picocom</code> which worked perfectly!
+It installed effortlessly from the identically-named Fedora package.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ dmesg --follow
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>...<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>361353.860046<span style="color:#666">]</span> usb 2-1.2: new full-speed USB device number <span style="color:#666">5</span> using ehci-pci
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>361353.938981<span style="color:#666">]</span> usb 2-1.2: New USB device found, <span style="color:#b8860b">idVendor</span><span style="color:#666">=</span>067b, <span style="color:#b8860b">idProduct</span><span style="color:#666">=</span>2303, <span style="color:#b8860b">bcdDevice</span><span style="color:#666">=</span> 0.01
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>361353.938990<span style="color:#666">]</span> usb 2-1.2: New USB device strings: <span style="color:#b8860b">Mfr</span><span style="color:#666">=</span>0, <span style="color:#b8860b">Product</span><span style="color:#666">=</span>0, <span style="color:#b8860b">SerialNumber</span><span style="color:#666">=</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>361353.940867<span style="color:#666">]</span> pl2303 2-1.2:1.0: pl2303 converter detected
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>361353.942955<span style="color:#666">]</span> usb 2-1.2: pl2303 converter now attached to ttyUSB0
+</span></span></code></pre></div><p>Plug everything in, and once <code>dmesg</code> tells you what port it&rsquo;s on, connect away:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo picocom /dev/ttyUSB0
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>sudo<span style="color:#666">]</span> password <span style="color:#a2f;font-weight:bold">for</span> james:
+</span></span><span style="display:flex;"><span>picocom v3.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>port is        : /dev/ttyUSB0
+</span></span><span style="display:flex;"><span>flowcontrol    : none
+</span></span><span style="display:flex;"><span>baudrate is    : <span style="color:#666">9600</span>
+</span></span><span style="display:flex;"><span>parity is      : none
+</span></span><span style="display:flex;"><span>databits are   : <span style="color:#666">8</span>
+</span></span><span style="display:flex;"><span>stopbits are   : <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>escape is      : C-a
+</span></span><span style="display:flex;"><span><span style="color:#a2f">local</span> <span style="color:#a2f">echo</span> is  : no
+</span></span><span style="display:flex;"><span>noinit is      : no
+</span></span><span style="display:flex;"><span>noreset is     : no
+</span></span><span style="display:flex;"><span>hangup is      : no
+</span></span><span style="display:flex;"><span>nolock is      : no
+</span></span><span style="display:flex;"><span>send_cmd is    : sz -vv
+</span></span><span style="display:flex;"><span>receive_cmd is : rz -vv -E
+</span></span><span style="display:flex;"><span>imap is        :
+</span></span><span style="display:flex;"><span>omap is        :
+</span></span><span style="display:flex;"><span>emap is        : crcrlf,delbs,
+</span></span><span style="display:flex;"><span>logfile is     : none
+</span></span><span style="display:flex;"><span>initstring     : none
+</span></span><span style="display:flex;"><span>exit_after is  : not <span style="color:#a2f">set</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">exit</span> is        : no
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#666">[</span>C-a<span style="color:#666">]</span> <span style="color:#666">[</span>C-h<span style="color:#666">]</span> to see available commands
+</span></span><span style="display:flex;"><span>Terminal ready
+</span></span></code></pre></div><p>Now our serial console is ready and waiting, and it should work automatically
+for the rest of this blog post.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="laptop-and-ap.jpg"><img class="alignnone size-full" src="laptop-and-ap.jpg"  width="100%" /></a></td></tr><tr><td>Here&#39;s what everything looks like all plugged together.</td></tr></table></br />
+
+<p>I powered the AP over ethernet, but you can use a power supply if you don&rsquo;t have
+a PoE compatible switch, midspan, or injector.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Firmware</span>:<br /><br />
+
+<p>Cisco has different &ldquo;modes&rdquo; that its access point can operate in. There are at
+least two: &ldquo;lightweight&rdquo; and &ldquo;autonomous&rdquo;. Lightweight mode requires additional
+Cisco hardware, and doesn&rsquo;t let you operate the access point without their
+proprietary controllers. Autonomous mode is a standalone mode that lets you
+operate a single AP without requiring centralized coordination.</p>
+<p>Unfortunately, to switch between the modes you need to flash the device with
+different firmware. I&rsquo;m also convinced that there&rsquo;s some third kind of secret
+&ldquo;enterprise&rdquo; mode that locks you in even deeper, but I don&rsquo;t know anything for
+sure. My access point was not in autonomous mode when I got it. It was easy to
+tell, because once it was plugged in, it got an IP address over DHCP, but would
+not respond on HTTP port 80. In general, in autonomous mode, there&rsquo;s a listening
+web server running from the AP.</p>
+<p>Want to flash it?</p>
+<p>Assuming you need to flash your device, you&rsquo;ll need to get a firmware image. It
+looks like they&rsquo;re available to download from Cisco&rsquo;s site:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-download1.png"><img class="alignnone size-full" src="cisco-download1.png"  width="100%" /></a></td></tr><tr><td>Just one click away, right?</td></tr></table></br />
+
+<p>But then you get hit with a paywall of doom&hellip;</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-download2.png"><img class="alignnone size-full" src="cisco-download2.png"  width="100%" /></a></td></tr><tr><td>Pay wall of doom.</td></tr></table></br />
+
+<p>Which ultimately ends in failure or an empty bank account. They even require
+your full home address for many of the free downloads! Crazy. Luckily, they at
+least provide some information about the images:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-download3.png"><img class="alignnone size-full" src="cisco-download3.png"  width="100%" /></a></td></tr><tr><td>Thanks Cisco! This is useful in case you find a firmware image of unknown origin.</td></tr></table></br />
+
+<p>Luckily for me, there happened to be a file with the exact name and hash of a
+slightly older version of their software taped to a USB key on the access point,
+so I was able to use that. If you&rsquo;ve misplaced your copy, I heard that searching
+for the exact file name of an older N-1 or N-M version of the software can lead
+to some archival sites which have copies, however I wouldn&rsquo;t know much about
+those, and you should check your local laws before downloading from such a site.</p>
+<p>As an aside, the files are named quite strangely. <a href="https://community.cisco.com/t5/wireless-mobility-documents/top-10-cisco-wireless-good-to-know/ta-p/3111423#toc-hId-1039556569">This article talks about the difference.</a>
+The &ldquo;lightweight&rdquo; versions have a <em>w8</em> in their names, and the &ldquo;standalone&rdquo;
+versions contain a <em>w7</em>. The latter is what we want. I went with:
+&ldquo;ap3g1-k9<strong>w7</strong>-tar.153-3.JF5.tar&rdquo;. Yes it&rsquo;s strange that they have an embedded
+<code>-tar</code> in the filename.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">TFTP server</span>:<br /><br />
+
+<p>To host the image to flash, you&rsquo;ll need to run a TFTP server. This shouldn&rsquo;t be
+complicated, but software sucks. I found a plausibly simple way to do this.
+Since the TFTP protocol is very simple, there are many short <code>python</code> and
+<code>golang</code> implementations. Pick your favourite. Since I hack on <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+in <code>golang</code>, I chose golang. I found a <a href="https://github.com/whyrusleeping/go-tftp">small package</a>
+that I could audit in five minutes. Install it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ git clone --recursive https://github.com/whyrusleeping/go-tftp
+</span></span><span style="display:flex;"><span>Cloning into <span style="color:#b44">&#39;go-tftp&#39;</span>...
+</span></span><span style="display:flex;"><span>remote: Enumerating objects: 141, <span style="color:#a2f;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>remote: Total <span style="color:#666">141</span> <span style="color:#666">(</span>delta 0<span style="color:#666">)</span>, reused <span style="color:#666">0</span> <span style="color:#666">(</span>delta 0<span style="color:#666">)</span>, pack-reused <span style="color:#666">141</span>
+</span></span><span style="display:flex;"><span>Receiving objects: 100% <span style="color:#666">(</span>141/141<span style="color:#666">)</span>, 25.71 KiB | 1.12 MiB/s, <span style="color:#a2f;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>Resolving deltas: 100% <span style="color:#666">(</span>62/62<span style="color:#666">)</span>, <span style="color:#a2f;font-weight:bold">done</span>.
+</span></span><span style="display:flex;"><span>$ <span style="color:#a2f">cd</span> go-tftp/
+</span></span><span style="display:flex;"><span>$ git show | head -1
+</span></span><span style="display:flex;"><span>commit 3695fa5761ee60eace335212461d6007cf2be923
+</span></span><span style="display:flex;"><span>$ go build
+</span></span><span style="display:flex;"><span>$ mv go-tftp ../tftp-server
+</span></span><span style="display:flex;"><span>$ <span style="color:#a2f">cd</span> ../
+</span></span></code></pre></div><p>Now copy the <code>ap3g1-k9w7-tar.153-3.JF5.tar</code> file into this directory, and then
+run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ ls
+</span></span><span style="display:flex;"><span>ap3g1-k9w7-tar.153-3.JF5.tar  go-tftp/  tftp-server*
+</span></span><span style="display:flex;"><span>$ sudo ./tftp-server -port <span style="color:#666">69</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>sudo<span style="color:#666">]</span> password <span style="color:#a2f;font-weight:bold">for</span> james: hunter2
+</span></span></code></pre></div><p>The TFTP server is now ready and waiting for our request. You&rsquo;ll need to make
+sure that you allow incoming requests on UDP port 69 for this to work.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Rooting</span>:<br /><br />
+
+<p>If your device is already on, hold down the &ldquo;mode&rdquo; button and reset it by
+disconnecting the power. Keep holding the &ldquo;mode&rdquo; button while you reconnect it.
+Your serial console might look something similar to this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">r WRDTR,CLKTR: 0x8200083f 0x40000000
+</span></span></span><span style="display:flex;"><span><span style="color:#888">r RQDC ,RFDC : 0x80000031 0x00000216
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">using  eeprom values
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">WRDTR,CLKTR: 0x8200083f 0x40000000
+</span></span></span><span style="display:flex;"><span><span style="color:#888">RQDC ,RFDC : 0x80000031 0x00000216
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">using MCNG ddr static values from serial eeprom
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ddr init done
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">IOS Bootloader - Starting system.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">FLASH CHIP:  Numonyx P33
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Checking for Over Erased blocks
+</span></span></span><span style="display:flex;"><span><span style="color:#888">......................................................................................................................................................................................................................................................
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Xmodem file system is available.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">DDR values used from system serial eeprom.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">WRDTR,CLKTR: 0x8200083f, 0x40000000
+</span></span></span><span style="display:flex;"><span><span style="color:#888">RQDC, RFDC : 0x80000031, 0x00000216
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">PCIE0: link is up.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">PCIE0: VC0 is active
+</span></span></span><span style="display:flex;"><span><span style="color:#888">PCIE1: link is up.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">PCIE1: VC0 is active
+</span></span></span><span style="display:flex;"><span><span style="color:#888">64bit PCIE devices
+</span></span></span><span style="display:flex;"><span><span style="color:#888">PCIEx: initialization done
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: 78 files, 15 directories
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: 0 orphaned files, 0 orphaned directories
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: Total bytes: 31739904
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: Bytes used: 24312832
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: Bytes available: 7427072
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[0]: flashfs fsck took 17 seconds.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Reading cookie from system serial eeprom...Done
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Base Ethernet MAC address: 44:d3:ca:b0:91:82
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Ethernet speed is 1000 Mb - FULL duplex
+</span></span></span></code></pre></div><p>Initially the access point LED is blue, until it eventually it turns red and the
+following message is printed on the console:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">button is pressed, wait for button to be released...
+</span></span></span></code></pre></div><p>At this point, release the button, and the text will continue scrolling:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">button pressed for 27 seconds
+</span></span></span><span style="display:flex;"><span><span style="color:#888">process_config_recovery: set IP address and config to default 10.0.0.1
+</span></span></span><span style="display:flex;"><span><span style="color:#888">process_config_recovery: image recovery
+</span></span></span><span style="display:flex;"><span><span style="color:#888">image_recovery: Download default IOS tar image tftp://255.255.255.255/ap3g1-k9w7-tar.default
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">examining image...
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#000080;font-weight:bold">%</span>Error opening tftp://255.255.255.255/ap3g1-k9w7-tar.default <span style="color:#666">(</span>connection timed out<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#888">ap:
+</span></span></span></code></pre></div><p>It then seems to try and boot from a default TFTP server, which fails because
+there isn&rsquo;t one running there. I then ran: <code>dir flash</code> (Note the trailing
+colon.) The <code>ap: </code> text is the prompt&rsquo;s <strong><code>$PS1</code></strong>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">ap: dir flash:
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Directory of flash:/
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">2    -rwx  95008     &lt;date&gt;               lwapp_reap.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#888">3    -rwx  280       &lt;date&gt;               lwapp_officeextend.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#888">4    -rwx  64        &lt;date&gt;               sensord_CSPRNG1
+</span></span></span><span style="display:flex;"><span><span style="color:#888">5    -rwx  58074     &lt;date&gt;               event.log
+</span></span></span><span style="display:flex;"><span><span style="color:#888">6    drwx  128       &lt;date&gt;               configs
+</span></span></span><span style="display:flex;"><span><span style="color:#888">7    -rwx  37852     &lt;date&gt;               event.capwap
+</span></span></span><span style="display:flex;"><span><span style="color:#888">40   -rwx  64        &lt;date&gt;               sensord_CSPRNG0
+</span></span></span><span style="display:flex;"><span><span style="color:#888">8    -rwx  35352     &lt;date&gt;               lwapp_non_apspecific_reap.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#888">44   -rwx  234       &lt;date&gt;               env_vars
+</span></span></span><span style="display:flex;"><span><span style="color:#888">11   drwx  128       &lt;date&gt;               ap3g1-rcvk9w8-mx
+</span></span></span><span style="display:flex;"><span><span style="color:#888">43   -rwx  3564      &lt;date&gt;               private-config
+</span></span></span><span style="display:flex;"><span><span style="color:#888">14   -rwx  8216      &lt;date&gt;               private-multiple-fs
+</span></span></span><span style="display:flex;"><span><span style="color:#888">76   drwx  832       &lt;date&gt;               ap3g1-k9w8-mx.152-2.JA
+</span></span></span><span style="display:flex;"><span><span style="color:#888">10   -rwx  965       &lt;date&gt;               lwapp_mm_mwar_hash.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#888">15   drwx  1152      &lt;date&gt;               ap3g1-k9w8-mx.152-4.JB3
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">7427072 bytes available (24312832 bytes used)
+</span></span></span></code></pre></div><p>Let&rsquo;s get root on this device:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">ap: rename flash:private-multiple-fs flash:private-multiple-fs-old
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap: rename flash:env_vars flash:env_vars-old
+</span></span></span></code></pre></div><p>I learned that from <a href="https://tom-bullock.com/2016/10/18/factory-reset-air-cap3502i-e-k9/">this blog post</a>.
+Now reset the device:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">ap: reset
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Are you sure you want to reset the system (y/n)?y
+</span></span></span><span style="display:flex;"><span><span style="color:#888">System resetting...
+</span></span></span></code></pre></div><p>Then the system boots normally&hellip;</p>
+<p>You might notice a line like this in the terminal:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">Cisco IOS Software, C3500 Software (AP3G1-RCVK9W8-M), Version 12.4(23c)JA2, RELEASE SOFTWARE (fc3)
+</span></span></span></code></pre></div><p>followed a little while later by:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">Press RETURN to get started!
+</span></span></span></code></pre></div><p>Quite annoyingly, Cisco&rsquo;s software likes to constantly flood your console with
+random log messages. These interrupt your workflow, and it&rsquo;s obvious their
+engineers didn&rsquo;t think about good design. You can get rid of most (but not all)
+of them shortly&hellip;</p>
+<p>Pressing <code>RETURN</code> gets you a console. At this point you can type: <code>enable</code> at
+the prompt, which will ask you for a <code>Password: </code>. Type <code>Cisco</code> (capitalized)
+and you&rsquo;ll now see a <strong>$PS1</strong> that ends with a <code>#</code>. We&rsquo;ve got root! You&rsquo;ll then
+need to type the magic commands: <code>debug capwap console cli</code> and then:
+<code>debug capwap client no-reload</code>. We can also get rid of most of the logging
+with: <code>conf t</code>, then <code>no logging console</code>, then <code>end</code>. This all looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">APxyz&gt;enable
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Password:
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#debug capwap console cli
+</span></span></span><span style="display:flex;"><span><span style="color:#888">This command is meant only for debugging/troubleshooting
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Any configuration change may result in different
+</span></span></span><span style="display:flex;"><span><span style="color:#888">behavior from centralized configuration.
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">CAPWAP console CLI allow/disallow debugging is on
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#debug capwap client no-reload
+</span></span></span><span style="display:flex;"><span><span style="color:#888">CAPWAP ignore internal reload debugging is on
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#conf t
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Enter configuration commands, one per line.  End with CNTL/Z.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz(config)#no logging console
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz(config)#end
+</span></span></span></code></pre></div><p>(Note: <code>APxyz</code> is the existing name of the AP. Yours may appear differently.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Erasing</span>:<br /><br />
+
+<p>On my first attempt flashing the firmware it failed with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">ERROR: Not enough free space in &#34;flash:/&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ERROR: Clean up and try again.
+</span></span></span></code></pre></div><p>So let&rsquo;s erase everything to make some room!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">APxyz#erase flash:
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Erasing the flash filesystem will remove all files! Continue? [confirm]
+</span></span></span></code></pre></div><p>You have to press ENTER to confirm, and then be patient for at least five
+minutes. You&rsquo;ll still get spurious log messages, but eventually your AP will
+finish erasing and hopefully report completion:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">flashfs[1]: 0 files, 1 directories
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[1]: 0 orphaned files, 0 orphaned directories
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[1]: Total bytes: 31481856
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[1]: Bytes used: 1024
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[1]: Bytes available: 31480832
+</span></span></span><span style="display:flex;"><span><span style="color:#888">flashfs[1]: flashfs fsck took 7 seconds.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Erase of flash: complete
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#
+</span></span></span></code></pre></div><p>Maybe the <code>fsck</code> took seven seconds, but this sure is a misleading message.</p>
+<p>At this point it&rsquo;s time to run the flashing operation!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Flashing</span>:<br /><br />
+
+<p>Luckily, I have a DHCP server running in my environment, so the AP automatically
+gets an IP address. If you don&rsquo;t have one, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">APxyz#capwap ap ip address 192.168.101.99 255.255.255.0
+</span></span></span><span style="display:flex;"><span><span style="color:#888">APxyz#capwap ap ip default-gateway 192.168.101.1
+</span></span></span></code></pre></div><p>Or similar, depending on what your network looks like. My laptop running the
+TFTP server is at 192.168.101.42, so I ran:
+<code>archive download-sw /force /overwrite tftp://192.168.101.42/ap3g1-k9w7-tar.153-3.JF5.tar</code></p>
+<p>Which takes a few minutes and looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">APxyz#archive download-sw /force /overwrite tftp://192.168.101.42/ap3g1-k9w7-tar.153-3.JF5.tar
+</span></span></span><span style="display:flex;"><span><span style="color:#888">examining image...
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Loading ap3g1-k9w7-tar.153-3.JF5.tar from 192.168.101.42 (via GigabitEthernet0): !
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting info (281 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Image info:
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Version Suffix: k9w7-.153-3.JF5
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Image Name: ap3g1-k9w7-mx.153-3.JF5
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Version Directory: ap3g1-k9w7-mx.153-3.JF5
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Ios Image Size: 8735232
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Total Image Size: 10732032
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Image Feature: WIRELESS LAN
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Image Family: AP3G1
+</span></span></span><span style="display:flex;"><span><span style="color:#888">    Wireless Switch Management Version: 8.5.120.0
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Extracting files...
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/ap3g1-k9w7-mx.153-3.JF5 (128690 bytes).!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/ap3g1-boot-m_upg (393216 bytes)!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/u-boot.bin (393216 bytes)!!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/html/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/html/level/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/html/level/1/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/appsui.js (563 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/back.shtml (512 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/cookies.js (5032 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/forms.js (20442 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/sitewide.js (17290 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/stylesheet.css (3220 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/config.js (29225 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/popup_capabilitycodes.shtml.gz (1020 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/filter.js.gz (2037 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/filter_vlan.js.gz (1459 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/filter_mac_ether.js.gz (1793 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/security.js.gz (962 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/vlan.js.gz (1196 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ssid.js.gz (6149 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/network-if.js.gz (2098 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/dot1x.js.gz (988 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/stp.js.gz (957 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_assoc.shtml.gz (5892 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_event-log.shtml.gz (4158 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_home.shtml.gz (7632 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_network-if.shtml.gz (3576 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_network-map.shtml.gz (4124 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_services.shtml.gz (3937 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_system-sw.shtml.gz (3134 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/ap_contextmgr.shtml.gz (4073 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/ap_title_appname.gif (2064 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/3500_title_appname.gif (1931 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button.gif (1211 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_1st.gif (1171 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_cbottom.gif (318 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_current.gif (1206 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_endcap.gif (878 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_encap_last.gif (333 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_last.gif (386 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_button_nth.gif (1177 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_leftnav_dkgreen.gif (869 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_leftnav_green.gif (879 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_leftnav_upright.gif (64 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/apps_leftnav_yellow.gif (881 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/arrowdown_red.gif (108 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/arrowup_green.gif (108 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/corner_ur_7.gif (53 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/dkgreenmask11_up.gif (113 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/dkgreenmask28_upright.gif (110 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/grn_vertlines_bottom.gif (149 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/grn_vertlines_top.gif (141 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/hinav_plus.gif (56 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/left_bkg.gif (146 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/list_data.gif (122 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/logo.gif (29454 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/pixel.gif (49 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/sitewide_downleft.gif (53 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/sitewide_help_off.gif (934 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/sitewide_help_on.gif (934 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/sitewide_print_off.gif (111 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/sitewide_print_on.gif (111 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/spacer.gif (49 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/whitemask11_botleft.gif (62 bytes)!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/whitemask11_upright.gif (61 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_alert.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_critical.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_debugging.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_emergency.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_error.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_information.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_notification.gif (73 bytes).!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/event_warning.gif (73 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/check_mark.gif (71 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/Spectrum.gif (1556 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/background_web41.jpg (732 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cisco-logo-2012.gif (579 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/logout_image.gif (40294 bytes).!.!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cna_icon1.gif (1212 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cna_icon2.gif (1185 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cna_icon3.gif (1196 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cna_icon4.gif (1072 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/cna_download_splash.gif (44862 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ap3g1-k9w7-mx.153-3.JF5/html/level/15/ (directory) 0 (bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_assoc_adv.shtml.gz (4144 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_event-log_config-options.shtml.gz (5730 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_event-log_notif-options.shtml.gz (2693 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_express-setup.shtml.gz (11858 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_express-security.shtml.gz (13550 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_broadcast-ssid.shtml.gz (1263 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_eap-security.shtml.gz (1791 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_no-security.shtml.gz (1582 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_wep-security.shtml.gz (1597 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_wpa-security.shtml.gz (1854 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_ipaddress.shtml.gz (6321 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_802-11.shtml.gz (7132 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_802-11_b.shtml.gz (6292 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_802-11_c.shtml.gz (30032 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/dBm_mW_translation_table.shtml.gz (1511 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_802-11_d.shtml.gz (4070 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_ethernet.shtml.gz (4377 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-if_ethernet_b.shtml.gz (6604 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_network-map_ap-adjacent-list.shtml.gz (3806 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec.shtml.gz (7600 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-security.shtml.gz (36305 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-key-security.shtml.gz (12068 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_band_select.shtml.gz (5720 bytes)!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_auto-config.shtml.gz (3611 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_local-admin-access.shtml.gz (6991 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_network-security_a.shtml.gz (11764 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_network-security_b.shtml.gz (5620 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_lrs.shtml.gz (5087 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_lrs_b.shtml.gz (8525 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_lrs_c.shtml.gz (6205 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_dot1x-security.shtml.gz (6444 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_dot1x-certificates.shtml.gz (11173 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_dot1x-cert_fingerprint.shtml.gz (577 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-security-adv_a.shtml.gz (4984 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-security-adv_b.shtml.gz (5061 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-security-adv_c.shtml.gz (4668 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-security-adv_d.shtml.gz (3608 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ids_mfp.shtml.gz (3922 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ids_mfp_stats.shtml.gz (3651 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_arp.shtml.gz (3017 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_cdp.shtml.gz (5123 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_console-telnet.shtml.gz (6833 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_dns.shtml.gz (3604 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_filters.shtml.gz (5313 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_filters-ip.shtml.gz (9264 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_filters-mac.shtml.gz (4011 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_filters-ether.shtml.gz (3855 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_hot-standby.shtml.gz (5506 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_http.shtml.gz (6455 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_mobile-ip-b.shtml.gz (6668 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_mobile-ip-c.shtml.gz (4163 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_mobile-ip-d.shtml.gz (5170 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_mobile-ip.shtml.gz (6015 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_qos-traffic.shtml.gz (8139 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_qos.shtml.gz (12217 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_qos_adv.shtml.gz (4443 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_snmp.shtml.gz (8027 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_sntp.shtml.gz (5959 bytes).!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_vlan.shtml.gz (14651 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_voice-traffic.shtml.gz (6358 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_services_stp.shtml.gz (7128 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_stationview-client_ltest.shtml.gz (5535 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade-b.htm (231 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade-b.shtml.gz (6208 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade.htm (229 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade.shtml.gz (6240 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/banner.html (14136 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameAssociation.html (628 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameEventlog.html (627 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameHome.html (611 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameNetWork.html (619 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameSecurity.html (637 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameServices.html (651 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameSoftware.html (650 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameWireless.html (626 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameset.html (4736 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navAssociation.html (1269 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navBar41.css (3605 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navHome.html (2251 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navNetwork.html (7057 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navSecurity.html (2958 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navServices.html (5018 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navSoftware.html (1542 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navWireless.html (1580 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/arrow_down.gif (177 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/arrow_down2.gif (838 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/arrow_right.gif (137 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/arrow_right2.gif (838 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/servicescript41.js.gz (11929 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/sideMenu.js.gz (813 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_easy-setup.shtml.gz (29509 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navEventLog.html (1283 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/content41.css (10497 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/logout.html (2782 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_def_spec_information.shtml.gz (2190 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_guest_list.shtml.gz (2556 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_guest_login.shtml.gz (1523 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_guest_new.shtml.gz (4293 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/frameguest.html (617 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/navguest.html (1605 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_webauth.shtml.gz (4207 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/def_wpa_psk-security.shtml.gz (1859 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/cna_upgrade.htm (5895 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_sec_ap-client-dot11u.shtml.gz (11397 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade_poll.htm (234 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_upgrade_poll.shtml (3596 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_system-sw_sysconfig.shtml.gz (7503 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_stationview-client.shtml.gz (5592 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_contextmgr_ap.shtml.gz (4784 bytes)!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_contextmgr_scm.shtml.gz (5304 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_contextmgr_scm-groups.shtml.gz (7600 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/html/level/15/ap_contextmgr_scm_summary.shtml.gz (5205 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/ap3g1-k9w7-xx.153-3.JF5 (8257251 bytes)!.!.!!!.!!!.!!!!!!!!!!!.!!!!!!!!!!!!!!!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/8003.img (473393 bytes)!!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/D2.bin (11716 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/D5.bin (788 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/Z2.bin (10504 bytes)!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/Z5.bin (602 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/G2.bin (7272 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/G5.bin (768 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/info (281 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/file_hashes (32907 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/final_hash (141 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/final_hash.sig (512 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/img_sign_rel.cert (1375 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting ap3g1-k9w7-mx.153-3.JF5/img_sign_rel_sha2.cert (1371 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">extracting info.ver (281 bytes)
+</span></span></span><span style="display:flex;"><span><span style="color:#888">[OK - 10772480 b
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Writing out the event log to nvram...
+</span></span></span><span style="display:flex;"><span><span style="color:#888">ytes]
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">New software image installed in flash:/ap3g1-k9w7-mx.153-3.JF5
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Configuring system to use new image...done.
+</span></span></span><span style="display:flex;"><span><span style="color:#888">Requested system reload in progress...
+</span></span></span><span style="display:flex;"><span><span style="color:#888">archive download: takes 227 seconds
+</span></span></span></code></pre></div><p>In the terminal running the TFTP server, it now looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo ./tftp-server -port <span style="color:#666">69</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>sudo<span style="color:#666">]</span> password <span style="color:#a2f;font-weight:bold">for</span> james:
+</span></span><span style="display:flex;"><span>04:39:10 New Connection!
+</span></span><span style="display:flex;"><span>04:39:10 Handle Client!
+</span></span><span style="display:flex;"><span>04:39:10 Read Request: ap3g1-k9w7-tar.153-3.JF5.tar
+</span></span><span style="display:flex;"><span>04:39:10 Dialing out 192.168.101.140:58772
+</span></span><span style="display:flex;"><span>04:39:10 <span style="color:#a2f">read</span> request finished, with error:
+</span></span><span style="display:flex;"><span>04:39:10 unrecognized packet <span style="color:#a2f">type</span>
+</span></span><span style="display:flex;"><span>04:39:10 New Connection!
+</span></span><span style="display:flex;"><span>04:39:10 Handle Client!
+</span></span><span style="display:flex;"><span>04:39:10 Read Request: ap3g1-k9w7-tar.153-3.JF5.tar
+</span></span><span style="display:flex;"><span>04:39:10 Dialing out 192.168.101.140:55873
+</span></span><span style="display:flex;"><span>04:40:00 Retransmit
+</span></span><span style="display:flex;"><span>04:40:03 got ack<span style="color:#666">(</span>3278<span style="color:#666">)</span> but expected ack<span style="color:#666">(</span>3277<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>04:40:05 Retransmit
+</span></span><span style="display:flex;"><span>04:40:55 Retransmit
+</span></span><span style="display:flex;"><span>04:41:52 Retransmit
+</span></span><span style="display:flex;"><span>04:41:54 got ack<span style="color:#666">(</span>14513<span style="color:#666">)</span> but expected ack<span style="color:#666">(</span>14512<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>04:42:48 Retransmit
+</span></span><span style="display:flex;"><span>04:42:49 got ack<span style="color:#666">(</span>20914<span style="color:#666">)</span> but expected ack<span style="color:#666">(</span>20913<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>04:42:53 Retransmit
+</span></span><span style="display:flex;"><span>04:42:55 <span style="color:#a2f;font-weight:bold">done</span> with transfer
+</span></span></code></pre></div><p>I&rsquo;m not quite sure if the <code>Retransmit</code> and <code>ack(...)</code> issues were bugs in the
+server, and similarly during the flashing there were a number of exclamation
+points seen. In any case, it seemed to complete successfully and reboot! We now
+see the startup messages now indicate:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">Cisco IOS Software, C3500 Software (AP3G1-K9W7-M), Version 15.3(3)JF5, RELEASE SOFTWARE (fc2)
+</span></span></span></code></pre></div><p>Which is the new version that we expected!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Configuration</span>:<br /><br />
+
+<p>At this point, the AP got an address from DHCP, and I pointed my web browser at
+it. It asks for a password, which we know from before.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-login.png"><img class="alignnone size-full" src="cisco-login.png"  width="100%" /></a></td></tr><tr><td>The password is not hunter2.</td></tr></table></br />
+
+<p>The web interface is slow, ugly, and very buggy. It looks like this:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="cisco-webui.png"><img class="alignnone size-full" src="cisco-webui.png"  width="100%" /></a></td></tr><tr><td>If you like pain, and you hate good design, then this is for you!</td></tr></table></br />
+
+<p>After at least an hour of fiddling around with all the settings, I got most of
+it working. There were still some webui bugs I couldn&rsquo;t get around, so I went to
+the <code>SOFTWARE &gt; System configuration</code> menu, and downloaded the <code>config.txt</code>
+file that it produced. I then edited that with the changes that I wanted (mostly
+done through induction) and then loaded them back into the device with the
+webui. My final config looks approximately like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>! Last configuration change at 01:09:20 UTC Mon Mar 1 1993
+</span></span><span style="display:flex;"><span>version 15.3
+</span></span><span style="display:flex;"><span>no service pad
+</span></span><span style="display:flex;"><span>service timestamps debug datetime msec
+</span></span><span style="display:flex;"><span>service timestamps log datetime msec
+</span></span><span style="display:flex;"><span>service password-encryption
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>hostname ciscoap
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>logging rate-limit console 9
+</span></span><span style="display:flex;"><span>! this password is: Cisco
+</span></span><span style="display:flex;"><span>enable secret 5 $1$GQ8M$R/UmUqQnX2DHI56H0vxzI/
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>no aaa new-model
+</span></span><span style="display:flex;"><span>no ip source-route
+</span></span><span style="display:flex;"><span>no ip cef
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>dot11 pause-time 100
+</span></span><span style="display:flex;"><span>dot11 syslog
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>dot11 ssid ciscosucks-far
+</span></span><span style="display:flex;"><span>   authentication open
+</span></span><span style="display:flex;"><span>   authentication key-management wpa version 2
+</span></span><span style="display:flex;"><span>   guest-mode
+</span></span><span style="display:flex;"><span>   mbssid guest-mode
+</span></span><span style="display:flex;"><span>   wpa-psk ascii 7 XXX
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>dot11 ssid ciscosucks-fast
+</span></span><span style="display:flex;"><span>   authentication open
+</span></span><span style="display:flex;"><span>   authentication key-management wpa version 2
+</span></span><span style="display:flex;"><span>   guest-mode
+</span></span><span style="display:flex;"><span>   mbssid guest-mode
+</span></span><span style="display:flex;"><span>   wpa-psk ascii 7 XXX
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>no ipv6 cef
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>! this password is: Cisco
+</span></span><span style="display:flex;"><span>username Cisco password 7 123A0C041104
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>bridge irb
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>interface Dot11Radio0
+</span></span><span style="display:flex;"><span> no ip address
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> encryption mode ciphers aes-ccm
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> ssid ciscosucks-far
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> antenna gain 0
+</span></span><span style="display:flex;"><span> station-role root
+</span></span><span style="display:flex;"><span> bridge-group 1
+</span></span><span style="display:flex;"><span> bridge-group 1 subscriber-loop-control
+</span></span><span style="display:flex;"><span> bridge-group 1 spanning-disabled
+</span></span><span style="display:flex;"><span> bridge-group 1 block-unknown-source
+</span></span><span style="display:flex;"><span> no bridge-group 1 source-learning
+</span></span><span style="display:flex;"><span> no bridge-group 1 unicast-flooding
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>interface Dot11Radio1
+</span></span><span style="display:flex;"><span> no ip address
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> encryption mode ciphers aes-ccm
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> ssid ciscosucks-fast
+</span></span><span style="display:flex;"><span> !
+</span></span><span style="display:flex;"><span> antenna gain 0
+</span></span><span style="display:flex;"><span> station-role root
+</span></span><span style="display:flex;"><span> bridge-group 1
+</span></span><span style="display:flex;"><span> bridge-group 1 subscriber-loop-control
+</span></span><span style="display:flex;"><span> bridge-group 1 spanning-disabled
+</span></span><span style="display:flex;"><span> bridge-group 1 block-unknown-source
+</span></span><span style="display:flex;"><span> no bridge-group 1 source-learning
+</span></span><span style="display:flex;"><span> no bridge-group 1 unicast-flooding
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>interface GigabitEthernet0
+</span></span><span style="display:flex;"><span> no ip address
+</span></span><span style="display:flex;"><span> duplex auto
+</span></span><span style="display:flex;"><span> speed auto
+</span></span><span style="display:flex;"><span> bridge-group 1
+</span></span><span style="display:flex;"><span> bridge-group 1 spanning-disabled
+</span></span><span style="display:flex;"><span> no bridge-group 1 source-learning
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>interface BVI1
+</span></span><span style="display:flex;"><span> mac-address 44d3.caaf.2848
+</span></span><span style="display:flex;"><span> ip address dhcp client-id GigabitEthernet0
+</span></span><span style="display:flex;"><span> ipv6 address dhcp
+</span></span><span style="display:flex;"><span> ipv6 address autoconfig
+</span></span><span style="display:flex;"><span> ipv6 enable
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>ip forward-protocol nd
+</span></span><span style="display:flex;"><span>ip http server
+</span></span><span style="display:flex;"><span>no ip http secure-server
+</span></span><span style="display:flex;"><span>ip http help-path http://www.cisco.com/warp/public/779/smbiz/prodconfig/help/eag
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>bridge 1 route ip
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>line con 0
+</span></span><span style="display:flex;"><span>line vty 0 4
+</span></span><span style="display:flex;"><span> login local
+</span></span><span style="display:flex;"><span> transport input all
+</span></span><span style="display:flex;"><span>!
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><p>I&rsquo;ve changed the WPA passwords to <code>XXX</code> in this example because I don&rsquo;t want to
+share my wifi with you. If you&rsquo;re from Cisco or the government, then I know you
+have backdoors, but I still don&rsquo;t consent. For everyone else, you&rsquo;ll want to use
+the webui to set an appropriate password, and then view the config to see how it
+stores it in there. I don&rsquo;t think it stores the raw string. I&rsquo;m actually not
+entirely sure if I got the WPA 2 setup correctly, but that&rsquo;s something you can
+fiddle with if you&rsquo;d like to be cautious. I wasn&rsquo;t entirely sure if the most
+secure AES mode was on or not. Comments are welcome if you can improve my
+configuration. I also recommend changing the two passwords. You&rsquo;ll find those
+fields in the webui as well.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Other notes</span>:<br /><br />
+
+<p>I couldn&rsquo;t get the two frequencies (<code>2.4ghz</code> and <code>5ghz</code>) to both use the same
+SSID. You&rsquo;ll note that there are three physical antennas for each of the two. In
+the end I gave the two frequencies different SSID&rsquo;s.</p>
+<p>I also couldn&rsquo;t even get the <code>5ghz</code> antennas to power on until I specified the
+config manually. I literally copied the relevant parts from setting up the
+<code>2.4ghz</code> side, and then everything just worked. Bugs!</p>
+<p>From power-in to working radios, it takes about five minutes. The AP will be
+online and responding to pings before that, but I measured 4min 48 seconds till
+the console printed:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>DOT11-6-FREQ_USED: Interface Dot11Radio1, frequency <span style="color:#666">5240</span> selected
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>LINK-6-UPDOWN: Interface Dot11Radio1, changed state to up
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>LINEPROTO-5-UPDOWN: Line protocol on Interface Dot11Radio1, changed state to up
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>DOT11-6-FREQ_USED: Interface Dot11Radio0, frequency <span style="color:#666">2432</span> selected
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>LINK-6-UPDOWN: Interface Dot11Radio0, changed state to up
+</span></span><span style="display:flex;"><span><span style="color:#000080;font-weight:bold">%</span>LINEPROTO-5-UPDOWN: Line protocol on Interface Dot11Radio0, changed state to up
+</span></span></code></pre></div><p>Apparently even legitimate users have trouble downloading the firmware. In IRC I
+asked about this, and got the following as one response: (edited for privacy and
+spelling)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">&lt;</span> hidden<span style="color:#666">&gt;</span> hahah hahahaahahahah ahhhhhhhhhh
+</span></span><span style="display:flex;"><span><span style="color:#666">&lt;</span> hidden<span style="color:#666">&gt;</span> i bought an XXX WITH a support contract
+</span></span><span style="display:flex;"><span><span style="color:#666">&lt;</span> hidden<span style="color:#666">&gt;</span> it<span style="color:#b44">&#39;s been a week</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">&lt;</span> hidden<span style="color:#666">&gt;</span> i still cant download the f<span style="color:#666">***</span>ing software
+</span></span></code></pre></div><p>Step up your proprietary software game Cisco. Even the &ldquo;legitimate&rdquo; users seem
+annoyed.</p>
+<p>Lastly, I don&rsquo;t have a mounting bracket for this AP. If you have one that you&rsquo;d
+like to donate, I&rsquo;d appreciate it! <a href="/contact/">Contact me!</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Labourious verificaton</span>:<br /><br />
+
+<p>I wanted to be doubly sure that my TFTP copy worked properly. Here&rsquo;s how I did
+it. In my local directory, I first extracted the &ldquo;firmware&rdquo; file, and did a bit
+of prefixing:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ tar -xf ap3g1-k9w7-tar.153-3.JF5.tar
+</span></span><span style="display:flex;"><span>$ find ap3g1-k9w7-mx.153-3.JF5/ -type f &gt; files
+</span></span><span style="display:flex;"><span>$ sed -e <span style="color:#b44">&#39;s/^/verify \/md5 /&#39;</span> files &gt; files.verify
+</span></span><span style="display:flex;"><span>$ wc -l files
+</span></span><span style="display:flex;"><span><span style="color:#666">206</span> files
+</span></span></code></pre></div><p>It seems there are <code>206</code> files. I prefixed the <code>verify /md5</code> string to each one
+and stored that in the <code>files.verify</code> file in that folder. This is a list of
+commands that I can run on the AP. These commands run an md5 sum on each file
+that I expect to be present from the firmware extraction. I then labouriously
+pasted these commands into the terminal window. Occasionally the paste would
+fail after running some number of commands. When this happened, I would just
+continue where I left off. This process took about five minutes or so. This is
+probably due to some buffer or flow control issue.</p>
+<p>At the end, I had a big window of terminal output that looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#888">ciscoap#verify /md5 ap3g1-k9w7-mx.153-3.JF5/u-boot.bin
+</span></span></span><span style="display:flex;"><span><span style="color:#888">................................................................................................MD5 of flash:ap3g1-k9w7-mx.153-3.JF5/u-boot.bin Done!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">verify /md5 (flash:ap3g1-k9w7-mx.153-3.JF5/u-boot.bin) = 2d827e7edfc9c88d0e3756df9ff1030c
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">ciscoap#verify /md5 ap3g1-k9w7-mx.153-3.JF5/ap3g1-boot-m_upg
+</span></span></span><span style="display:flex;"><span><span style="color:#888">................................................................................................MD5 of flash:ap3g1-k9w7-mx.153-3.JF5/ap3g1-boot-m_upg Done!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">verify /md5 (flash:ap3g1-k9w7-mx.153-3.JF5/ap3g1-boot-m_upg) = a4495403a3fdbb357496e3254b519b40
+</span></span></span><span style="display:flex;"><span><span style="color:#888"></span><span style="">
+</span></span></span><span style="display:flex;"><span><span style="">
+</span></span></span><span style="display:flex;"><span><span style=""></span><span style="color:#888">ciscoap#verify /md5 ap3g1-k9w7-mx.153-3.JF5/ap3g1-k9w7-mx.153-3.JF5
+</span></span></span><span style="display:flex;"><span><span style="color:#888">................................MD5 of flash:ap3g1-k9w7-mx.153-3.JF5/ap3g1-k9w7-mx.153-3.JF5 Done!
+</span></span></span><span style="display:flex;"><span><span style="color:#888">verify /md5 (flash:ap3g1-k9w7-mx.153-3.JF5/ap3g1-k9w7-mx.153-3.JF5) = 59e74b40f6a9f00a67a3c78035f9281a
+</span></span></span></code></pre></div><p>I saved all of that into a file named: <code>output</code> on my local machine. I then ran:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># quick and dirty hack to transform the output and annoy the uuoc people</span>
+</span></span><span style="display:flex;"><span>$ cat output | grep <span style="color:#b44">&#39;^verify&#39;</span> | awk -F <span style="color:#b44">&#39;) = &#39;</span> <span style="color:#b44">&#39;{print $2&#34; &#34;$1}&#39;</span> | awk -F <span style="color:#b44">&#39; verify \\/md5 \\(flash\\:&#39;</span> <span style="color:#b44">&#39;{print $1 &#34;  &#34; $2}&#39;</span> &gt; output.md5sum
+</span></span><span style="display:flex;"><span>$ wc -l output.md5sum
+</span></span><span style="display:flex;"><span><span style="color:#666">206</span> output.md5sum
+</span></span></code></pre></div><p>Which produces an <code>output.md5sum</code> file that matches the <code>md5sum</code> format. I then
+ran <code>md5sum</code> on my firmware image directory:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ find ap3g1-k9w7-mx.153-3.JF5/ -type f | xargs md5sum &gt; md5sums
+</span></span></code></pre></div><p>Lastly, I compared the two:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ diff output.md5sums md5sums | grep -E <span style="color:#b44">&#39;^\+|^\-&#39;</span>
+</span></span><span style="display:flex;"><span>--- output.md5sums	2018-12-06 06:46:08.845536002 -0500
+</span></span><span style="display:flex;"><span>+++ md5sums	2018-12-06 06:18:04.326820811 -0500
+</span></span><span style="display:flex;"><span>-662f7f58d61d886078c5c84d8ff8a6f7  ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/ap_title_appname.gif
+</span></span><span style="display:flex;"><span>+cd86f1fdec5b327ffeafee14a8680d0a  ap3g1-k9w7-mx.153-3.JF5/html/level/1/images/ap_title_appname.gif
+</span></span></code></pre></div><p>Interestingly, there was one difference: an image file. I have no idea why this
+is the case, and I don&rsquo;t really care to investigate any further. I suppose this
+is where Cisco hides one of its government backdoors! ;)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this. Next time you&rsquo;re fighting with something unpleasant,
+remember that proprietary software only helps to make the unpleasantness worse!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>December 21, 2018<br>
+				<small>4434 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/802.11n">802.11n</a> <a class="label label-default" href="/tags/aironet">aironet</a> <a class="label label-default" href="/tags/access-point">access point</a> <a class="label label-default" href="/tags/antenna">antenna</a> <a class="label label-default" href="/tags/cisco">cisco</a> <a class="label label-default" href="/tags/firmware">firmware</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/md5sum">md5sum</a> <a class="label label-default" href="/tags/minicom">minicom</a> <a class="label label-default" href="/tags/picocom">picocom</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/poe">poe</a> <a class="label label-default" href="/tags/power-over-ethernet">power over ethernet</a> <a class="label label-default" href="/tags/screen">screen</a> <a class="label label-default" href="/tags/serial">serial</a> <a class="label label-default" href="/tags/tftp">tftp</a> <a class="label label-default" href="/tags/wireless">wireless</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Vagrant vsftp and other tricks - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Vagrant vsftp and other tricks</strong><br><small></small></h3>
+					<hr>
+					<p><a title="Vagrant on Fedora with libvirt" href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">As I previously wrote, I&rsquo;ve been busy with Vagrant on Fedora with libvirt</a>, and have even been <a href="https://github.com/mitchellh/vagrant/pull/2677">submitting</a>, <a href="https://github.com/fgrehm/vagrant-cachier/pull/68">patches</a> and <a href="https://github.com/mitchellh/vagrant/issues/2680">issues</a>! (<a href="https://github.com/pradels/vagrant-libvirt/issues/107">This &ldquo;<em>closed</em>&rdquo; issue needs solving!</a>) Here are some of the tricks that I&rsquo;ve used while hacking away.</p>
+<p><strong><span style="text-decoration:underline;">Default provider</span>:</strong></p>
+<p>I should have mentioned this in my earlier article but I forgot: If you&rsquo;re always using the same provider, you might want to set it as the default. In my case I&rsquo;m using <a href="https://github.com/purpleidea/vagrant-libvirt">vagrant-libvirt</a>. To do so, add the following to your <code>.bashrc</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">export</span> VAGRANT_DEFAULT_PROVIDER<span style="color:#666">=</span>libvirt
+</span></span></code></pre></div><p>This helps you avoid having to add <code>&ndash;provider=libvirt</code> to all of your vagrant commands.</p>
+<p><strong><span style="text-decoration:underline;">Aliases</span>:</strong></p>
+<p>All good hackers use shell (in my case bash) aliases to make their lives easier. I normally keep all my aliases in <code>.bash_aliases</code>, but I&rsquo;ve grouped them together with some other vagrant related items in my <code>.bashrc</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a2f">alias</span> <span style="color:#b8860b">vp</span><span style="color:#666">=</span><span style="color:#b44">&#39;vagrant provision&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">alias</span> <span style="color:#b8860b">vup</span><span style="color:#666">=</span><span style="color:#b44">&#39;vagrant up&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">alias</span> <span style="color:#b8860b">vssh</span><span style="color:#666">=</span><span style="color:#b44">&#39;vagrant ssh&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">alias</span> <span style="color:#b8860b">vdestroy</span><span style="color:#666">=</span><span style="color:#b44">&#39;vagrant destroy&#39;</span></span></span></code></pre></div>
+<strong><span style="text-decoration:underline;">Bash functions</span>:</strong></p>
+<p>There are some things aliases just can&rsquo;t do. For those situations, a bash function might be most appropriate. These go inside your <code>.bashrc</code> file. I&rsquo;d like to share two with you:</p>
+<p><strong><span style="text-decoration:underline;">Vagrant logging</span>:</strong></p>
+<p>Sometimes it&rsquo;s useful to get more information from the vagrant command that is running. To do this, you can set the <code>VAGRANT_LOG</code> environment variable to <code>info</code>, or <code>debug</code>.</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span> vlog <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">VAGRANT_LOG</span><span style="color:#666">=</span>info vagrant <span style="color:#b44">&#34;</span><span style="color:#b8860b">$@</span><span style="color:#b44">&#34;</span> 2&gt; vagrant.log
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span></span></span></code></pre></div>
+This is usually helpful for debugging a vagrant issue. When you use the <code>vlog</code> command, it works exactly as the normal <code>vagrant</code> command, but it spits out a <code>vagrant.log</code> logfile into the working directory.</p>
+<p><strong><span style="text-decoration:underline;">Vagrant sftp</span>:</strong></p>
+<p>Vagrant provides an <code>ssh</code> command, but it doesn&rsquo;t offer an <code>sftp</code> command. The <code>sftp</code> tool is fantastically useful when you want to quickly push or pull a file over ssh. First I&rsquo;ll show you the code so that you can practice reading bash:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># vagrant sftp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span> vsftp <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$2</span><span style="color:#b44">&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f">echo</span> <span style="color:#b44">&#34;Usage: vsftp  - vagrant sftp&#34;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">wd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>		<span style="color:#080;font-style:italic"># save wd, then find the Vagrant project</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">while</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;`pwd`&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;/&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;`pwd`/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;`pwd`/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#echo &#34;pwd is `pwd`&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">cd</span> ..
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">pwd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">cd</span> <span style="color:#b8860b">$wd</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">echo</span> <span style="color:#b44">&#39;Vagrant project not found!&#39;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">d</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.ssh&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">f</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">/</span><span style="color:#b8860b">$1</span><span style="color:#b44">.config&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># if mtime of $f is &gt; than 5 minutes (5 * 60 seconds), re-generate...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">`</span>date -d <span style="color:#b44">&#34;now - </span><span style="color:#a2f;font-weight:bold">$(</span>stat -c <span style="color:#b44">&#39;%Y&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> 2&gt; /dev/null<span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44"> seconds&#34;</span> +%s<span style="color:#b44">`</span> -gt <span style="color:#666">300</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		mkdir -p <span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># we cache the lookup because this command is slow...</span>
+</span></span><span style="display:flex;"><span>		vagrant ssh-config <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> &gt; <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">||</span> rm <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> sftp -F <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span></span></span></code></pre></div>
+This <code>vsftp</code> command will work from anywhere in the vagrant project root directory or deeper. It does this by first searching upwards until it gets to that directory. When it finds it, it creates a <code>.ssh/</code> directory there, and stores the proper <code>ssh_config</code> stubs needed for <code>sftp</code> to find the machines. Then the <code>sftp -F</code> command runs, connecting you to your guest machine.</p>
+<p>You&rsquo;ll notice that the first time you connect takes longer than the second time. This is because the <code>vsftp</code> function caches the <code>ssh_config</code> file store operation. You might want to set a different timeout, or disable it altogether. I should also mention that this script searches for a <code>Vagrantfile</code> and <code>.vagrant/</code> directory to identify the project root. If there is a more &ldquo;correct&rdquo; method, please let me know.</p>
+<p>I&rsquo;m particularly proud of this because it was a fun (and useful) hack. This function, and all the above <code>.bashrc</code> material is <a href="https://gist.github.com/purpleidea/8071962">available here as an easy download</a>.</p>
+<p><strong><span style="text-decoration:underline;">NFS folder syncing/mounting</span>:</strong></p>
+<p>The vagrant-libvirt provider supports one way folder &ldquo;synchronization&rdquo; with <code>rsync</code>, and NFS mounting if you want two-way synchronization. I would love if libvirt/vagrant-libvirt had support for real folder sharing via <a href="http://wiki.libvirt.org/page/Qemu_guest_agent">QEMU guest agent</a> and/or <a href="http://wiki.qemu.org/Documentation/9psetup">9p</a>. Getting it to work wasn&rsquo;t trivial. Here&rsquo;s what I had to do:</p>
+<p><strong><span style="text-decoration:underline;">Vagrantfile</span>:</strong></p>
+<p>Define your &ldquo;synced_folder&rdquo; so that you add the <code>:mount_options</code> array:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>config<span style="color:#666">.</span>vm<span style="color:#666">.</span>synced_folder <span style="color:#b44">&#34;nfs/&#34;</span>, <span style="color:#b44">&#34;/tmp/nfs&#34;</span>, <span style="color:#b8860b">:nfs</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>, <span style="color:#b8860b">:mount_options</span> <span style="color:#666">=&gt;</span> <span style="color:#666">[</span><span style="color:#b44">&#39;rw&#39;</span>, <span style="color:#b44">&#39;vers=3&#39;</span>, <span style="color:#b44">&#39;tcp&#39;</span><span style="color:#666">]</span></span></span></code></pre></div>
+When you specify anything in the <code>:mount_options</code> array, it erases all the defaults. The defaults are: <code>vers=3,udp,rw</code>. Obviously, choose your own directory paths! I&rsquo;d rather see this use <em>NFSv4</em>, but it would have taken slightly more fighting. <a href="https://github.com/mitchellh/vagrant/issues/2699">Please become a warrior today!</a></p>
+<p><strong><span style="text-decoration:underline;">Firewall</span>:</strong></p>
+<p>Firewalling is not automatic. To work around this, you&rsquo;ll need to run the following commands before you use your NFS mount:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># systemctl restart nfs-server # this as root, the rest will prompt</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> firewall<span style="color:#666">-</span>cmd <span style="color:#666">--</span>permanent <span style="color:#666">--</span>zone public <span style="color:#666">--</span>add<span style="color:#666">-</span>service mountd
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> firewall<span style="color:#666">-</span>cmd <span style="color:#666">--</span>permanent <span style="color:#666">--</span>zone public <span style="color:#666">--</span>add<span style="color:#666">-</span>service rpc<span style="color:#666">-</span>bind
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> firewall<span style="color:#666">-</span>cmd <span style="color:#666">--</span>permanent <span style="color:#666">--</span>zone public <span style="color:#666">--</span>add<span style="color:#666">-</span>service nfs
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> firewall<span style="color:#666">-</span>cmd <span style="color:#666">--</span>reload
+</span></span></code></pre></div><p>You should only have to do this once, but possibly each reboot. If you like, you can patch those commands to run at the top of your <code>Vagrantfile</code>. <a href="https://github.com/mitchellh/vagrant/issues/2447">If you can help fix this issue permanently, the bug is here.</a></p>
+<p><strong><span style="text-decoration:underline;">Sudo</span>:</strong></p>
+<p>The use of <code>sudo</code> to automatically edit <code>/etc/exports</code> is a neat trick, but it can cause some problems:</p>
+<ol>
+	<li><a href="https://github.com/mitchellh/vagrant/issues/2643">It is often not needed</a></li>
+	<li><a href="https://github.com/mitchellh/vagrant/issues/2642">It annoyingly prompts you</a></li>
+	<li><a href="https://github.com/mitchellh/vagrant/issues/2680">It can bork your stdin</a></li>
+</ol>
+You get internet karma from me if you can help <em>permanently</em> solve any of those three problems.
+<p><strong><span style="text-decoration:underline;">Package caching</span>:</strong></p>
+<p>As part of my deployments, Puppet installs a lot of packages. Repeatedly hitting a public mirror isn&rsquo;t a very friendly thing to do, it wastes bandwidth, and it&rsquo;s slower than having the packages locally! Setting up a proper mirror is a nice solution, but it comes with a management overhead. <a href="http://www.pulpproject.org/">There is really only one piece of software that manages repositories properly</a>, but using <a href="http://www.pulpproject.org/">pulp</a> has its own overhead, and is beyond the scope of this article. Because we&rsquo;re not using our own local mirror, this won&rsquo;t allow you to work entirely offline, as the metadata still needs to get downloaded from the net.</p>
+<p><strong><span style="text-decoration:underline;">Installation</span>:</strong></p>
+<p>As an interim solution, we can use <a href="https://github.com/fgrehm/vagrant-cachier">vagrant-cachier</a>. This plugin adds <em>synced_folder</em>&rsquo;s to the apt/yum cache directories. Sneaky! Since this requires two-way sync, you&rsquo;ll need to get NFS folder syncing/mounting working first. Luckily, I&rsquo;ve already taught you that!</p>
+<p>To pass the right options through to vagrant-cachier, you&rsquo;ll need <a href="https://github.com/fgrehm/vagrant-cachier/pull/68">this patch</a>. I&rsquo;d recommend first installing the plugin with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant plugin install vagrant-cachier
+</span></span></code></pre></div><p>and then patching your vagrant-cachier manually. On my machine, the file to patch is found at:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>~/.vagrant.d/gems/gems/vagrant-cachier-0.5.0/lib/vagrant-cachier/provision_ext.rb
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">Vagrantfile</span>:</strong></p>
+<p>Here&rsquo;s what I put in my <code>Vagrantfile</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># NOTE: this doesn&#39;t cache metadata, full offline operation not possible</span>
+</span></span><span style="display:flex;"><span>config<span style="color:#666">.</span>cache<span style="color:#666">.</span>auto_detect <span style="color:#666">=</span> <span style="color:#a2f">true</span>
+</span></span><span style="display:flex;"><span>config<span style="color:#666">.</span>cache<span style="color:#666">.</span>enable <span style="color:#b8860b">:yum</span>		<span style="color:#080;font-style:italic"># choose :yum or :apt</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> <span style="color:#800">ARGV</span><span style="color:#666">.</span>include?(<span style="color:#b44">&#39;--no-parallel&#39;</span>)	<span style="color:#080;font-style:italic"># when running in parallel,</span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>cache<span style="color:#666">.</span>scope <span style="color:#666">=</span> <span style="color:#b8860b">:machine</span>	<span style="color:#080;font-style:italic"># use the per machine cache</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>config<span style="color:#666">.</span>cache<span style="color:#666">.</span>enable_nfs <span style="color:#666">=</span> <span style="color:#a2f">true</span>	<span style="color:#080;font-style:italic"># sets nfs =&gt; true on the synced_folder</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># the nolock option is required, otherwise the NFSv3 client will try to</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># access the NLM sideband protocol to lock files needed for /var/cache/</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># all of this can be avoided by using NFSv4 everywhere. die NFSv3, die!</span>
+</span></span><span style="display:flex;"><span>config<span style="color:#666">.</span>cache<span style="color:#666">.</span>mount_options <span style="color:#666">=</span> <span style="color:#666">[</span><span style="color:#b44">&#39;rw&#39;</span>, <span style="color:#b44">&#39;vers=3&#39;</span>, <span style="color:#b44">&#39;tcp&#39;</span>, <span style="color:#b44">&#39;nolock&#39;</span><span style="color:#666">]</span></span></span></code></pre></div>
+Since multiple package managers operating on the same cache can cause locking issues, this plugin lets you decide if you want a shared cache for all machines, or if you want separate caches. I know that when I use the <code>&ndash;no-parallel</code> option it&rsquo;s safe (enough) to use a common cache because Puppet does all the package installations, and they all happen during each of their first provisioning runs which are themselves sequential.</p>
+<p>This isn&rsquo;t perfect, it&rsquo;s a hack, but hacks are fun, and in this case, very useful. If things really go wrong, it&rsquo;s easy to rebuild everything! I still think a few sneaky bugs remain in vagrant-cachier with libvirt, so please find, report, and patch them if you can, although it might be NFS that&rsquo;s responsible.</p>
+<p><strong><span style="text-decoration:underline;">Puppet integration</span>:</strong></p>
+<p>Integration with Puppet makes this all worthwhile. There are two scenarios:</p>
+<ol>
+	<li>You're using a puppetmaster, and you care about things like <a href="http://docs.puppetlabs.com/puppet/3/reference/lang_exported.html">exported resources</a> and multi-machine systems.</li>
+	<li>You don't have a puppetmaster, and you're running standalone "single machine" code.</li>
+</ol>
+The correct answer is #1. Standalone Puppet code is bad for a few reasons:
+<ol type="a">
+	<li>It neglects the multi-machine nature of servers, and software.</li>
+	<li>You're not able to use useful features like exported resources.</li>
+	<li>It's easy to (unknowingly) write code that won't work <em>with</em> a puppetmaster.</li>
+</ol>
+If you'd like to see some code which was intentionally written to only work without a puppetmaster (and the puppetmaster friendly equivalent) have a look at my <a title="Pushing Puppet at Puppet Camp DC, LISA 2013" href="/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/">Pushing Puppet</a> material.
+<p>There is one good reason for standalone Puppet code, and that is: <a href="https://en.wikipedia.org/wiki/Bootstrapping#Computing">bootstrapping</a>. In particular, bootstrapping the Puppet server.</p>
+<p><strong><span style="text-decoration:underline;">DNS</span>:</strong></p>
+<p>You need some sort of working DNS setup for this to function properly. Whether that involves hacking up your <code>/etc/hosts</code> files, using one of the vagrant DNS plugins, or running dnsmasq/bind is up to you. I haven&rsquo;t found an elegant solution yet, hopefully not telling you what I&rsquo;ve done will push you to come up with something awesome!</p>
+<p><strong><span style="text-decoration:underline;">The :puppet_server provisioner</span>:</strong></p>
+<p>This is the vagrant (puppet agent) provisioner that lets you talk to a puppet server. Here&rsquo;s my config:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>vm<span style="color:#666">.</span>vm<span style="color:#666">.</span>provision <span style="color:#b8860b">:puppet_server</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>puppet<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>puppet_server <span style="color:#666">=</span> <span style="color:#b44">&#39;puppet&#39;</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>options <span style="color:#666">=</span> <span style="color:#b44">&#39;--test&#39;</span>    <span style="color:#080;font-style:italic"># see the output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span></span></span></code></pre></div>
+I&rsquo;ve added the <code>&ndash;test</code> option so that I can see the output go by in my console. I&rsquo;ve also disabled the <em>puppet</em> service on boot in my base machine image, so that it doesn&rsquo;t run before I get the chance to watch it. If your base image already has the <em>puppet</em> service running on boot, you can disable it with a shell provisioner. That&rsquo;s it!</p>
+<p><strong><span style="text-decoration:underline;">The :puppet provisioner</span>:</strong></p>
+<p>This is the standalone vagrant (puppet apply) provisioner. It seems to get misused quite a lot! As I mentioned, I&rsquo;m only using it to bootstrap my puppet server. That&rsquo;s why it&rsquo;s a useful provisioner. Here&rsquo;s my config:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>vm<span style="color:#666">.</span>vm<span style="color:#666">.</span>provision <span style="color:#b8860b">:puppet</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>puppet<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>module_path <span style="color:#666">=</span> <span style="color:#b44">&#39;puppet/modules&#39;</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>manifests_path <span style="color:#666">=</span> <span style="color:#b44">&#39;puppet/manifests&#39;</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>manifest_file <span style="color:#666">=</span> <span style="color:#b44">&#39;site.pp&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># custom fact</span>
+</span></span><span style="display:flex;"><span>	puppet<span style="color:#666">.</span>facter <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#b44">&#39;vagrant&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;1&#39;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span></span></span></code></pre></div>
+The <code>puppet/{modules,manifests}</code> directories should exist in your project root. I keep the <code>puppet/modules/</code> directory fresh with a make script that rsync&rsquo;s code in from my git directories, but that&rsquo;s purely a personal choice. I added the custom fact as an example. All that&rsquo;s left is for this code to build a puppetmaster!</p>
+<p><strong><span style="text-decoration:underline;">Building a puppetmaster</span>:</strong></p>
+<p>Here&rsquo;s my <code>site.pp</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>node puppet {	<span style="color:#080;font-style:italic"># puppetmaster</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">class</span> { <span style="color:#b44">&#39;::puppet::server&#39;</span>:
+</span></span><span style="display:flex;"><span>		pluginsync <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,	<span style="color:#080;font-style:italic"># do we want to enable pluginsync?</span>
+</span></span><span style="display:flex;"><span>		storeconfigs <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,	<span style="color:#080;font-style:italic"># do we want to enable storeconfigs?</span>
+</span></span><span style="display:flex;"><span>		autosign <span style="color:#666">=&gt;</span> <span style="color:#666">[</span><span style="color:#b44">&#39;*&#39;</span><span style="color:#666">]</span>,	<span style="color:#080;font-style:italic"># NOTE: this is a temporary solution</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#repo =&gt; true,		# automatic repos (DIY for now)</span>
+</span></span><span style="display:flex;"><span>		start <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">class</span> { <span style="color:#b44">&#39;::puppet::deploy&#39;</span>:
+</span></span><span style="display:flex;"><span>		path <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;/vagrant/puppet/&#39;</span>,	<span style="color:#080;font-style:italic"># puppet folder is put here...</span>
+</span></span><span style="display:flex;"><span>		backup <span style="color:#666">=&gt;</span> <span style="color:#a2f">false</span>,		<span style="color:#080;font-style:italic"># don&#39;t use puppet to backup...</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+As you can see, I <em>include</em> two classes. The first one installs and configures the <em>puppetmaster</em>, <em>puppetdb</em>, and so on. The second class runs an <code>rsync</code> from the vagrant deployed <code>/vagrant/puppet/</code> directory to the proper directories inside of <code>/etc/puppet/</code> and wherever else is appropriate. Each time I want to push new puppet code, I run <code>vp puppet</code> and then <code>vp <host></code> of whichever host I want to test. You can even combine the two commands into a one-liner with <code>&amp;&amp;</code> if you&rsquo;d like.</p>
+<p><strong><span style="text-decoration:underline;">The puppet-puppet module</span>:</strong></p>
+<p>This is the hairy part. I&rsquo;ve always had an issue with this module. I recently ripped out support for a lot of the old puppet 0.24 era features, and I&rsquo;ve only since tested it on the recent 3.x series. A lot has changed from version to version, so it has been hard to follow this and keep it sane. There are serious improvements that could be made to the code. In fact, I wouldn&rsquo;t recommend it unless you&rsquo;re okay hacking on Puppet code:</p>
+<p><a href="https://github.com/purpleidea/puppet-puppet"><a href="https://github.com/purpleidea/puppet-puppet">https://github.com/purpleidea/puppet-puppet</a></a></p>
+<p><strong><a href="https://www.youtube.com/watch?v=N1uIIY2glaY&html5=1"><span style="text-decoration:underline;">Most importantly</span></a>:</strong></p>
+<p>This was a long article! I could have split it up into multiple posts, gotten more internet traffic karma, and would have seemed like a much more prolific blogger as a result, but I figured you&rsquo;d prefer it all in one big lot, and without any suspense. Prove me right by <a title="donate" href="/donate/">leaving me a tip</a>, and giving me your <a href="#comments">feedback</a>.</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p>PS: You&rsquo;ll want to be able to follow along with everything in this article if you want to use the upcoming <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a>+Vagrant infrastructure that I&rsquo;ll be releasing.</p>
+<p>PPS: Heh heh heh&hellip;</p>
+<p>PPPS: Get it? Vagrant -&gt; Oscar the Grouch -&gt; Muppets -&gt; Puppet</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>December 21, 2013<br>
+				<small>2130 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/nfs">NFS</a> <a class="label label-default" href="/tags/apt">apt</a> <a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/cache">cache</a> <a class="label label-default" href="/tags/caching">caching</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/libvirt">libvirt</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/pulp">pulp</a> <a class="label label-default" href="/tags/pulpproject">pulpproject</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/rsync">rsync</a> <a class="label label-default" href="/tags/sftp">sftp</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-cachier">vagrant-cachier</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> <a class="label label-default" href="/tags/vsftp">vsftp</a> <a class="label label-default" href="/tags/yum">yum</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/12/21/vagrant-vsftp-and-other-tricks/"><small>https://ttboj.wordpress.com/2013/12/21/vagrant-vsftp-and-other-tricks/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/12/21/vagrant-vsftp-and-other-tricks">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/12/21/vagrant-vsftp-and-other-tricks.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

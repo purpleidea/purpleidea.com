@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Non-Technical on purpleidea.com</title>
+    <link>https://purpleidea.com/categories/non-technical/</link>
+    <description>Recent content in Non-Technical on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 25 Sep 2025 01:07:56 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/categories/non-technical/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>10 years of mgmt</title>
+      <link>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</link>
+      <pubDate>Thu, 25 Sep 2025 01:07:56 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</guid>
+      <description>I publicly released mgmt to the internet 10 years ago. I can&amp;rsquo;t believe it&amp;rsquo;s been 10 years. In this post I&amp;rsquo;ll talk about:&#xA;The new mgmt company A one-time new customer offer Unexpected wins Past failures Some history A new release And more&amp;hellip;&#xA;The company:&#xA;I&amp;rsquo;ve officially started a company. I&amp;rsquo;ve been working on this for some time now, and it&amp;rsquo;s time to let you all know about it officially. As you already know (mgmt, purpleidea, etc&amp;hellip;) I&amp;rsquo;ve never been great at naming.</description>
+    </item>
+    <item>
+      <title>Working at Amazon</title>
+      <link>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</link>
+      <pubDate>Mon, 28 Dec 2020 08:27:35 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</guid>
+      <description>TL;DR: I&amp;rsquo;ve got a new job working for Amazon, in the &amp;ldquo;Open Source Program Office&amp;rdquo;. I&amp;rsquo;m now an Amazoner! More information below&amp;hellip; The Amazon. Source: https://en.wikipedia.org/wiki/Amazon_rainforest Background:&#xA;A little over three months ago, I decided to get back into full-time work. For the past 2.5 years since I left my job at Red Hat, I&amp;rsquo;ve been mostly working full-time on Mgmt Config and my DevOps/SWE Mentoring Program. To do such things, I had to live off of my savings, which isn&amp;rsquo;t sustainable long-term.</description>
+    </item>
+    <item>
+      <title>James is available for hire!</title>
+      <link>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</link>
+      <pubDate>Thu, 10 Sep 2020 08:00:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</guid>
+      <description>TL;DR: I&amp;rsquo;m available for hire. Experienced at Linux/Golang/Mentoring/etc. More information below!&#xA;A drawing of me coding away. A photo of me giving a talk to a sold-out crowd. Background:&#xA;Two years ago, I left my job at Red Hat to work on mgmt config full-time. I&amp;rsquo;m still passionate about this project, and I&amp;rsquo;m proud of the progress that has been made in the last two years, but it&amp;rsquo;s time for me to explore new opportunities as well.</description>
+    </item>
+    <item>
+      <title>The End of a Red Giant</title>
+      <link>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</link>
+      <pubDate>Tue, 30 Oct 2018 08:39:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</guid>
+      <description>As I&amp;rsquo;m sure you&amp;rsquo;ve now heard, Red Hat is being acquired by IBM.&#xA;Reactions have ranged from:&#xA;The first two emotions everyone experienced. to:&#xA;The classic humourous response. to:&#xA;The classy response. to:&#xA;The thing we&amp;#39;re all curious about. to everything in between. If someone were to leak me a copy of the memo-list 2018-October.txt.gz mailman archive, I&amp;rsquo;d sure love to see that! (Of course I&amp;rsquo;m joking and I wouldn&amp;rsquo;t actually ask anyone to do this.</description>
+    </item>
+    <item>
+      <title>Leaving Red Hat</title>
+      <link>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</link>
+      <pubDate>Wed, 04 Apr 2018 06:27:35 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</guid>
+      <description>I&amp;rsquo;ve spent about four years at Red Hat, and now it&amp;rsquo;s time to move on&amp;hellip;&#xA;TL;DR: had to leave Red Hat and start Patreon to fund mgmt.&#xA;What follows is a bit of historical rambling, and some forward looking statements.&#xA;Retrospective:&#xA;Long-time readers of my blog will know that I was very active in the puppet ecosystem for many years. I learned a lot while writing puppet code, and while building some of my outrageous puppet hacks.</description>
+    </item>
+    <item>
+      <title>Hello World!</title>
+      <link>https://purpleidea.com/blog/hello-world/</link>
+      <pubDate>Mon, 13 Nov 2017 09:18:15 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/hello-world/</guid>
+      <description>Hello! This is a new version of my website and blog. If you experience any issues, please let me know!&#xA;Happy Hacking, James&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+    <item>
+      <title>Copyleft is Dead. Long live Copyleft!</title>
+      <link>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</link>
+      <pubDate>Tue, 17 Oct 2017 21:22:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</guid>
+      <description>As you may have noticed, we recently re-licensed mgmt from the AGPL (Affero General Public License) to the regular GPL. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.&#xA;Disclaimer:&#xA;I am not a lawyer, and these are not necessarily the opinions of my employer. I think I&amp;rsquo;m knowledgeable in this area, but I&amp;rsquo;m happy to be corrected in the comments.</description>
+    </item>
+    <item>
+      <title>Working at RedHat</title>
+      <link>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</link>
+      <pubDate>Wed, 02 Apr 2014 14:27:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</guid>
+      <description>So this happened:&#xA;James just James at RedHat headquarters in North Carolina wearing his new red hat. RedHat made me an offer, and I am happy to say that I have just started this week!&#xA;I am proud to have joined a company that employs many of the worlds foremost, highly professional and clever hackers. It is indubitably the best Free Software [1] / Open Source company out there, and they ship some of the greatest and most elegant software available.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>IPMI for linux professionals - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>IPMI for linux professionals</strong><br><small></small></h3>
+					<hr>
+					<p>The nostalgia of serial console servers, kvm&rsquo;s and switched PDU&rsquo;s is hopefully no longer visible in your server room. If not, you must definitely start playing catch up. Please forgive my ignorance, but these things might still be common for big windows shops, however if that&rsquo;s the case, you&rsquo;ve got an entirely different set of problems ;)</p>
+<p>IPMI is an IP based protocol that allows you to talk directly to a little computer, usually built in to your server. It lets you remotely manage power (on, off, reboot, cycle&hellip;) get a serial console, collect sensor readings like temperatures, and do other magical things too if you care to figure them out.</p>
+<p>The web talks a lot about all this. I&rsquo;ll give you the short &ldquo;need to know&rdquo; list to get you going.</p>
+<ol>
+	<li>It probably makes sense to have the IPMI device of your DHCP server (or whatever network dependencies you have) set statically, so that this works if DHCP is down. I've actually never heard of anyone who had this problem, but it seems logical enough that I figured I'd mention it.</li>
+	<li>Set an IPMI password and put the device on a separate layer two network behind your router and firewall. Most servers bond the IPMI device to your "eth0" by default (at layer2), or let you split it off to a separate physical interface if so desired. Do the split and plug it into your management network. Remind me to talk about my dual router topology one day.</li>
+	<li>When you use cobbler to kickstart your machines, you'll need this in your kopts:
+console=ttyS1,115200
+Don't bother wasting your time configuring that manually when anaconda takes care of this for you :)</li>
+	<li>Almost all server hardware uses the second serial device (ttyS1) as the one that is linked to the IPMI hardware. In some insane default BIOS'es you might have to enable this.</li>
+	<li>Once installed, the kopt will usually know to have added the correct magic to grub, and also to whatever spawn's your serial tty. Feel free to grep to see what your $OS did.</li>
+	<li>ipmitool -I lanplus -H &lt;ip address of ipmi device&gt; -U ADMIN sol activate
+if ever this gets stuck, run a 'deactivate' first.</li>
+	<li>Learn the ~. disconnect sequence. If you're connected over ssh to your ipmi client (which I always am since it's my router) you'll need to "~~" to skip "through" the ssh <a title="how to use ssh escape characters" href="/blog/2012/04/25/how-to-use-ssh-escape-characters/">escape character</a>, and then period ".", exactly how ssh disconnects. Similarly the same logic applies if you're insane and run screen -&gt; ssh -&gt; screen.</li>
+	<li>You might need to do a "reset+clear" if the bios throws crap down the wire at you. I haven't found a way to avoid this. It's generally not a big problem for me, because this only happens if I'm watching the bios at boot, which only really happens if I'm bored on first install.</li>
+</ol>
+Happy Hacking!
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>April 25, 2012<br>
+				<small>550 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/cobbler">cobbler</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/ipmi">ipmi</a> <a class="label label-default" href="/tags/ipmitool">ipmitool</a> <a class="label label-default" href="/tags/kvm">kvm</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2012/04/25/ipmi-for-linux-professionals/"><small>https://ttboj.wordpress.com/2012/04/25/ipmi-for-linux-professionals/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2012/04/25/ipmi-for-linux-professionals">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2012/04/25/ipmi-for-linux-professionals.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

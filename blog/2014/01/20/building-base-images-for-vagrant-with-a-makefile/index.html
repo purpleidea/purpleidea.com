@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Building base images for Vagrant with a Makefile - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Building base images for Vagrant with a Makefile</strong><br><small></small></h3>
+					<hr>
+					<p>I needed a base image &ldquo;<a href="https://docs.vagrantup.com/v2/boxes.html">box</a>&rdquo; for my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="/blog/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&rsquo;t able to satisfy either of these conditions, so I&rsquo;ve had to build one myself! <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/README">I&rsquo;ve published all of my code</a>, so that you can use these techniques and <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile">tools</a> too!</p>
+<p><strong><span style="text-decoration:underline;">Status quo</span>:</strong></p>
+<p>Having an <a href="https://en.wikipedia.org/wiki/Not_Invented_Here">NIH problem</a> is bad for <a href="https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants">your vision</a>, and it&rsquo;s best to benefit from existing tools before creating your own. I first tried using <em><a href="https://github.com/fgrehm/vagrant-cachier">vagrant-cachier</a></em>, and then <em><a href="https://github.com/jedi4ever/veewee">veewee</a></em>, and <em><a href="https://github.com/mitchellh/packer">packer</a></em>. <em>Vagrant-cachier</em> is a great tool, but it turned out not being very useful because there weren&rsquo;t any base images available for download that met my needs. <em>Veewee</em> and <em>packer</em> can build those images, but they both failed in doing so for different reasons. Hopefully this situation will improve in the future.</p>
+<p><strong><span style="text-decoration:underline;">Writing a script</span>:</strong></p>
+<p>I started by hacking together a short <a href="https://www.gnu.org/software/bash/manual/bash.html">shell script</a> of commands for building base images. There wasn&rsquo;t much programming involved as the process was fairly linear, but it was useful to figure out what needed getting done.</p>
+<p>I decided to use the excellent <a href="http://libguestfs.org/virt-builder.1.html"><code>virt-builder</code></a> command to put together the base image. This is exactly what it&rsquo;s good at doing! To install it on Fedora 20, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> sudo yum install libguestfs<span style="color:#666">-</span>tools
+</span></span></code></pre></div><p>It wasn&rsquo;t available in Fedora 19, but after a lot of pain, I managed to build (mostly correct?) packages. I have <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/virt-builder/f19/rpm/">posted them online</a> if you are <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/virt-builder/f19/rpm/README">brave (or crazy?)</a> enough to want them.</p>
+<p><strong><span style="text-decoration:underline;">Using the right tool</span>:</strong></p>
+<p>After building a few images, I realized that a shell script was the wrong tool, and that it was time for an upgrade. What was the right tool? <a href="https://www.gnu.org/software/make/manual/make.html"><em>GNU Make</em></a>! After working on this for more hours than I&rsquo;m ready to admit, I present to you, a lovingly crafted virtual machine base image (&ldquo;box&rdquo;) builder:</p>
+<blockquote><a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile">Makefile</a></blockquote>
+The <code>Makefile</code> itself is quite compact. It uses a few shell scripts to do some of the customization, and builds a clean image in about <em>ten</em> minutes. To use it, just run <code>make</code>.
+<p><strong><span style="text-decoration:underline;">Customization</span>:</strong></p>
+<p>At the moment, it builds <em>x86_64</em>, <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> 6.5+ machines for <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>, but you can edit the <code>Makefile</code> to build a custom image of your choosing. I&rsquo;ve gone out of my way to add an <code>$(OUTPUT)</code> variable to the <code>Makefile</code> so that your generated files get saved in <code>/tmp/</code> or somewhere outside of your source tree.</p>
+<p><strong><span style="text-decoration:underline;">Download the image</span>:</strong></p>
+<p>If you&rsquo;d like to download the image that I generated, it is being generously hosted by the <a href="https://www.gluster.org/">Gluster</a> community <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/">here</a>. If you&rsquo;re using the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/gluster/Vagrantfile">Vagrantfile</a> from my <a title="Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!" href="/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">Puppet-Gluster+Vagrant</a> setup, then you don&rsquo;t have to download it manually, this will happen automatically.</p>
+<p><strong><span style="text-decoration:underline;">Open issues</span>:</strong></p>
+<p>The biggest issue with the images is that <em>SELinux</em> gets disabled! You might be okay with this, but it&rsquo;s actually quite unfortunate. It is disabled to avoid the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile#L57"><em>SELinux</em> relabelling</a> that happens on first boot, as this overhead defeats the usefulness of a fast vagrant deployment. If you know of a way to fix this problem, please let me know!</p>
+<p><strong><span style="text-decoration:underline;">Example output</span>:</strong></p>
+<p>If you&rsquo;d like to see this in action, but don&rsquo;t want to run it yourself, here&rsquo;s an example run:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ date <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f">time</span> make <span style="color:#666">&amp;&amp;</span> date
+</span></span><span style="display:flex;"><span>Mon Jan <span style="color:#666">20</span> 10:57:35 EST <span style="color:#666">2014</span>
+</span></span><span style="display:flex;"><span>Running templater...
+</span></span><span style="display:flex;"><span>Running virt-builder...
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>   1.0<span style="color:#666">]</span> Downloading: http://libguestfs.org/download/builder/centos-6.xz
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>   4.0<span style="color:#666">]</span> Planning how to build this image
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>   4.0<span style="color:#666">]</span> Uncompressing
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>  19.0<span style="color:#666">]</span> Resizing <span style="color:#666">(</span>using virt-resize<span style="color:#666">)</span> to expand the disk to 40.0G
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 173.0<span style="color:#666">]</span> Opening the new disk
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 181.0<span style="color:#666">]</span> Setting a random seed
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 181.0<span style="color:#666">]</span> Setting root password
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 181.0<span style="color:#666">]</span> Installing packages: screen vim-enhanced git wget file man tree nmap tcpdump htop lsof telnet mlocate bind-utils koan iftop yum-utils nc rsync nfs-utils sudo openssh-server openssh-clients
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 212.0<span style="color:#666">]</span> Uploading: files/epel-release-6-8.noarch.rpm to /root/epel-release-6-8.noarch.rpm
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 212.0<span style="color:#666">]</span> Uploading: files/puppetlabs-release-el-6.noarch.rpm to /root/puppetlabs-release-el-6.noarch.rpm
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 212.0<span style="color:#666">]</span> Uploading: files/selinux to /etc/selinux/config
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 212.0<span style="color:#666">]</span> Deleting: /.autorelabel
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 212.0<span style="color:#666">]</span> Running: yum install -y /root/epel-release-6-8.noarch.rpm <span style="color:#666">&amp;&amp;</span> rm -f /root/epel-release-6-8.noarch.rpm
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 214.0<span style="color:#666">]</span> Running: yum install -y bash-completion moreutils
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 235.0<span style="color:#666">]</span> Running: yum install -y /root/puppetlabs-release-el-6.noarch.rpm <span style="color:#666">&amp;&amp;</span> rm -f /root/puppetlabs-release-el-6.noarch.rpm
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 239.0<span style="color:#666">]</span> Running: yum install -y puppet
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 254.0<span style="color:#666">]</span> Running: yum update -y
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 375.0<span style="color:#666">]</span> Running: files/user.sh
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 376.0<span style="color:#666">]</span> Running: files/ssh.sh
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 376.0<span style="color:#666">]</span> Running: files/network.sh
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 376.0<span style="color:#666">]</span> Running: files/cleanup.sh
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span> 377.0<span style="color:#666">]</span> Finishing off
+</span></span><span style="display:flex;"><span>Output: /home/james/tmp/builder/gluster/builder.img
+</span></span><span style="display:flex;"><span>Output size: 40.0G
+</span></span><span style="display:flex;"><span>Output format: qcow2
+</span></span><span style="display:flex;"><span>Total usable space: 38.2G
+</span></span><span style="display:flex;"><span>Free space: 37.3G <span style="color:#666">(</span>97%<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>Running convert...
+</span></span><span style="display:flex;"><span>Running tar...
+</span></span><span style="display:flex;"><span>./Vagrantfile
+</span></span><span style="display:flex;"><span>./metadata.json
+</span></span><span style="display:flex;"><span>./box.img
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real	9m10.523s
+</span></span><span style="display:flex;"><span>user	2m23.282s
+</span></span><span style="display:flex;"><span>sys	0m37.109s
+</span></span><span style="display:flex;"><span>Mon Jan <span style="color:#666">20</span> 11:06:46 EST <span style="color:#666">2014</span>
+</span></span><span style="display:flex;"><span>$</span></span></code></pre></div>
+If you have any other questions, <a title="contact" href="/contact/">please let me know</a>!</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p>PS: Be careful when writing <code>Makefile</code>&rsquo;s. They can be dangerous if used improperly, and in fact I once took out part of my <code>lib/</code> directory by running one. Woops!</p>
+<p><strong>UPDATE:</strong> This technique now exists in it&rsquo;s own repo here: <a href="https://github.com/purpleidea/vagrant-builder"><a href="https://github.com/purpleidea/vagrant-builder">https://github.com/purpleidea/vagrant-builder</a></a></p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 20, 2014<br>
+				<small>868 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/box">box</a> <a class="label label-default" href="/tags/boxes">boxes</a> <a class="label label-default" href="/tags/centos">centos</a> <a class="label label-default" href="/tags/dangerous">dangerous</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/make">make</a> <a class="label label-default" href="/tags/makefile">makefile</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/selinux">selinux</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> <a class="label label-default" href="/tags/virt-builder">virt-builder</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/01/20/building-base-images-for-vagrant-with-a-makefile/"><small>https://ttboj.wordpress.com/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Show the exit status in your $PS1 - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Show the exit status in your $PS1</strong><br><small></small></h3>
+					<hr>
+					<p>As an update <a href="/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/">to my earlier article</a>, a friend gave me an idea of how to make my <code>$PS1</code> even better&hellip; First, the relevant part of my <code>~/.bashrc</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ps1_prompt<span style="color:#666">()</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">local</span> <span style="color:#b8860b">ps1_exit</span><span style="color:#666">=</span><span style="color:#b8860b">$?</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b8860b">$ps1_exit</span> -eq <span style="color:#666">0</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#ps1_status=`echo -e &#34;\[&amp;#092;&amp;#048;33[32m\]&#34;&#39;\$&#39;&#34;\[&amp;#092;&amp;#048;33[0m\]&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">ps1_status</span><span style="color:#666">=</span><span style="color:#b44">&#39;\$&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">ps1_status</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">echo</span> -e <span style="color:#b44">&#34;\[&amp;#092;&amp;#048;33[1;31m\]&#34;</span><span style="color:#b44">&#39;\$&#39;</span><span style="color:#b44">&#34;\[&amp;#092;&amp;#048;33[0m\]&#34;</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">ps1_git</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#a2f;font-weight:bold">$(</span>__git_ps1 %s<span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> -a <span style="color:#b44">&#34;</span><span style="color:#a2f;font-weight:bold">$(</span>__git_ps1 %s<span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;master&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">ps1_git</span><span style="color:#666">=</span><span style="color:#b44">&#34; (\[&amp;#092;&amp;#048;33[32m\]&#34;</span><span style="color:#a2f;font-weight:bold">$(</span>__git_ps1 <span style="color:#b44">&#34;%s&#34;</span><span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">&#34;\[&amp;#092;&amp;#048;33[0m\])&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">PS1</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">debian_chroot</span>:+(<span style="color:#b8860b">$debian_chroot</span>)<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">\u@\h:\[&amp;#092;&amp;#048;33[01;34m\]\w\[&amp;#092;&amp;#048;33[00m\]</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">ps1_git</span><span style="color:#b68;font-weight:bold">}${</span><span style="color:#b8860b">ps1_status</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44"> &#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># preserve earlier PROMPT_COMMAND entries...</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">PROMPT_COMMAND</span><span style="color:#666">=</span><span style="color:#b44">&#34;ps1_prompt;</span><span style="color:#b8860b">$PROMPT_COMMAND</span><span style="color:#b44">&#34;</span></span></span></code></pre></div>
+If you haven&rsquo;t figured it out, the magic is that the trailing <strong>$</strong> prompt gets coloured in <strong><span style="color:#ff0000;">red</span></strong> when the previous command exited with a non-zero value. Example:</p>
+<pre>
+james@computer:<span style="color:#3366ff;">~</span>$ cdmkdir /tmp/ttboj # yes, i built cdmkdir
+james@computer:<span style="color:#3366ff;">/tmp/ttboj</span>$ false
+james@computer:<span style="color:#3366ff;">/tmp/ttboj</span><span style="color:#ff0000;">$</span> echo ttboj
+ttboj
+james@computer:<span style="color:#3366ff;">/tmp/ttboj</span>$ ^C
+james@computer:<span style="color:#3366ff;">/tmp/ttboj</span><span style="color:#ff0000;">$</span> true
+james@computer:<span style="color:#3366ff;">/tmp/ttboj</span>$ cd ~/code/puppet/puppet-gluster/
+james@computer:<span style="color:#3366ff;">~/code/puppet/puppet-gluster</span>$ # hack, hack, hack...
+</pre>
+<p>You can still:</p>
+<pre>
+<span style="color:#ff0000;">$</span> echo $?
+42
+</pre>
+<p>if you want more specifics about what the exact return code was, and of course you can edit the above <code>~/.bashrc</code> snippet to match your needs.</p>
+<p>Hopefully this will help you be more productive, I know it&rsquo;s helping me!</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 29, 2014<br>
+				<small>248 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/exit-code">exit code</a> <a class="label label-default" href="/tags/exit-status">exit status</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/ps1">ps1</a> <a class="label label-default" href="/tags/puppet">puppet</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/01/29/show-the-exit-status-in-your-ps1/"><small>https://ttboj.wordpress.com/2014/01/29/show-the-exit-status-in-your-ps1/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/01/29/show-the-exit-status-in-your-ps1">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/01/29/show-the-exit-status-in-your-ps1.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

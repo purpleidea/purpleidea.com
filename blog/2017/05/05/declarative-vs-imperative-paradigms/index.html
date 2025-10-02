@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Declarative vs. Imperative paradigms - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Declarative vs. Imperative paradigms</strong><br><small></small></h3>
+					<hr>
+					<p>Recently, while operating two different remote-controlled appliances, I realized that it was high time for a discussion about declarative and imperative paradigms. Let&rsquo;s start by looking at the two remotes:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="declarative-imperative.png"><img class="alignnone size-full wp-image-2110" src="declarative-imperative.png" alt="declarative-imperative" width="100%" height="100%" /></a></td></tr><tr><td>Two different "remotes". The one on the left operates a television, and the one on the right controls a central heating and cooling system.</td></tr></table></br />
+<p>At first glance you will notice that one of these remotes is dark, and the other is light. You might also notice that my photography skills are terrible. Neither of these facts is very important to the discussion at hand. Is there anything interesting that you can infer?</p>
+<p>Here&rsquo;s a hint: to both reduce costs, preserve battery life, and to keep the design simple, the manufacturers of these two devices only included infrared transmitters on the two devices. That is to say, there is no infrared receiver built into the remote control units, those are only found on the appliances.</p>
+<p>The difference is that the dark coloured television remote control sends commands imperatively, whilst the light coloured climate control system sends them declaratively. What does this mean?</p>
+<p><span style="text-decoration:underline;">Imperative</span>:</p>
+<p>When you press the &ldquo;increase volume&rdquo; button on the dark-coloured remote, it sends the equivalent of a literal &ldquo;increase the volume&rdquo; command to the television. It has no idea what the previous volume was, or even if the television is powered on.</p>
+<p>It is fine to operate this way because the human will discern that an action occurred by an on-screen pop up which informs them about the new volume. If the remote wasn&rsquo;t properly aimed at the television, then the lack of a feedback loop will probably convince you to repeat the command.</p>
+<p>This <em><strong>is not</strong></em> <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>, and there is always the chance that an erroneous extra command could be sent. (Perhaps the television had a <a href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">GC</a> pause and didn&rsquo;t display a notification till some seconds after you had retried the command.) It is not particularly safe, but since we&rsquo;re changing channels and not launching missiles, it&rsquo;s not a significant problem.</p>
+<p><span style="text-decoration:underline;">Declarative</span>:</p>
+<p>When you press the &ldquo;increase temperature&rdquo; button on the light-coloured remote, it actually sends the entire state as shown on the display including the equivalent of &ldquo;22<sup>o</sup>C please&rdquo;. It is able to remember what it believes to be the previous state by storing this on-board, and it even displays it on the built-in LCD screen.</p>
+<p>It is useful to operate in this manner, because the designers decided that it was preferable to view a display which was positioned in your hand, rather than on a fan unit which might be mounted in an awkward area and which could exacerbate neck strain to view.</p>
+<p>In this case to provide feedback that the command was actually received, each key press will trigger a &ldquo;beep&rdquo; noise from the wall unit, and a brief flash of its power LED. This <strong><em>is</em></strong> idempotent, although the designers didn&rsquo;t provide a button to &ldquo;resend state&rdquo;.</p>
+<p><span style="text-decoration:underline;">Advantages and disadvantages</span>:</p>
+<p>Clearly, it is quite straightforward to imperatively send an action command. This is the common paradigm which we&rsquo;re usually most comfortable with, and layered beneath a declarative design there usually <em>are</em> some imperative operations. This often works best for low latency operations where feedback is guaranteed.</p>
+<p>Anyone who has operated a recent television might remember that they require a few seconds to &ldquo;start-up&rdquo;. In my impatience when trying to turn on a television, I&rsquo;ve pressed the &ldquo;power button&rdquo; a second time only to see the television turn itself back off. This is because that button only knows to send a &ldquo;change power state&rdquo; command which must be both sent and received in odd quanta to change the (binary) power state.</p>
+<p>In the declarative world we always request the desired result, and allow the machine to figure out the mechanism and if an action even needs to be performed at all. (It&rsquo;s worth mentioning that I could always send a subset of the desired state if sending the full &ldquo;struct&rdquo; would be too onerous!) I can however trick the light-coloured remote into displaying an incorrect visual by pressing buttons when it is out of transmitting range of the wall unit. The good news is that this is only due to a lack of bi-directional communication, and isn&rsquo;t a failure of the declarative paradigm.</p>
+<p><span style="text-decoration:underline;">Bi-directional communication</span>:</p>
+<p>In practice after either an imperative or declarative command is sent, we can usually expect to receive a response, whether it be a <code>200 OK</code>, or an error message. We&rsquo;re talking about software and systems engineering now, and while <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> makes everyone&rsquo;s lives easier, it&rsquo;s not immune from failure. If the successful <a href="https://en.wikipedia.org/wiki/Acknowledgement_(data_networks)">ACK</a> message to an imperative command never got delivered (maybe the server crashed after having sent it) and the client repeats the request, you&rsquo;ve got a possible problem on your hands!</p>
+<p>With the declarative message, it&rsquo;s safe to retry your command ad-nauseum until you&rsquo;re satisfied you were heard.</p>
+<p><span style="text-decoration:underline;">Multiple senders</span>:</p>
+<p>With a declarative approach it might seem that if two near-simultaneous users send differing commands, the &ldquo;winner&rdquo; would overwrite the other users command! It might also seem that this isn&rsquo;t a problem in imperative systems. It turns out that both these assumptions are wrong.</p>
+<p>In the imperative system two independent senders might both decide that the volume wasn&rsquo;t loud enough. If they were to both send a command, they might now have increased it twice as much as desired and are in a similar situation but with the problem that their ears now hurt.</p>
+<p>In the declarative system it is easy to avoid overwriting another users request with a simple <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> system (basically <a href="https://en.wikipedia.org/wiki/Test-and-set">test and set</a>). For any state change command, the user first looks up the current state and gets a unique integer (possibly incremental) that represents the returned state. When the new state is sent, it should include the integer from the previous state, and should know to only process the state change if it currently matches this value. In this manner with simultaneous requests, as long as the endpoint <a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">linearizes</a> the requests, only one will succeed, while the others will know that their cached view of the world needs to be refreshed. This might annoy them, but it is the safer mechanism.</p>
+<p><span style="text-decoration:underline;">Multiple endpoints</span>:</p>
+<p>If multiple endpoints form a <a href="https://en.wikipedia.org/wiki/CAP_theorem">consistent</a> cluster where all members can serve client requests using a declarative tasking system, the client can send the request to one system, and retrieve the status from someone else. This is particularly useful if the operation might take some time, and there is a chance that the initial endpoint was replaced during this interval.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="declarative-imperative-diagram.png"><img class="alignnone size-full wp-image-2331" src="declarative-imperative-diagram.png" alt="declarative-imperative-diagram" width="100%" height="100%" /></a></td></tr><tr><td>Hand drawn diagram of the scenario. As you can see the user is happy because they are using a declarative paradigm, and are more resistant to failures.</td></tr></table></br />
+<p>While this could be replicated to some degree with imperative systems, it&rsquo;s much more complicated to keep track of whether an operation occurred or not as it&rsquo;s easier for each cluster member to be able to determine whether the current state matches what&rsquo;s expected.</p>
+<p><span style="text-decoration:underline;">Conclusion</span>:</p>
+<p>This wasn&rsquo;t an exhaustive discussion about the topic, but I couldn&rsquo;t help writing about it since the two paradigms present some interesting engineering questions. As systems become more complex, will the adoption of new methodologies be widespread and expedient, or niche and sluggish?</p>
+<p>Some of my declarative work involves my <a href="https://github.com/purpleidea/mgmt/">next generation configuration management</a> project! <a href="https://github.com/purpleidea/mgmt/#community">Get involved today!</a></p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>May 5, 2017<br>
+				<small>1292 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/ack">ACK</a> <a class="label label-default" href="/tags/cap-theorem">CAP theorem</a> <a class="label label-default" href="/tags/cas">CAS</a> <a class="label label-default" href="/tags/tcp">TCP</a> <a class="label label-default" href="/tags/declarative">declarative</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/idempotent">idempotent</a> <a class="label label-default" href="/tags/imperative">imperative</a> <a class="label label-default" href="/tags/linear">linear</a> <a class="label label-default" href="/tags/linearalizable">linearalizable</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/remote-control">remote control</a> <a class="label label-default" href="/tags/state">state</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2017/05/05/declarative-vs-imperative-paradigms/"><small>https://ttboj.wordpress.com/2017/05/05/declarative-vs-imperative-paradigms/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2017/05/05/declarative-vs-imperative-paradigms">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2017/05/05/declarative-vs-imperative-paradigms.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

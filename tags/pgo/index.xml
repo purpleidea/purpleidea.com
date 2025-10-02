@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pgo on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/pgo/</link>
+    <description>Recent content in Pgo on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 20 Mar 2014 18:01:24 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/pgo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Preserving your working directory in gnome-terminal</title>
+      <link>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</link>
+      <pubDate>Thu, 20 Mar 2014 18:01:24 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</guid>
+      <description>I use gnome-terminal for most of my hacking. In fact, I use it so much, that I&amp;rsquo;ll often have multiple tabs open for a particular project. Here&amp;rsquo;s my workflow:&#xA;Control+Alt+t (My shortcut to open a new gnome-terminal window.) cd ~/code/some_cool_hack/ # directory of some cool hack Control-Shift-t (Shortcut to open a new gnome-terminal tab.) Hack, hack, hack... The problem is that the new tab that I&#39;ve created will have a $PWD of ~, instead of keeping the $PWD of ~/code/some_cool_hack/, which is the project I&#39;m working on!</description>
+    </item>
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>I&amp;rsquo;m usually on IRC, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;&#xA;The Setup&#xA;Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run irssi in a screen session on an SSH server that I manage, and I use gnome-terminal on my laptop.</description>
+    </item>
+    <item>
+      <title>GNOME Montreal Summit</title>
+      <link>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</link>
+      <pubDate>Tue, 15 Oct 2013 16:52:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</guid>
+      <description>This October 12th to 14th Montreal hosted the GNOME boston summit. Many thanks to Canonical for sponsoring breakfast, Savoir Faire Linux for hosting a great 6 à 10 with fancy snacks, and RedHat for sponsoring a pool night. What follows is some technical commentary about stuff that went on.&#xA;JHBuild&#xA;JHBuild is a tool to make it easy to download/clone (from git) and compile all the GNOME modules and applications. It was easy to get going.</description>
+    </item>
+    <item>
+      <title>Installing missing GNOME games</title>
+      <link>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</link>
+      <pubDate>Thu, 26 Sep 2013 00:43:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</guid>
+      <description>I just realized that my Fedora 19 installation didn&amp;rsquo;t have any of the GNOME games installed by default any more. I guess there&amp;rsquo;s no love for nibbles. Here&amp;rsquo;s a quick one-liner to get them all back:&#xA;$ sudo yum search game | grep gnome | awk &amp;#39;{print $1}&amp;#39; | xargs sudo yum install -y Loaded plugins: etckeeper, langpacks, refresh-packagekit Package gnome-nibbles-3.8.0-2.fc19.x86_64 already installed and latest version Resolving Dependencies --&amp;gt; Running transaction check ---&amp;gt; Package gnome-chess.</description>
+    </item>
+    <item>
+      <title>Upgrading from Fedora 18 to Fedora 19</title>
+      <link>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</link>
+      <pubDate>Sun, 04 Aug 2013 05:02:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</guid>
+      <description>It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. Fedora 18 was one of the worst releases ever, so I figured it could only get better. I ran my backups as usual, however this time I didn&amp;rsquo;t seem to need them, the upgrade process went off without a hitch! I used the fedup-cli process over the network. I always run these things inside of screen.</description>
+    </item>
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:&#xA;3 files changed, 1401 insertions(+), 215 deletions(-) You should now have a highly capable user type, along with some quick examples.&#xA;I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.&#xA;Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    <item>
+      <title>Mothers day hacks</title>
+      <link>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</link>
+      <pubDate>Sun, 12 May 2013 07:32:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</guid>
+      <description>Firstly Happy Mother&amp;rsquo;s day to my mother.&#xA;Google is, as usual, busily releasing doodles. Today, the doodle takes you through a Rube Goldberg -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:&#xA;3 * 3 * 3 * 3 = 81 different permutations. At the end of the process, you can print your image.</description>
+    </item>
+    <item>
+      <title>Fixing jerky scrolling in Firefox</title>
+      <link>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</link>
+      <pubDate>Thu, 11 Apr 2013 05:53:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</guid>
+      <description>Fedora did a lovely job of updating me to the latest version (v. 20) of Firefox. One problem I found, was that scrolling on certain pages was quite jerky. Performance was worse (or more likely) on pages with a frameset, and pages which were long. Pages with many images made this problem worse.&#xA;It turns out that the workaround is to disable hardware acceleration:&#xA;After you&amp;rsquo;ve unchecked this box, restart Firefox, and scrolling is now considerably smoother.</description>
+    </item>
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support releasing early and often, for some value of $early and $often. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;&#xA;I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many.</description>
+    </item>
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:&#xA;james@computer:~/some/awesome/directory$ nautilus . Initializing nautilus-open-terminal extension Shutting down nautilus-open-terminal extension james@computer:~/some/awesome/directory$ This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it.</description>
+    </item>
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&#xA;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections.</description>
+    </item>
+    <item>
+      <title>Picking up the pieces after a Fedora 18 install</title>
+      <link>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</link>
+      <pubDate>Tue, 12 Feb 2013 01:15:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</guid>
+      <description>I love GNOME and Fedora, but &amp;ldquo;upgrading&amp;rdquo; from Fedora 17 to 18 did not go well for me. I recommend you wait until either these are all fixed, or Fedora 19+ suits your needs. Here are a list of problems I had, and some workarounds. Hopefully proper patches to these bugs will get merged quickly, so that you don&amp;rsquo;t need to use these fixes.&#xA;Problem: Boot fails after upgrade from Fedora 17 to Fedora 18.</description>
+    </item>
+    <item>
+      <title>How to send and receive files like a professional</title>
+      <link>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</link>
+      <pubDate>Mon, 04 Feb 2013 10:56:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</guid>
+      <description>Everyone needs to send and receive files sometimes. Traditionally people send files as email attachments. This still works great, and supports encryption, but many mail servers are slow and cap the upper file size limit.&#xA;ICQ was a great solution back in the 1990&amp;rsquo;s, but those days are now over. (I still remember my number.)&#xA;A lot of folks use dropbox, which requires a dropbox account, and for you to trust them with your files.</description>
+    </item>
+    <item>
+      <title>Renaming a GNOME keyring (for seahorse, the passwords and keyrings application)</title>
+      <link>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</link>
+      <pubDate>Sun, 27 Jan 2013 15:33:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</guid>
+      <description>The GNOME Keyring is a great tool to unify password management across the desktop. Sadly, Firefox is the one application that doesn&amp;rsquo;t support this natively. (Chrome actually does!)&#xA;Seahorse is a useful tool to browse and manage your keyrings. Each keyring is physically stored in: ~/.gnome2/keyrings/$something.keyring&#xA;Usually the &amp;ldquo;$something&amp;rdquo;, matches the name of the keyring, however the real name comes from within the file. I had an older ubuntu machine running GNOME, and I wanted to import my keyring.</description>
+    </item>
+    <item>
+      <title>more rows and columns on firefox new tab page</title>
+      <link>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</link>
+      <pubDate>Sat, 24 Nov 2012 19:09:37 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</guid>
+      <description>Firefox has a &amp;ldquo;new tab&amp;rdquo; speed dial type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.&#xA;My one gripe is that it only shows you a default grid of 3 x 3. You can easily change that if you look in the secret preferences. Open a new tab and type in: about:config, accept the warning, and then search for: browser.</description>
+    </item>
+    <item>
+      <title>changing *that* keyboard shortcut right there (in gnome)</title>
+      <link>https://purpleidea.com/blog/2012/11/03/changing-that-keyboard-shortcut-right-there-in-gnome/</link>
+      <pubDate>Sat, 03 Nov 2012 03:12:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/03/changing-that-keyboard-shortcut-right-there-in-gnome/</guid>
+      <description>I love my keyboard shortcuts, and I sometimes I want to change them. If you&amp;rsquo;re ever in a gnome application and wanted to change that one right there, you can now live-edit them!&#xA;In a terminal, first enable this feature:&#xA;gsettings set org.gnome.desktop.interface can-change-accels true Next, hover over the menu item shortcut that you want to change. Enter the shortcut you want. It should update immediately! I like to disable this live-editing, so that I don&amp;rsquo;t accidentally change any shortcuts.</description>
+    </item>
+    <item>
+      <title>gnome3&#43;others glipper/klipper replacement</title>
+      <link>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</link>
+      <pubDate>Thu, 05 Jul 2012 18:56:40 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</guid>
+      <description>So a friend of mine uses kde4 for its klipper feature. Turns out he&amp;rsquo;s right that it&amp;rsquo;s an awesome feature! I realized I couldn&amp;rsquo;t let gnome3 take second place to a clipboard app, so after a bit of searching&amp;hellip;&#xA;$ sudo yum install gnome-shell-extension-gpaste gpaste xsel Next hit up: https://extensions.gnome.org/local/ to flip on the extension. I had to first type: ALT-F2, &amp;ldquo;r&amp;rdquo; (to restart the gnome shell). Don&amp;rsquo;t worry your apps won&amp;rsquo;t die.</description>
+    </item>
+    <item>
+      <title>fedora 14 to 17 upgrade</title>
+      <link>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</link>
+      <pubDate>Mon, 04 Jun 2012 22:31:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</guid>
+      <description>I&amp;rsquo;ve been reluctantly dreading the switch to gnome 3 + shell until it&amp;rsquo;s been ironed out a little bit more than gnome 3.0 - finally took the plunge. overall it&amp;rsquo;s working well. here are some (hopefully) useful notes:&#xA;preupgrade 14-&amp;gt;17 in one step doesn&#39;t work. it lets you wait an hour for all the downloads to finish, but once you&#39;ve rebooted, the preupgrade installer tells you it can&#39;t jump this far.</description>
+    </item>
+    <item>
+      <title>gnome-do trick</title>
+      <link>https://purpleidea.com/blog/2010/03/31/gnome-do-trick/</link>
+      <pubDate>Wed, 31 Mar 2010 12:17:21 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/gnome-do-trick/</guid>
+      <description>I use gnome-do. It&amp;rsquo;s fairly useful. One quick trick: press SHIFT - &amp;lt;ENTER&amp;gt; instead of plain &amp;lt;ENTER&amp;gt; to launch without closing the launcher box. Therefore, if you want three terminals, type: &amp;lt;SUPER&amp;gt; - &amp;lt;SPACE&amp;gt;, t(erminal), (&amp;lt;SHIFT&amp;gt; - &amp;lt;ENTER&amp;gt; X 2), &amp;lt;ENTER&amp;gt;.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>getting gedit to work like magic</title>
+      <link>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</link>
+      <pubDate>Tue, 09 Mar 2010 17:17:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</guid>
+      <description>i use gnu/linux. it&amp;rsquo;s probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using gedit for editing text. i still use vim, echo (gnu bash) and emacs (but only for org-mode).&#xA;vim is really, really great. but for day to day full-screen coding, i love working in gedit. i only have one [1] longstanding gripe, and today i believe that it is solved.</description>
+    </item>
+    <item>
+      <title>a custom epiphany location bar</title>
+      <link>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</link>
+      <pubDate>Mon, 22 Feb 2010 17:04:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</guid>
+      <description>since i do much research on the internets, i often find myself in a web browser. my favourite of the lot is epiphany. this post isn&amp;rsquo;t about its merits or failures, but about the awesome way to make my location bar be exactly how i like it: monospaced.&#xA;just add the following into your ~/.gtkrc-2.0 file and then restart epiphany. feel free to modify as you wish.&#xA;# ~/.gtkrc-2.0 style &amp;#34;Epiphany_Locationbar&amp;#34; { # leave out the font size if you wish font_name = &amp;#34;Monospace 12&amp;#34; #bg[NORMAL] = &amp;#34;#ff0000&amp;#34; } # both of these seem to work.</description>
+    </item>
+    <item>
+      <title>vanilla: my favourite flavour of gnome</title>
+      <link>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</link>
+      <pubDate>Thu, 22 Oct 2009 17:14:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</guid>
+      <description>after a recent upgrade to ubuntu 9.04, it seems that i&amp;rsquo;ve been pushed into using some &amp;ldquo;unfeatures&amp;rdquo; that i didn&amp;rsquo;t ask for. well apparently they won&amp;rsquo;t be unfeatures forever, but for me, notify-osd and indicator-applet aren&amp;rsquo;t quite ready for my consumption. i realize that ubuntu is trying to improve the desktop experience, but i&amp;rsquo;m going to need to wait for some more polish first.&#xA;so how do i get rid of these horrible things ?</description>
+    </item>
+  </channel>
+</rss>

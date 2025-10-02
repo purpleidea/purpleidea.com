@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Automatic edges in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Automatic edges in mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>It&rsquo;s been <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">two months since I announced mgmt</a>, and now it&rsquo;s time to continue the story by telling you more about the design of <a href="https://github.com/purpleidea/mgmt/">what&rsquo;s now in git master</a>. Before I get into those details, let me quickly <a href="https://www.youtube.com/watch?v=M4vqr3_ROIk&t=748&html5=1">recap</a> what&rsquo;s happened since then.</p>
+<p><span style="text-decoration:underline;">Mgmt community recap</span>:</p>
+<ul>
+    <li>I gave the first public presentation about mgmt at <a href="http://cfgmgmtcamp.eu/schedule/speakers/JamesShubin.html">CfgMgmtCamp</a>.</li>
+    <li>I repeated the talk at <a href="https://devconfcz2016.sched.org/event/5m14/next-generation-config-mgmt">DevConf.cz</a>. <a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">The video recording is available.</a></li>
+    <li>Felix wrote about his work <a href="https://ffrank.github.io/features/2016/02/18/from-catalog-to-mgmt/">cross compiling puppet code to mgmt</a>.</li>
+    <li><a href="https://github.com/purpleidea/mgmt/graphs/contributors">Three new contributors</a> got their feet wet in git master.</li>
+    <li><a href="https://github.com/purpleidea/mgmt/#on-the-web">Mgmt got a lot more attention on the web...</a></li>
+</ul>
+<p>Okay, time to tell you what&rsquo;s new in mgmt!</p>
+<p><span style="text-decoration:underline;">Types vs. resources</span>:</p>
+<p>Configuration management systems have the concept of primitives for the basic building blocks of functionality. The well-known ones are &ldquo;package&rdquo;, &ldquo;file&rdquo;, &ldquo;service&rdquo; and &ldquo;exec&rdquo; or &ldquo;execute&rdquo;. <a href="https://docs.chef.io/resource.html">Chef calls these &ldquo;resources&rdquo;</a>, while <a href="https://docs.puppetlabs.com/puppet/latest/reference/type.html">puppet (misleadingly) calls them &ldquo;types&rdquo;</a>.</p>
+<p>I made the mistake of calling the primitives in mgmt, &ldquo;types&rdquo;, no doubt due to <a href="/tags/puppet/">my extensive background in puppet</a>, however this overloads the word because it usually refers to <a href="https://en.wikipedia.org/wiki/Type_system">programming types</a>, so I&rsquo;ve decided not to use it any more to refer to these primitives. The Chef folks got this right! From now on they&rsquo;ll be <a href="https://github.com/purpleidea/mgmt/commit/3a8538437743d2151c73c108f75a93d6f1fbff17">referred to as &ldquo;resources&rdquo;</a> or &ldquo;res&rdquo; when abbreviated.</p>
+<p>Mgmt now has: &ldquo;<a href="https://github.com/purpleidea/mgmt/blob/master/resources.go#L18">noop</a>&rdquo;, &ldquo;<a href="https://github.com/purpleidea/mgmt/blob/master/file.go#L18">file</a>&rdquo;, &ldquo;<a href="https://github.com/purpleidea/mgmt/blob/master/svc.go#L18">svc</a>&rdquo;, &ldquo;<a href="https://github.com/purpleidea/mgmt/blob/master/exec.go#L18">exec</a>&rdquo;, and now: &ldquo;<a href="https://github.com/purpleidea/mgmt/blob/master/pkg.go#L18">pkg</a>&rdquo;&hellip;</p>
+<p><span style="text-decoration:underline;">The package (pkg) resource</span>:</p>
+<p>The most obvious change to mgmt, is that it now has a <a href="https://github.com/purpleidea/mgmt/commit/3b5678dd91945427b0fb8a86992c7d9117819ff6">package resource</a>. I&rsquo;ve named it &ldquo;pkg&rdquo; because we hackers prefer to keep strings short. Creating a pkg resource is difficult for two reasons:</p>
+<ol>
+    <li>Mgmt is event based</li>
+    <li>Mgmt should support many package managers</li>
+</ol>
+<p>Event based systems would involve an inotify watch on the <code>rpmdb</code> (or a similar watch on <code>/var/lib/dpkg/</code>), and the logic to respond to it. This engineering problem boils down to being able to support the entire matrix of possible GNU/Linux packaging systems. Yuck! Additionally, it would be particularly unfriendly if we primarily supported RPM and DNF based systems, but left the DPKG and APT backend out as &ldquo;an exercise for the community&rdquo;.</p>
+<p>Therefore, we solve both of these problems by basing the pkg resource on the excellent <a href="https://www.freedesktop.org/software/PackageKit/">PackageKit project</a>! PackageKit provides the events we need, and more importantly, it <a href="https://www.freedesktop.org/software/PackageKit/pk-matrix.html">supports many backends</a> already! If there&rsquo;s ever a new backend that needs to be added, you can add it upstream in PackageKit, and everyone (including mgmt) will benefit from your work.</p>
+<p>As a result, I&rsquo;m proud to announce that both Debian and Fedora, (and many other friends) all got a working pkg resource on day one. Here&rsquo;s a small demo:</p>
+<p>Run mgmt:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@debian:~/mgmt# time ./mgmt run --file examples/pkg1.yaml 
+</span></span><span style="display:flex;"><span>18:58:25 main.go:65: This is: mgmt, version: 0.0.2-41-g963f025
+</span></span><span style="display:flex;"><span>[snip]
+</span></span><span style="display:flex;"><span>18:18:44 pkg.go:208: Pkg[powertop]: CheckApply(true)
+</span></span><span style="display:flex;"><span>18:18:44 pkg.go:259: Pkg[powertop]: Apply
+</span></span><span style="display:flex;"><span>18:18:44 pkg.go:266: Pkg[powertop]: Set: installed...
+</span></span><span style="display:flex;"><span>18:18:52 pkg.go:284: Pkg[powertop]: Set: installed success!
+</span></span></code></pre></div><p>The &ldquo;powertop&rdquo; package will install&hellip; Now while mgmt is still running, remove powertop:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>root@debian:~# pkcon remove powertop
+</span></span><span style="display:flex;"><span>Resolving                     [=========================]         
+</span></span><span style="display:flex;"><span>Testing changes               [=========================]         
+</span></span><span style="display:flex;"><span>Finished                      [=========================]         
+</span></span><span style="display:flex;"><span>Removing                      [=========================]         
+</span></span><span style="display:flex;"><span>Loading cache                 [=========================]         
+</span></span><span style="display:flex;"><span>Running                       [=========================]         
+</span></span><span style="display:flex;"><span>Removing packages             [=========================]         
+</span></span><span style="display:flex;"><span>Committing changes            [=========================]         
+</span></span><span style="display:flex;"><span>Finished                      [=========================]         
+</span></span><span style="display:flex;"><span>root@debian:~# which powertop
+</span></span><span style="display:flex;"><span>/usr/sbin/powertop
+</span></span></code></pre></div><p>It gets installed right back! Similarly, you can do it like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>root<span style="">@</span>debian:~<span style="">#</span> apt<span style="color:#666">-</span>get <span style="color:#666">-</span>y remove powertop
+</span></span><span style="display:flex;"><span>Reading <span style="color:#a2f;font-weight:bold">package</span> lists<span style="color:#666">...</span> Done
+</span></span><span style="display:flex;"><span>Building dependency tree       
+</span></span><span style="display:flex;"><span>Reading state information<span style="color:#666">...</span> Done
+</span></span><span style="display:flex;"><span>The following packages were automatically installed and are no longer required:
+</span></span><span style="display:flex;"><span>  libnl<span style="color:#666">-</span><span style="color:#666">3</span><span style="color:#666">-</span><span style="color:#666">200</span> libnl<span style="color:#666">-</span>genl<span style="color:#666">-</span><span style="color:#666">3</span><span style="color:#666">-</span><span style="color:#666">200</span>
+</span></span><span style="display:flex;"><span>Use <span style="">&#39;</span>apt<span style="color:#666">-</span>get autoremove<span style="">&#39;</span> to remove them.
+</span></span><span style="display:flex;"><span>The following packages will be REMOVED:
+</span></span><span style="display:flex;"><span>  powertop
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> upgraded, <span style="color:#666">0</span> newly installed, <span style="color:#666">1</span> to remove and <span style="color:#666">80</span> not upgraded.
+</span></span><span style="display:flex;"><span>After this operation, <span style="color:#666">542</span> kB disk space will be freed.
+</span></span><span style="display:flex;"><span>(Reading database <span style="color:#666">...</span> <span style="color:#666">47528</span> files and directories currently installed.)
+</span></span><span style="display:flex;"><span>Removing <span style="color:#00a000">powertop</span> (<span style="color:#666">2.6.1</span><span style="color:#666">-</span><span style="color:#666">1</span>) <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#a2f;font-weight:bold">for</span> man<span style="color:#666">-</span><span style="color:#00a000">db</span> (<span style="color:#666">2.7.0.2</span><span style="color:#666">-</span><span style="color:#666">5</span>) <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>root<span style="">@</span>debian:~<span style="">#</span> which powertop
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>powertop
+</span></span></code></pre></div><p>And it will also get installed right back! Try it yourself to see it happen &ldquo;live&rdquo;! Similar behaviour can be seen on Fedora and other distros.</p>
+<p>As a quite aside. If you&rsquo;re a C hacker, and you would like to help with the upstream PackageKit project, they would surely love your contributions, and in particular, we here working on mgmt would especially like it if you worked on any of the open issues that we&rsquo;ve uncovered. In order from increasing to decreasing severity, they are: <a href="https://github.com/hughsie/PackageKit/issues/118">#118 (please help!)</a>, <a href="https://github.com/hughsie/PackageKit/issues/117">#117 (needs love)</a>, <a href="https://github.com/hughsie/PackageKit/issues/110">#110 (needs testing)</a>, and <a href="https://github.com/hughsie/PackageKit/issues/116">#116 (would be nice to have)</a>. If you&rsquo;d like to test mgmt on your favourite distro, and report and fix any issues, that would be helpful too!</p>
+<p><span style="text-decoration:underline;">Automatic edges</span>:</p>
+<p>Since we&rsquo;re now hooked into the pkg resource, there&rsquo;s no reason we can&rsquo;t use that wealth of knowledge to make mgmt more powerful. For example, the PackageKit API can give us the list of files that a certain package would install. Since any file resource would obviously want to get &ldquo;applied&rdquo; after the package is installed, we use this information to automatically generate the relationships or &ldquo;edges&rdquo; in the graph. This means that module authors don&rsquo;t have to waste time manually adding or updating the &ldquo;require&rdquo; relationships in their modules!</p>
+<p>For example, the <code>/etc/drbd.conf</code> file, will want to require the <code>drbd-utils</code> package to be installed first. With traditional config management systems, without this dependency chain, after one run, your system will not be in a converged state, and would require another run. With mgmt, since it is event based, it <em>would</em> converge, except it might run in a sub-optimal order. That&rsquo;s one reason why we add this dependency for you automatically.</p>
+<p>This is represented via what mgmt calls the &ldquo;AutoEdges&rdquo; API. (If you can think of a better name, please tell me now!) It&rsquo;s also worth noting that this isn&rsquo;t entirely a novel idea. Puppet has a concept of &ldquo;autorequires&rdquo;, which is used for some of their resources, but doesn&rsquo;t work with packages. I&rsquo;m particularly proud of my design, because in my opinion, I think the API and mechanism in mgmt are much more powerful and logical.</p>
+<p>Here&rsquo;s a small demo:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@fedora:~$ ./mgmt run --file examples/autoedges3.yaml 
+</span></span><span style="display:flex;"><span>20:00:38 main.go:65: This is: mgmt, version: 0.0.2-42-gbfe6192
+</span></span><span style="display:flex;"><span>[snip]
+</span></span><span style="display:flex;"><span>20:00:38 configwatch.go:54: Watching: examples/autoedges3.yaml
+</span></span><span style="display:flex;"><span>20:00:38 config.go:248: Compile: Adding AutoEdges...
+</span></span><span style="display:flex;"><span>20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -&gt; Svc[drbd]
+</span></span><span style="display:flex;"><span>20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -&gt; File[file1]
+</span></span><span style="display:flex;"><span>20:00:38 config.go:313: Compile: Adding AutoEdge: Pkg[drbd-utils] -&gt; File[file2]
+</span></span><span style="display:flex;"><span>20:00:38 main.go:149: Graph: Vertices(4), Edges(3)
+</span></span><span style="display:flex;"><span>[snip]
+</span></span></code></pre></div><p>Here we define four resources: pkg (<code>drbd-utils</code>), svc (<code>drbd</code>), and two files (<code>/etc/drbd.conf</code> and <code>/etc/drbd.d/</code>), both of which happen to be listed inside the RPM package! The AutoEdge magic works out these dependencies for us by examining the package data, and as you can see, adds the three edges. Unfortunately, there is no elegant way that I know of to add an automatic relationship between the svc and any of these files at this time. Suggestions welcome.</p>
+<p>Finally, we also use the same interface to make sure that a parent directory gets created before any managed file that is a child of it.</p>
+<p><span style="text-decoration:underline;">Automatic edges internals</span>:</p>
+<p>How does it work? Each resource has a method to generate a &ldquo;unique id&rdquo; for that resource. This happens in the &ldquo;UIDs&rdquo; method. Additionally, each resource has an &ldquo;AutoEdges&rdquo; method which, unsurprisingly, generates an &ldquo;AutoEdge&rdquo; object (struct). When the compiler is generating the graph and adding edges, it calls two methods on this AutoEdge object:</p>
+<ol>
+    <li>Next()</li>
+    <li>Test(...)</li>
+</ol>
+<p>The Next() method produces a list of possible matching edges for that resource. Whichever edges match are added to the graph, and the results of each match is fed into the Test(&hellip;) function. This information is used to tell the resource whether there are more potential matches available or not. The process iterates until Test returns false, which means that there are no other available matches.</p>
+<p>This ensures that a file: <code>/var/lib/foo/bar/baz/</code> will first seek a dependency on <code>/var/lib/foo/bar/</code>, but be able to fall back to <code>/var/lib/</code> if that&rsquo;s the first file resource available. This way, we avoid adding more resource dependencies than necessary, which would diminish the amount of <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">parallelism</a> possible, while running the graph.</p>
+<p>Lastly, it&rsquo;s also worth noting that users can choose to disable AutoEdges per resource if they so desire. If you&rsquo;ve got an idea for a clever automatic edge, please <a href="/contact/">contact me</a>, send a patch, or leave the information in the <a href="#comments">comments</a>!</p>
+<p><span style="text-decoration:underline;">Contributing</span>:</p>
+<p>Good ideas and designs help, but <a href="https://web.libera.chat/?channels=#mgmtconfig">contributors is what will make the project</a>. All sorts of help is appreciated, and you can join in even if you&rsquo;re not an &ldquo;expert&rdquo;. I&rsquo;ll try and tag &ldquo;easy&rdquo; or &ldquo;first time&rdquo; patches with the &ldquo;<a href="https://github.com/purpleidea/mgmt/labels/mgmtlove">mgmtlove</a>&rdquo; tag. Feel free to work on other issues too, or <a href="https://github.com/purpleidea/mgmt/issues/">suggest something</a> that you think will help! Want to add more interesting resources! Anyone want to write a libvirt resource? How about a network resource? Use your imagination!</p>
+<p>Lastly, thanks to both <a href="https://github.com/hughsie/">Richard</a> and <a href="https://github.com/ximion/">Matthias Klumpp</a> in particular from the <a href="https://github.com/hughsie/PackageKit/">PackageKit project</a> for their help so far, and to everyone else who has contributed in some way.</p>
+<p>That&rsquo;s all for today. I&rsquo;ve got more exciting things coming. Please <a href="https://github.com/purpleidea/mgmt/">contribute</a>!</p>
+<p>Happy Hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 14, 2016<br>
+				<small>1537 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/apt-get">apt-get</a> <a class="label label-default" href="/tags/autoedge">autoedge</a> <a class="label label-default" href="/tags/autoedges">autoedges</a> <a class="label label-default" href="/tags/deb">deb</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dnf">dnf</a> <a class="label label-default" href="/tags/dpkg">dpkg</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/libvirt">libvirt</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/network">network</a> <a class="label label-default" href="/tags/packagekit">packagekit</a> <a class="label label-default" href="/tags/pkcon">pkcon</a> <a class="label label-default" href="/tags/pkg">pkg</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/rpm">rpm</a> <a class="label label-default" href="/tags/systemd">systemd</a> <a class="label label-default" href="/tags/yum">yum</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/03/14/automatic-edges-in-mgmt/"><small>https://ttboj.wordpress.com/2016/03/14/automatic-edges-in-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/03/14/automatic-edges-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/03/14/automatic-edges-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

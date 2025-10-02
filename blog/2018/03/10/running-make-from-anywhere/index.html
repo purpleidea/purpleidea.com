@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Run commands from your `Makefile`, even if you&#39;re nested deeply!">
+	<meta name="author" content="James Shubin">
+
+	<title>Running `make` from anywhere - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Running `make` from anywhere</strong><br><small>Run commands from your `Makefile`, even if you&#39;re nested deeply!</small></h3>
+					<hr>
+					<p>Sometimes while I&rsquo;m deep inside <a href="https://github.com/purpleidea/mgmt/">mgmt</a>&rsquo;s
+project directory, I want to run an operation from the <code>Makefile</code> which lives in
+the root! Unfortunately, if you do so while nested, you&rsquo;ll just get:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt/resources$ make build
+</span></span><span style="display:flex;"><span>make: *** No rule to make target <span style="color:#b44">&#39;build&#39;</span>.  Stop.
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Ten Minute Solution</span>:<br /><br />
+
+<p>I figured I&rsquo;d hack out a quick solution. What I came up with looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#080"></span><span style="color:#080;font-style:italic"># James Shubin, 2018</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># run `make` in the first directory (or its parent recursively) that it works in</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">MF</span><span style="color:#666">=</span><span style="color:#b44">&#39;Makefile&#39;</span>	<span style="color:#080;font-style:italic"># looks for this file, could look for others, but that&#39;s silly</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">CWD</span><span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">$(</span><span style="color:#a2f">pwd</span><span style="color:#a2f;font-weight:bold">)</span>	<span style="color:#080;font-style:italic"># starting here</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">while</span> true; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$MF</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		make <span style="color:#b8860b">$@</span>		<span style="color:#080;font-style:italic"># run make!</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">e</span><span style="color:#666">=</span><span style="color:#b8860b">$?</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">cd</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$CWD</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic"># go home first</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">exit</span> <span style="color:#b8860b">$e</span>		<span style="color:#080;font-style:italic"># pass on the exit status</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># stop if we get home</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#a2f;font-weight:bold">$(</span><span style="color:#a2f">pwd</span><span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$HOME</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">cd</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$CWD</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">exit</span> 2		<span style="color:#080;font-style:italic"># the exit status of `make` when it errors</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">#echo &#34;searching...&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">cd</span> ..			<span style="color:#080;font-style:italic"># go up one dir</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">done</span>
+</span></span></code></pre></div><p>You can probably figure it out quite easily from the code, but what this does is
+it searches upwards until it finds a <code>Makefile</code>, and then runs your command from
+there!</p>
+<p>I saved that into a file named <code>pmake</code>, made it executable (<code>chmod u+x pmake</code>)
+and put it into my <code>~/bin/</code>. You can download it from <a href="https://gist.github.com/purpleidea/ebf5ee7bf47f41132e5d0c1cd8329c75">here</a>
+instead.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Problems</span>:<br /><br />
+
+<p>One problem with this solution is that if you have an intermediate <code>Makefile</code>
+which is in a parent folder of where you&rsquo;re working, then it will stop the
+search there, instead of continuing upwards. One potential solution to this is
+to name those files <code>GNUmakefile</code> instead, since they will continue to work as
+normal, but won&rsquo;t get found by this script. In my use cases, I only ever split
+up <code>Makefile</code>&rsquo;s into intermediate layers for compartmentalization and
+readability, and I can almost always invoke anything important from the root.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Magic?</span><br /><br />
+
+<p>You&rsquo;d expect that this doesn&rsquo;t support the magical bash completion that comes
+with a normal <code>Makefile</code>. Strangely, and due to nothing that I did, it seems to
+just work! I type <code>pmake &lt;tab&gt;</code> and I see the correct completions!</p>
+<p>This happens because of clever bash completion engineering and one coincidence.</p>
+<ol>
+<li>
+<p>Clever bash completion engineering:
+To build the bash completion for <code>make</code>, the shell (via a completion
+script) actually calls <code>make -npq __BASH_MAKE_COMPLETION__=1 -C . .DEFAULT</code>
+which is a magic incantation which actually asks <code>make</code> to parse the
+<code>Makefile</code>, and return a bunch of information which can then be used to
+automatically build clever bash completion targets. You can run it
+yourself to see the output. (I won&rsquo;t paste it here because it&rsquo;s
+enormous.) As a result, when we invoke our <code>pmake</code> script and press
+<code>&lt;tab&gt;</code>, the shell actually runs it secretly, and our script passes the
+magic incantation to the real <code>make</code>, which returns the necessary
+information. You can observe this by adding:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a2f">echo</span> <span style="color:#b44">&#34;MAKE: </span><span style="color:#b8860b">$@</span><span style="color:#b44">&#34;</span> &gt;&gt; /tmp/whatever
+</span></span></code></pre></div><p>to the top of the script, and then running a <code>tail -F /tmp/whatever</code> to
+see our script getting called when you press <code>&lt;tab&gt;</code> a few times.</p>
+</li>
+<li>
+<p>The coincidence:
+So why does this work? Our script is <code>pmake</code>, and it would be bad if the
+shell always ran <code>-npq</code> every time we pressed tab on a binary. As a
+result, the bash completion package only does this for <code>make</code>, although
+they also hook up <code>pmake</code>, <code>gmake</code>, <code>gnumake</code>, <code>colormake</code>, and <code>_make</code>.
+<a href="https://github.com/scop/bash-completion/blob/master/completions/make#L169">source</a>
+So it was pure coincidence that I chose a script named <code>pmake</code>. Had I
+written a script named <code>pmake</code> which launched nuclear missiles every
+time you ran it with <code>-npq</code> (<code>-n</code> for nuclear missiles, <code>-p</code> for max
+payload active, and <code>-q</code> for a quiet stealth attack) then we&rsquo;d be in
+serious trouble the moment someone tried to use tab completion!</p>
+<p>Apparently <code>pmake</code> is the name of a <code>make</code> like command on *BSD, and the
+legacy is present in the GNU package. Turns out BSD <em>is</em> occasionally
+useful ;)</p>
+</li>
+</ol>
+<p>Thanks to the commentors which pointed me to the <code>pmake</code> entry in the source!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 10, 2018<br>
+				<small>740 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/ten-minute-hacks">ten minute hacks</a> <a class="label label-default" href="/tags/make">make</a> <a class="label label-default" href="/tags/makefile">makefile</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/03/10/running-make-from-anywhere">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/03/10/running-make-from-anywhere.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

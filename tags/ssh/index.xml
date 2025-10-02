@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ssh on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ssh/</link>
+    <description>Recent content in Ssh on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 14 May 2025 19:45:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Running etcd over SSH</title>
+      <link>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</link>
+      <pubDate>Wed, 14 May 2025 19:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</guid>
+      <description>Want to tunnel etcd traffic over SSH? Here&amp;rsquo;s a pitfall I ran into.&#xA;The problem:&#xA;Mgmt supports tunnelling the etcd traffic over SSH. This is quite useful, because it means that for it to connect to etcd, it doesn&amp;rsquo;t need to open up any new ports other than 22.&#xA;You can run the agent like so:&#xA;mgmt run --ssh-url=etcd@etcdserver:22 --seeds=http://127.0.0.1:2379 --no-server --no-magic empty and it just works!&#xA;Lockdown:&#xA;It&amp;rsquo;s no fun giving out more access than is really necessary, so I added this line to the etcd user account in their ~/.</description>
+    </item>
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.&#xA;Prior knowledge&#xA;If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (cssh) and screen with vagrant. I decided to expand on my vsftp script. First read:&#xA;Vagrant on Fedora with libvirt&#xA;and Vagrant vsftp and other tricks&#xA;to get up to speed on the background information. Vagrant screen:&#xA;First, a simple screen hack&amp;hellip; I often use my vssh alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with sudo-ing to root and then running screen each time.</description>
+    </item>
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>I&amp;rsquo;m usually on IRC, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;&#xA;The Setup&#xA;Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run irssi in a screen session on an SSH server that I manage, and I use gnome-terminal on my laptop.</description>
+    </item>
+    <item>
+      <title>how to use ssh escape characters</title>
+      <link>https://purpleidea.com/blog/2012/04/25/how-to-use-ssh-escape-characters/</link>
+      <pubDate>Wed, 25 Apr 2012 00:59:01 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/04/25/how-to-use-ssh-escape-characters/</guid>
+      <description>So you&amp;rsquo;ve learned screen, ssh and vim. Time to take your skills to level two.&#xA;Day one: You&amp;rsquo;ve logged in to your server remotely via ssh. You run &amp;ldquo;screen -xRR&amp;rdquo;, and two minutes later you&amp;rsquo;re busy chatting away in irssi and vim is running in the other window, because, you know, real sysadmins don&amp;rsquo;t use emacs.&#xA;Lunch time: You grab your laptop and head off for lunch. When you open the lid and look at your terminals, they&amp;rsquo;re all frozen, because the tcp connections have died.</description>
+    </item>
+    <item>
+      <title>git, gitosis, gitweb and friends...</title>
+      <link>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</link>
+      <pubDate>Thu, 19 Aug 2010 11:03:46 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</guid>
+      <description>In case it wasn&amp;rsquo;t already obvious, I am a huge fan of git, and often prefer it over sliced bread. Recently to help a small team of programmers collaborate, I decided to setup a private git server for them to use. By no claim of mine is the following tutorial unique, however I am writing this to aid those who had trouble following other online tutorials.&#xA;Goal: Setup a central git server for private or public source sharing, without having to give everyone a separate shell account.</description>
+    </item>
+    <item>
+      <title>piping data through ssh</title>
+      <link>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</link>
+      <pubDate>Wed, 09 Dec 2009 22:36:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</guid>
+      <description>not that what i&amp;rsquo;m about to tell you is brilliant, new or revolutionary, however i thought i&amp;rsquo;d mention it in case you&amp;rsquo;re not doing it. also feel free to let me know if there is a better way.&#xA;problem: i have some stdout which comes from a command and i want it in a file on another machine.&#xA;i could first send it to a temp file, scp that over, and then remove the temp file; but instead, i&amp;rsquo;ll just:</description>
+    </item>
+    <item>
+      <title>ssh hanging</title>
+      <link>https://purpleidea.com/blog/2009/07/29/ssh-hanging/</link>
+      <pubDate>Wed, 29 Jul 2009 09:40:46 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/29/ssh-hanging/</guid>
+      <description>i&amp;rsquo;m sure everyone who has used ssh has experienced this, but couldn&amp;rsquo;t put their finger on what was happening exactly. this article explains.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+  </channel>
+</rss>

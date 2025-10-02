@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;m usually on <a href="https://libera.chat/">IRC</a>, but I don&rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&rsquo;s all done, and you can benefit from my hacking by following along&hellip;</p>
+<p><span style="text-decoration:underline;">The Setup</span></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Laptop -&gt; Gnome-Terminal -&gt; SSH -&gt; Screen -&gt; Irssi
+</span></span></code></pre></div><p>This way, I&rsquo;m connected to IRC, even when my laptop isn&rsquo;t. I run <a href="http://irssi.org/">irssi</a> in a <a href="https://www.gnu.org/software/screen/">screen</a> session on an SSH server that I manage, and I use <a href="https://en.wikipedia.org/wiki/GNOME_Terminal">gnome-terminal</a> on my laptop. If you don&rsquo;t understand this setup, then you&rsquo;ll need to get more comfortable with these tools first.</p>
+<p><span style="text-decoration:underline;">Fnotify</span></p>
+<p>The first trick is getting irssi to store notifications in a uniform way. To do this, I modified an irssi script called fnotify. My <a href="https://gist.githubusercontent.com/purpleidea/9017ba480391fc2936760a94ae1791ac/raw/3e4ac1404e2f3836842fe3ae01d40b8b345f8155/fnotify.pl">changed version is available here</a>. Installation is easy:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># on your ssh server:</span>
+</span></span><span style="display:flex;"><span>cd <span style="color:#666">/</span>tmp; wget https:<span style="color:#666">//</span>gist<span style="color:#666">.</span>githubusercontent<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span><span style="color:#666">9017</span>ba480391fc2936760a94ae1791ac<span style="color:#666">/</span>raw<span style="color:#666">/</span><span style="color:#666">3e4</span>ac1404e2f3836842fe3ae01d40b8b345f8155<span style="color:#666">/</span>fnotify<span style="color:#666">.</span>pl <span style="color:#666">-</span>O fnotify<span style="color:#666">.</span>pl
+</span></span><span style="display:flex;"><span>cp <span style="color:#666">/</span>tmp<span style="color:#666">/</span>fnotify<span style="color:#666">.</span>pl <span style="color:#666">~/.</span>irssi<span style="color:#666">/</span>scripts<span style="color:#666">/</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># in irssi:</span>
+</span></span><span style="display:flex;"><span>irssi<span style="color:#666">&gt;</span> <span style="color:#666">/</span><span style="color:#a2f">load</span> perl
+</span></span><span style="display:flex;"><span>irssi<span style="color:#666">&gt;</span> <span style="color:#666">/</span>script <span style="color:#a2f">load</span> fnotify
+</span></span></code></pre></div><p>When someone sends you a direct message, or highlights your nick on IRC, this script will append a line to the <em>~/.irssi/fnotify</em> file on the SSH server.</p>
+<p><span style="text-decoration:underline;">Watching fnotify</span></p>
+<p>On your local machine, we need a script to <em><a href="https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html">tail</a></em> the fnotify file. This was surprisingly hard to get right. The <a href="https://gist.githubusercontent.com/purpleidea/531441fac2b439b1ab28b424c6eddc8a/raw/84aac2fd1f845aafb62aceb0c870a333d86c51e4/irssi-fnotify.sh">fruit of my labour is available here</a>. You&rsquo;ll want to copy this script to your local <em>~/bin/</em> directory. I&rsquo;ve named this script <em>irssi-fnotify.sh</em>. This script watches the remote <em>fnotify</em> file, and runs <em>notify-send</em> and <em>paplay</em> locally to notify you of any incoming messages, each time one comes in.</p>
+<p><span style="text-decoration:underline;">SSH Activation</span></p>
+<p>We want the <em>irssi-fnotify.sh</em> script to run automatically when we connect to our SSH server. To do this, add the following lines to your <em>~/.ssh/config</em> file:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># home
+</span></span><span style="display:flex;"><span>Host home
+</span></span><span style="display:flex;"><span>    HostName home.example.com
+</span></span><span style="display:flex;"><span>    PermitLocalCommand yes
+</span></span><span style="display:flex;"><span>    LocalCommand ~/bin/irssi-fnotify.sh --start %r@%h
+</span></span></code></pre></div><p>You might also want to have other directives listed here as well, but that is outside the scope of this article. Now each time you run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ssh home
+</span></span></code></pre></div><p>The <em>irssi-fnotify.sh</em> command will automatically run.</p>
+<p><span style="text-decoration:underline;">Magic</span></p>
+<p>I&rsquo;ve left out some important details:</p>
+<ul>
+	<li>The <em>LocalCommand</em> that you use, must return before ssh will continue. As a result, it daemonizes itself into the background when you invoke it with <em>--start</em>.</li>
+	<li>My <em>irssi-fnotify.sh</em> program watches the parent ssh <em>$PID</em>. When it exits, it will run a cleanup routine to purge old notifications from the <em>fnotify</em> file. This requires a brief SSH connection back to the server. This is a useful feature!</li>
+	<li>You may wish to modify <em>irssi-fnotify.sh</em> to <em>paplay</em> a different alert sound, or to avoid making noise entirely. The choice is yours.</li>
+	<li>When <em>irssi-fnotify.sh</em> runs, it will <em>tail</em> the <em>fnotify</em> file over ssh. If there are "<em>unread</em>" messages, tail will try to "<em>download</em>" up to ten. You can edit this behaviour in <em>irssi-fnotify.sh</em> if you want a larger initial backlog.</li>
+	<li>The <em>irssi-notify.sh</em> script doesn't attempt to prevent flooding, nor does it filter weird characters from incoming messages. You may want to add this yourself, and or /kb users who cause you to need these features.</li>
+</ul>
+Here's a little screenshot (with shameless plug) of the result in action:
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify.png"><img alt="irssi-fnotify.sh notification screenshot" src="irssi-fnotify.png" width="100%" height="100%" /></a></td></tr></table></br />
+<p>Here&rsquo;s an example of how this helps me to be more responsive in channel:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="irssi-fnotify2.png"><img class="size-full wp-image-555" alt="helping out in #gluster" src="irssi-fnotify2.png" width="100%" height="100%" /></a></td></tr><tr><td> helping out in <a href="https://web.libera.chat/?channels=#gluster">#gluster</a></td></tr></table></br />
+<p>I hope you found this useful.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 18, 2013<br>
+				<small>610 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/desktop-notifications">desktop notifications</a> <a class="label label-default" href="/tags/fnotify">fnotify</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/gnome-terminal">gnome-terminal</a> <a class="label label-default" href="/tags/irc">irc</a> <a class="label label-default" href="/tags/irssi">irssi</a> <a class="label label-default" href="/tags/libera">libera</a> <a class="label label-default" href="/tags/notify-send">notify-send</a> <a class="label label-default" href="/tags/pgo">pgo</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/screen">screen</a> <a class="label label-default" href="/tags/ssh">ssh</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/"><small>https://ttboj.wordpress.com/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Evanescent on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/evanescent/</link>
+    <description>Recent content in Evanescent on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 21 Jul 2009 10:19:52 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/evanescent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[py]inotify, polling, gtk and gio</title>
+      <link>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</link>
+      <pubDate>Tue, 21 Jul 2009 10:19:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</guid>
+      <description>i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel inotify support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with pyinotify and io_add_watch, but on closer inspection into the pyinotify code it turns out that it seems to actually use polling! (search for: select.</description>
+    </item>
+    <item>
+      <title>evanescent 0.3</title>
+      <link>https://purpleidea.com/blog/2009/07/14/evanescent-03/</link>
+      <pubDate>Tue, 14 Jul 2009 14:53:30 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/14/evanescent-03/</guid>
+      <description>new evanescent released. get your tar balls today. now with pro dbus support, and happier than 0.2 in every way. please send in any patches and bug reports.&#xA;ps: easy one line installation too!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>logging out of $SESSION</title>
+      <link>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</link>
+      <pubDate>Mon, 13 Jul 2009 10:05:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</guid>
+      <description>the software (evanescent) that i&amp;rsquo;m working on is supposed to log out the user from its current X session. originally i had some yucky looking code that ran a kill on gnome-session, which quickly got replaced with:&#xA;os.system(&amp;#39;gnome-session-save --logout-dialog&amp;#39;) i&amp;rsquo;ve decided this was still a little crufty, so i&amp;rsquo;ve recently replaced this with:&#xA;bus = dbus.SessionBus() remote_object = bus.get_object(&amp;#39;org.gnome.SessionManager&amp;#39;, &amp;#39;/org/gnome/SessionManager&amp;#39;) # specify the dbus_interface in each call remote_object.Logout(0, dbus_interface=&amp;#39;org.gnome.SessionManager&amp;#39;) # or create an Interface wrapper for the remote object #iface = dbus.</description>
+    </item>
+  </channel>
+</rss>

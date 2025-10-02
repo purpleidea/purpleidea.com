@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Thanking Oh-My-Vagrant contributors for version 1.0.0 - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Thanking Oh-My-Vagrant contributors for version 1.0.0</strong><br><small></small></h3>
+					<hr>
+					<p>The <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant project</a> became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count
+</span></span><span style="display:flex;"><span>188
+</span></span><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1)
+</span></span><span style="display:flex;"><span>commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371
+</span></span><span style="display:flex;"><span>Author: James Shubin &lt;james@shubin.ca&gt;
+</span></span><span style="display:flex;"><span>Date:   Thu Aug 28 01:08:03 2014 -0400
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Initial commit of vagrant-puppet-docker-template...
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    This is an attempt to prototype a default environment for
+</span></span><span style="display:flex;"><span>    vagrant+puppet+docker hacking. More improvements are needed for it to be
+</span></span><span style="display:flex;"><span>    useful, but it&#39;s probably already useful as a reference for now.
+</span></span></code></pre></div><p>It would be easy to take most of the credit for taking the project this far, as I&rsquo;ve been responsible for about 87% of the commits, but as is common, the numbers don&rsquo;t tell the whole story. It is also a bug (but hopefully just an artifact) that I&rsquo;ve had such a large percentage of commits. It&rsquo;s quite common for a new project to start this way, but for <a href="https://www.gnu.org/philosophy/free-sw.html">Free Software</a> to succeed long-term, it&rsquo;s essential that the users become the contributors. Let&rsquo;s try to change that going forward.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ git shortlog -s | sort -rn
+</span></span><span style="display:flex;"><span>   165    James Shubin
+</span></span><span style="display:flex;"><span>     5    Vasyl Kaigorodov
+</span></span><span style="display:flex;"><span>     4    Randy Barlow
+</span></span><span style="display:flex;"><span>     2    Scott Collier
+</span></span><span style="display:flex;"><span>     2    Milan Zink
+</span></span><span style="display:flex;"><span>     2    Christoph Görn
+</span></span><span style="display:flex;"><span>     2    aweiteka
+</span></span><span style="display:flex;"><span>     1    scollier
+</span></span><span style="display:flex;"><span>     1    Russell Tweed
+</span></span><span style="display:flex;"><span>     1    ncoghlan
+</span></span><span style="display:flex;"><span>     1    John Browning
+</span></span><span style="display:flex;"><span>     1    Flavio Fernandes
+</span></span><span style="display:flex;"><span>     1    Carsten Clasohm
+</span></span><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ echo &#39;165/188*100&#39; | bc -l
+</span></span><span style="display:flex;"><span>87.76595744680851063800
+</span></span></code></pre></div><p>The true story behind these 188 commits is the living history of the past year. Countless hours testing the code, using the project, suggesting features, getting hit by bugs, debugging issues, patching those bugs, and so on&hellip; If you could see an accurate graph of the number of hours put into the project, you&rsquo;d see a much longer list of individuals, and I would have nowhere close to 87% of that breakdown.</p>
+<p><span style="text-decoration:underline;">Contributions are important!</span></p>
+<p>Contributions are important, and patches especially help. Patches from your users are what make something a community project as opposed to two separate camps of consumers and producers. It&rsquo;s about time we singled out some of those contributors!</p>
+<p><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=vkaigoro@redhat.com"><span style="text-decoration:underline;">Vasyl Kaigorodov</span></a></p>
+<p>Vasyl is a great hacker who first <a href="https://github.com/purpleidea/oh-my-vagrant/commit/d021ebcad4c9ad65412ed3773bf805a29b3fda12">fixed the broken networking</a> in OMV. Before his work merged, it was not possible to run two different OMV environments at the same time. Now networking makes a lot more sense. Unfortunately the <a href="https://github.com/purpleidea/oh-my-vagrant/graphs/contributors">GitHub contributors graph</a> doesn&rsquo;t acknowledge his work because he doesn&rsquo;t have a GitHub account. Shame on them!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=rbarlow">Randy Barlow</a></span> (<a href="https://twitter.com/bowlofeggs">bowlofeggs</a>)</p>
+<p>Randy came up with the idea for &ldquo;<a href="/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">mainstream mode</a>&rdquo;, and while his initial proof of concept didn&rsquo;t quite work, the idea was good. His time budget didn&rsquo;t afford the project this new feature, but he has sent in some other patches including <a href="https://github.com/purpleidea/oh-my-vagrant/commit/94534dfa6f3728fab00cbd47606e1dffe209c31e">some</a>, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/c85c7962fe44e933792c7f338d702e7fb338f07c">tweaks</a> used by the <a href="http://www.pulpproject.org/">Pulp</a> Vagrantfile. He&rsquo;s got a patch or two pending on his TODO list which we&rsquo;re looking forward to, as he finishes the work to port Pulp to OMV.</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=scollier">Scott Collier</a></span></p>
+<p>Scott is a great model user. He gets very enthusiastic, he&rsquo;s great at testing things out and complaining if they don&rsquo;t behave as he&rsquo;d like, and if you&rsquo;re lucky, you can brow beat him to write a quick patch or two. He actually has three commits in the project so far, which would show up correctly above if he had set his git user variables correctly ;) Thanks for spending the time to deal with OMV when there was a lot more cruft, and fewer features. I look forward to your next patch!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=mzink@redhat.com">Milan Zink</a></span></p>
+<p>Milan is a ruby expert who fixed the ruby xdg bugs we had in an earlier version of the project. Because of his work new users don&rsquo;t even realize that there was ever an issue!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/goern/">Christoph Görn</a></span></p>
+<p>Christoph has been an invaluable promoter and dedicated user of the project. His work pushing OMV to the limit has generated real world requirements and feature requests, which have made the project useful for real users! It&rsquo;s been hard to say no when he opens an issue ticket, but I&rsquo;ve been able to force him to write a <a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=goern">patch or two</a> as well.</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=rtweed">Russell Tweed</a></span></p>
+<p>Russell is a new OMV user who jumped right into the code and sent in a patch for <a href="https://github.com/purpleidea/oh-my-vagrant/commit/ae484b2e5fad6f8188d861a97c64b874fe3965ab">adding an arbitrary number of disks to OMV machines</a>. As a first time contributor, I thank him for his patch and for withstanding the number of reviews it had to go through. It&rsquo;s finally merged, even though we might have let one <a href="https://github.com/purpleidea/oh-my-vagrant/commit/b03fe1e3fc3090d6846fcd068040f4ec037de436">bug (now fixed) slip in too</a>. I particularly like his patch, because <a href="https://github.com/pradels/vagrant-libvirt/commit/be2042537e4f8f3e59a7880bf3e09358252be252">I actually wrote the initial patch to add extra disks support to vagrant-libvirt</a>, and I&rsquo;m pleased to see it get used one level up!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=johbro">John Browning</a></span></p>
+<p>John actually found an edge case in the subscription manager code and after an interesting discussion, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/3f03325bc4b7866e108d8aec1f4ef4ad6af5e359">patched the issue</a>. More users means more edge cases will fall out! Thanks John!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=flavio-fernandes">Flavio Fernandes</a></span></p>
+<p>Even though Flavio is an OSX user, we&rsquo;re thankful that <a href="https://github.com/purpleidea/oh-my-vagrant/commit/2595f1206c6d5214c80c6ee255185a91371370de">he wrote and tested the virtualbox patch</a> for OMV. OMV still needs an installer for OSX + mainstream mode, but once that&rsquo;s done, we know the rest will work great!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=clasohm">Carsten Clasohm</a></span></p>
+<p>Carsten actually wrote a lovely patch for a subtle OMV issue that is very hard to reproduce. I was able to merge <a href="https://github.com/purpleidea/oh-my-vagrant/commit/b29247070855d7f18bb81bf3409decae2677e11c">his patch</a> on the first review, and in fact it looked nicer than how I would have written it!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=ncoghlan">Nick Coghlan</a></span></p>
+<p>Nick is actually a python hacker, so getting a ruby contribution proved a bit tricky! Fortunately, he is also a master of words, and helped clean up the <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/DOCUMENTATION.md">documentation</a> a bit. We&rsquo;d love to get a few more doc patches if you have the time and <a href="https://github.com/purpleidea/oh-my-vagrant/issues/79">some love</a>!</p>
+<p><span style="text-decoration:underline;"><a href="https://github.com/purpleidea/oh-my-vagrant/commits?author=aweiteka">Aaron Weitekamp</a></span></p>
+<p>Even though aweiteka (as we call him) has only added five lines of source (2 of which were comments), he was an early user and tester, and we thank him for his contributions! Hopefully we&rsquo;ll see him in our commit logs in the future!</p>
+<p><a href="https://twitter.com/mairin"><span style="text-decoration:underline;">Máirín Duffy</span></a></p>
+<p>Máirín is a talented artist who does great work using <a href="https://mako.cc/writing/hill-free_tools.html">free tools</a>. I asked her if she&rsquo;d be kind enough to make us a logo, and I&rsquo;ll hopefully be able to show it to you soon!</p>
+<p><span style="text-decoration:underline;">Everyone else</span></p>
+<p>To everyone else who isn&rsquo;t in the commit log yet, thank you for using and testing OMV, finding bugs, opening issues and even for your social media love in getting the word out! I hope to get a patch from you soon!</p>
+<p><span style="text-decoration:underline;">The power of the unknown user</span></p>
+<p>They&rsquo;re sometimes hard to measure, but a recently introduced bug was reported to me independently by two different (and previously unknown) users very soon after the bug was introduced! I&rsquo;m sorry for letting the bug in, but I am glad that people picked up on it so quickly! I&rsquo;d love to have your help in improving our <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/test.sh">automated test infrastructure</a>!</p>
+<p><span style="text-decoration:underline;">The <code>AUTHORS</code> file</span></p>
+<p>Every good project needs a &ldquo;hall of fame&rdquo; for its contributors. That&rsquo;s why, starting today there is an <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/AUTHORS"><code>AUTHORS</code></a> file, and if you&rsquo;re a contributor, we urge you to send a one-line patch with your name, so it can be immortalized in the project forever. We could try to generate this file with <code>git log</code>, but that would remove the prestige behind getting your first and second patches in. If you&rsquo;re not in the <code>AUTHORS</code> file, and you should be, send me your patch already!</p>
+<p><span style="text-decoration:underline;">Version 1.0.0</span></p>
+<p>I think it&rsquo;s time. The project deserves a 1.0.0 release, <a href="https://github.com/purpleidea/oh-my-vagrant/releases/tag/1.0.0">and I&rsquo;ve now made it so</a>. Please <a href="https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy">share and enjoy</a>!</p>
+<p>I hope you enjoy this project, and I look forward to receiving your patch.</p>
+<p>Happy Hacking!</p>
+<p>James</p>
+<p>PS: Thanks to <a href="https://github.com/bmbouter">Brian Bouterse</a> for encouraging me to focus on community, and for inspiring me to write this post!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>August 18, 2015<br>
+				<small>1360 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/1.0.0">1.0.0</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/libvirt">libvirt</a> <a class="label label-default" href="/tags/mainstream-mode">mainstream mode</a> <a class="label label-default" href="/tags/networking">networking</a> <a class="label label-default" href="/tags/oh-my-vagrant">oh-my-vagrant</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/thanks">thanks</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/"><small>https://ttboj.wordpress.com/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

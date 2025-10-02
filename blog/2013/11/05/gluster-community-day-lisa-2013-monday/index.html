@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Gluster Community Day, LISA 2013, Monday - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Gluster Community Day, LISA 2013, Monday</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;m here at LISA 2013 at the <a href="http://glusterday-lisa.eventbrite.com/">Gluster Community Day</a>. I&rsquo;ve been asked by <a href="https://twitter.com/jzb">Joe Brockmeier</a> to give a little recap about what&rsquo;s been going on. So here it is!</p>
+<p><a href="https://twitter.com/wphotos">Wesley Duffee-Braun</a> started off with a nice overview talk about <a href="http://www.gluster.org/">GlusterFS</a>. The great thing about his talk was that he gave a live demo, running on virtual machines, on his laptop. If you&rsquo;re a new GlusterFS user, this is good exposure to help you get started. He also has the nicest slides I&rsquo;ve ever seen. Someone needs to send me the .<em>odp</em> template!</p>
+<p><a href="https://twitter.com/ecoreply">Eco Willson</a> gave the next talk about geo-replication, and discussed a few other GlusterFS topics too. I particularly enjoyed when he talked to us about the upcoming changes. I understood that this would include the ability to have multiple geo-replication daemons across each distributed part of each volume, and, <a href="https://en.wikipedia.org/wiki/High_availability">HA</a> between the <em>N</em> brick replicas. This way, your workload is split across the volume, and if a replica is down, one of the other copies can take over and continue the sync.</p>
+<p>During lunch, I got to meet <a href="https://twitter.com/Obdurodon">Jeff Darcy</a> and talk a bit about storage and feature ideas on my wish-list. He knew my <a href="https://twitter.com/#!/purpleidea">twitter</a>/<a href="https://web.libera.chat/">IRC</a> handle, so he instantly gets 200 bonus points. <a href="http://pl.atyp.us/">You should probably checkout his blog if you haven&rsquo;t already.</a></p>
+<p>After lunch I gave my talk about <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a>, and successfully gave two live demos. I&rsquo;m really due for a blog post about some of the new features that I&rsquo;ve added. I&rsquo;ll try to put together a screen cast in the future. If you&rsquo;re really keen on trying out some of the new features, I&rsquo;m happy to share a screen session on your hosts and walk you through it. When run fully automatically, it takes between five and ten minutes to deploy a featureful GlusterFS!</p>
+<p>I won&rsquo;t be able to hack on this project for free, forever. If you&rsquo;re able to donate test hardware, VM time, or sponsor a feature, it would be appreciated. I&rsquo;m particularly interested in building a GlusterFS microserver cluster. If you&rsquo;re interested in this too, let me know.</p>
+<p>Wesley came back for round two to demo the <a href="https://forge.gluster.org/puppet-gluster">GlusterForge</a> (hi <a href="https://twitter.com/johnmark">John Mark</a>!) and <a href="https://forge.gluster.org/glusterinfo">Glusterinfo</a>, which I hadn&rsquo;t ever used. Nobody knew why certain projects are still &ldquo;incubating&rdquo;, when they&rsquo;re mostly likely cooked through by now.</p>
+<p>At this point, we had some left over time for questions and discussion. Jeff, Eco, and I formed a loosely organized &ldquo;panel&rdquo; to answer questions. Joe took a photo, and now owes me a copy, since I&rsquo;ve never really been on a &ldquo;panel&rdquo; before. Jeff knows his GlusterFS internals very well. I should have come prepared with some hard questions!</p>
+<p><a href="england_th_0450_rhs_perf_practices-4_neependra.pdf">To whoever was looking for Ben England&rsquo;s RHS performance talk, it&rsquo;s available here</a>.</p>
+<p>Overall, it was a very nice little event, and I hope the attendees enjoyed it. If I forgot anything, please feel free to add it into the comments. I&rsquo;d also love to hear about what you enjoyed or didn&rsquo;t enjoy about my talk. <a title="contact" href="/contact/">Let me know</a>!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 5, 2013<br>
+				<small>576 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/geo-replication">geo-replication</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/gluster-community-day">gluster community day</a> <a class="label label-default" href="/tags/lisa2013">lisa2013</a> <a class="label label-default" href="/tags/microserver-cluster">microserver cluster</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/puppet">puppet</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/11/05/gluster-community-day-lisa-2013-monday/"><small>https://ttboj.wordpress.com/2013/11/05/gluster-community-day-lisa-2013-monday/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/11/05/gluster-community-day-lisa-2013-monday">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/11/05/gluster-community-day-lisa-2013-monday.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

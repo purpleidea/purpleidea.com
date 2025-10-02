@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to log when you&#39;re waiting for a blocked select statement...">
+	<meta name="author" content="James Shubin">
+
+	<title>Blocked select logging (deadlock finding) in golang - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Blocked select logging (deadlock finding) in golang</strong><br><small>How to log when you&#39;re waiting for a blocked select statement...</small></h3>
+					<hr>
+					<p>I&rsquo;ve been writing some massively concurrent code for <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+lately. The concurrency makes it incredibly bug prone. In this case it&rsquo;s usually
+races or deadlocks. I&rsquo;ve got a new trick to make the process more pleasant.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>I&rsquo;m sure many of you have written some code like this before:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#080;font-style:italic">// just a small excerpt
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">for</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>someEvent:
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">// some awesome thing happened!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">return</span> ctx.<span style="color:#00a000">Err</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And during debugging, you might have gotten frustrated and added some printf&rsquo;s:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">for</span> {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: about to select...\n&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>someEvent:
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: received event!\n&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">// some awesome thing happened!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: errored with: %+v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">return</span> ctx.<span style="color:#00a000">Err</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I know I&rsquo;ve done this a lot. In fact, I&rsquo;ve occasionally added some permanent
+logging in some of these situations. The problem is, that most of the time, when
+I&rsquo;m running in these fast loops, I don&rsquo;t care about seeing those messages. I
+usually only care about those messages when something is stuck! Otherwise it&rsquo;s
+just noise.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="eddie.jpg"><img class="alignnone size-full" src="eddie.jpg" alt="I wish I could avoid concurrency and locking, but here we are!" width="100%" /></a></td></tr></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Solution</span>:<br /><br />
+
+<p>I&rsquo;d like to add a <code>printf</code>, but I&rsquo;d only like it to appear if I&rsquo;m still waiting
+for that <code>select</code> for more than some number of seconds. When I &ldquo;get past&rdquo; the
+<code>select</code>, I don&rsquo;t care about printing that message anymore. I wrote up a small
+utility library to do this. Here&rsquo;s what the new code looks like:</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Example</span>:<br /><br />
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#b44">&#34;github.com/purpleidea/mgmt/util&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">for</span> {
+</span></span><span style="display:flex;"><span>	bt <span style="color:#666">:=</span> util.BlockedTimer{Seconds: <span style="color:#666">2</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">defer</span> bt.<span style="color:#00a000">Cancel</span>() <span style="color:#080;font-style:italic">// free memory (prevent one goroutine leak)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	bt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: about to select...\n&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>someEvent:
+</span></span><span style="display:flex;"><span>		bt.<span style="color:#00a000">Cancel</span>() <span style="color:#080;font-style:italic">// no need to print anymore!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: received event!\n&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">// some awesome thing happened!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: errored with: %+v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">return</span> ctx.<span style="color:#00a000">Err</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We first setup the timer, and in this example I wanted two seconds. Just as in
+the <a href="https://godocs.io/context">context</a> package, we need to make sure to free
+it when done so that we don&rsquo;t leak goroutines. As soon as the <code>bt.Printf</code>
+statement is run, then a timer for that <code>Printf</code> starts. If we <code>Cancel</code> it
+before those two seconds are up, then nothing is printed. If we delay too long,
+then we&rsquo;ll see the message, and we&rsquo;ll know which part of our code is blocking!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Duration vs. Seconds</span>:<br /><br />
+
+<p>If you&rsquo;d prefer to specify an exact duration instead of a time in seconds, then
+use the <code>Duration</code> field instead. That will work how you expect. The <code>Seconds</code>
+field is meant as a shorthand for the most common use-case.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Run instead of Printf</span>:<br /><br />
+
+<p>I wrote the utility to be slightly more generic. Instead of <code>Printf</code> you can
+also use <code>Run</code>. The latter takes an arbitrary function to run instead. This is
+useful for when you want to run a <code>t.Logf</code> when you&rsquo;re inside of a test, or in
+some other scenario. For testing this library, I actually use <code>Run</code> and a
+channel signal. There are many other uses for run as well.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Multiple</span>:<br /><br />
+
+<p>After you&rsquo;ve initialized the <code>BlockedTimer</code> struct, you can call a mixture of
+<code>Printf</code> and <code>Run</code> as many times as you like. They&rsquo;ll each get their own timer,
+and they&rsquo;ll each run individually. When you run the <code>Cancel</code> method, all of
+those that are still waiting will shutdown.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Corner cases and safety</span>:<br /><br />
+
+<p>It&rsquo;s completely safe to call this concurrently. You can call the <code>Cancel</code>
+function as many times as you&rsquo;d like. If you&rsquo;ve called <code>Printf</code> or <code>Run</code> then
+you should definitely call <code>Cancel</code> at least once to avoid a goroutine leak.</p>
+<p>The copying semantics are identical to the <a href="https://godocs.io/sync#Mutex">sync.Mutex</a>
+package in that if you don&rsquo;t create this as a pointer, then it &ldquo;must not be
+copied after first use&rdquo;.</p>
+<p>It&rsquo;s pretty hard to break this! Have fun!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The code</span>:<br /><br />
+
+<p>The code is available <a href="https://github.com/purpleidea/mgmt/blob/master/util/bt.go">here</a>.
+I hope you find it as useful in your projects as I have.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Alternatives</span>:<br /><br />
+
+<p>The <a href="https://godocs.io/time">time</a> package has an <code>AfterFunc(d Duration, f func()) *Timer</code>
+function included. This is almost identical to what I&rsquo;ve implemented. The main
+downside is that you can only have a single action, and it&rsquo;s much more verbose.
+It&rsquo;s not entirely clear to me from the docs which parts are thread-safe and
+which aren&rsquo;t, but if you want to do it, it might look like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#b44">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">for</span> {
+</span></span><span style="display:flex;"><span>	af <span style="color:#666">:=</span> time.AfterFunc{time.<span style="color:#00a000">Duration</span>(<span style="color:#666">2</span>) <span style="color:#666">*</span> time.Second, <span style="color:#a2f;font-weight:bold">func</span>() { fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: about to select...\n&#34;</span>) } }
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">defer</span> af.<span style="color:#00a000">Stop</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>someEvent:
+</span></span><span style="display:flex;"><span>		af.<span style="color:#00a000">Stop</span>()
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: received event!\n&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">// some awesome thing happened!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;XXX: errored with: %+v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">return</span> ctx.<span style="color:#00a000">Err</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Non-debugging cases</span>:<br /><br />
+
+<p>In one of the pieces of code I&rsquo;m working on, I have a bunch of workers that all
+start up. They are arranged into a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a>.
+A worker that is slow or blocked will prevent anyone downstream of it from
+starting up. As a result, I can use this library to notify the user which
+particular workers still haven&rsquo;t initialized if we&rsquo;re waiting for more than a
+few seconds. This is a much better user experience than wondering if you have a
+deadlock in your code.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Stacktraces to find out where you&#39;re blocked</span>:<br /><br />
+
+<p>An important reminder: If you&rsquo;re only interested in debugging scenarios, you can
+also rely on stacktraces to find out where you are blocked. In my
+<a href="/blog/2016/02/15/debugging-golang-programs/">debugging golang programs</a> post,
+you will remember that at any point, you can press <em>Control+Backslash</em> and you
+should get a full stacktrace of where each goroutine is waiting.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this. Please leave me a comment if this taught you something
+new!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>May 26, 2023<br>
+				<small>976 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/deadlock">deadlock</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/logging">logging</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/sync">sync</a> <a class="label label-default" href="/tags/testing">testing</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2023/05/26/blocked-select-logging-in-golang">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2023/05/26/blocked-select-logging-in-golang.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

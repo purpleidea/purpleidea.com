@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to handle dmesg on a modern computer">
+	<meta name="author" content="James Shubin">
+
+	<title>Better dmesg in five minutes - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2024/11/17/better-dmesg/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Better dmesg in five minutes</strong><br><small>How to handle dmesg on a modern computer</small></h3>
+					<hr>
+					<p>I last wrote about <code>dmesg</code> in <a href="/blog/2016/08/29/live-dmesg-following/">2016</a>. It
+has mostly not changed since then, but I&rsquo;ve changed my setup slightly. Here&rsquo;s a
+short article about what I did so that you can do it too, and so that I can
+remember for the next time.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Previously</span>:<br /><br />
+
+<p>Previous I had a bash alias which looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>alias dmesg=&#39;dmesg --follow || dmesg&#39;
+</span></span></code></pre></div><p>since some machines didn&rsquo;t yet support the <code>--follow</code> flag.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Currently</span>:<br /><br />
+
+<p>Current machines disable reading <code>dmesg</code> if you&rsquo;re not root. This is for
+security. There&rsquo;s a sysctl flag you can tweak to bypass this for single user
+machines where you&rsquo;re not worried about this risk.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /proc/sys/kernel/dmesg_restrict
+</span></span></code></pre></div><p>If it&rsquo;s <code>1</code>, then you need to be root. <code>0</code> means non-root users can use dmesg.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="meme.png"><img class="alignnone size-full" src="meme.png"  width="100%" /></a></td></tr><tr><td>Trying to make this article more eye catching and fun!</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Better dmesg</span>:<br /><br />
+
+<p>Let&rsquo;s fix this permanently so I don&rsquo;t need to keep finding this workaround. I&rsquo;ve
+now got <code>~/bin/dmesg</code> setup as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#080"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#a2f;font-weight:bold">$(</span>cat /proc/sys/kernel/dmesg_restrict<span style="color:#a2f;font-weight:bold">)</span> <span style="color:#666">=</span> <span style="color:#b44">&#34;1&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">echo</span> <span style="color:#b44">&#39;dmesg is currently restricted, enter password to enable for user&#39;</span>
+</span></span><span style="display:flex;"><span>	sudo bash -c <span style="color:#b44">&#39;echo 0 &gt; /proc/sys/kernel/dmesg_restrict&#39;</span>
+</span></span><span style="display:flex;"><span>	sudo bash -c <span style="color:#b44">&#39;echo &#34;kernel.dmesg_restrict = 0&#34; &gt; /etc/sysctl.d/10-dmesg.conf&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/usr/bin/dmesg --human --follow <span style="color:#b44">&#34;</span><span style="color:#b8860b">$@</span><span style="color:#b44">&#34;</span>
+</span></span></code></pre></div><p>This checks and adds the needed permissions if they&rsquo;re not already set, and it
+also runs <code>dmesg</code> with my two favourite flags: <code>--follow</code> and <code>--human</code>.</p>
+<p>The manual page will help you with anything else you need.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>As with last time, try out this snippet!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo bash -c <span style="color:#b44">&#39;echo The Technical Blog of James is awesome! &gt; /dev/kmsg&#39;</span>
+</span></span></code></pre></div><p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 17, 2024<br>
+				<small>327 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/dmesg">dmesg</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/sysctl">sysctl</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2024/11/17/better-dmesg/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2024/11/17/better-dmesg">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2024/11/17/better-dmesg.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

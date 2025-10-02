@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>git, gitosis, gitweb and friends... - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>git, gitosis, gitweb and friends...</strong><br><small></small></h3>
+					<hr>
+					<p>In case it wasn&rsquo;t already obvious, I am a huge fan of <a href="http://git-scm.com/">git</a>, and often prefer it over <a href="http://en.wikipedia.org/wiki/Sliced_bread">sliced bread</a>. Recently to help a small team of programmers collaborate, I decided to setup a private git server for them to use. By no claim of mine is the following tutorial unique, however I am writing this to aid those who had trouble following <a href="http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way">other</a><a href="http://eagain.net/gitweb/?p=gitosis.git;a=blob;f=README.rst"> online</a> <a href="http://hokietux.net/blog/?p=58">tutorials</a>.</p>
+<p><span style="text-decoration:underline;">Goal</span>:
+Setup a central git server for private or public source sharing, without having to give everyone a separate shell account.</p>
+<p><span style="text-decoration:underline;">Step 1</span>:
+Install git, <a href="http://eagain.net/gitweb/?p=gitosis.git">gitosis</a>, and <a href="http://git.kernel.org/?p=git/git.git;a=tree;f=gitweb;">gitweb</a> by the method of your choosing. Most distributions probably have packages for all of these.</p>
+<p><span style="text-decoration:underline;">Step 2</span>:
+Create a user account named &ldquo;git&rdquo;, &ldquo;gitosis&rdquo;, or something sensible if it hasn&rsquo;t already been done by some packagers install script. The shell command to do this yourself looks something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo adduser --system --shell /bin/sh --gecos &#39;git version control&#39; --group --disabled-password --home /srv/gitosis gitosis
+</span></span></code></pre></div><p>In my particular case, I edited the <code>/etc/passwd</code> file to change the automatically added account, however running <code>sudo dpkg-reconfigure gitosis</code> is probably an easier way to do this.</p>
+<p><span style="text-decoration:underline;">Step 3</span>:
+Authentication is done by public ssh key, and gitosis takes care of the magic relationships between a users key and the read/write access per repository. As such, gitosis needs initialization, and it needs the public key of the administrator. If you aren&rsquo;t familiar with ssh public key authentication, go learn about this <a href="http://www.google.com/search?q=ssh+public+key+authentication">now</a>.</p>
+<p>To initialize gitosis most tutorials alledge that you should run something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo -H -u gitosis gitosis-init &lt; SSH_KEY.pub
+</span></span></code></pre></div><p>In my case, this didn&rsquo;t work (likely due to environment variable problems, but try it first anyways) so I cut to the chase and ran:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo su - gitosis
+</span></span><span style="display:flex;"><span>gitosis-init &lt; /tmp/SSH_KEY.pub
+</span></span></code></pre></div><p>which worked perfectly right away. Note that you have to copy your public key to a publicly readable location like <code>/tmp/</code> first.</p>
+<p><span style="text-decoration:underline;">Step 4</span>:
+Now it&rsquo;s time to change the gitosis configuration file to your liking. Instead of editing the file directly on the server, the model employed is quite clever: git-clone a special repository, edit what&rsquo;s necessary and commit, then push the changes back up. Once this is done, git runs a special commit-hook that generates special files needed for correct operation. The code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone gitosis@SERVER:gitosis-admin.git
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Step 5</span>:
+To add a new repository, and its users, into the machine, the obvious bits are done by making changes in the recently cloned git directory. Once a user has access, setup the new remote, and push.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git remote add origin gitosis@SERVER:the_repository_name.git
+</span></span><span style="display:flex;"><span>git push origin master:refs/heads/master
+</span></span></code></pre></div><div>Subsequent pushes don't need the master:refs/heads/master part, and everything else should function as normal.</div>
+<span style="text-decoration:underline;">Gitweb</span>:
+I still don't have a happy gitweb+gitosis installation. I'm using apache as a webserver, and I wanted to leave the main <code>/etc/gitweb.conf</code> as unchanged as possible. The gitweb package that I installed, comes with an: <code>/etc/apache2/conf.d/gitweb</code> and all I added was:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>SetEnv GITWEB_CONFIG /srv/gitosis/.gitweb.conf
+</span></span></code></pre></div><div>between the &lt;directory&gt; braces. I used the template gitweb configuration file as provided by gitosis.</div>
+<span style="text-decoration:underline;">Gitosis</span>:
+The last small change that I needed for perfection is to store the gitweb configuration in the gitosis-admin.git directory. To do this, I added a symlink to <code>/srv/gitosis/repositories/gitosis-admin.git/gitweb.conf</code> from the above gitweb config location. The problem is that the file isn't in the git repo. This would require patching gitosis to recognize it as a special file, and since the author doesn't respond to patch offers, and since the gitweb config is usually completely static, I didn't bother taking this any further.
+<p><span style="text-decoration:underline;">Gitolite</span>:
+It seems there is a well maintained and more fine grained alternative to gitosis called <a href="http://github.com/sitaramc/gitolite">gitolite</a>. The author was very friendly and responsive, and it seems his software provides finer grained control than gitosis. If I hadn&rsquo;t already setup gitosis, I would have surely investiaged this first.</p>
+<p><span style="text-decoration:underline;">Etckeeper</span>:
+If you haven&rsquo;t yet used this tool, then go have a <a href="http://joey.kitenet.net/code/etckeeper/">look</a>. It can be quite useful, and I only have one addition to propose. It should keep a configurable mapping (as an etckeeper config file) with commands to run based on what gets updated. For example, if I update <code>/etc/apache2/httpd.conf</code>, then run <code>/etc/init.d/apache2 reload</code>.</p>
+<p>Happy hacking!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>August 19, 2010<br>
+				<small>758 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/etckeeper">etckeeper</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gitolite">gitolite</a> <a class="label label-default" href="/tags/gitosis">gitosis</a> <a class="label label-default" href="/tags/gitweb">gitweb</a> <a class="label label-default" href="/tags/sliced-bread">sliced bread</a> <a class="label label-default" href="/tags/ssh">ssh</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2010/08/19/git-gitosis-gitweb-and-friends/"><small>https://ttboj.wordpress.com/2010/08/19/git-gitosis-gitweb-and-friends/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2010/08/19/git-gitosis-gitweb-and-friends">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2010/08/19/git-gitosis-gitweb-and-friends.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Clustering virtual machines with rgmanager and clusvcadm - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Clustering virtual machines with rgmanager and clusvcadm</strong><br><small></small></h3>
+					<hr>
+					<p>This <em>could</em> be a post detailing how to host clustered virtual machines with <a href="https://fedorahosted.org/cluster/wiki/RGManager">rgmanager</a> and clusvcadm, but that is a longer story and there is much work to do. For now, I will give you a short version including an informative &ldquo;gotcha&rdquo;.</p>
+<p>With my cluster up and running, I added a virtual machine entry to my <em>cluster.conf</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;vm name=&#34;test1&#34; domain=&#34;somedomain&#34; path=&#34;/shared/vm/&#34; autostart=&#34;0&#34; exclusive=&#34;0&#34; recovery=&#34;restart&#34; use_virsh=&#34;1&#34; /&gt;
+</span></span></code></pre></div><p>This goes inside the <em><rm></em> block. As a benchmark, please note that starting the machine with <em>virsh</em> worked perfectly:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@server1 ~]# virsh create /shared/vm/test1.xml --console
+</span></span><span style="display:flex;"><span>(...The operation worked perfectly!)
+</span></span></code></pre></div><p>However, when I attempted to use the cluster aware tools, all I got was failure:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[root@server1 ~]# clusvcadm -e &#39;vm:test1&#39; -m server1
+</span></span><span style="display:flex;"><span>Member server1 trying to enable vm:test1...Failure
+</span></span></code></pre></div><p>Whenever I think I&rsquo;ve done everything right, but something is still not working, I first check to see if I can blame someone else. Usually that someone is <a href="http://en.wikipedia.org/wiki/Security-Enhanced_Linux">selinux</a>. Make no mistake, selinux is a good thing<sup>™</sup>, however it does still cause me pain.</p>
+<p>The first clue is to remember that <em>/var/log/</em> contains other files besides &ldquo;<em>messages</em>&rdquo;. Running a <a title="continuous display of log files (better tail -f)" href="/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/">tail</a> on <em>/var/log/audit/audit.log</em> while simultaneously running the above <em>clusvcadm</em> command revealed:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>type=AVC msg=audit(1357202069.310:10904): avc:  denied  { read } for  pid=15675 comm=&#34;virsh&#34; name=&#34;test1.xml&#34; dev=drbd0 ino=198628 scontext=unconfined_u:system_r:xm_t:s0 tcontext=unconfined_u:object_r:default_t:s0 tclass=file
+</span></span><span style="display:flex;"><span>type=SYSCALL msg=audit(1357202069.310:10904): arch=c000003e syscall=2 success=no exit=-13 a0=24259e0 a1=0 a2=7ffff03af0d0 a3=7ffff03aee10 items=0 ppid=15609 pid=15675 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=1 comm=&#34;virsh&#34; exe=&#34;/usr/bin/virsh&#34; subj=unconfined_u:system_r:xm_t:s0 key=(null)
+</span></span></code></pre></div><p>I am not a magician, but if I was, I would probably understand what all of that means. For now, let&rsquo;s pretend that we do. Closer inspection (or grep) will reveal:</p>
+<ul>
+	<li>"<em>test1.xml</em>" (the definition for the virtual machine)</li>
+</ul>
+and:
+<ul>
+	<li>"/usr/bin/virsh" (the command that I expect rgmanager's <em>/usr/share/cluster/vm.sh</em> script to run)</li>
+</ul>
+A quick:
+```
+[root@server1 ~]# selinuxenabled && echo t || echo f
+t
+```
+to confirm that selinux is auditing away, and a short:
+```
+[root@server1 ~]# /bin/echo 0 > /selinux/enforce
+```
+to temporarily test my theory, and:
+```
+[root@server1 ~]# clusvcadm -e 'vm:test1' -m server1
+Member server1 trying to enable vm:test1...Success
+vm:test1 is now running on server1
+```
+Presto change-o, the diagnosis is complete. This is a development system, and so for the time being, I will accept defeat and workaround this problem by turning selinux off, but this is most definitely the wrong solution. If you're an selinux guru who knows the proper fix, please let me know! Until then,
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 3, 2013<br>
+				<small>471 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/audit.log">audit.log</a> <a class="label label-default" href="/tags/clustering">clustering</a> <a class="label label-default" href="/tags/clusvcadm">clusvcadm</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/rgmanager">rgmanager</a> <a class="label label-default" href="/tags/selinux">selinux</a> <a class="label label-default" href="/tags/virsh">virsh</a> <a class="label label-default" href="/tags/virtual-machine">virtual machine</a> <a class="label label-default" href="/tags/vm">vm</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/"><small>https://ttboj.wordpress.com/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

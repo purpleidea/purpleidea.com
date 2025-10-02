@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Thoughts on IBM&#39;s acquisition of Red Hat">
+	<meta name="author" content="James Shubin">
+
+	<title>The End of a Red Giant - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>The End of a Red Giant</strong><br><small>Thoughts on IBM&#39;s acquisition of Red Hat</small></h3>
+					<hr>
+					<p>As I&rsquo;m sure you&rsquo;ve now heard, <a href="https://www.redhat.com/en/about/press-releases/ibm-acquire-red-hat-completely-changing-cloud-landscape-and-becoming-world%E2%80%99s-1-hybrid-cloud-provider">Red Hat is being acquired by IBM</a>.</p>
+<p>Reactions have ranged from:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="reddit1.png"><img class="alignnone size-full" src="reddit1.png"  width="100%" /></a></td></tr><tr><td>The first two emotions everyone experienced.</td></tr></table></br />
+
+<p>to:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="twitter1.png"><img class="alignnone size-full" src="twitter1.png"  width="100%" /></a></td></tr><tr><td>The classic humourous response.</td></tr></table></br />
+
+<p>to:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="twitter2.png"><img class="alignnone size-full" src="twitter2.png"  width="100%" /></a></td></tr><tr><td>The classy response.</td></tr></table></br />
+
+<p>to:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="reddit2.png"><img class="alignnone size-full" src="reddit2.png"  width="100%" /></a></td></tr><tr><td>The thing we&#39;re all curious about.</td></tr></table></br />
+
+<p>to everything in between. If someone were to leak me a copy of the memo-list
+<em>2018-October.txt.gz</em> mailman archive, I&rsquo;d sure love to see that! (Of course I&rsquo;m
+joking and I wouldn&rsquo;t actually ask anyone to do this.)</p>
+<p>In any case, the reality about all of this is much more nuanced. I&rsquo;m going to
+try and explain my thoughts as factually as I can.</p>
+<p>(Yes, the post title is an astrophysics joke.)</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="https://imgs.xkcd.com/comics/hertzsprung_russell_diagram.png"><img class="alignnone size-full" src="https://imgs.xkcd.com/comics/hertzsprung_russell_diagram.png"  width="100%" /></a></td></tr><tr><td>A more interesting variant of the Hertzsprung-Russell diagram. Source: https://xkcd.com/2009/</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">A part of history</span>:<br /><br />
+
+<p><a href="/blog/2014/04/02/working-at-redhat/">I joined Red Hat in 2014.</a> I became part
+of history, and felt very lucky to see inside this special unicorn. Red Hat was
+special because they proved that <a href="https://www.gnu.org/licenses/copyleft.en.html">Copyleft</a>
+could be a viable business model. Whatever your opinions on corporations and
+licensing are, this is a very interesting data point.</p>
+<p>They started with Linux and <a href="https://www.gnu.org/">GNU</a>, and over the years,
+added all sorts of projects to the mix:</p>
+<ul>
+<li><a href="https://fedoraproject.org/">Fedora</a></li>
+<li><a href="https://libvirt.org/">libvirt</a></li>
+<li><a href="https://www.gnome.org/">GNOME</a></li>
+<li><a href="https://www.gnu.org/software/libc/">glibc</a></li>
+<li><a href="https://www.gnu.org/software/gcc/">GCC</a></li>
+<li><a href="https://www.gtk.org/">GTK+</a></li>
+<li><a href="https://www.freedesktop.org/wiki/Software/systemd/">systemd</a></li>
+<li><a href="https://cockpit-project.org/">cockpit</a></li>
+<li><a href="https://www.freeipa.org/">FreeIPA</a></li>
+<li><a href="http://libguestfs.org/">libguestfs</a></li>
+</ul>
+<p>as well as countless others. Some of these projects even contain entire
+ecosystems of spawned child projects. (Everything in GNOME is the obvious
+example.)</p>
+<p>In my opinion, in addition to being highly elegant and innovative, these
+projects all have two things in common:</p>
+<ol>
+<li>They are all under copyleft licenses like the <a href="https://en.wikipedia.org/wiki/GNU_General_Public_License">GPL</a>.</li>
+<li>They didn&rsquo;t receive as much drive from upper management as they deserved.</li>
+</ol>
+<p>I can&rsquo;t prove these two points are related, and they might not be, but I can&rsquo;t
+help think it&rsquo;s worth considering. Some theories:</p>
+<ul>
+<li>
+<p>Internal, anti-copyleft rhetoric from some individuals persuaded management to
+invest in alternate &ldquo;permissively-licensed&rdquo; technologies. There certainly are
+many different internal views on licensing. It&rsquo;s well-known that there are both
+<a href="https://www.fsf.org/">FSF</a>-members and <a href="https://www.apache.org/">ASF</a>-members
+within Red Hat. The former generally prefer copyleft licensing, while the latter
+generally prefer permissive licensing. It&rsquo;s extremely religious and political.</p>
+</li>
+<li>
+<p>Passionate developers who understand software better, prefer to spend and
+invest their time on copyleft-licensed software where there is a greater chance
+that future patches and their code won&rsquo;t be taken proprietary and hidden from
+everyone. Good software engineers can get quite attached to their code, and
+keeping it in the open can allow them to continue working on the project, even
+if they&rsquo;ve changed companies.</p>
+</li>
+<li>
+<p>Business partners convinced upper management that they were only interested in
+permissive licensing. This way, they could build off of Red Hat&rsquo;s shoulders with
+their proprietary forks, without having to release any of their added &ldquo;secret
+sauce&rdquo;. This feels very much like giving away a lot of value for free, without
+much of a return on investment. I&rsquo;m actually surprised the shareholders put up
+with this, as I always thought it was an easy lawsuit. In fact, AFAICT, Red
+Hat&rsquo;s own <a href="https://investors.redhat.com/financial-information/sec-filings">Annual Reports</a>
+and other filings only ever mentioned the GPL (copyleft) until <em>2016</em>, when it
+suddenly changed a bunch of the text and added mention of the permissive ALv2
+license.</p>
+</li>
+</ul>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Investment in permissively-licensed projects</span>:<br /><br />
+
+<p>On the flip-side of things, Red Hat upper management has invested heavily in
+many permissively-licensed projects. It&rsquo;s up to you to determine how much value
+or revenue they have brought to the company. In general they were all more
+recent endeavours:</p>
+<ul>
+<li>Openstack</li>
+<li>ManageIQ</li>
+<li>Ovirt / RHEV</li>
+<li>Docker</li>
+<li>Kubernetes</li>
+<li>Openshift</li>
+<li>Opendaylight</li>
+</ul>
+<p>I&rsquo;m extremely biased here, but I&rsquo;ve found the top first list to be filled with
+projects that I find extremely useful, and this second list with projects that
+spend a lot of marketing dollars. What&rsquo;s good design and what is hype? I&rsquo;m
+curious to know if they&rsquo;ve gotten a return on their investment in these.</p>
+<p>Instead of doubling down and continuing the copyleft tradition, new management
+very publicly pushed the &ldquo;Open Source&rdquo; terminology and focused more on
+non-copyleft projects. <a href="https://www.gnu.org/philosophy/open-source-misses-the-point.en.html">Some believe this to be very political</a>,
+where as others believe that &ldquo;Open Source&rdquo; is just toned-down, mainstream
+nomenclature for <a href="https://www.gnu.org/philosophy/free-sw.html">&ldquo;Free Software&rdquo;</a>.
+One thing I&rsquo;m confident of is that you need a healthy balance between copyleft
+and permissive, and it&rsquo;s clear to me that we lost that.</p>
+<p>In any case, upper management <em>did</em> push a lot of top-down decisions onto
+engineering and developing these permissively licensed projects. They invested
+so much money into these ventures that it wasn&rsquo;t clear to me if we even saw a
+return. To be clear, I&rsquo;m not trying to disrespect OpenStack or Docker, there are
+lots of very talented people working on these projects, but they both have some
+enormous design flaws too.</p>
+<p>Had things been left to engineering, I believe a traditional bottom-up approach
+would have ensured a longer term, independent prosperity for Red Hat. It might
+also have delayed a $34B dollar valuation, but it also could have cemented our
+independence for another 25 years. This is the approach I hope future Red Hat or
+IBM takes going forward. I&rsquo;m a supporter, and an investor, and this is what I
+believe would be good for my stock price and the world.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Even more proof that modern Red Hat dislikes copyleft</span>:<br /><br />
+
+<p>Red Hat recently acquired a GPLv3-licensed piece of software named Ansible. In
+general, I don&rsquo;t think this conflicts with my arguments that present-day Red Hat
+prefers permissively-licensed software, because in general,
+<a href="/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/">copyleft doesn&rsquo;t usually apply</a>
+to automation software used in the Ansible manner.</p>
+<p>The real proof comes when you look at how Red Hat released the previously
+non-public (proprietary) components from the Ansible project. Instead of
+licensing them consistently with the parent project (it would be unheard of not
+to) they opted instead to release them as ALv2 (non-copyleft) instead. You can
+<a href="https://github.com/ansible/">see for yourself</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Apart from history</span>:<br /><br />
+
+<p>I am incredibly biased.
+<a href="/blog/2018/04/04/leaving-redhat/">I recently left Red Hat.</a>
+I&rsquo;m not angry. I met a lot of great hackers there. But it was clear that the
+bottom-up, engineer-driven, copyleft days were over, and I wanted to spend some
+time trying to innovate on <a href="https://github.com/purpleidea/mgmt/">something that I believed in</a>.
+My example is miniscule compared to the scope and engineer-years of some of the
+top-mentioned copyleft projects, but it does fit the same pattern. (You can
+support this effort by <a href="https://github.com/purpleidea/mgmt/">sending me patches</a>
+and <a href="https://www.patreon.com/purpleidea">donating to my patreon</a>!)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Did IBM just kill Red Hat?</span><br /><br />
+
+<p>No. Most of <em>my</em> favourite parts were already dead. When Red Hat switched all of
+our company email to Gmail, it was a big nail in the coffin for many of us. If
+we&rsquo;re lucky, there will now be less internal pressure on the Red Hat execs to
+account for their previous investments, and they can instead focus on building
+good products and saving IBM. It&rsquo;s surely hard work to constantly have to
+justify yourself to short-term shareholders and instead focus on long term
+goals. Red Hat is about <em>3%</em> (by employee count) of IBM. Maybe that part can
+hide away inside Big Blue, the same way some of the top Red Hat engineers hid
+away inside Red Hat and directed some really great engineering.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>Red Hat was never special because &ldquo;open source&rdquo;. Red Hat was special because
+they proved copyleft could be a sustainable business model. This space is wide
+open again. I look forward to seeing who and how many will take their place.</p>
+<p>There are a lot of great engineers at Red Hat that steal away time to work on
+projects that benefit both the public good and the company. Let&rsquo;s hope that this
+work is still funded at IBM or that those individuals find new funders. I&rsquo;m
+happy to connect good developers that I know, to companies looking to support
+their hacking should both parties <a href="/contact/">contact me</a> and ask.</p>
+<p>There&rsquo;s a small chance that the original, bottom-up, engineer-driven, copyleft
+culture can spread inside IBM. If it does, I think it could benefit IBM. I&rsquo;m
+happy to consult on these crazy ideas if any of the 400k employees there would
+like to ping me. I&rsquo;m hoping for the best!</p>
+<p>In the meantime, I&rsquo;ll still be using <a href="https://getfedora.org/">Fedora</a> as long as
+it plans on staying <a href="https://reproducible-builds.org/">honest</a>.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 30, 2018<br>
+				<small>1422 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/non-technical">non-technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/alv2">alv2</a> <a class="label label-default" href="/tags/copyleft">copyleft</a> <a class="label label-default" href="/tags/copyright">copyright</a> <a class="label label-default" href="/tags/fsf">fsf</a> <a class="label label-default" href="/tags/gpl">gpl</a> <a class="label label-default" href="/tags/ibm">ibm</a> <a class="label label-default" href="/tags/legal">legal</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/redhat">redhat</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/10/30/the-end-of-a-red-giant">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/10/30/the-end-of-a-red-giant.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

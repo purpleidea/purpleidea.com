@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant! - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</strong><br><small></small></h3>
+					<hr>
+					<p><a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> was always about automating the deployment of <a href="https://www.gluster.org/">GlusterFS</a>. Getting your own Puppet server and the associated infrastructure running was never included &ldquo;<em>out of the box</em>&rdquo;. <strong>Today, it is!</strong> (This is big news!)</p>
+<p>I&rsquo;ve used <a href="https://www.vagrantup.com/">Vagrant</a> to automatically build these GlusterFS clusters. I&rsquo;ve tested this with <a href="https://fedoraproject.org/">Fedora 20</a>, and <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. This won&rsquo;t work with Fedora 19 because of <a href="https://bugzilla.redhat.com/show_bug.cgi?id=876541">bz#876541</a>. I recommend first reading my earlier articles for Vagrant and Fedora:</p>
+<ul>
+	<li>
+<blockquote><a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></blockquote>
+</li>
+	<li>
+<blockquote><a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></blockquote>
+</li>
+	<li>
+<blockquote><a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and 'screen'</a></blockquote>
+</li>
+</ul>
+Once you're comfortable with the material in the above articles, we can continue...
+<p><strong><span style="text-decoration:underline;">The short answer</span>:</strong></p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo service nfs start
+</span></span><span style="display:flex;"><span>$ git clone --recursive https://github.com/purpleidea/puppet-gluster.git
+</span></span><span style="display:flex;"><span>$ <span style="color:#a2f">cd</span> puppet-gluster/vagrant/gluster/
+</span></span><span style="display:flex;"><span>$ vagrant up puppet <span style="color:#666">&amp;&amp;</span> sudo -v <span style="color:#666">&amp;&amp;</span> vagrant up</span></span></code></pre></div>
+Once those commands finish, you should have four running gluster hosts, and a puppet server. The gluster hosts will still be building. You can log in and <code>tail -F</code> log files, or <code>watch -n 1</code> gluster status commands.</p>
+<p>The whole process including the one-time downloads took about 30 minutes. If you&rsquo;ve got faster internet that I do, I&rsquo;m sure you can cut that down to under 20. Building the gluster hosts themselves probably takes about 15 minutes.</p>
+<p>Enjoy your new Gluster cluster!</p>
+<p><strong><span style="text-decoration:underline;">Screenshots</span>!</strong></p>
+<p>I took a few screenshots to make this more visual for you. I like to have <a href="http://virt-manager.org/">virt-manager</a> open so that I can visually see what&rsquo;s going on:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager.png"><img class="size-full wp-image-702" alt="The annex{1..4} machines are building in parallel." src="virt-manager.png" width="100%" height="100%" /></a></td></tr><tr><td> The annex{1..4} machines are building in parallel. The valleys happened when the machines were waiting for the vagrant DHCP server (dnsmasq).</td></tr></table></br />
+<p>Here we can see two puppet runs happening on <em>annex1</em> and <em>annex4</em>.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager-puppet.png"><img class="size-full wp-image-703" alt="Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}." src="virt-manager-puppet.png" width="100%" height="100%" /></a></td></tr><tr><td> Notice the two peaks on the puppet server which correspond to the valleys on annex{1,4}.</td></tr></table></br />
+<p>Here&rsquo;s another example, with four hosts working in parallel:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="virt-manager-puppet2.png"><img class="size-full wp-image-704" alt="foo" src="virt-manager-puppet2.png" width="100%" height="100%" /></a></td></tr><tr><td> Can you answer why the annex machines have two peaks? Why are the second peaks bigger?</td></tr></table></br />
+<p><strong><span style="text-decoration:underline;">Tell me more</span>!</strong></p>
+<p>Okay, let&rsquo;s start with the command sequence shown above.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ sudo service nfs start
+</span></span></code></pre></div><p>This needs to be run <em>once</em> if the NFS server on your host is not already running. It is used to provide folder synchronization for the Vagrant guest machines. I offer more information about the NFS synchronization in an <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">earlier article</a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ git clone --recursive https://github.com/purpleidea/puppet-gluster.git
+</span></span></code></pre></div><p>This will pull down the Puppet-Gluster source, and all the necessary submodules.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ cd puppet-gluster/vagrant/gluster/
+</span></span></code></pre></div><p>The Puppet-Gluster source contains a <em>vagrant</em> subdirectory. I&rsquo;ve included a <em>gluster</em> subdirectory inside it, so that your machines get a sensible prefix. <a href="https://github.com/pradels/vagrant-libvirt/issues/121">In the future, this might not be necessary.</a></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant up puppet &amp;&amp; sudo -v &amp;&amp; vagrant up
+</span></span></code></pre></div><p>This is where the fun stuff happens. You&rsquo;ll need a <a href="https://docs.vagrantup.com/v2/boxes.html">base box</a> image to run machines with Vagrant. Luckily, I&rsquo;ve already built one for you, and it is generously hosted by the <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/">Gluster community</a>.</p>
+<p>The very first time you run this Vagrant command, it will download this image automatically, install it and then continue the build process. This initial box download and installation only happens once. Subsequent Puppet-Gluster+Vagrant deploys and re-deploys won&rsquo;t need to re-download the base image!</p>
+<p>This command starts by building the puppet server. Vagrant might use sudo to prompt you for root access. This is used to manage your <code>/etc/exports</code> file. After the puppet server is finished building, we refresh the sudo cache to avoid <a href="https://github.com/mitchellh/vagrant/issues/2680">bug #2680</a>.</p>
+<p>The last <code>vagrant up</code> command starts up the remaining gluster hosts in parallel, and kicks off the initial puppet runs. As I mentioned above, the gluster hosts will still be building. Puppet automatically waits for the cluster to &ldquo;settle&rdquo; and enter a steady state (no host/brick changes) before it creates the first volume. You can log in and <code>tail -F</code> log files, or <code>watch -n 1</code> gluster status commands.</p>
+<p>At this point, your cluster is running and you can do whatever you want with it! Puppet-Gluster+Vagrant is meant to be easy. If this wasn&rsquo;t easy, or you can think of a way to make this better, let me know!</p>
+<p><strong><span style="text-decoration:underline;">I want <em>N</em> hosts, not 4</span>:</strong></p>
+<p>By default, this will build four (4) gluster hosts. I&rsquo;ve spent a lot of time writing a fancy <em>Vagrantfile</em>, to give you speed and configurability. If you&rsquo;d like to set a different number of hosts, you&rsquo;ll first need to destroy the hosts that you&rsquo;ve built already:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant destroy annex{1..4}
+</span></span></code></pre></div><p>You don&rsquo;t have to rebuild the puppet server because this command is clever and automatically cleans the old host entries from it! This makes re-deploying even faster!</p>
+<p>Then, run the <code>vagrant up</code> command with the <code>&ndash;gluster-count=<em><N></em></code> argument. Example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant up --gluster-count=8
+</span></span></code></pre></div><p>This is also configurable in the <code>puppet-gluster.yaml</code> file which will appear in your vagrant working directory. Remember that before you change any configuration option, you should destroy the affected hosts first, otherwise vagrant can get confused about the current machine state.</p>
+<p><strong><span style="text-decoration:underline;">I want to test a different GlusterFS version</span>:</strong></p>
+<p>By default, this will use the packages from:</p>
+<p><a href="https://download.gluster.org/pub/gluster/glusterfs/LATEST/"><a href="https://download.gluster.org/pub/gluster/glusterfs/LATEST/">https://download.gluster.org/pub/gluster/glusterfs/LATEST/</a></a></p>
+<p>but if you&rsquo;d like to pick a specific GlusterFS version you can do so with the <code>&ndash;gluster-version=<em>&lt;<strong>version</strong>&gt;</em></code> argument. Example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant up --gluster-version=&#39;3.4.2-1.el6&#39;
+</span></span></code></pre></div><p>This is also stored, and configurable in the <code>puppet-gluster.yaml</code> file.</p>
+<p><strong><span style="text-decoration:underline;">Does (repeating) this consume a lot of bandwidth</span>?</strong></p>
+<p>Not really, no. There is an initial download of about <em>450MB</em> for the base image. You&rsquo;ll only ever need to download this again if I publish an updated version.</p>
+<p>Each deployment will hit a public mirror to download the necessary <em>puppet</em>, <em>GlusterFS</em> and <em>keepalived</em> packages. The puppet server caused about <em>115MB</em> of package downloads, and each gluster host needed about <em>58MB</em>.</p>
+<p>The great thing about this setup, is that it is integrated with <a href="https://github.com/fgrehm/vagrant-cachier">vagrant-cachier</a>, so that you don&rsquo;t have to re-download packages. When building the gluster hosts in parallel (the default), each host will have to download the necessary packages into a separate directory. If you&rsquo;d like each host to share the same cache folder, and save yourself <em>58MB</em> or so per machine, you&rsquo;ll need to build in series. You can do this with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant up --no-parallel
+</span></span></code></pre></div><p>I chose speed over preserving bandwidth, so I do <em>not</em> recommend this option. If your <a href="https://en.wikipedia.org/wiki/Internet_service_provider">ISP</a> has a <a href="https://en.wikipedia.org/wiki/Bandwidth_cap">bandwidth cap</a>, you should find one <a href="http://publicknowledge.org/issues/data-caps">that isn&rsquo;t crippled</a>.</p>
+<p>Subsequent re-builds won&rsquo;t download any packages that haven&rsquo;t already been downloaded.</p>
+<p><strong><span style="text-decoration:underline;">What should I look for</span>?</strong></p>
+<p>Once the vagrant commands are done running, you&rsquo;ll want to look at something to see how your machines are doing. I like to log in and run different commands. I usually log in like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vcssh --screen root@annex{1..4}
+</span></span></code></pre></div><p>I explain how to do this kind of magic in <a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">an earlier post</a>. I then run some of the following commands:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># tail -F /var/log/messages</span>
+</span></span></code></pre></div><p>This lets me see what the machine is doing. I can see puppet runs and other useful information fly by.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># ip a s eth2
+</span></span></code></pre></div><p>This lets me check that the <em>VIP</em> is working correctly, and which machine it&rsquo;s on. This should usually be the first machine.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># ps auxww | grep again.[py]
+</span></span></code></pre></div><p>This lets me see if puppet has scheduled another puppet run. My scripts automatically do this when they decide that there is still building (deployment) left to do. If you see a <em>python</em> <code>again.py</code> process, this means it is sleeping and will wake up to continue shortly.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># gluster peer status
+</span></span></code></pre></div><p>This lets me see which hosts have connected, and what state they&rsquo;re in.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># gluster volume info
+</span></span></code></pre></div><p>This lets me see if Puppet-Gluster has built me a volume yet. By default it builds one distributed volume named <em>puppet</em>.</p>
+<p><strong><span style="text-decoration:underline;">I want to configure this differently</span>!</strong></p>
+<p>Okay, you&rsquo;re more than welcome to! All of the scripts can be customized. If you want to configure the volume(s) differently, you&rsquo;ll want to look in the:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>puppet-gluster/vagrant/gluster/puppet/manifests/site.pp
+</span></span></code></pre></div><p>file. The <code>gluster::simple</code> class is <a href="https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md#glustersimple">well-documented</a>, and can be configured however you like. If you want to do more serious hacking, have a look at the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/gluster/Vagrantfile">Vagrantfile</a>, the <a href="https://github.com/purpleidea/puppet-gluster/">source</a>, and the <a href="https://github.com/purpleidea/puppet-gluster/tree/master/vagrant/gluster/puppet/modules/">submodules</a>. Of course the <a href="http://git.gluster.org/?p=glusterfs.git;a=summary">GlusterFS source</a> is a great place to hack too!</p>
+<p>The network block, domain, and other parameters are all configurable inside of the <em>Vagrantfile</em>. I&rsquo;ve tried to use sensible defaults where possible. I&rsquo;m using <code>example.com</code> as the default domain. <em>Yes</em>, this will work fine on your private network. DNS is currently configured with the <code>/etc/hosts</code> file. I wrote some magic into the <em>Vagrantfile</em> so that the slow <code>/etc/hosts</code> shell provisioning only has to happen once per machine! If you have a better, functioning, alternative, please let me know!</p>
+<p><strong><span style="text-decoration:underline;">What&rsquo;s the greatest number of machines this will scale to</span>?</strong></p>
+<p>Good question! I&rsquo;d like to know too! I know that GlusterFS probably can&rsquo;t scale to <a href="http://www.gluster.org/community/documentation/index.php/Features/thousand-node-glusterd">1000 hosts</a> yet. Keepalived can&rsquo;t support more than 256 priorities, therefore Puppet-Gluster can&rsquo;t scale beyond that count until a suitable fix can be found. There are likely some earlier limits inside of Puppet-Gluster due to maximum command line length constraints that you&rsquo;ll hit. If you find any, let me know and I&rsquo;ll patch them. Patches now cost around seven karma points. Other than those limits, there&rsquo;s the limit of my hardware. Since this is all being virtualized on a lowly <a href="https://en.wikipedia.org/wiki/ThinkPad_X_Series#X201">X201</a>, my tests are limited. <a title="donate" href="/donate/">An upgrade would be awesome!</a></p>
+<p><strong><span style="text-decoration:underline;">Can I use this to test QA releases, point releases and new GlusterFS versions</span>?</strong></p>
+<p>Absolutely! That&rsquo;s the idea. There are two caveats:</p>
+<ol>
+	<li>Automatically testing QA releases isn't supported until the QA packages have a sensible home on <em>download.gluster.org</em> or similar. This will need a change to:
+<p><a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/repo.pp#L18"><a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/repo.pp#L18">https://github.com/purpleidea/puppet-gluster/blob/master/manifests/repo.pp#L18</a></a></p>
+<p>The gluster community is working on this, and as soon as a solution is found, I&rsquo;ll patch Puppet-Gluster to support it. If you want to disable automatic repository management (in <code>gluster::simple</code>) and manage this yourself with the <a href="https://docs.vagrantup.com/v2/provisioning/shell.html">vagrant shell provisioner</a>, you&rsquo;re able to do so now.</li>
+<li>It&rsquo;s possible that new releases introduce bugs, or change things in a backwards incompatible way that breaks Puppet-Gluster. If this happens, please let me know so that something can get patched. That&rsquo;s what testing is for!</li></p>
+</ol>
+You could probably use this infrastructure to test GlusterFS builds automatically, but that's a project that would need real funding.
+<p><strong><span style="text-decoration:underline;">Updating the puppet source</span>:</strong></p>
+<p>If you make a change to the puppet source, but you don&rsquo;t want to rebuild the puppet virtual machine, you don&rsquo;t have to. All you have to do is run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant provision puppet
+</span></span></code></pre></div><p>This will update the puppet server with any changes made to the source tree at:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>puppet-gluster/vagrant/gluster/puppet/
+</span></span></code></pre></div><p>Keep in mind that the <em>modules</em> subdirectory contains all the necessary puppet submodules, and a clone of puppet-gluster itself. You&rsquo;ll first need to run <code>make</code> inside of:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>puppet-gluster/vagrant/gluster/puppet/modules/
+</span></span></code></pre></div><p>to refresh the local clone. To see what&rsquo;s going on, or to customize the process, you can look at the <code>Makefile</code>.</p>
+<p><strong><span style="text-decoration:underline;">Client machines</span>:</strong></p>
+<p>At the moment, this doesn&rsquo;t build separate machines for gluster client use. You can either mount your gluster pool from the puppet server, another gluster server, or if you add the right DNS entries to your <code>/etc/hosts</code>, you can mount the volume on your host machine. If you really want Vagrant to build client machines, you&rsquo;ll have to <a title="donate" href="/donate/">persuade me</a>.</p>
+<p><strong><span style="text-decoration:underline;">What about firewalls</span>?</strong></p>
+<p>Normally I use <a href="http://www.shorewall.net/">shorewall</a> to manage the firewall. It integrates well with Puppet-Gluster, and does a great job. For an unexplained reason, it seems to be blocking my VRRP (keepalived) traffic, and I had to disable it. I think this is due to a <a href="http://wiki.libvirt.org/page/VirtualNetworking">libvirt networking</a> bug, but I can&rsquo;t prove it yet. If you can help debug this issue, <a href="/contact/">please let me know</a>! To reproduce it, enable the <em>firewall</em> and <em>shorewall</em> directives in:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>puppet-gluster/vagrant/gluster/puppet/manifests/site.pp
+</span></span></code></pre></div><p>and then get keepalived to work.</p>
+<p><strong><span style="text-decoration:underline;">Re-provisioning a machine after a long wait throws an error</span>:</strong></p>
+<p>You might be hitting: <a href="https://github.com/fgrehm/vagrant-cachier/issues/74">vagrant-cachier #74</a>. If you do, there is an <a href="https://gist.github.com/purpleidea/8211614">available workaround</a>.</p>
+<p><strong><span style="text-decoration:underline;">Keepalived shows &ldquo;invalid passwd!&rdquo; messages in the logs</span>:</strong></p>
+<p>This is expected. This happens because we build a distributed password for use with keepalived. Before the cluster state has settled, the password will be different from host to host. Only when the cluster is coherent will the password be identical everywhere, which incidentally is the only time when the VIP matters.</p>
+<p><strong><span style="text-decoration:underline;">How did you build that awesome base image</span>?</strong></p>
+<p>I used <a href="http://libguestfs.org/virt-builder.1.html">virt-builder</a>, some scripts, and a clever <em>Makefile</em>. I&rsquo;ll be publishing this code shortly. Hasn&rsquo;t this been enough to keep you busy for a while?</p>
+<p><strong><span style="text-decoration:underline;">Are you still here</span>?</strong></p>
+<p>If you&rsquo;ve read this far, then good for you! I&rsquo;m sorry that it has been a long read, but I figured I would try to answer everyone&rsquo;s questions in advance. I&rsquo;d like to hear your <a href="#comments">comments</a>! I get very little feedback, and I&rsquo;ve never gotten a <a title="donate" href="/donate/">single tip</a>! If you find this useful, <a title="contact" href="/contact/">please let me know</a>.</p>
+<p>Until then,</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 8, 2014<br>
+				<small>2161 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/nfs">NFS</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/execagain">exec[&#34;again&#34;]</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fedora-20">fedora 20</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/glustersimple">gluster::simple</a> <a class="label label-default" href="/tags/keepalived">keepalived</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/shorewall">shorewall</a> <a class="label label-default" href="/tags/testing">testing</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-cachier">vagrant-cachier</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> <a class="label label-default" href="/tags/vcssh">vcssh</a> <a class="label label-default" href="/tags/vrrp">vrrp</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/"><small>https://ttboj.wordpress.com/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pupper on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/pupper/</link>
+    <description>Recent content in Pupper on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 30 Sep 2016 08:41:06 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/pupper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mgmt has a logo</title>
+      <link>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</link>
+      <pubDate>Fri, 30 Sep 2016 08:41:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</guid>
+      <description>The mgmt config project got a logo! The full commit is here. Thanks to Sarah Jane Cox for creating it.&#xA;Happy Hacking,&#xA;James&#xA;PS: I might have a few stickers to give out too! Ask me next time you see me if you&amp;rsquo;d like one! Alternatively, use the artwork to make your own and share with your friends!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+  </channel>
+</rss>

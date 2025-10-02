@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Metaparameters in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Metaparameters in mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>In <a href="https://github.com/purpleidea/mgmt/">mgmt</a> we have <em>meta parameters</em>. They are similar in concept to what you might be familiar with from other tools, except that they are more clearly defined (in a single struct) and vastly more powerful.</p>
+<p>In mgmt, a meta parameter is a parameter which is codified entirely in the engine, and which can be used by any resource. In contrast with <a href="https://docs.puppet.com/puppet/4.6/metaparameter.html#require">Puppet, require/before are considered meta parameters</a>, whereas in mgmt, the equivalent is a graph edge, which is not a meta parameter. [1]</p>
+<p><span style="text-decoration:underline;">Kinds</span></p>
+<p>As of this writing we have seven different kinds of meta parameters:</p>
+<ul>
+    <li><a href="/blog/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a></li>
+    <li><a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a></li>
+    <li>Noop</li>
+    <li>Retry & Delay</li>
+    <li>Poll</li>
+    <li>Limit & Burst</li>
+    <li>Sema</li>
+</ul>
+<p>The astute reader will note that there are actually nine different meta parameters listed, but I have grouped them into seven categories since some of them are very tightly interconnected. The first two, <a href="/blog/2016/03/14/automatic-edges-in-mgmt/">AutoEdge</a> and <a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">AutoGroup</a> have been covered in separate articles already, so they won&rsquo;t be discussed here. To learn about the others, please read on&hellip;</p>
+<p><strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#noop-1"><span style="text-decoration:underline;">Noop</span></a></strong></p>
+<p>Noop stands for no-operation. If it is set to <code>true</code>, we tell the CheckApply portion of the resource to not make any changes. It is up to the individual resource implementation to respect this facility, which is the case for all correctly written resources. You can learn more about this by reading <a href="https://github.com/purpleidea/mgmt/blob/master/docs/resource-guide.md#checkapply">the CheckApply section in the resource guide</a>.</p>
+<p>If you&rsquo;d like to set the noop state on all resources at runtime, there is a cli flag which you can use to do so. It is unsurprisingly named <code>&ndash;noop</code>, and overrides all the resources in the graph. <a href="https://docs.puppet.com/puppet/4.6/metaparameter.html#noop">This is in stark contrast with Puppet which will allow an individual resource definition to override the user&rsquo;s choice!</a></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/tmp$ cat noop.pp
+</span></span><span style="display:flex;"><span>file { &#39;/tmp/puppet.noop&#39;:
+</span></span><span style="display:flex;"><span>    content =&gt; &#34;nope, nope, nope!\n&#34;,
+</span></span><span style="display:flex;"><span>    noop =&gt; false,    # set at the resource level
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>james@computer:/tmp$ time puppet apply noop.pp
+</span></span><span style="display:flex;"><span>Notice: Compiled catalog for computer in environment production in 0.29 seconds
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/File[/tmp/puppet.noop]/ensure: defined content as &#39;{md5}d8bda32dd3fbf435e5a812b0ba3e9a95&#39;
+</span></span><span style="display:flex;"><span>Notice: Applied catalog in 0.03 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m15.862s
+</span></span><span style="display:flex;"><span>user    0m7.423s
+</span></span><span style="display:flex;"><span>sys    0m1.260s
+</span></span><span style="display:flex;"><span>james@computer:/tmp$ file puppet.noop    # verify it worked
+</span></span><span style="display:flex;"><span>puppet.noop: ASCII text
+</span></span><span style="display:flex;"><span>james@computer:/tmp$ rm -f puppet.noop    # reset
+</span></span><span style="display:flex;"><span>james@computer:/tmp$ time puppet apply --noop noop.pp    # safe right?
+</span></span><span style="display:flex;"><span>Notice: Compiled catalog for computer in environment production in 0.30 seconds
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/File[/tmp/puppet.noop]/ensure: defined content as &#39;{md5}d8bda32dd3fbf435e5a812b0ba3e9a95&#39;
+</span></span><span style="display:flex;"><span>Notice: Class[Main]: Would have triggered &#39;refresh&#39; from 1 events
+</span></span><span style="display:flex;"><span>Notice: Stage[main]: Would have triggered &#39;refresh&#39; from 1 events
+</span></span><span style="display:flex;"><span>Notice: Applied catalog in 0.02 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m15.808s
+</span></span><span style="display:flex;"><span>user    0m7.356s
+</span></span><span style="display:flex;"><span>sys    0m1.325s
+</span></span><span style="display:flex;"><span>james@computer:/tmp$ cat puppet.noop
+</span></span><span style="display:flex;"><span>nope, nope, nope!
+</span></span><span style="display:flex;"><span>james@computer:/tmp$
+</span></span></code></pre></div><p>If you look closely, Puppet just trolled you by performing an operation when you thought it would be noop! I think the behaviour is incorrect, but if this isn&rsquo;t supposed to be a bug, then I&rsquo;d sure like to know why!</p>
+<p>It&rsquo;s worth mentioning that there is also a <a href="https://github.com/purpleidea/mgmt/blob/master/resources/noop.go#L18"><code>noop</code> resource in mgmt</a> which is similarly named because it does absolutely nothing.</p>
+<p><strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#retry"><span style="text-decoration:underline;">Retry &amp; Delay</span></a></strong></p>
+<p>In mgmt we can run continuously, which means that it&rsquo;s often more useful to do something interesting when there is a resource failure, rather than simply shutting down completely. As a result, if there is an error during the CheckApply phase of the resource execution, the operation can be retried (<em>retry</em>) a number of times, and there can be a <em>delay</em> between each retry.</p>
+<p>The <em>delay</em> value is an integer representing the number of milliseconds to wait between retries, and it defaults to zero. The <em>retry</em> value is an integer representing the maximum number of allowed retries, and it defaults to zero. A negative value will permit an infinite number of retries. If the number of retries is exhausted, then the temporary resource failure will be converted into a permanent failure. Resources which depend on a failed resource will be blocked until there is a successful execution. When there is a successful <em>CheckApply</em>, the resource retry counter is reset.</p>
+<p>In general it is best to leave these values at their defaults unless you are expecting spurious failures, this way if you do get a failure, it won&rsquo;t be masked by the retry mechanism.</p>
+<p>It&rsquo;s worth mentioning that the <em>Watch</em> loop can fail as well, and that the <em>retry</em> and <em>delay</em> meta parameters apply to this as well! While these could have had their own set of meta parameters, I felt it would have unnecessarily cluttered up the interface, and I couldn&rsquo;t think of a reason where it would be helpful to have different values. They do have their own separate retry counter and delay timer of course! If someone has a valid use case, then I&rsquo;m happy to separate these.</p>
+<p>If someone would like to implement a pluggable back-off algorithm (eg: <a href="https://en.wikipedia.org/wiki/Exponential_backoff">exponential back-off</a>) to be used here instead of a simple delay, then I think it would be a welcome addition!</p>
+<p><strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#poll"><span style="text-decoration:underline;">Poll</span></a></strong></p>
+<p>Despite mgmt being event based, there are situations where you&rsquo;d really like to poll instead of using the <em>Watch</em> method. For these cases, I reluctantly implemented a <em>poll</em> meta parameter. It does exactly what you&rsquo;d expect, generating events every <code>poll</code> seconds. It defaults to zero which means that it is disabled, and <em>Watch</em> is used instead.</p>
+<p>Despite my earlier knock of it, it is actually quite useful, in that some operations might require or prefer polling, and having it as a meta parameter means that those resources won&rsquo;t need to duplicate the polling code.</p>
+<p>This might be very powerful for an <a href="https://aws.amazon.com/"><strong><em>aws</em></strong></a> resource that can set up hosted <em><a href="https://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud">Amazon ec2</a></em> resources. When combined with the <em>retry</em> and <em>delay</em> meta parameters, it will even survive <a href="https://status.aws.amazon.com/">outages</a>!</p>
+<p>One particularly interesting aspect is that ever since the converged graph detection was improved, we can still converge a graph and shutdown with the <code>converged-timeout</code> functionality while using polling! <a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#poll">This is described in more detail in the documentation.</a></p>
+<p><strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#limit"><span style="text-decoration:underline;">Limit &amp; Burst</span></a></strong></p>
+<p>In mgmt, the events generated by the <em>Watch</em> main loop of a resource do not need to be 1-1 matched with the <em>CheckApply</em> remediation step. This is very powerful because it allows mgmt to collate multiple events into a single <em>CheckApply</em> step which is helpful for when the duration of the <em>CheckApply</em> step is longer than the interval between <em>Watch</em> events that are being generated often.</p>
+<p>In addition, you might not want to constantly <em>Check</em> or <em>Apply</em> (converge) the state of your resource as often as it goes out of state. For this situation, that step can be rate limited with the <em>limit</em> and <em>burst</em> meta parameters.</p>
+<p>The <em>limit</em> and <em>burst</em> meta parameters implement something known as a <strong><a href="https://en.wikipedia.org/wiki/Token_bucket">token bucket</a></strong>. This models a bucket which is filled with tokens and which is drained slowly. It has a particular rate limit (which sets a maximum rate) and a burst count which sets a maximum bolus which can be absorbed.</p>
+<p>This doesn&rsquo;t cause us to permanently miss events (and stay un-converged) because when the bucket overfills, instead of dropping events, we actually cache the last one for playback once the bucket falls within the execution rate threshold. Remember, we expect to be converged in the steady state, not at every <a href="https://en.wikipedia.org/wiki/(%CE%B5,_%CE%B4)-definition_of_limit">infinitesimal delta <em>t</em></a> in between.</p>
+<p>The <em>limit</em> and <em>burst</em> metaparams default to allowing an infinite rate, with zero burst. As it turns out, if you have a non-infinite rate, the burst must be non-zero or you will cause a <em>Validate</em> error. Similarly, a non-zero burst, with an infinite rate is effectively the same as the default. A good rule of thumb is to remember to either set both values or neither. <a href="https://vimeo.com/13497928">This is all because of the mathematical implications of token buckets which I won&rsquo;t explain in this article.</a></p>
+<p><strong><a href="https://github.com/purpleidea/mgmt/blob/master/docs/documentation.md#sema">Sema</a></strong></p>
+<p>Sema is short for semaphore. In mgmt we have implemented <a href="https://en.wikipedia.org/wiki/Semaphore_(programming)">P/V style counting semaphores</a>. This is a mechanism for reducing parallelism in situations where there are not explicit dependencies between resources. This might be useful for when the number of operations might outnumber the number of CPUs on your machine and you want to avoid starving your other processes. Alternatively, there might be a particular operation that you want to add a mutex (<a href="https://en.wikipedia.org/wiki/Lock_(computer_science)">mutual exclusion</a>) around, which can be represented with a semaphore of size (1) one. Lastly, it was a particularly fun meta parameter to write, and I had been itching to do so for some time.</p>
+<p>To use this meta parameter, simply give a list of semaphore ids to the resource you want to lock. These can be any string, and are shared globally throughout the graph. By default, they have a size of one. To specify a semaphore with a different size, append a colon (<strong>:</strong>) followed by an integer at the end of the semaphore id.</p>
+<p>Valid ids might include: &ldquo;<code>some_id:42</code>&rdquo;, &ldquo;<code>hello:13</code>&rdquo;, and &ldquo;<code>lockname</code>&rdquo;. Remember, the size parameter is the number of simultaneous resources which can run their <em>CheckApply</em> methods at the same time. It does not prevent multiple <em>Watch</em> methods from returning events simultaneously.</p>
+<p>If you would like to force a semaphore globally on all resources, you can pass in the <code>&ndash;sema</code> argument with a size integer. This will get appended to the existing semaphores. For example, to simulate Puppet&rsquo;s traditional non-parallel execution, you could specify <code>&ndash;sema 1</code>.</p>
+<p>Oh, no! Does this mean I can deadlock my graphs? Interestingly enough, this is actually completely safe! The reason is that because all the semaphores exist in the mgmt <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph</a>, and because that DAG represents dependencies that are always respected, there will always be a way to make progress, which eventually unblocks any waiting resources! The trick to doing this is ensuring that each resource always acquires the list of semaphores in alphabetical order. (Actually the order doesn&rsquo;t matter as long as it&rsquo;s consistent across the graph, and alphabetical is as good as any!) Unfortunately, I don&rsquo;t have a formal proof of this, but I was able to convince myself on the <a href="https://en.wikipedia.org/wiki/Back-of-the-envelope_calculation">back of an envelope</a> that it is true! <a href="/contact/">Please contact me if you can prove me right or wrong!</a> The one exception is that a counting semaphore of size zero would never let anyone acquire it, so by definition it would permanently block, and as a result is not <em>currently</em> permitted.</p>
+<p>The last important point to mention is about the interplay between <a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">automatic grouping</a> and semaphores. When more than one resource is grouped, they are considered to be part of the same resource. As a result, the resulting list of semaphores is the sum of the individual semaphores, de-duplicated. This ensures that individual locking guarantees aren&rsquo;t broken when multiple resources are combined.</p>
+<p><span style="text-decoration:underline;">Future</span></p>
+<p>If you have ideas for future meta parameters, please let me know! We&rsquo;d love to hear about your ideas on our <a href="https://github.com/purpleidea/mgmt/#community">mailing list or on IRC</a>. If you&rsquo;re shy, you can <a href="/contact/">contact me privately</a> as well.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p>[1] This is a bit of an apples vs. flame-throwers comparison because I&rsquo;m comparing the mgmt <em>engine</em> meta parameters with the puppet <em>language</em> meta parameters, but I think it&rsquo;s worth mentioning because there&rsquo;s a clear separation between the two in mgmt, where as the separation is much more blurry in the puppet scenario. It&rsquo;s also true that the mgmt language might grow a concept of language-level meta parameters which has a partial set that only maps partially to engine meta parameters, but this is a discussion for another day!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 1, 2017<br>
+				<small>1935 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/p/v">P/V</a> <a class="label label-default" href="/tags/autoedge">autoedge</a> <a class="label label-default" href="/tags/autoedges">autoedges</a> <a class="label label-default" href="/tags/autogrouping">autogrouping</a> <a class="label label-default" href="/tags/burst">burst</a> <a class="label label-default" href="/tags/counting-semaphore">counting semaphore</a> <a class="label label-default" href="/tags/dag">dag</a> <a class="label label-default" href="/tags/delay">delay</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/directed-acyclic-graph">directed acyclic graph</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/limit">limit</a> <a class="label label-default" href="/tags/metaparameters">metaparameters</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/noop">noop</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/poll">poll</a> <a class="label label-default" href="/tags/proofs">proofs</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/retry">retry</a> <a class="label label-default" href="/tags/semaphore">semaphore</a> <a class="label label-default" href="/tags/token-bucket">token bucket</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2017/03/01/metaparameters-in-mgmt/"><small>https://ttboj.wordpress.com/2017/03/01/metaparameters-in-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2017/03/01/metaparameters-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2017/03/01/metaparameters-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

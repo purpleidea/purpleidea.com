@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>preventing duplicate parameter values in puppet types - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>preventing duplicate parameter values in puppet types</strong><br><small></small></h3>
+					<hr>
+					<p>I am writing a <a href="http://www.keepalived.org/">keepalived</a> module for puppet. It will naturally be called: &ldquo;puppet-keepalived&rdquo;, and I will be releasing the code in the near future! In any case, if you&rsquo;re familiar with <a href="http://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol">VRRP</a>, you&rsquo;ll know that each managed link (eg: resource or <a href="http://en.wikipedia.org/wiki/Virtual_IP_address">VIP</a>) has a common <em>routerid</em> and <em>password</em> which are shared among all members in the group. It is important that these parameters are unique across the type definitions on a single node.</p>
+<p>Here is an example of two different instance definitions in puppet:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>keepalived::vrrp { &#39;VI_NET&#39;:
+</span></span><span style="display:flex;"><span>    state =&gt; ...,
+</span></span><span style="display:flex;"><span>    routerid =&gt; 42, # must be unique
+</span></span><span style="display:flex;"><span>    password =&gt; &#39;somelongpassword...&#39;,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>keepalived::vrrp { &#39;VI_DMZ&#39;:
+</span></span><span style="display:flex;"><span>    state =&gt; ...,
+</span></span><span style="display:flex;"><span>    routerid =&gt; 43, # must be unique
+</span></span><span style="display:flex;"><span>    password =&gt; &#39;somedifferentlongpassword...&#39;,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here puppet guarantees that the <em>$name</em> variable is unique. Let&rsquo;s extend this magic with a trick to make sure that <em>routerid</em> and <em>password</em> are too. Here is an excerpt from the relevant puppet definition:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>define keepalived::vrrp(
+</span></span><span style="display:flex;"><span>    <span style="color:#666">$</span>state,
+</span></span><span style="display:flex;"><span>    <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">$</span>routerid,
+</span></span><span style="display:flex;"><span>    <span style="color:#666">$</span>password
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>    file { <span style="color:#b44">&#34;/etc/keepalived/${instance}.vrrp&#34;</span>:
+</span></span><span style="display:flex;"><span>        content <span style="color:#666">=&gt;</span> template(<span style="color:#b44">&#39;keepalived/keepalived.vrrp.erb&#39;</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>        ensure <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># NOTE: add unnecessary alias names so that if one of those</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># variables appears more than once, an error will be raised.</span>
+</span></span><span style="display:flex;"><span>        alias <span style="color:#666">=&gt;</span> [<span style="color:#b44">&#34;password-${password}&#34;</span>, <span style="color:#b44">&#34;routerid-${routerid}&#34;</span>],
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, multiple alias names are specified with an array, and since this file definition is used for each <em>keepalived::vrrp</em> instance, you&rsquo;ll most assuredly cause a &ldquo;duplicate alias&rdquo; issue if there is a duplicate <em>routerid</em> or <em>password</em> used!</p>
+<p>This trick will also probably work across define types too. To ensure a common key, just create an object like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>file { &#39;/root/the_unique_key&#39;:
+</span></span><span style="display:flex;"><span>    alias =&gt; [&#34;token1-${token1}&#34;, &#34;token2-${token2}&#34;, &#34;token3-${token3}&#34;],
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The token prefix will guarantee that you don&rsquo;t accidentally cause a collision between dissimilar parameter values, unless that&rsquo;s what you want. I&rsquo;ve used a file in this scenario, but you can use whatever object you like. Because of this reason, it would make sense to create a noop() type if you&rsquo;re really serious about this. Maybe puppet labs can add a built-in type upstream.</p>
+<p>This is the type of thing that&rsquo;s important to do if you want to write puppet code that acts less like a templating hack and more like a library :)</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 7, 2012<br>
+				<small>438 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/keepalived">keepalived</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/vrrp">vrrp</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/"><small>https://ttboj.wordpress.com/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

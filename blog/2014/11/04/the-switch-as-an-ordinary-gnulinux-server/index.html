@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>The switch as an ordinary GNU/Linux server - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>The switch as an ordinary GNU/Linux server</strong><br><small></small></h3>
+					<hr>
+					<p>The fact that we manage the <a href="https://en.wikipedia.org/wiki/Network_switch">switches</a> in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of <a href="https://en.wikipedia.org/wiki/Silicon#Electronic_grade">silicon</a> which happens to be able to dramatically speed up the switching bandwidth.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="absurd.png"><img class="wp-image-984 size-full" src="absurd.png" alt="absurd" width="100%" height="100%" /></a></td></tr><tr><td> beware of proprietary silicon, it's absurd!</td></tr></table></br />
+<p>That tiny bit of silicon is known as an <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit">ASIC</a>, or an <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit"><em>application specific integrated circuit</em></a>, and one particularly well performing ASIC (which is present in many commercially available switches) is called the <a href="https://www.broadcom.com/products/Switching/Data-Center/BCM56850-Series">Trident</a>.</p>
+<p>None of this should impact the end-user management experience, however, because the big switch companies and chip makers believe that there is some special differentiation in their <a href="https://www.gnu.org/philosophy/not-ipr.html">IP</a>, they&rsquo;ve ensured that the stacks and software surrounding the hardware is highly proprietary and difficult to replace. This also lets them create and sell bundled products and features that you don&rsquo;t want, but which you can&rsquo;t get elsewhere.</p>
+<p>This is still true today! System and network engineers know too well the hassles of dealing with the <a href="http://en.wikipedia.org/wiki/NX-OS">different</a> <a href="https://en.wikipedia.org/wiki/Cisco_IOS">proprietary</a> <a href="https://en.wikipedia.org/wiki/Junos">switch</a> <a href="http://en.wikipedia.org/wiki/DNOS">operating</a> <a href="http://en.wikipedia.org/wiki/FTOS">systems</a> and interfaces. Why not standardize on the well-known interface that every GNU/Linux server uses.</p>
+<p>We&rsquo;re talking about <a href="https://en.wikipedia.org/wiki/Iptables">iptables</a> of course! (Although <a href="https://en.wikipedia.org/wiki/Nftables">nftables</a> would be an acceptable standard too!) This way we could have a common interface for all the networked devices in our server room.</p>
+<p>I&rsquo;ve been able to work around this limitation in the past, by using Linux to do my routing in software, and by building the routers out of <a href="https://en.wikipedia.org/wiki/Commercial_off-the-shelf">COTS</a> <a href="https://en.wikipedia.org/wiki/Rack_unit">2U</a> GNU/Linux boxes. The trouble with this approach, is that they&rsquo;re bigger, louder, more expensive, consume more power, and don&rsquo;t have the port density that a 48 port 1U switch does.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="2550T-PWR-Front.jpg"><img class="size-large wp-image-992" src="2550T-PWR-Front.jpg" alt="a 48 port, 1U switch" width="100%" height="100%" /></a></td></tr><tr><td> a 48 port, 1U switch</td></tr></table></br />
+<p>It turns out that there is a <a href="https://github.com/cumulusnetworks">company</a> which is actually trying to build this <a href="https://en.wikipedia.org/wiki/Legendary_creature">mythical</a> box. It is not perfect, but I think they are on the right track. What follows are my opinions of what they&rsquo;ve done right, what&rsquo;s wrong, and what I&rsquo;d like to see in the future.</p>
+<p><span style="text-decoration:underline;">Who are they</span>?</p>
+<p>They are <a href="https://github.com/cumulusnetworks">Cumulus Networks</a>, and I recently got to meet, demo and discuss with one of their very talented engineers, <a href="https://twitter.com/lesliegeek">Leslie Carr</a>. I recently <a href="https://puppetlabs.com/presentations/switch-server-leslie-carr-cumulus-networks">attended a talk</a> that she gave on this very same subject. She gave me a rocket turtle. (Yes, this now makes me biased!)</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="rocket-turtle.jpg"><img class="size-large wp-image-987" src="rocket-turtle.jpg" alt="my rocket turtle, the cumulus networks mascot" width="100%" height="100%" /></a></td></tr><tr><td> my rocket turtle, the cumulus networks mascot</td></tr></table></br />
+<p><span style="text-decoration:underline;">What are they doing</span>?</p>
+<p>You buy an existing switch from your favourite vendor. You then throw out (flash over) the included software, and instead, pay them a yearly licensing fee to use the &ldquo;Cumulus&rdquo; GNU/Linux. It comes as an OS image, based off of <a href="https://www.debian.org/">Debian</a>.</p>
+<p><span style="text-decoration:underline;">How does it talk to the ASIC</span>?</p>
+<p>The OS image comes with a daemon called <a href="http://cumulusnetworks.com/docs/2.2/user-guide/system_management_diagnostics/switchd.html">switchd</a> that transfers the kernel iptables rules down into the ASIC. I don&rsquo;t know the specifics on how this works exactly because:</p>
+<ol>
+	<li>Switchd is proprietary. Apparently this is because of a scary <a href="https://en.wikipedia.org/wiki/Non-disclosure_agreement">NDA</a> they had to sign, but it's still unfortunate, and it is impeding my hacking.</li>
+	<li>I'm not an expert on talking to ASIC's. I'm guessing that unless you've signed the NDA's, and you're behind the Trident paywall, then it's tough to become one!</li>
+</ol>
+<span style="text-decoration:underline;">Problems with packaging</span>:
+<p>The OS is only distributed as a single image. This is an unfortunate mistake! It should be available from the upstream project with switchd (and any other add-ons) as individual <em>.deb</em> packages. That way, I know I&rsquo;m getting a stock OS which is preferably even built and signed by the Debian team! That way I could use the same infrastructure for my servers to keep all my servers up to date.</p>
+<p><span style="text-decoration:underline;">Problems with OS security</span>:</p>
+<p>Unfortunately the OS doesn&rsquo;t benefit from any of the standard OS security enhancements like <a href="https://wiki.debian.org/SELinux">SELinux</a>. I&rsquo;d prefer running a more advanced distro like <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">RHEL</a> or <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> that have these things out of the box, but if Cumulus will continue using Debian, then they must include some more advanced security measures. I didn&rsquo;t find <a href="https://en.wikipedia.org/wiki/AppArmor">AppArmor</a> or <a href="https://grsecurity.net/">grsecurity</a> in use either. It did seem to have all the <a href="https://en.wikipedia.org/wiki/Shellshock_%28software_bug%29">important bash security updates</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cumulus@switch1$ bash --version
+</span></span><span style="display:flex;"><span>GNU bash, version 4.2.37(1)-release (powerpc-unknown-linux-gnu)
+</span></span><span style="display:flex;"><span>Copyright (C) 2011 Free Software Foundation, Inc.
+</span></span><span style="display:flex;"><span>License GPLv3+: GNU GPL version 3 or later 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This is free software; you are free to change and redistribute it.
+</span></span><span style="display:flex;"><span>There is NO WARRANTY, to the extent permitted by law.
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Use of udev</span>:</p>
+<p>This switch does seem to support and use udev, although not being a udev expert I can&rsquo;t comment on if it&rsquo;s done properly or not. I&rsquo;d be interested to hear from the pros. Here&rsquo;s what I found:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>cumulus<span style="">@</span>switch1<span style="color:#666">$</span> cd <span style="color:#666">/</span>etc<span style="color:#666">/</span>udev<span style="color:#666">/</span>
+</span></span><span style="display:flex;"><span>cumulus<span style="">@</span>switch1<span style="color:#666">$</span> tree
+</span></span><span style="display:flex;"><span><span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span><span style="">`</span><span style="color:#666">--</span> rules<span style="color:#666">.</span>d
+</span></span><span style="display:flex;"><span>    <span style="color:#666">|--</span> <span style="color:#666">10</span><span style="color:#666">-</span>cumulus<span style="color:#666">.</span>rules
+</span></span><span style="display:flex;"><span>    <span style="color:#666">|--</span> <span style="color:#666">60</span><span style="color:#666">-</span>bridge<span style="color:#666">-</span>network<span style="color:#666">-</span>interface<span style="color:#666">.</span>rules <span style="color:#666">-&gt;</span> <span style="color:#666">/</span>dev<span style="color:#666">/</span>null
+</span></span><span style="display:flex;"><span>    <span style="color:#666">|--</span> <span style="color:#666">75</span><span style="color:#666">-</span>persistent<span style="color:#666">-</span>net<span style="color:#666">-</span>generator<span style="color:#666">.</span>rules <span style="color:#666">-&gt;</span> <span style="color:#666">/</span>dev<span style="color:#666">/</span>null
+</span></span><span style="display:flex;"><span>    <span style="">`</span><span style="color:#666">--</span> <span style="color:#666">80</span><span style="color:#666">-</span>networking<span style="color:#666">.</span>rules <span style="color:#666">-&gt;</span> <span style="color:#666">/</span>dev<span style="color:#666">/</span>null
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">1</span> directory, <span style="color:#666">4</span> files
+</span></span><span style="display:flex;"><span>cumulus<span style="">@</span>switch1<span style="color:#666">$</span> cat rules<span style="color:#666">.</span>d<span style="color:#666">/</span><span style="color:#666">10</span><span style="color:#666">-</span>cumulus<span style="color:#666">.</span>rules <span style="color:#666">|</span> tail <span style="color:#666">-</span>n <span style="color:#666">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># udev rules specific to Cumulus Linux</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># Rule called when the linux-user-bde driver is loaded</span>
+</span></span><span style="display:flex;"><span>ACTION<span style="color:#666">==</span><span style="color:#b44">&#34;add&#34;</span> SUBSYSTEM<span style="color:#666">==</span><span style="color:#b44">&#34;module&#34;</span> DEVPATH<span style="color:#666">==</span><span style="color:#b44">&#34;/module/linux_user_bde&#34;</span> ENV{DEVICE_NAME}<span style="color:#666">=</span><span style="color:#b44">&#34;linux-user-bde&#34;</span> ENV{DEVICE_TYPE}<span style="color:#666">=</span><span style="color:#b44">&#34;c&#34;</span> ENV{DEVICE_MINOR}<span style="color:#666">=</span><span style="color:#b44">&#34;0&#34;</span> RUN<span style="color:#666">=</span><span style="color:#b44">&#34;/usr/lib/cumulus/udev-module&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># Quanta LY8 uses RTC1</span>
+</span></span><span style="display:flex;"><span>KERNEL<span style="color:#666">==</span><span style="color:#b44">&#34;rtc1&#34;</span>, PROGRAM<span style="color:#666">=</span><span style="color:#b44">&#34;/usr/bin/platform-detect&#34;</span>, RESULT<span style="color:#666">==</span><span style="color:#b44">&#34;quanta,ly8_rangeley&#34;</span>, SYMLINK<span style="color:#666">+=</span><span style="color:#b44">&#34;rtc&#34;</span>
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Other things</span>:</p>
+<p>There seems to be a number of extra things running on the switch. Here&rsquo;s what I mean:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>cumulus<span style="">@</span>switch1<span style="color:#666">$</span> ps auxwww 
+</span></span><span style="display:flex;"><span>USER       PID <span style="color:#666">%</span>CPU <span style="color:#666">%</span>MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">1</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>   <span style="color:#666">2516</span>   <span style="color:#666">860</span> <span style="">?</span>        Ss   Nov05   <span style="color:#666">0</span>:<span style="color:#666">02</span> init [<span style="color:#666">3</span>]  
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">2</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kthreadd]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">3</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">05</span> [ksoftirqd<span style="color:#666">/</span><span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">5</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kworker<span style="color:#666">/</span>u:<span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">6</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [migration<span style="color:#666">/</span><span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">7</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [cpuset]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">8</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [khelper]
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">9</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [netns]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">10</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">02</span> [sync_supers]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">11</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [bdi<span style="color:#666">-</span>default]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">12</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kblockd]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">13</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [ata_sff]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">14</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [khubd]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">15</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [rpciod]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">17</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [khungtaskd]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">18</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kswapd0]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">19</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [fsnotify_mark]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">20</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [nfsiod]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">21</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S<span style="color:#666">&lt;</span>   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [crypto]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">34</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [scsi_eh_0]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">36</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kworker<span style="color:#666">/</span>u:<span style="color:#666">2</span>]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">41</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [mtdblock0]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">42</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [mtdblock1]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">43</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [mtdblock2]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">44</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [mtdblock3]
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">49</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> [mtdblock4]
+</span></span><span style="display:flex;"><span>root       <span style="color:#666">362</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">54</span> [hwmon0]
+</span></span><span style="display:flex;"><span>root       <span style="color:#666">363</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">1</span>:<span style="color:#666">01</span> [hwmon1]
+</span></span><span style="display:flex;"><span>root       <span style="color:#666">398</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">04</span> [flush<span style="color:#666">-</span><span style="color:#666">8</span>:<span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>root       <span style="color:#666">862</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.1</span>  <span style="color:#666">28680</span>  <span style="color:#666">1768</span> <span style="">?</span>        Sl   Nov05   <span style="color:#666">0</span>:<span style="color:#666">03</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>rsyslogd <span style="color:#666">-</span>c4
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1041</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.2</span>   <span style="color:#666">5108</span>  <span style="color:#666">2420</span> <span style="">?</span>        Ss   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> <span style="color:#666">/</span>sbin<span style="color:#666">/</span>dhclient <span style="color:#666">-</span>pf <span style="color:#666">/</span>run<span style="color:#666">/</span>dhclient<span style="color:#666">.</span>eth0<span style="color:#666">.</span>pid <span style="color:#666">-</span>lf <span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">var</span><span style="color:#666">/</span>lib<span style="color:#666">/</span>dhcp<span style="color:#666">/</span>dhclient<span style="color:#666">.</span>eth0<span style="color:#666">.</span>leases eth0
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1096</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.1</span>   <span style="color:#666">3344</span>  <span style="color:#666">1552</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">16</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>bash <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>arp_refresh
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1188</span>  <span style="color:#666">0.0</span>  <span style="color:#666">1.1</span>  <span style="color:#666">15456</span> <span style="color:#666">10676</span> <span style="">?</span>        S    Nov05   <span style="color:#666">1</span>:<span style="color:#666">36</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>python <span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>ledmgrd
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1218</span>  <span style="color:#666">0.2</span>  <span style="color:#666">1.1</span>  <span style="color:#666">15468</span> <span style="color:#666">10708</span> <span style="">?</span>        S    Nov05   <span style="color:#666">5</span>:<span style="color:#666">41</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>python <span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>pwmd
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1248</span>  <span style="color:#666">1.4</span>  <span style="color:#666">1.1</span>  <span style="color:#666">15480</span> <span style="color:#666">10728</span> <span style="">?</span>        S    Nov05  <span style="color:#666">39</span>:<span style="color:#666">45</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>python <span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>smond
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1289</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>  <span style="color:#666">13832</span>   <span style="color:#666">964</span> <span style="">?</span>        SNov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> <span style="color:#666">/</span>sbin<span style="color:#666">/</span>auditd
+</span></span><span style="display:flex;"><span>root      <span style="color:#666">1291</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>  <span style="color:#666">10456</span>   <span style="color:#666">852</span> <span style="">?</span>        S
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">12776</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    <span style="color:#666">04</span>:<span style="color:#666">31</span>   <span style="color:#666">0</span>:<span style="color:#666">01</span> [kworker<span style="color:#666">/</span><span style="color:#666">0</span>:<span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">13606</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    <span style="color:#666">05</span>:<span style="color:#666">05</span>   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kworker<span style="color:#666">/</span><span style="color:#666">0</span>:<span style="color:#666">2</span>]
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">13892</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>      <span style="color:#666">0</span>     <span style="color:#666">0</span> <span style="">?</span>        S    <span style="color:#666">05</span>:<span style="color:#666">13</span>   <span style="color:#666">0</span>:<span style="color:#666">00</span> [kworker<span style="color:#666">/</span><span style="color:#666">0</span>:<span style="color:#666">1</span>]
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">13999</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.0</span>   <span style="color:#666">2028</span>   <span style="color:#666">512</span> <span style="">?</span>        S    <span style="color:#666">05</span>:<span style="color:#666">16</span>   <span style="color:#666">0</span>:<span style="color:#666">00</span> sleep <span style="color:#666">30</span>
+</span></span><span style="display:flex;"><span>cumulus  <span style="color:#666">14016</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.1</span>   <span style="color:#666">3324</span>  <span style="color:#666">1128</span> pts<span style="color:#666">/</span><span style="color:#666">0</span>    R<span style="color:#666">+</span>   <span style="color:#666">05</span>:<span style="color:#666">17</span>   <span style="color:#666">0</span>:<span style="color:#666">00</span> ps auxwww
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">30713</span> <span style="color:#666">15.6</span>  <span style="color:#666">2.4</span>  <span style="color:#666">69324</span> <span style="color:#666">24176</span> <span style="">?</span>        Ssl  Nov05 <span style="color:#666">304</span>:<span style="color:#666">16</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>switchd <span style="color:#666">-</span>d
+</span></span><span style="display:flex;"><span>root     <span style="color:#666">30952</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.3</span>  <span style="color:#666">11196</span>  <span style="color:#666">3500</span> <span style="">?</span>        Ss   Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> sshd: cumulus [priv]
+</span></span><span style="display:flex;"><span>cumulus  <span style="color:#666">30954</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.1</span>  <span style="color:#666">11196</span>  <span style="color:#666">1684</span> <span style="">?</span>        S    Nov05   <span style="color:#666">0</span>:<span style="color:#666">00</span> sshd: cumulus<span style="">@</span>pts<span style="color:#666">/</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>cumulus  <span style="color:#666">30955</span>  <span style="color:#666">0.0</span>  <span style="color:#666">0.2</span>   <span style="color:#666">4548</span>  <span style="color:#666">2888</span> pts<span style="color:#666">/</span><span style="color:#666">0</span>    Ss   Nov05   <span style="color:#666">0</span>:<span style="color:#666">01</span> <span style="color:#666">-</span>bash
+</span></span></code></pre></div><p>In particular, I&rsquo;m referring to <code>ledmgrd</code>, <code>pwmd</code>, <code>smond</code> and others. I don&rsquo;t doubt these things are necessary and useful, in fact, they&rsquo;re written in python and should be easy to reverse if anyone is interested, but if they&rsquo;re a useful part of a switch capable operating system, I hope that they grow proper upstream projects and get appropriate <a href="/blog/2014/10/18/hacking-out-an-openshift-app/">documentation</a>, <a href="https://www.gnu.org/philosophy/free-sw.html">licensing</a>, and <a href="http://rpm.org/">packaging</a> too!</p>
+<p><span style="text-decoration:underline;">Switch ports are network devices</span>:</p>
+<p>Hacking on the device couldn&rsquo;t feel more native. Anyone remember how to enumerate the switch ports on IOS? &hellip; Who cares! Try the standard <em>iproute2</em> tools on a Cumulus box:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cumulus@switch1$ ip a s swp42
+</span></span><span style="display:flex;"><span>44: swp42: &lt;broadcast,multicast&gt; mtu 1500 qdisc noop state DOWN qlen 500
+</span></span><span style="display:flex;"><span>    link/ether 08:9e:01:f8:96:74 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>cumulus@switch1$ ip a | grep swp | wc -l
+</span></span><span style="display:flex;"><span>52
+</span></span></code></pre></div><p><span style="text-decoration:underline;">What about ifup/ifdown</span>?</p>
+<p>This one is a bit different:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cumulus@switch1$ file /sbin/ifup
+</span></span><span style="display:flex;"><span>/sbin/ifup: symbolic link to `/sbin/ifupdown&#39;
+</span></span><span style="display:flex;"><span>cumulus@switch1$ file /sbin/ifupdown 
+</span></span><span style="display:flex;"><span>/sbin/ifupdown: Python script, ASCII text executable
+</span></span></code></pre></div><p>The Cumulus team encountered issues with the traditional ifup/ifdown tools found in a stock distro. So they replaced them, with shiny python versions:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;a href=&#34;https://github.com/CumulusNetworks/ifupdown2&#34;&gt;https://github.com/CumulusNetworks/ifupdown2&lt;/a&gt;
+</span></span></code></pre></div><p>I hope that this project either gets into the upstream distro, or that <a href="http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html">some upstream writes tools</a> that address the limitations in the <a href="https://wiki.archlinux.org/index.php/SysVinit">various messes of shell scripts</a>. I&rsquo;m optimistic about <a href="http://www.freedesktop.org/software/systemd/man/systemd-networkd.service.html">networkd</a> being the solution here, but until that&rsquo;s fully baked, the Cumulus team has built a nice workaround. Additionally, until the Debian team finalizes on the proper technical decision to use <a href="http://freedesktop.org/wiki/Software/systemd/">SystemD</a>, it has a bleak future.</p>
+<p><span style="text-decoration:underline;">Kernel</span>:</p>
+<p>All the kernel hackers out there will want to know what&rsquo;s under the hood:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cumulus@switch1$ uname -a
+</span></span><span style="display:flex;"><span>Linux leaf1 3.2.46-1+deb7u1+cl2.2+1 #3.2.46-1+deb7u1+cl2.2+1 SMP Thu Oct 16 14:28:31 PDT 2014 ppc powerpc GNU/Linux
+</span></span></code></pre></div><p>Because this is an embedded chip found in a 1U box, and not an <a href="http://en.wikipedia.org/wiki/List_of_Intel_Xeon_microprocessors">Xeon</a> processor, it&rsquo;s noticeably slower than a traditional server. This is of course (non-sarcastically) exactly what I want. For admin tasks, it has plenty of power, and this trade-off means it has lower power consumption and heat production than a stock server. While debugging some puppet code that I was running takes longer than normal on this box, I was eventually able to get the job done. This is another reason why this box needs to act like more of an upstream distro &ndash; if it did, I&rsquo;d be able to have a faster machine as my dev box!</p>
+<p><span style="text-decoration:underline;">Other tools</span>:</p>
+<p>Other stock tools like <code>ethtool</code>, and <code>brctl</code>, work out of the box. Bonding, vlan&rsquo;s and every other feature I tested seems to work the same way you expect from a GNU/Linux system.</p>
+<p><span style="text-decoration:underline;">Puppet and automation</span>:</p>
+<p>Readers of my blog will know that I manage my servers with <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a>. Instead of having the <a href="https://puppetlabs.com/about/press-releases/puppet-labs-partners-leading-vendors-deliver-automation-networking-and-storage">puppet agent connect over an API to the switch</a>, you can directly install and run puppet on this Cumulus Linux machine! Some users might quickly jump to using the <a href="https://github.com/puppetlabs/puppetlabs-firewall">firewall module</a> as the solution for consistent management, but a <a href="http://en.wikipedia.org/wiki/State_of_the_art">level two</a> user will know that a <a href="https://github.com/purpleidea/puppet-shorewall">higher level wrapper</a> around <a href="http://shorewall.net/">shorewall</a> is the better approach. This is all possible with this switch and seems to work great! The downside was that I had to manually add repositories to get the shorewall packages because it is not a stock distro :(</p>
+<p><span style="text-decoration:underline;">Why not SDN</span>?</p>
+<p>SDN or <a href="https://en.wikipedia.org/wiki/Software-defined_networking">software-defined networking</a>, is a fantastic and interesting technology. Unfortunately, it&rsquo;s a parallel problem to what I&rsquo;m describing in this article, and not a solution to help you work around the lack of a good <a href="https://www.gnu.org/gnu/linux-and-gnu.html">GNU+Linux</a> switch. If programming the ASIC&rsquo;s wasn&rsquo;t an NDA requiring activity, I bet we&rsquo;d see a lot more innovative networking companies and technologies pop up.</p>
+<p><span style="text-decoration:underline;">Future</span>?</p>
+<p>This product isn&rsquo;t quite baked yet for me to want to use it in production, but it&rsquo;s so tantalizingly close that it&rsquo;s strongly worth considering. I hope that they react positively to my suggestions and create an even more native, upstream environment. Once this is done, it will be my go to, for all my switching!</p>
+<p><span style="text-decoration:underline;">Thanks</span>:
+Thanks very much to the Cumulus team for showing me their software, and giving me access to demo it on some live switches. I didn&rsquo;t test performance, but I have no doubt that it competes with the market average. Prove me right by <a href="https://cumulusnetworks.com/cumulus-workbench/?referral=purpleidea.com">trying it out yourself</a>!</p>
+<p>Thanks for listening, and Happy hacking!</p>
+<p>James</p>
+<p>PS: Special thanks to David Caplan for the great networking discussions we had!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 4, 2014<br>
+				<small>2174 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/asic">ASIC</a> <a class="label label-default" href="/tags/nda">NDA</a> <a class="label label-default" href="/tags/trident">Trident</a> <a class="label label-default" href="/tags/cumulus">cumulus</a> <a class="label label-default" href="/tags/cumulusnetworks">cumulusnetworks</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/ifup/ifdown">ifup/ifdown</a> <a class="label label-default" href="/tags/iproute2">iproute2</a> <a class="label label-default" href="/tags/iptables">iptables</a> <a class="label label-default" href="/tags/networkd">networkd</a> <a class="label label-default" href="/tags/nftables">nftables</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-shorewall">puppet-shorewall</a> <a class="label label-default" href="/tags/python">python</a> <a class="label label-default" href="/tags/rocket-turtle">rocket-turtle</a> <a class="label label-default" href="/tags/selinux">selinux</a> <a class="label label-default" href="/tags/shorewall">shorewall</a> <a class="label label-default" href="/tags/switch">switch</a> <a class="label label-default" href="/tags/switchd">switchd</a> <a class="label label-default" href="/tags/systemd">systemd</a> <a class="label label-default" href="/tags/udev">udev</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/"><small>https://ttboj.wordpress.com/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

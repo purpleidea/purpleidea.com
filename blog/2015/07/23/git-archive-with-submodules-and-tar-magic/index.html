@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Git archive with submodules and tar magic - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Git archive with submodules and tar magic</strong><br><small></small></h3>
+					<hr>
+					<p><a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">Git submodules</a> are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&rsquo;ve used them in projects like <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>, <a href="https://github.com/purpleidea/oh-my-vagrant">oh-my-vagrant</a>, and others. If you&rsquo;re not familiar with them, do a bit of reading and come back later, I&rsquo;ll wait.</p>
+<p>I recently did some work <a href="/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">packaging Oh-My-Vagrant as RPM&rsquo;s</a>. My primary goal was to make sure the entire process was automatic, as I have no patience for manually building RPM&rsquo;s. Any good packager knows that the pre-requisite for building a SRPM is a source tarball, and I wanted to build those automatically too.</p>
+<p>Simply running a <code>tar -cf</code> on my source directory wouldn&rsquo;t work, because I only want to include files that are stored in git. Thankfully, git comes with a tool called <code>git archive</code>, which does exactly that! No scary tar commands required:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://xkcd.com/1168/" target="_blank"><img class="" src="https://imgs.xkcd.com/comics/tar.png" alt="" width="100%" height="100%" /></a></td></tr><tr><td> Nobody likes tar</td></tr></table></br />
+<p>Here&rsquo;s how you might run it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ git archive --prefix=some-project/ -o output.tar.bz2 HEAD
+</span></span></code></pre></div><p>Let&rsquo;s decompose:</p>
+<p>The <code>&ndash;prefix</code> argument prepends a string prefix onto every file in the archive. Therefore, if you&rsquo;d like the root directory to be named <code>some-project</code>, then you prepend that string with a trailing slash, and you&rsquo;ll have everything nested inside a directory!</p>
+<p>The <code>-o</code> flag predictably picks the output file and format. Using <code>.tar.bz2</code> is quite common.</p>
+<p>Lastly, the <code>HEAD</code> portion at the end specifies which git tree to pull the files from. I usually specify a git tag here, but you can specify a commit id if you prefer.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="idontalwaystarball.png"><img class="wp-image-1105 size-full" src="idontalwaystarball.png" alt="Obligatory, "make this article more interesting" meme image." width="100%" height="100%" /></a></td></tr><tr><td> Obligatory, "make this article more interesting" meme image.</td></tr></table></br />
+<p>This is all well and good, but unfortunately, when I open my newly created archive, it is notably missing my git submodules! It would probably make sense for there to be an upstream option so that a <code>&ndash;recursive</code> flag would do this magic for you, but unfortunately it doesn&rsquo;t exist yet.</p>
+<p>There are a few scripts floating around that can do this, but I wanted something small, and without any real dependencies, that I can embed in my project <code>Makefile</code>, so that it&rsquo;s all self-contained.</p>
+<p>Here&rsquo;s what that looks like:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sometarget:
+</span></span><span style="display:flex;"><span>    @echo Running git archive...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># use HEAD if tag doesn&#39;t exist yet, so that development is easier...</span>
+</span></span><span style="display:flex;"><span>    git archive --prefix<span style="color:#666">=</span>oh-my-vagrant-<span style="color:#a2f;font-weight:bold">$(</span>VERSION<span style="color:#a2f;font-weight:bold">)</span>/ -o <span style="color:#a2f;font-weight:bold">$(</span>SOURCE<span style="color:#a2f;font-weight:bold">)</span> <span style="color:#a2f;font-weight:bold">$(</span>VERSION<span style="color:#a2f;font-weight:bold">)</span> 2&gt; /dev/null <span style="color:#666">||</span> <span style="color:#666">(</span><span style="color:#a2f">echo</span> <span style="color:#b44">&#39;Warning: $(VERSION) does not exist.&#39;</span> <span style="color:#666">&amp;&amp;</span> git archive --prefix<span style="color:#666">=</span>oh-my-vagrant-<span style="color:#a2f;font-weight:bold">$(</span>VERSION<span style="color:#a2f;font-weight:bold">)</span>/ -o <span style="color:#a2f;font-weight:bold">$(</span>SOURCE<span style="color:#a2f;font-weight:bold">)</span> HEAD<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># TODO: if git archive had a --submodules flag this would easier!</span>
+</span></span><span style="display:flex;"><span>    @echo Running git archive submodules...
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># i thought i would need --ignore-zeros, but it doesn&#39;t seem necessary!</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b8860b">p</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">(</span><span style="color:#a2f">echo</span> .; git submodule foreach<span style="color:#666">)</span> | <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">read</span> entering path; <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>        <span style="color:#b8860b">temp</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$$</span><span style="color:#b44">{path%\&#39;}&#34;</span>; <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>        <span style="color:#b8860b">temp</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$$</span><span style="color:#b44">{temp#\&#39;}&#34;</span>; <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>        <span style="color:#b8860b">path</span><span style="color:#666">=</span><span style="color:#b8860b">$$</span>temp; <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>        <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$$</span><span style="color:#b44">path&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#34;&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">continue</span>; <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>        <span style="color:#666">(</span><span style="color:#a2f">cd</span> <span style="color:#b8860b">$$</span>path <span style="color:#666">&amp;&amp;</span> git archive --prefix<span style="color:#666">=</span>oh-my-vagrant-<span style="color:#a2f;font-weight:bold">$(</span>VERSION<span style="color:#a2f;font-weight:bold">)</span>/<span style="color:#b8860b">$$</span>path/ HEAD &gt; <span style="color:#b8860b">$$</span>p/rpmbuild/tmp.tar <span style="color:#666">&amp;&amp;</span> tar --concatenate --file<span style="color:#666">=</span><span style="color:#b8860b">$$</span>p/<span style="color:#a2f;font-weight:bold">$(</span>SOURCE<span style="color:#a2f;font-weight:bold">)</span> <span style="color:#b8860b">$$</span>p/rpmbuild/tmp.tar <span style="color:#666">&amp;&amp;</span> rm <span style="color:#b8860b">$$</span>p/rpmbuild/tmp.tar<span style="color:#666">)</span>; <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>    <span style="color:#a2f;font-weight:bold">done</span></span></span></code></pre></div>
+This is a bit tricky to read, so I&rsquo;ll try to break it down. Remember, double dollar signs are used in <code>Make</code> syntax for embedded bash code since a single dollar sign is a special <code>Make</code> identifier. The <code>$(VERSION)</code> variable corresponds to the version of the project I&rsquo;m building, which matches a git tag that I&rsquo;ve previously created. <code>$(SOURCE)</code> corresponds to an output file name, ending in the <code>.tar.bz2</code> suffix.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#bbb">    </span>p<span style="color:#666">=`</span>pwd<span style="color:#666">`</span><span style="color:#bbb"> </span><span style="color:#666">&amp;&amp;</span><span style="color:#bbb"> </span>(echo<span style="color:#bbb"> </span>.;<span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>submodule<span style="color:#bbb"> </span>foreach)<span style="color:#bbb"> </span><span style="color:#666">|</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">while</span><span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">read</span><span style="color:#bbb"> </span>entering<span style="color:#bbb"> </span>path;<span style="color:#bbb"> </span>do<span style="color:#bbb"> </span><span style="">\</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>In this first line, we store the current working directory for use later, and then loop through the output of the <code>git submodule foreach</code> command. That output normally looks something like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ git submodule foreach 
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/gems/xdg&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/kubernetes/templates/default&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/p4h&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/puppet/modules/module-data&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/puppet/modules/puppet&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/puppet/modules/stdlib&#39;
+</span></span><span style="display:flex;"><span>Entering &#39;vagrant/puppet/modules/yum&#39;
+</span></span></code></pre></div><p>As you can see, this shows that the above <code>read</code> command, eats up the <em>Entering</em> string, and pulls the quoted path into the second <em>path</em> variable. The next part of the code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>        temp=&#34;$${path%\&#39;}&#34;; \
+</span></span><span style="display:flex;"><span>        temp=&#34;$${temp#\&#39;}&#34;; \
+</span></span><span style="display:flex;"><span>        path=$$temp; \
+</span></span><span style="display:flex;"><span>        [ &#34;$$path&#34; = &#34;&#34; ] &amp;&amp; continue; \
+</span></span></code></pre></div><p>uses bash idioms to remove the two single quotes that wrap our string, and then skip over any empty versions of the path variable in our loop. Lastly, for each submodule found, we first switch into that directory:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>        (cd $$path &amp;&amp;
+</span></span></code></pre></div><p>Run a normal <code>git archive</code> command and create a plain uncompressed tar archive in a temporary directory:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git archive --prefix=oh-my-vagrant-$(VERSION)/$$path/ HEAD &gt; $$p/rpmbuild/tmp.tar &amp;&amp;
+</span></span></code></pre></div><p>Then use the magic of tar to overlay this new tar file, on top of the source file that we&rsquo;re now building up with each iteration of this loop, and then remove the temporary file.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>tar --concatenate --file=$$p/$(SOURCE) $$p/rpmbuild/tmp.tar &amp;&amp; rm $$p/rpmbuild/tmp.tar); \
+</span></span></code></pre></div><p>Finally, we end the loop:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>    done
+</span></span></code></pre></div><p>Boom, magic! Short, concise, and without any dependencies but <code>bash</code> and <code>git</code>.</p>
+<p>Nobody should have to figure that out by themselves, and I wish it was built in to git, but until then, here&rsquo;s how it&rsquo;s done! Many thanks to <code>#git</code> on IRC for pointing me in the right direction.</p>
+<p><a href="https://github.com/purpleidea/oh-my-vagrant/commit/8ee3fdab7451bb30b56e42c4586e4304b5805faf#diff-b67911656ef5d18c4ae36cb6741b7965R89" target="_blank">This is the commit</a> where I landed this patch for oh-my-vagrant, if you&rsquo;re curious to see this in the wild. Now that this is done, I can definitely say that it was worth the time:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://xkcd.com/1205/" target="_blank"><img src="https://imgs.xkcd.com/comics/is_it_worth_the_time.png" alt="" width="100%" height="100%" /></a></td></tr><tr><td> Is it worth the time? In this case, it was.</td></tr></table></br />
+<p>With this feature merged, along with my <a href="/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/" target="_blank">automatic COPR</a> builds, a simple &lsquo;<code>make rpm</code>&rsquo;, causes all of this automation to happen, and delivers a fresh build from git in a few minutes.</p>
+<p>I hope you enjoyed this technique, and I hope you have some coding skills to get this feature upstream in git.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>July 23, 2015<br>
+				<small>263 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/copr">copr</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/git-submodules">git submodules</a> <a class="label label-default" href="/tags/git-archive">git-archive</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/make">make</a> <a class="label label-default" href="/tags/makefile">makefile</a> <a class="label label-default" href="/tags/oh-my-vagrant">oh-my-vagrant</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/rpm">rpm</a> <a class="label label-default" href="/tags/tar">tar</a> <a class="label label-default" href="/tags/tar--concatenate">tar --concatenate</a> <a class="label label-default" href="/tags/xkcd">xkcd</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/07/23/git-archive-with-submodules-and-tar-magic/"><small>https://ttboj.wordpress.com/2015/07/23/git-archive-with-submodules-and-tar-magic/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/07/23/git-archive-with-submodules-and-tar-magic">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/07/23/git-archive-with-submodules-and-tar-magic.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

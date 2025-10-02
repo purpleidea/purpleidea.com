@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Fixing dropbox “conflicted copy” problems - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Fixing dropbox “conflicted copy” problems</strong><br><small></small></h3>
+					<hr>
+					<p><a href="https://www.gnu.org/philosophy/who-does-that-server-really-serve.html">I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns.</a> In addition, there are some excellent <em>libre</em> (and hosted) services such as <a href="https://wordpress.com/">WordPress</a>, <a href="https://www.wikipedia.org/">Wikipedia</a> and <a href="https://www.openshift.com/">OpenShift</a> which don&rsquo;t have the above problems. Thirdly, there are every day <a href="https://www.gnu.org/philosophy/free-sw.html">Free Software</a> tools such as <a href="https://fedoraproject.org/">Fedora GNU/Linux</a>, <a href="https://www.libreoffice.org/">Libreoffice</a>, and <a href="http://git-annex.branchable.com/assistant/">git-annex-assistant</a> which make <em>my</em> computing much more powerful. Finally, there are some hosted services that I use that don&rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools. The two examples are <a href="https://github.com/purpleidea/">GitHub</a> and <a href="https://db.tt/svmqLvX7">Dropbox</a>.</p>
+<p>Today, Dropbox bit me. Here&rsquo;s how I saved my data.</p>
+<p>Dropbox integrates with <a href="https://www.gnome.org/">GNOME</a>&rsquo;s <a href="https://wiki.gnome.org/Apps/Nautilus">nautilus</a> to sync your data to their proprietary cloud hosting. I periodically run the dropbox client to sync any changes to my public files up to their servers. Today, the client decided that some of my newer files were older than the stored server-side versions, and promptly over-wrote my newer versions.</p>
+<p>Thankfully I have real backups, and, to be fair, Dropbox actually renamed my newer files instead of blatantly clobbering them. My filesystem now looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ tree files/
+</span></span><span style="display:flex;"><span>files/
+</span></span><span style="display:flex;"><span>|-- bar
+</span></span><span style="display:flex;"><span>|-- baz
+</span></span><span style="display:flex;"><span>|   |-- file1
+</span></span><span style="display:flex;"><span>|   |-- file1\ (james&#39;s\ conflicted\ copy\ 2014-09-29)
+</span></span><span style="display:flex;"><span>|   |-- file2\ (james&#39;s\ conflicted\ copy\ 2014-09-29).sh
+</span></span><span style="display:flex;"><span>|   `-- file2.sh
+</span></span><span style="display:flex;"><span>`-- foo
+</span></span><span style="display:flex;"><span>    `-- magic.sh
+</span></span></code></pre></div><p>You&rsquo;ll note that my previously clean file system now has the &ldquo;conflicted copy&rdquo; versions everywhere. These are the good versions, whereas in the example above <code>file1</code> and <code>file2.sh</code> are the older unwanted versions.</p>
+<p>I spent some time with <code>find</code> and <code>diff</code> convincing myself that this was true, and eventually I wrote a script. The script looks through the current working directory for &ldquo;conflicted copy&rdquo; matches, saves the unwanted versions (just in case) and then clobbers them with the good &ldquo;conflicted&rdquo; version.</p>
+<p>Please look through, edit, and understand this script before running it. It might not be what you want, and it was designed to only work for me. It is <a href="https://gist.github.com/purpleidea/0ed86f735807759d455c">available as a gist</a>, and below in the body of this article.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat fix-dropbox.sh 
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># XXX: use at your own risk - do not run without understanding this first!</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">exit</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># safety directory</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">BACKUP</span><span style="color:#666">=</span><span style="color:#b44">&#39;/tmp/fix-dropbox/&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># TODO: detect or pick manually...</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">NAME</span><span style="color:#666">=</span><span style="color:#b44">`</span>hostname<span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#NAME=&#39;myhostname&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">DATE</span><span style="color:#666">=</span><span style="color:#b44">&#39;2014-09-29&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#b44">&#34;</span><span style="color:#b8860b">$BACKUP</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>find . -path <span style="color:#b44">&#34;*(*&#39;s conflicted copy [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]*&#34;</span> -print0 | <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">read</span> -d <span style="color:#b44">$&#39;&#39;</span> -r file; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f">printf</span> <span style="color:#b44">&#39;Found: %s\n&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$file</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># TODO: detect or pick manually...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#NAME=&#39;XXX&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#DATE=&#39;2014-09-29&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b8860b">STRING</span><span style="color:#666">=</span><span style="color:#b44">&#34; (</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">NAME</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#39;s conflicted copy </span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">DATE</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">)&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#echo $STRING</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b8860b">RESULT</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">echo</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$file</span><span style="color:#b44">&#34;</span> | sed <span style="color:#b44">&#34;s/</span><span style="color:#b8860b">$STRING</span><span style="color:#b44">//&#34;</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#echo $RESULT</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b8860b">SAVE</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$BACKUP</span><span style="color:#b44">&#34;</span><span style="color:#b44">`</span>dirname <span style="color:#b44">&#34;</span><span style="color:#b8860b">$RESULT</span><span style="color:#b44">&#34;</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#echo $SAVE</span>
+</span></span><span style="display:flex;"><span>    mkdir -p <span style="color:#b44">&#34;</span><span style="color:#b8860b">$SAVE</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>    cp <span style="color:#b44">&#34;</span><span style="color:#b8860b">$RESULT</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$SAVE</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>    mv <span style="color:#b44">&#34;</span><span style="color:#b8860b">$file</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$RESULT</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">done</span></span></span></code></pre></div>
+<p>You can thank <a href="https://www.gnu.org/software/bash/">bash</a> for saving your data. <a href="https://weev.livejournal.com/409835.html?nojs=1">Stop bashing it and read this article instead.</a>
+(NOTE: I&rsquo;ve been informed that the author of the previous link is apparently not a very nice person, to say the least. I didn&rsquo;t know anything about the person when I linked to it, and I&rsquo;m only agreeing with this particular article and nothing else.)</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>September 30, 2014<br>
+				<small>568 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/diff">diff</a> <a class="label label-default" href="/tags/dropbox">dropbox</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/find">find</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/hacks">hacks</a> <a class="label label-default" href="/tags/nautilus">nautilus</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/script">script</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/09/30/fixing-dropbox-conflicted-copy-problems/"><small>https://ttboj.wordpress.com/2014/09/30/fixing-dropbox-conflicted-copy-problems/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/09/30/fixing-dropbox-conflicted-copy-problems">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

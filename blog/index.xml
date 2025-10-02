@@ -1,0 +1,1468 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>The Technical Blog of James on purpleidea.com</title>
+    <link>https://purpleidea.com/blog/</link>
+    <description>Recent content in The Technical Blog of James on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 25 Sep 2025 01:07:56 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>10 years of mgmt</title>
+      <link>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</link>
+      <pubDate>Thu, 25 Sep 2025 01:07:56 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</guid>
+      <description>I publicly released mgmt to the internet 10 years ago. I can&amp;rsquo;t believe it&amp;rsquo;s been 10 years. In this post I&amp;rsquo;ll talk about:&#xA;The new mgmt company A one-time new customer offer Unexpected wins Past failures Some history A new release And more&amp;hellip;&#xA;The company:&#xA;I&amp;rsquo;ve officially started a company. I&amp;rsquo;ve been working on this for some time now, and it&amp;rsquo;s time to let you all know about it officially. As you already know (mgmt, purpleidea, etc&amp;hellip;) I&amp;rsquo;ve never been great at naming.</description>
+    </item>
+    <item>
+      <title>Better git status</title>
+      <link>https://purpleidea.com/blog/2025/08/04/better-git-status/</link>
+      <pubDate>Mon, 04 Aug 2025 21:10:30 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/08/04/better-git-status/</guid>
+      <description>I&amp;rsquo;ve been using git status for quite a long time now. Let&amp;rsquo;s make it better.&#xA;My old aliases:&#xA;My ~/.gitconfig has had:&#xA;[alias] s = status d = diff l = log --show-signature for as long as I can remember. They&amp;rsquo;ve served me well.&#xA;The problem:&#xA;In one of my projects, I occasionally have a bunch of untracked files, particularly when I&amp;rsquo;m hacking on something new that isn&amp;rsquo;t committed yet. This may include notes, new tests, and so on.</description>
+    </item>
+    <item>
+      <title>Running etcd over SSH</title>
+      <link>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</link>
+      <pubDate>Wed, 14 May 2025 19:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</guid>
+      <description>Want to tunnel etcd traffic over SSH? Here&amp;rsquo;s a pitfall I ran into.&#xA;The problem:&#xA;Mgmt supports tunnelling the etcd traffic over SSH. This is quite useful, because it means that for it to connect to etcd, it doesn&amp;rsquo;t need to open up any new ports other than 22.&#xA;You can run the agent like so:&#xA;mgmt run --ssh-url=etcd@etcdserver:22 --seeds=http://127.0.0.1:2379 --no-server --no-magic empty and it just works!&#xA;Lockdown:&#xA;It&amp;rsquo;s no fun giving out more access than is really necessary, so I added this line to the etcd user account in their ~/.</description>
+    </item>
+    <item>
+      <title>Working around an iPXE issue</title>
+      <link>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</link>
+      <pubDate>Thu, 23 Jan 2025 21:34:56 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</guid>
+      <description>iPXE is a terrific tool, but despite their very respectable documentation, it has some rough edges, and it still feels like an &amp;ldquo;in crowd&amp;rdquo; kind of thing, where you have to learn the common tricks by knowing someone.&#xA;The problem:&#xA;I&amp;rsquo;ve been building a provisioning tool in mgmt and instead of always relying on distro-specific boot images, I decided to use iPXE to handle the early boot, and have it hand-off to the kernel installer.</description>
+    </item>
+    <item>
+      <title>Modules and imports in mgmt</title>
+      <link>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</link>
+      <pubDate>Tue, 03 Dec 2024 02:56:37 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</guid>
+      <description>Mgmt modules are used for structuring your code across multiple files. This keeps things readable and allows for code reusability. For example, it should be easy to write a single module which can be effectively used by many different parties. To me, it never felt like code reuse was a core design objective with other tools. In mgmt it has been since the very beginning. I&amp;rsquo;m very proud of our module system, so let me introduce you to it properly.</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language: Functions</title>
+      <link>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</link>
+      <pubDate>Fri, 22 Nov 2024 18:16:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been a little while since I introduced the Mgmt Configuration Language. I originally wrote this article in 2019, and as I was working on it alongside the code for functions, when I realized that lambdas didn&amp;rsquo;t work properly. It took some time to finally solve that properly. Since then I&amp;rsquo;ve been working to get mgmt production ready. It&amp;rsquo;s properly useful for production now, and so it&amp;rsquo;s time for me to catch up on my documentation.</description>
+    </item>
+    <item>
+      <title>Better dmesg in five minutes</title>
+      <link>https://purpleidea.com/blog/2024/11/17/better-dmesg/</link>
+      <pubDate>Sun, 17 Nov 2024 15:52:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/17/better-dmesg/</guid>
+      <description>I last wrote about dmesg in 2016. It has mostly not changed since then, but I&amp;rsquo;ve changed my setup slightly. Here&amp;rsquo;s a short article about what I did so that you can do it too, and so that I can remember for the next time.&#xA;Previously:&#xA;Previous I had a bash alias which looked like this:&#xA;alias dmesg=&amp;#39;dmesg --follow || dmesg&amp;#39; since some machines didn&amp;rsquo;t yet support the --follow flag.</description>
+    </item>
+    <item>
+      <title>A new provisioning tool built with mgmt</title>
+      <link>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</link>
+      <pubDate>Wed, 27 Mar 2024 16:58:57 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</guid>
+      <description>Today I&amp;rsquo;m announcing a new type of provisioning tool. This is both the culmination of a long road, and the start of a new era. Please read on for all of the details. Feel free to skip to the relevant sections you&amp;rsquo;re interested in if you don&amp;rsquo;t want all of the background.&#xA;Ten years:&#xA;The vision for this specific tool started around ten years ago. Previously, as a sysadmin, I spent a lot of my time using a configuration management tool called puppet.</description>
+    </item>
+    <item>
+      <title>Bash $PATH filtering</title>
+      <link>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</link>
+      <pubDate>Sat, 02 Mar 2024 19:54:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</guid>
+      <description>As most modern GNU+Linux distro users already know, you get a lot of tools included for free! Many of these may clutter up your $PATH and make bash tab completion more difficult than it has to be. Here&amp;rsquo;s a way to improve this!&#xA;A mess:&#xA;Here&amp;rsquo;s what I see when I tab-complete cd&amp;lt;TAB&amp;gt;:&#xA;james@computer:~$ cd cd cddb_query cd-info cd-read cd-convert cd-drive cd-it8 cdrecord cd-create-profile cd-fix-profile cdmkdir cdtmpmkdir cdda-player cd-iccdump cd-paranoia I genuinely only use three of those commands.</description>
+    </item>
+    <item>
+      <title>Upcoming Speaking and Events</title>
+      <link>https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/</link>
+      <pubDate>Wed, 31 Jan 2024 09:57:30 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/</guid>
+      <description>There are three upcoming mgmtconfig events happening within the next seven days!&#xA;mgmt @ FOSDEM:&#xA;On February 3rd, I&amp;rsquo;ll be giving a talk in the golang devroom at FOSDEM. Please come early (1hr+) if you want to get a seat, usually this room is especially full. This happens in Brussels, but it should be recorded if there aren&amp;rsquo;t any technical glitches.&#xA;(I got rejected for the main track, but it&amp;rsquo;s my fault because I need to make my work more generally appealing first.</description>
+    </item>
+    <item>
+      <title>Git branch filtering</title>
+      <link>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</link>
+      <pubDate>Sun, 28 Jan 2024 17:04:30 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</guid>
+      <description>If you have more than one git branch up in the air at the same time, having a system to track them and filter them is essential. Here are the stages I went through with git branch.&#xA;xkcd reminds us that we&amp;#39;re insane Prefixes:&#xA;My first tip involves using a memorable prefix. For new features I name my branches with feat/. For example feat/my-new-feature. Yes the slash and the dashes are treated like any regular character.</description>
+    </item>
+    <item>
+      <title>Five minute hacks: Swapping left and right headphone audio in wireplumber</title>
+      <link>https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/</link>
+      <pubDate>Wed, 22 Nov 2023 17:25:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/</guid>
+      <description>I&amp;rsquo;m on Fedora 37 at the moment. My headphone audio is backwards. How do we fix it? I&amp;rsquo;ve apparently never found the right magic until now.&#xA;The Setup:&#xA;I have a crappy &amp;ldquo;couch computer&amp;rdquo;. It&amp;rsquo;s used for casual internet browsing and video watching. It has an analog audio out which goes to my speakers. I&amp;rsquo;d like to use headphones for when I don&amp;rsquo;t want to annoy my neighbours. I have a pair of wireless headphones that I got for free, but the battery doesn&amp;rsquo;t last longer than an hour.</description>
+    </item>
+    <item>
+      <title>One minute hacks: Saving time inserting images in Libreoffice</title>
+      <link>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</link>
+      <pubDate>Wed, 02 Aug 2023 13:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</guid>
+      <description>You&amp;rsquo;ve probably used libreoffice. You opened a document, and proceeded to insert an image into the text. It wiggles all over and never rests where you want it to.&#xA;The solution:&#xA;You most likely want the &amp;ldquo;anchor as character&amp;rdquo; option. Right-click on the newly inserted image, go to the Anchor menu item, and choose As Character. You will have to do this for each image you insert which is annoying&amp;hellip;</description>
+    </item>
+    <item>
+      <title>UEFI booting, and with a new kernel module</title>
+      <link>https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/</link>
+      <pubDate>Mon, 24 Jul 2023 17:22:22 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/</guid>
+      <description>Picture this. You&amp;rsquo;ve got a supermicro server. It&amp;rsquo;s got eight hot-swappable 3.5&amp;quot; HDD&amp;rsquo;s. You want to use all of those for storage, so you buy a nifty add-on that let&amp;rsquo;s you add four additional 2.5&amp;quot; SSD&amp;rsquo;s. Those are great for your OS. That&amp;rsquo;s a great way to keep your data separate. The motherboard only supports eight drives, so you&amp;rsquo;ll need an HBA for the additional four&amp;hellip; What are some catches and things you need to watch out for?</description>
+    </item>
+    <item>
+      <title>Improving git diff output in 5 min</title>
+      <link>https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/</link>
+      <pubDate>Thu, 01 Jun 2023 18:20:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/</guid>
+      <description>Everyone uses git diff. But there&amp;rsquo;s that odd annoyance that you&amp;rsquo;ve probably seen before but are so used to that you&amp;rsquo;ve forgotten about it. The a/ and b/ prefixes&amp;hellip;&#xA;Example:&#xA;james@computer:~/code/mgmt (feat/cool-feature)$ git diff diff --git a/lang/funcs/core/os/readfile_func.go b/lang/funcs/core/os/readfile_func.go index 206ba798d..48ac29dc7 100644 --- a/lang/funcs/core/os/readfile_func.go +++ b/lang/funcs/core/os/readfile_func.go @@ -228,6 +228,8 @@ func (obj *ReadFileFunc) Stream() error { // Close runs some shutdown code for this function and turns off the stream. func (obj *ReadFileFunc) Close() error { + // TODO: Port to the new ctx-in-Stream close API.</description>
+    </item>
+    <item>
+      <title>Blocked select logging (deadlock finding) in golang</title>
+      <link>https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/</link>
+      <pubDate>Fri, 26 May 2023 01:21:22 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/</guid>
+      <description>I&amp;rsquo;ve been writing some massively concurrent code for mgmt lately. The concurrency makes it incredibly bug prone. In this case it&amp;rsquo;s usually races or deadlocks. I&amp;rsquo;ve got a new trick to make the process more pleasant.&#xA;The Problem:&#xA;I&amp;rsquo;m sure many of you have written some code like this before:&#xA;// just a small excerpt for { select { case &amp;lt;-someEvent: // some awesome thing happened! case &amp;lt;-ctx.Done(): return ctx.Err() } } And during debugging, you might have gotten frustrated and added some printf&amp;rsquo;s:</description>
+    </item>
+    <item>
+      <title>Deadline context test cancellation in golang</title>
+      <link>https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/</link>
+      <pubDate>Fri, 24 Feb 2023 22:36:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/</guid>
+      <description>I decided to write a fancy test harness in golang today. The test wraps a big internal engine for mgmt and at the top-level it takes a context for cancellation. If you don&amp;rsquo;t know about the context package, then you should go understand that and then come back here&amp;hellip; Don&amp;rsquo;t feel bad, I had no idea what it was about at first either!&#xA;The Problem:&#xA;I assumed there would be some way to follow a notification from the test runner down into my test to tell it when it was time to cleanup and exit early&amp;hellip; I expected that making my own ^C signal handler wouldn&amp;rsquo;t be correct, and I (incorrectly) assumed that the interface I&amp;rsquo;d be looking for would offer a golang context that I could pass into my code.</description>
+    </item>
+    <item>
+      <title>Magic typing with shortcuts on Linux</title>
+      <link>https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/</link>
+      <pubDate>Wed, 16 Jun 2021 00:40:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/</guid>
+      <description>Ever find yourself typing more characters than is necessary when using some annoying application or website? Here&amp;rsquo;s a quick hack around that.&#xA;Intro:&#xA;There&amp;rsquo;s a magic program called xdotool written by Jordan Sissel that solves this problem. I&amp;rsquo;ve known about his excellent work for years, but only today did I learn he also wrote xdotool. It&amp;rsquo;s named as such because it tells the X server to do something for you.</description>
+    </item>
+    <item>
+      <title>USB Audio on a Boombox</title>
+      <link>https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/</link>
+      <pubDate>Mon, 11 Jan 2021 04:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/</guid>
+      <description>In an earlier post, I got USB audio working on my used, manual, 2013 Honda Civic EX. Today I&amp;rsquo;ll do the same for a Sony ZS-RS60BT boombox.&#xA;Here it is in all its used glory after a little cleaning. Background:&#xA;I decided I should get a small portable boombox to practice my dope dance moves. I currently still suck because I think I spend more time computering than out on the floor.</description>
+    </item>
+    <item>
+      <title>Working at Amazon</title>
+      <link>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</link>
+      <pubDate>Mon, 28 Dec 2020 08:27:35 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2020/12/28/working-at-amazon/</guid>
+      <description>TL;DR: I&amp;rsquo;ve got a new job working for Amazon, in the &amp;ldquo;Open Source Program Office&amp;rdquo;. I&amp;rsquo;m now an Amazoner! More information below&amp;hellip; The Amazon. Source: https://en.wikipedia.org/wiki/Amazon_rainforest Background:&#xA;A little over three months ago, I decided to get back into full-time work. For the past 2.5 years since I left my job at Red Hat, I&amp;rsquo;ve been mostly working full-time on Mgmt Config and my DevOps/SWE Mentoring Program. To do such things, I had to live off of my savings, which isn&amp;rsquo;t sustainable long-term.</description>
+    </item>
+    <item>
+      <title>James is available for hire!</title>
+      <link>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</link>
+      <pubDate>Thu, 10 Sep 2020 08:00:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/</guid>
+      <description>TL;DR: I&amp;rsquo;m available for hire. Experienced at Linux/Golang/Mentoring/etc. More information below!&#xA;A drawing of me coding away. A photo of me giving a talk to a sold-out crowd. Background:&#xA;Two years ago, I left my job at Red Hat to work on mgmt config full-time. I&amp;rsquo;m still passionate about this project, and I&amp;rsquo;m proud of the progress that has been made in the last two years, but it&amp;rsquo;s time for me to explore new opportunities as well.</description>
+    </item>
+    <item>
+      <title>Inexpensive Dynamic DNS over IRC</title>
+      <link>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</link>
+      <pubDate>Tue, 01 Sep 2020 17:08:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</guid>
+      <description>The one thing that I&amp;rsquo;ve been using for longer than ssh is dynamic dns. In this article I&amp;rsquo;ll explain how I built an inexpensive, reliable, private alternative to the mainstream tools commonly available today using only golang and IRC.&#xA;Background:&#xA;I&amp;rsquo;ve had an account with dyndns.org for a long time. They used to be free, but then they cut off the free tier, but left existing accounts alone, until they eventually cut all the non-payers off entirely.</description>
+    </item>
+    <item>
+      <title>USB Car Audio in a Civic</title>
+      <link>https://purpleidea.com/blog/2020/08/11/usb-car-audio-in-a-civic/</link>
+      <pubDate>Mon, 24 Aug 2020 01:30:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2020/08/11/usb-car-audio-in-a-civic/</guid>
+      <description>Transportation is very important to me. My whole life I&amp;rsquo;ve never owned a car. I have gotten by with biking, public transit, and various car sharing services. Sadly, biking is incredibly dangerous and stressful, because most cars don&amp;rsquo;t respect bicycles, and in the winter it&amp;rsquo;s not very practical, the STM (public transit) offers an incredibly unreliable and unpleasant service, and Car2Go (car sharing) now requires that you use their proprietary smart phone app (you used to be able to just swipe the membership card) so I finally gave up and decided to buy a used car.</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language: Class and Include</title>
+      <link>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</link>
+      <pubDate>Fri, 26 Jul 2019 06:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been a little over a year since I introduced the Mgmt Configuration Language. A lot has happened since then, and I&amp;rsquo;d like to introduce some of the missing features that weren&amp;rsquo;t available when the language was first introduced. If you haven&amp;rsquo;t already read that post, please start there and come back when you&amp;rsquo;re finished. In this article we&amp;rsquo;ll learn about classes.&#xA;Classes:&#xA;You might remember that the mgmt language called mcl has both statements, and expressions.</description>
+    </item>
+    <item>
+      <title>Upcoming Speaking and Events</title>
+      <link>https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/</link>
+      <pubDate>Sat, 02 Feb 2019 03:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/</guid>
+      <description>mgmt @ FOSDEM:&#xA;Later today I&amp;rsquo;m giving four talks about mgmt at FOSDEM. I&amp;rsquo;m also giving two more on the following day. (One is a 5 min lightning talk.) I don&amp;rsquo;t know how I got accepted for so many talks, I just replied to the CFP for every room where I thought I had something interesting to share, and well, here we are!&#xA;I got rejected for the main track again, but I guess it&amp;rsquo;s up to me to make my work more generally appealing first.</description>
+    </item>
+    <item>
+      <title>A guide to fighting with a Cisco access point</title>
+      <link>https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/</link>
+      <pubDate>Fri, 21 Dec 2018 07:45:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/12/21/a-guide-to-fighting-with-a-cisco-access-point/</guid>
+      <description>In my hands is a Cisco AIR-CAP-3502-E-A-K9 that I saved from the landfill. After about eight hours of suffering, and what was surely a cancer causing dose of RF-radiation, I now know:&#xA;How to convince this access point to provide me with wifi.&#xA;Why Cisco products are probably best left in the garbage.&#xA;What follows is my setup guide and review for using a Cisco Aironet device. This guide will likely be useful with other models of Cisco devices, but use your own best judgment.</description>
+    </item>
+    <item>
+      <title>The End of a Red Giant</title>
+      <link>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</link>
+      <pubDate>Tue, 30 Oct 2018 08:39:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</guid>
+      <description>As I&amp;rsquo;m sure you&amp;rsquo;ve now heard, Red Hat is being acquired by IBM.&#xA;Reactions have ranged from:&#xA;The first two emotions everyone experienced. to:&#xA;The classic humourous response. to:&#xA;The classy response. to:&#xA;The thing we&amp;#39;re all curious about. to everything in between. If someone were to leak me a copy of the memo-list 2018-October.txt.gz mailman archive, I&amp;rsquo;d sure love to see that! (Of course I&amp;rsquo;m joking and I wouldn&amp;rsquo;t actually ask anyone to do this.</description>
+    </item>
+    <item>
+      <title>Hyperlinks in GNOME terminal</title>
+      <link>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</link>
+      <pubDate>Fri, 29 Jun 2018 21:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</guid>
+      <description>Over the years I&amp;rsquo;ve learned about many of the advantages of using a modern terminal and shell. I&amp;rsquo;m talking about using bash with GNOME terminal on a modern GNU/Linux distribution.&#xA;I particularly like switching between the terminal and GUI applications. It&amp;rsquo;s now even better.&#xA;Automatic Hyperlinks:&#xA;Occasionally, some program running in your shell might output what looked like a link:&#xA;gnome terminal and vte will automatically add links to text that looks like a web hyperlink or an email address They can be seen when you hover over them, and a right-click will display a useful context menu:</description>
+    </item>
+    <item>
+      <title>Breaking out of the Slack walled garden</title>
+      <link>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</link>
+      <pubDate>Fri, 22 Jun 2018 13:50:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</guid>
+      <description>I&amp;rsquo;m old school cool. Real hackers chat on open, distributed platforms. Most technical discussion can be found on the Libera.chat IRC network. It&amp;rsquo;s not perfect, but the advantages clearly outweigh the drawbacks.&#xA;Recently, I needed to join an existing large &amp;ldquo;community&amp;rdquo; on the centralized, proprietary walled garden that is the Slack network.&#xA;The Problem:&#xA;Connecting to the the Slack server requires that you use either the proprietary client or their proprietary web app.</description>
+    </item>
+    <item>
+      <title>A new sync primitive in golang</title>
+      <link>https://purpleidea.com/blog/2018/05/20/a-new-sync-primitive-in-golang/</link>
+      <pubDate>Sun, 20 May 2018 18:00:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/05/20/a-new-sync-primitive-in-golang/</guid>
+      <description>I&amp;rsquo;ve been working on lots of new stuff in mgmt and I had a synchronization problem that needed solving&amp;hellip; Long story short, I built it into a piece of re-usable functionality, exactly like you might find in the sync package. For details and examples, please continue reading&amp;hellip;&#xA;The Problem:&#xA;I want to multicast a signal to an arbitrary number of goroutines. As you might already know, this can already be done with a chan struct{}.</description>
+    </item>
+    <item>
+      <title>Leaving Red Hat</title>
+      <link>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</link>
+      <pubDate>Wed, 04 Apr 2018 06:27:35 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</guid>
+      <description>I&amp;rsquo;ve spent about four years at Red Hat, and now it&amp;rsquo;s time to move on&amp;hellip;&#xA;TL;DR: had to leave Red Hat and start Patreon to fund mgmt.&#xA;What follows is a bit of historical rambling, and some forward looking statements.&#xA;Retrospective:&#xA;Long-time readers of my blog will know that I was very active in the puppet ecosystem for many years. I learned a lot while writing puppet code, and while building some of my outrageous puppet hacks.</description>
+    </item>
+    <item>
+      <title>Running `make` from anywhere</title>
+      <link>https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/</link>
+      <pubDate>Sat, 10 Mar 2018 02:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/</guid>
+      <description>Sometimes while I&amp;rsquo;m deep inside mgmt&amp;rsquo;s project directory, I want to run an operation from the Makefile which lives in the root! Unfortunately, if you do so while nested, you&amp;rsquo;ll just get:&#xA;james@computer:~/code/mgmt/resources$ make build make: *** No rule to make target &amp;#39;build&amp;#39;. Stop. The Ten Minute Solution:&#xA;I figured I&amp;rsquo;d hack out a quick solution. What I came up with looks like this:&#xA;#!/bin/bash # James Shubin, 2018 # run `make` in the first directory (or its parent recursively) that it works in MF=&amp;#39;Makefile&amp;#39;&#x9;# looks for this file, could look for others, but that&amp;#39;s silly CWD=$(pwd)&#x9;# starting here while true; do if [ -e &amp;#34;$MF&amp;#34; ]; then make $@&#x9;# run make!</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language</title>
+      <link>https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/</link>
+      <pubDate>Mon, 05 Feb 2018 00:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/</guid>
+      <description>Mgmt has given us a lot of great features, demos, and insight into how infrastructure automation should be managed. Unfortunately it wasn&amp;rsquo;t a complete tool yet, because it was missing a crucial piece for its completeness. That all changes today with the addition of: the language.&#xA;An ideal language allows us to express easily what is useful for the programming task, and at the same time makes it difficult to write what leads to incomprehensible or incorrect programs.</description>
+    </item>
+    <item>
+      <title>Hello World!</title>
+      <link>https://purpleidea.com/blog/hello-world/</link>
+      <pubDate>Mon, 13 Nov 2017 09:18:15 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/hello-world/</guid>
+      <description>Hello! This is a new version of my website and blog. If you experience any issues, please let me know!&#xA;Happy Hacking, James&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+    <item>
+      <title>Copyleft is Dead. Long live Copyleft!</title>
+      <link>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</link>
+      <pubDate>Tue, 17 Oct 2017 21:22:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</guid>
+      <description>As you may have noticed, we recently re-licensed mgmt from the AGPL (Affero General Public License) to the regular GPL. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.&#xA;Disclaimer:&#xA;I am not a lawyer, and these are not necessarily the opinions of my employer. I think I&amp;rsquo;m knowledgeable in this area, but I&amp;rsquo;m happy to be corrected in the comments.</description>
+    </item>
+    <item>
+      <title>Extracting movies from libreoffice</title>
+      <link>https://purpleidea.com/blog/2017/07/12/extracting-movies-from-libreoffice/</link>
+      <pubDate>Wed, 12 Jul 2017 10:09:46 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/07/12/extracting-movies-from-libreoffice/</guid>
+      <description>I have a short movie that I imported into a libreoffice presentation. I wanted a copy of that movie back, but I couldn&amp;rsquo;t figure out how to extract a copy. In desperation, I figured I&amp;rsquo;d try opening the file with file-roller, the GNOME archive manager.&#xA;james@computer:/tmp$ file mgmt-berlin-osdc-17may2017.odp mgmt-berlin-osdc-17may2017.odp: OpenDocument Presentation james@computer:/tmp$ mkdir out james@computer:/tmp$ file-roller -f mgmt-berlin-osdc-17may2017.odp -e out/ [snip] james@computer:/tmp$ cd out/ james@computer:/tmp/out$ ls Configurations2/ Media/ meta.xml Pictures/ styles.</description>
+    </item>
+    <item>
+      <title>Declarative vs. Imperative paradigms</title>
+      <link>https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/</link>
+      <pubDate>Fri, 05 May 2017 17:35:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/05/05/declarative-vs-imperative-paradigms/</guid>
+      <description>Recently, while operating two different remote-controlled appliances, I realized that it was high time for a discussion about declarative and imperative paradigms. Let&amp;rsquo;s start by looking at the two remotes:&#xA;Two different &#34;remotes&#34;. The one on the left operates a television, and the one on the right controls a central heating and cooling system. At first glance you will notice that one of these remotes is dark, and the other is light.</description>
+    </item>
+    <item>
+      <title>Osmocom femtocell un-boxing</title>
+      <link>https://purpleidea.com/blog/2017/04/30/osmocom-femtocell-un-boxing/</link>
+      <pubDate>Sun, 30 Apr 2017 17:56:13 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/04/30/osmocom-femtocell-un-boxing/</guid>
+      <description>LaForge and the fine folks at Osmocom (Sysmocom) recently had a femtocell giveaway. I didn&amp;rsquo;t expect to have much time to hack on things, but they were still quite generous in sending me one. It arrived, and I took some un-boxing photos for anyone who is curious.&#xA;A box arrived in the mail... Which recurses into an inner box... Inner box is box like. Finally... The unit is displayed. Here it is in all its glory.</description>
+    </item>
+    <item>
+      <title>Metaparameters in mgmt</title>
+      <link>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</link>
+      <pubDate>Wed, 01 Mar 2017 16:11:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</guid>
+      <description>In mgmt we have meta parameters. They are similar in concept to what you might be familiar with from other tools, except that they are more clearly defined (in a single struct) and vastly more powerful.&#xA;In mgmt, a meta parameter is a parameter which is codified entirely in the engine, and which can be used by any resource. In contrast with Puppet, require/before are considered meta parameters, whereas in mgmt, the equivalent is a graph edge, which is not a meta parameter.</description>
+    </item>
+    <item>
+      <title>Faster golang builds</title>
+      <link>https://purpleidea.com/blog/2017/02/26/faster-golang-builds/</link>
+      <pubDate>Sun, 26 Feb 2017 17:02:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/02/26/faster-golang-builds/</guid>
+      <description>I&amp;rsquo;ve been hacking in golang since before version 1.4, and the speed at which my builds finished has been mostly trending downwards. Let&amp;rsquo;s look into the reasons and some fixes. TL;DR click-bait title: &amp;ldquo;Get 4x faster golang builds with this one trick!&amp;rdquo;.&#xA;Here are the three reasons my builds got slower:&#xA;The compiler&#xA;Before version 1.5, the compiler was written in C but with that release, it moved to being pure golang.</description>
+    </item>
+    <item>
+      <title>Ten minute hacks: Process pause &amp; resume</title>
+      <link>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</link>
+      <pubDate>Fri, 06 Jan 2017 05:57:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</guid>
+      <description>I&amp;rsquo;m old school and still rocking an old X220 laptop because I didn&amp;rsquo;t like the new ones. My battery life isn&amp;rsquo;t as great as I&amp;rsquo;d like it to be, but it gets worse when some &amp;ldquo;webapp&amp;rdquo; (which I&amp;rsquo;d much rather have as a native GTK+ app) causes Firefox to rev my CPU with their websocket (hi gmail!) poller.&#xA;This seems to happen most often on planes or when I&amp;rsquo;m disconnected from the internet.</description>
+    </item>
+    <item>
+      <title>Send/Recv in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</link>
+      <pubDate>Wed, 07 Dec 2016 07:00:20 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</guid>
+      <description>I previously published &amp;ldquo;A revisionist history of configuration management&amp;rdquo;. I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I will explain Send/Recv in this article, but first a few clarifications to the aforementioned article.&#xA;Clarifications&#xA;I mentioned that my &amp;ldquo;revisionist history&amp;rdquo; was inaccurate, but I failed to mention that it was also not exhaustive! Many things were left out either because they were proprietary, niche, not well-known, of obscure design or simply for brevity.</description>
+    </item>
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>I&amp;rsquo;ve got a brand new core feature in mgmt called send/recv which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.&#xA;History&#xA;This is my historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.&#xA;Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, CFEngine burst onto the scene with the first real solution to this problem.</description>
+    </item>
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.&#xA;Prior knowledge&#xA;If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    <item>
+      <title>mgmt has a logo</title>
+      <link>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</link>
+      <pubDate>Fri, 30 Sep 2016 08:41:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</guid>
+      <description>The mgmt config project got a logo! The full commit is here. Thanks to Sarah Jane Cox for creating it.&#xA;Happy Hacking,&#xA;James&#xA;PS: I might have a few stickers to give out too! Ask me next time you see me if you&amp;rsquo;d like one! Alternatively, use the artwork to make your own and share with your friends!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>Live dmesg following</title>
+      <link>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</link>
+      <pubDate>Mon, 29 Aug 2016 09:00:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</guid>
+      <description>All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.&#xA;Around the time I wrote that article, I remember wanting to stream dmesg output too! The functionality wasn&amp;rsquo;t available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!&#xA;Most GNU/Linux distros are probably running a new enough version by now, and you can now dmesg &amp;ndash;follow (or dmesg -w):</description>
+    </item>
+    <item>
+      <title>Seen in downtown Montreal...</title>
+      <link>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</link>
+      <pubDate>Wed, 03 Aug 2016 01:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</guid>
+      <description>The Technical Blog of James was seen on an outdoor electronic display in downtown Montreal! Thanks to one of my readers for sending this in.&#xA;I guess the smart phone revolution is over, and people are taking to reading my articles on bigger screens! The &#34;poutine&#34; is decent proof that this is probably Montreal. If you&amp;rsquo;ve got access to a large electronic display, put up the blog, snap a photo, and send it my way!</description>
+    </item>
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:&#xA;Someone should consider probing this USB port. The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.</description>
+    </item>
+    <item>
+      <title>Automatic clustering in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/</link>
+      <pubDate>Mon, 20 Jun 2016 12:28:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/</guid>
+      <description>In mgmt, deploying and managing your clustered config management infrastructure needs to be as automatic as the infrastructure you&amp;rsquo;re using mgmt to manage. With mgmt, instead of a centralized data store, we function as a distributed system, built on top of etcd and the raft protocol.&#xA;In this article, I&amp;rsquo;ll cover how this feature works.&#xA;Foreword:&#xA;Mgmt is a next generation configuration management project. If you haven&amp;rsquo;t heard of it yet, or you don&amp;rsquo;t remember why we use a distributed database, start by reading the previous articles:</description>
+    </item>
+    <item>
+      <title>Upcoming speaking In Hong Kong and South Africa</title>
+      <link>https://purpleidea.com/blog/2016/06/20/upcoming-speaking-in-hong-kong-and-south-africa/</link>
+      <pubDate>Mon, 20 Jun 2016 04:08:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/06/20/upcoming-speaking-in-hong-kong-and-south-africa/</guid>
+      <description>I&amp;rsquo;m thrilled to tell you that I&amp;rsquo;ll be speaking about mgmt in Hong Kong and South Africa. It will be my first time to both countries and my first time to Asia and Africa!&#xA;In Hong Kong I&amp;rsquo;ll be speaking at HKOSCon2016.&#xA;In South Africa I&amp;rsquo;ll be speaking at DebConf16.&#xA;I&amp;rsquo;m looking forward to meeting with many of the hard-working Debian hackers, and collaborating with them to build and promote excellent Free Software.</description>
+    </item>
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    <item>
+      <title>Automatic grouping in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</link>
+      <pubDate>Wed, 30 Mar 2016 06:03:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</guid>
+      <description>In this post, I&amp;rsquo;ll tell you about the recently released &amp;ldquo;automatic grouping&amp;rdquo; or &amp;ldquo;AutoGroup&amp;rdquo; feature in mgmt, a next generation configuration management prototype. If you aren&amp;rsquo;t already familiar with mgmt, I&amp;rsquo;d recommend you start by reading the introductory post, and the second post. There&amp;rsquo;s also an introductory video.&#xA;Resources in a graph&#xA;Most configuration management systems use something called a directed acyclic graph, or DAG. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges).</description>
+    </item>
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>It&amp;rsquo;s been two months since I announced mgmt, and now it&amp;rsquo;s time to continue the story by telling you more about the design of what&amp;rsquo;s now in git master. Before I get into those details, let me quickly recap what&amp;rsquo;s happened since then.&#xA;Mgmt community recap:&#xA;I gave the first public presentation about mgmt at CfgMgmtCamp. I repeated the talk at DevConf.cz. The video recording is available. Felix wrote about his work cross compiling puppet code to mgmt.</description>
+    </item>
+    <item>
+      <title>Introducing: git tpush</title>
+      <link>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</link>
+      <pubDate>Tue, 16 Feb 2016 12:15:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</guid>
+      <description>On today&amp;rsquo;s issue of &amp;ldquo;one hour hacks&amp;rdquo;, I&amp;rsquo;ll show you how you can stop your git drive-by&amp;rsquo;s to git master from breaking your CI tests&amp;hellip; Let&amp;rsquo;s continue!&#xA;The problem:&#xA;Sometimes I&amp;rsquo;ve got a shitty one-line patch that I want to push to git master. I&amp;rsquo;m usually right, and everything tests out fine, but usually isn&amp;rsquo;t always, and then I look silly while I frantically try to fix git master on a project that I maintain.</description>
+    </item>
+    <item>
+      <title>Debugging golang programs</title>
+      <link>https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/</link>
+      <pubDate>Mon, 15 Feb 2016 16:47:57 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/</guid>
+      <description>I&amp;rsquo;ve been writing a lot of golang lately. I&amp;rsquo;ve hit painful problems in the past. Here are some debugging tips. Hopefully they help you out. I bet you don&amp;rsquo;t know #2.&#xA;#0 Use log.Printf:&#xA;This should go without saying, but I&amp;rsquo;m ashamed to say it&amp;rsquo;s what I use the most. We&amp;rsquo;ve only been C programming for 44+ years, and it&amp;rsquo;s still what is most useful!&#xA;#1 Use go run -race:</description>
+    </item>
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.&#xA;I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+    <item>
+      <title>Upcoming speaking</title>
+      <link>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</link>
+      <pubDate>Mon, 18 Jan 2016 00:32:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</guid>
+      <description>I&amp;rsquo;ve got a few upcoming speaking engagements. If you&amp;rsquo;ll be attending one of these events, come see me or any of the other excellent speakers!&#xA;Please remember to check the official schedules in case there are any changes!&#xA;I&amp;rsquo;ll be speaking at the Brussels CentOS Dojo:&#xA;Automated Infrastructure Testing with Oh-My-Vagrant ...and the CentOS CI Time/date unconfirmed: I&#39;ll be showing some CI tricks, and showing you how the CentOS CI is the perfect CI for multi-machine test environments.</description>
+    </item>
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>Daniel P. Berrangé wrote about trying out a single node ceph cluster. I decided to take his article and turn it into an Oh-My-Vagrant omv.yaml file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.&#xA;If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the omv.yaml file that I&amp;rsquo;ve just published and run omv up.</description>
+    </item>
+    <item>
+      <title>Matching arbitrary URL&#39;s to custom Firefox profiles</title>
+      <link>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</link>
+      <pubDate>Sat, 14 Nov 2015 06:50:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</guid>
+      <description>We&amp;rsquo;re constantly clicking on all sorts of different URL&amp;rsquo;s throughout the day. These clickable links appear in webpages (including in &amp;ldquo;web apps&amp;rdquo; like gmail) in mail clients like Evolution, in terminals such as GNOME-terminal, and any other GTK+ app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&amp;rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along.</description>
+    </item>
+    <item>
+      <title>Thanking Oh-My-Vagrant contributors for version 1.0.0</title>
+      <link>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</link>
+      <pubDate>Tue, 18 Aug 2015 03:12:26 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/08/18/thanking-oh-my-vagrant-contributors-for-version-1-0-0/</guid>
+      <description>The Oh-My-Vagrant project became public about one year ago and at the time it was more of a fancy template than a robust project, but 188 commits (and counting) later, it has gotten surprisingly useful and mature.&#xA;james@computer:~/code/oh-my-vagrant$ git rev-list HEAD --count 188 james@computer:~/code/oh-my-vagrant$ git log $(git log --pretty=format:%H|tail -1) commit 4faa6c89cce01c62130ef5a6d5fa0fff833da371 Author: James Shubin &amp;lt;james@shubin.ca&amp;gt; Date: Thu Aug 28 01:08:03 2014 -0400 Initial commit of vagrant-puppet-docker-template... This is an attempt to prototype a default environment for vagrant+puppet+docker hacking.</description>
+    </item>
+    <item>
+      <title>Vagrant and Oh-My-Vagrant on RHEL7</title>
+      <link>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</link>
+      <pubDate>Tue, 11 Aug 2015 15:09:16 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/08/11/vagrant-and-oh-my-vagrant-on-rhel7/</guid>
+      <description>My employer keeps paying me, which I appreciate, so it&amp;rsquo;s good to spend some time to make sure RHEL7 customers get a great developer experience! So here&amp;rsquo;s how to make vagrant, vagrant-libvirt and Oh-My-Vagrant work on RHEL 7+. The same steps should work for CentOS 7+.&#xA;I&amp;rsquo;ll first paste the commands you need to run, and then I&amp;rsquo;ll explain what&amp;rsquo;s happening for those that are interested:&#xA;# run these commands, and then get hacking!</description>
+    </item>
+    <item>
+      <title>Making an empty RPM</title>
+      <link>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</link>
+      <pubDate>Tue, 11 Aug 2015 13:25:58 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</guid>
+      <description>I am definitely not an RPM expert, in fact, I&amp;rsquo;m afraid of it, but with recent tools such as COPR, and my glorious Makefile, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.&#xA;A video of my journey building this RPM. Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM.</description>
+    </item>
+    <item>
+      <title>Golang parallelism issues causing “too many open files” error</title>
+      <link>https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/</link>
+      <pubDate>Mon, 27 Jul 2015 11:39:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/</guid>
+      <description>I&amp;rsquo;ve been hacking in golang for a while, but I&amp;rsquo;ll admit that I didn&amp;rsquo;t get too deep into some of the language nuances until more recently. Since some of them have started to bite me, here&amp;rsquo;s a little post-mortem of one of the problems I was having.&#xA;After hacking and testing code all day, I made a seemingly innocuous change, and when running my program, I saw the following error:</description>
+    </item>
+    <item>
+      <title>Git archive with submodules and tar magic</title>
+      <link>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</link>
+      <pubDate>Thu, 23 Jul 2015 20:32:27 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</guid>
+      <description>Git submodules are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&amp;rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&amp;rsquo;ve used them in projects like puppet-gluster, oh-my-vagrant, and others. If you&amp;rsquo;re not familiar with them, do a bit of reading and come back later, I&amp;rsquo;ll wait.&#xA;I recently did some work packaging Oh-My-Vagrant as RPM&amp;rsquo;s.</description>
+    </item>
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>Making Oh-My-Vagrant (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)&#xA;Prerequisites:&#xA;If you haven&amp;rsquo;t read any of the previous articles about Oh-My-Vagrant, I&amp;rsquo;d recommend you start there.</description>
+    </item>
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>In this new crazy world of containers and immutable hosts, one might still want to run previous generation software such as Puppet on a current generation Atomic host. This article will explain how you can do that, and offer some proof of concept code.&#xA;The atomic host doesn&amp;rsquo;t provide a yum or dnf command, because the software is pre-baked into a read-only /usr/ partition. To &amp;ldquo;install&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.</description>
+    </item>
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>I&amp;rsquo;ve added the ability to deploy a Kubernetes cluster with Oh-My-Vagrant (omv). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a rolling update, you can use omv to test this out in minutes! I&amp;rsquo;ve recorded a screencast (~15 min), if you&amp;rsquo;d like to see some of this in action.</description>
+    </item>
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>The Oh-My-Vagrant (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, omv can be used to help this happen more naturally.&#xA;Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:</description>
+    </item>
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>With Oh-My-Vagrant (omv) you can set up a dev environment in seconds. (Read the omv introduction if you&amp;rsquo;ve never used it before!) Since everything is defined in a single omv.yaml file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;&#xA;In the omv.yaml file there is an extern variable.</description>
+    </item>
+    <item>
+      <title>Fancy git aliases and git cherryfetch</title>
+      <link>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</link>
+      <pubDate>Mon, 16 Mar 2015 05:36:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</guid>
+      <description>Here are two quick git tricks that I&amp;rsquo;ve added to my toolbox lately&amp;hellip;&#xA;I wanted to create a git alias that takes in argv from the command, but in the middle of the command. Here&amp;rsquo;s the hack that I came up with for the [alias] section of my ~/.gitconfig:&#xA;[alias] # cherryfetch fetches a repo ($1) / branch ($2) and applies it rebased! # the &amp;amp;&amp;amp; true at the end eats up the appended args cherryfetch = !</description>
+    </item>
+    <item>
+      <title>Building RHEL Vagrant Boxes with Vagrant-Builder</title>
+      <link>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</link>
+      <pubDate>Mon, 23 Feb 2015 22:48:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/02/23/building-rhel-vagrant-boxes-with-vagrant-builder/</guid>
+      <description>Vagrant is a great tool for development, but Red Hat Enterprise Linux (RHEL) customers have typically been left out, because it has been impossible to get RHEL boxes! It would be extremely elegant if hackers could quickly test and prototype their code on the same OS as they&amp;rsquo;re running in production.&#xA;Secondly, when hacking on projects that have a long initial setup phase (eg: a long rpm install) it would be excellent if hackers could roll their own modified base boxes, so that certain common operations could be re-factored out into the base image.</description>
+    </item>
+    <item>
+      <title>Introducing: Silent counter</title>
+      <link>https://purpleidea.com/blog/2015/02/09/introducing-silent-counter/</link>
+      <pubDate>Mon, 09 Feb 2015 07:31:58 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/02/09/introducing-silent-counter/</guid>
+      <description>You might want to write code that can tell how many iterations have passed since some action occurred. Alternatively, you might want to know if it&amp;rsquo;s the first time a machine has run Puppet. To do these types of things, you might wish to have a monotonically increasing counter in your Puppet manifest. Since one did not exist, I set out to build one!&#xA;The code:&#xA;If you just want to try the code, and skip the ramble, you can include common::counter into your manifest.</description>
+    </item>
+    <item>
+      <title>Replying to mailing lists with Evolution</title>
+      <link>https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/</link>
+      <pubDate>Thu, 27 Nov 2014 20:28:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/</guid>
+      <description>I use the Evolution mail client. It does have a few annoying bugs, but it has a plethora of great features too! Hopefully this post will inspire you to help hack on this piece of software and fix the bugs!&#xA;Mailing list etiquette:&#xA;When replying to mailing lists, it&amp;rsquo;s typically very friendly to include the email address of the person you&amp;rsquo;re replying to in the to or cc fields along with the mailing list address.</description>
+    </item>
+    <item>
+      <title>Captive web portals are considered harmful</title>
+      <link>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</link>
+      <pubDate>Thu, 27 Nov 2014 00:46:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</guid>
+      <description>Recently, when I tried to access http://slashdot.org/ in Firefox, I would see my browser title bar flash briefly to &amp;ldquo;AT&amp;amp;T GUI&amp;rdquo;, and then I would get redirected to: http://slashdot.org/cgi-bin/redirect.ha which returns slashdot&amp;rsquo;s custom error 404 page! What is going on? (Read on for answer&amp;hellip;)&#xA;Did slashdot mess up their mod_rewrite config? (Nope, works fine in a different browser...) Did my HTTPS everywhere extension go crazy? (Nope, still broken when disabled...) Are my HTTP requests being MITM-ed?</description>
+    </item>
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>The fact that we manage the switches in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of silicon which happens to be able to dramatically speed up the switching bandwidth.&#xA;beware of proprietary silicon, it&#39;s absurd! That tiny bit of silicon is known as an ASIC, or an application specific integrated circuit, and one particularly well performing ASIC (which is present in many commercially available switches) is called the Trident.</description>
+    </item>
+    <item>
+      <title>Testing Evolution&#39;s git master and GNOME continuous</title>
+      <link>https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/</link>
+      <pubDate>Wed, 22 Oct 2014 17:22:56 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/</guid>
+      <description>I&amp;rsquo;ve wanted a feature in Evolution for a while. It was formally requested in 2002, and it just recently got fixed in git master. I only started publicly groaning about this missing feature in 2013, and mcrha finally patched it. I tested the feature and found a small bug, mcrha patched that too, and I finally re-tested it. Now I&amp;rsquo;m blogging about this process so that you can get involved too!</description>
+    </item>
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>I had an itch to scratch, and I wanted to get a bit more familiar with Openshift. I had used it in the past, but it was time to have another go. The app and the code are now available. Feel free to check out:&#xA;https://pdfdoc-purpleidea.rhcloud.com/ This is a simple app that takes the URL of a markdown file on GitHub, and outputs a pandoc converted PDF. I wanted to use pandoc specifically, because it produces PDF&#39;s that were beautifully created with LaTeX.</description>
+    </item>
+    <item>
+      <title>Continuous integration for Puppet modules</title>
+      <link>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</link>
+      <pubDate>Fri, 10 Oct 2014 15:34:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/</guid>
+      <description>I just patched puppet-gluster and puppet-ipa to bring their infrastructure up to date with the current state of affairs&amp;hellip;&#xA;What&amp;rsquo;s new?&#xA;Better README&#39;s Rake syntax checking (fewer oopsies) CI (testing) with travis on git push (automatic testing for everyone) Use of .pmtignore to ignore files from puppet module packages (finally) Pushing modules to the forge with blacksmith (sweet!) This last point deserves another mention. Puppetlabs created the &#34;forge&#34; to try to provide some sort of added value to their stewardship.</description>
+    </item>
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>If you&amp;rsquo;re a reader of my code or of this blog, it&amp;rsquo;s no secret that I hack on a lot of puppet and vagrant. Recently I&amp;rsquo;ve fooled around with a bit of docker, too. I realized that the vagrant, environments I built for puppet-gluster and puppet-ipa needed to be generalized, and they needed new features too. Therefore&amp;hellip;&#xA;Introducing: Oh My Vagrant!&#xA;Oh My Vagrant is an attempt to provide an easy to use development environment so that you can be up and hacking quickly, and focusing on the real devops problems.</description>
+    </item>
+    <item>
+      <title>Rough data density calculations</title>
+      <link>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</link>
+      <pubDate>Wed, 27 Aug 2014 05:52:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/08/27/rough-data-density-calculations/</guid>
+      <description>Seagate has just publicly announced 8TB HDD&amp;rsquo;s in a 3.5&amp;quot; form factor. I decided to do some rough calculations to understand the density a bit better&amp;hellip;&#xA;Note: I have decided to ignore the distinction between Terabytes (TB) and Tebibytes (TiB), since I always work in base 2, but I hate the -bi naming conventions. Seagate is most likely announcing an 8TB HDD, which is actually smaller than a true 8TiB drive.</description>
+    </item>
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)&#xA;The error message that puppet hackers are probably most familiar is:&#xA;Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>Master SDN hacker Flavio sent me some tunes. They were sitting on my desktop in a folder:&#xA;$ ls ~/Desktop/ uncopyrighted_tunes_from_flavio/ I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the nautilus file browser to select which folder to play, and the totem music/video player to do the playing.&#xA;Drop a file named totem into:&#xA;~/.local/share/nautilus/scripts/ with the contents:&#xA;#!/bin/bash # o hai from purpleidea exec totem -- &amp;#34;$@&amp;#34; and make it executable with:</description>
+    </item>
+    <item>
+      <title>Securely managing secrets for FreeIPA with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</link>
+      <pubDate>Fri, 06 Jun 2014 06:12:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</guid>
+      <description>Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.&#xA;In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer.</description>
+    </item>
+    <item>
+      <title>Hiera data in modules and OS independent puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</link>
+      <pubDate>Wed, 04 Jun 2014 03:47:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</guid>
+      <description>Earlier this year, R.I.Pienaar released his brilliant data in modules hack, a few months ago, I got the chance to start implementing it in Puppet-Gluster, and today I have found the time to blog about it.&#xA;What is it?&#xA;R.I.&amp;rsquo;s hack lets you store hiera data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly params.pp, and replace it with something file based that is elegant and hierarchical.</description>
+    </item>
+    <item>
+      <title>Restarting GNOME shell via SSH</title>
+      <link>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</link>
+      <pubDate>Thu, 29 May 2014 02:18:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</guid>
+      <description>When GNOME shell breaks, you get to keep both pieces. The nice thing about shell failures in GNOME 3, is that if you&amp;rsquo;re able to do a restart, the active windows are mostly not disturbed. The common way to do this is to type ALT-F2, r, &amp;laquo;em&amp;gt;ENTER&amp;gt;.&#xA;Unfortunately, you can&amp;rsquo;t always type that in if your shell is very borked. If you are lucky enough to have SSH access, and another machine, you can log in remotely and run this script:</description>
+    </item>
+    <item>
+      <title>Vagrant on Fedora with libvirt (reprise)</title>
+      <link>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</link>
+      <pubDate>Tue, 13 May 2014 18:58:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</guid>
+      <description>Vagrant has become the de facto tool for devops. Faster iterations, clean environments, and less overhead. This isn&amp;rsquo;t an article about why you should use Vagrant. This is an article about how to get up and running with Vagrant on Fedora with libvirt easily!&#xA;Background:&#xA;This article is an update of my original Vagrant on Fedora with libvirt article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</description>
+    </item>
+    <item>
+      <title>Keeping git submodules in sync with your branches</title>
+      <link>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</link>
+      <pubDate>Tue, 06 May 2014 19:34:13 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</guid>
+      <description>This is a quick trick for making working with git submodules more magic.&#xA;One day you might find that using git submodules is needed for your project. It&amp;rsquo;s probably not necessary for everyday hacking, but if you&amp;rsquo;re glue-ing things together, it can be quite useful. Puppet-Gluster uses this technique to easily include all the dependencies needed for a Puppet-Gluster+Vagrant automatic deployment.&#xA;If you&amp;rsquo;re a good hacker, you develop things in separate feature branches.</description>
+    </item>
+    <item>
+      <title>Working at RedHat</title>
+      <link>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</link>
+      <pubDate>Wed, 02 Apr 2014 14:27:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</guid>
+      <description>So this happened:&#xA;James just James at RedHat headquarters in North Carolina wearing his new red hat. RedHat made me an offer, and I am happy to say that I have just started this week!&#xA;I am proud to have joined a company that employs many of the worlds foremost, highly professional and clever hackers. It is indubitably the best Free Software [1] / Open Source company out there, and they ship some of the greatest and most elegant software available.</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster now available as RPM</title>
+      <link>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</link>
+      <pubDate>Thu, 27 Mar 2014 20:32:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</guid>
+      <description>I&amp;rsquo;ve been afraid of RPM and package maintaining [1] for years, but thanks to Kaleb Keithley, I have finally made some RPM&amp;rsquo;s that weren&amp;rsquo;t generated from a high level tool. Now that I have the boilerplate done, it&amp;rsquo;s a relatively painless process!&#xA;In case you don&amp;rsquo;t know kkeithley, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a $BEVERAGE.</description>
+    </item>
+    <item>
+      <title>Introducing Puppet Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</link>
+      <pubDate>Mon, 24 Mar 2014 18:37:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</guid>
+      <description>Puppet is missing a number of much-needed features. That&amp;rsquo;s the bad news. The good news is that I&amp;rsquo;ve been able to write some of these as modules that don&amp;rsquo;t need to change the Puppet core! This is an article about one of these features.&#xA;Posit: It&amp;rsquo;s not possible to apply all of your Puppet manifests in a single run.&#xA;I believe that this holds true for the current implementation of Puppet.</description>
+    </item>
+    <item>
+      <title>Preserving your working directory in gnome-terminal</title>
+      <link>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</link>
+      <pubDate>Thu, 20 Mar 2014 18:01:24 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</guid>
+      <description>I use gnome-terminal for most of my hacking. In fact, I use it so much, that I&amp;rsquo;ll often have multiple tabs open for a particular project. Here&amp;rsquo;s my workflow:&#xA;Control+Alt+t (My shortcut to open a new gnome-terminal window.) cd ~/code/some_cool_hack/ # directory of some cool hack Control-Shift-t (Shortcut to open a new gnome-terminal tab.) Hack, hack, hack... The problem is that the new tab that I&#39;ve created will have a $PWD of ~, instead of keeping the $PWD of ~/code/some_cool_hack/, which is the project I&#39;m working on!</description>
+    </item>
+    <item>
+      <title>Speaking at SCALE today!</title>
+      <link>https://purpleidea.com/blog/2014/02/21/speaking-at-scale-today/</link>
+      <pubDate>Fri, 21 Feb 2014 13:54:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/02/21/speaking-at-scale-today/</guid>
+      <description>I&amp;rsquo;ll be giving a talk at SCALE today about automatically deploying GlusterFS with Puppet-Gluster and Vagrant. I&amp;rsquo;ll be giving some live demos, and this will cover some of the material from:&#xA;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&#xA;and it will contain excerpts from:&#xA;Screencasts of Puppet-Gluster + Vagrant&#xA;I&amp;rsquo;ll also be talking about some new upcoming features, and am happy to answer all of your questions!&#xA;The talk will be part of Infrastructure.</description>
+    </item>
+    <item>
+      <title>Building a snow shelter</title>
+      <link>https://purpleidea.com/blog/2014/02/17/building-a-snow-shelter/</link>
+      <pubDate>Mon, 17 Feb 2014 18:23:27 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/02/17/building-a-snow-shelter/</guid>
+      <description>To give you a break from the usual GNU/Linux/DevOps/Puppet/GlusterFS drab, I&amp;rsquo;ve decided to have a go at writing a different kind of technical article. This article will show you how to build the traditional Canadian snow dwelling known as a quinzee. If you will be travelling to Canada, I recommended that you read through this article ahead of time, so that you don&amp;rsquo;t offend your host by being unfamiliar with their traditional living accommodations.</description>
+    </item>
+    <item>
+      <title>Scathing review of the Lenovo X240</title>
+      <link>https://purpleidea.com/blog/2014/02/02/scathing-review-of-the-lenovo-x240/</link>
+      <pubDate>Sun, 02 Feb 2014 15:15:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/02/02/scathing-review-of-the-lenovo-x240/</guid>
+      <description>I&amp;rsquo;m using a Lenovo X201 with 8GiB of RAM. Apart from some minor issues, I&amp;rsquo;ve been very satisfied with this laptop. It&amp;rsquo;s over four years old, and so I decided to see what&amp;rsquo;s available on the horizon. I did not buy an X240 because of the following reasons:&#xA;The X240 has only one slot for RAM and thus supports a maximum of 8GiB.&#xA;I think it&amp;rsquo;s pretty ridiculous for any successor to the X230 to support less RAM.</description>
+    </item>
+    <item>
+      <title>Show the exit status in your $PS1</title>
+      <link>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</link>
+      <pubDate>Wed, 29 Jan 2014 19:43:44 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</guid>
+      <description>As an update to my earlier article, a friend gave me an idea of how to make my $PS1 even better&amp;hellip; First, the relevant part of my ~/.bashrc:&#xA;ps1_prompt() { local ps1_exit=$? if [ $ps1_exit -eq 0 ]; then #ps1_status=`echo -e &amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[32m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\]&amp;#34;` ps1_status=&amp;#39;\$&amp;#39; else ps1_status=`echo -e &amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[1;31m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\]&amp;#34;` fi ps1_git=&amp;#39;&amp;#39; if [ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;&amp;#39; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;master&amp;#39; ]; then ps1_git=&amp;#34; (\[&amp;amp;#092;&amp;amp;#048;33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\])&amp;#34; fi PS1=&amp;#34;${debian_chroot:+($debian_chroot)}\u@\h:\[&amp;amp;#092;&amp;amp;#048;33[01;34m\]\w\[&amp;amp;#092;&amp;amp;#048;33[00m\]${ps1_git}${ps1_status} &amp;#34; } # preserve earlier PROMPT_COMMAND entries.</description>
+    </item>
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>I decided to record some screencasts to show how easy it is to deploy GlusterFS using Puppet-Gluster+Vagrant. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!&#xA;If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:&#xA;Vagrant on Fedora with libvirt Vagrant vsftp and other tricks Vagrant clustered SSH and &#39;screen&#39; Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!</description>
+    </item>
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!&#xA;Status quo:&#xA;Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    <item>
+      <title>Testing GlusterFS during “Glusterfest”</title>
+      <link>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</link>
+      <pubDate>Thu, 16 Jan 2014 20:28:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</guid>
+      <description>The GlusterFS community is having a &amp;ldquo;test day&amp;rdquo;. Puppet-Gluster+Vagrant is a great tool to help with this, and it has now been patched to support alpha, beta, qa, and rc releases! Because it was built so well (*cough*, shameless plug), it only took one patch.&#xA;Okay, first make sure that your Puppet-Gluster+Vagrant setup is working properly. I have only tested this on Fedora 20. Please read:&#xA;Automatically deploying GlusterFS with Puppet-Gluster+Vagrant!</description>
+    </item>
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>Puppet-Gluster was always about automating the deployment of GlusterFS. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;out of the box&amp;rdquo;. Today, it is! (This is big news!)&#xA;I&amp;rsquo;ve used Vagrant to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with Fedora 20, and vagrant-libvirt. This won&amp;rsquo;t work with Fedora 19 because of bz#876541. I recommend first reading my earlier articles for Vagrant and Fedora:</description>
+    </item>
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (cssh) and screen with vagrant. I decided to expand on my vsftp script. First read:&#xA;Vagrant on Fedora with libvirt&#xA;and Vagrant vsftp and other tricks&#xA;to get up to speed on the background information. Vagrant screen:&#xA;First, a simple screen hack&amp;hellip; I often use my vssh alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with sudo-ing to root and then running screen each time.</description>
+    </item>
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt, and have even been submitting, patches and issues! (This &amp;ldquo;closed&amp;rdquo; issue needs solving!) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.&#xA;Default provider:&#xA;I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using vagrant-libvirt.</description>
+    </item>
+    <item>
+      <title>Vagrant on Fedora with libvirt</title>
+      <link>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</link>
+      <pubDate>Mon, 09 Dec 2013 20:14:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/</guid>
+      <description>Apparently lots of people are using Vagrant these days, so I figured I&amp;rsquo;d try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I&amp;rsquo;ve done. I did this on Fedora 19. Feel free to suggest improvements.&#xA;Intro:&#xA;Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like Puppet. It&amp;rsquo;s often used for development.</description>
+    </item>
+    <item>
+      <title>Now syndicated on “Planet Fedora”</title>
+      <link>https://purpleidea.com/blog/2013/12/09/now-syndicated-on-planet-fedora/</link>
+      <pubDate>Mon, 09 Dec 2013 19:18:56 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/12/09/now-syndicated-on-planet-fedora/</guid>
+      <description>I&amp;rsquo;m now syndicated on the Fedora Project planet. If you haven&amp;rsquo;t read through my blog yet, let me introduce myself, I&amp;rsquo;m James, and I write The Technical Blog of James.&#xA;I&amp;rsquo;m a sysadmin, DevOps/Puppet hacker, I.T./network architect and physiologist. Hi! I run Fedora as my primary desktop, but I also use it for servers, particularly for development before future versions of RHEL and CentOS release.&#xA;I&amp;rsquo;m most well-known for Puppet-Gluster, but I&amp;rsquo;ve also written a decent Puppet-IPA (FreeIPA) module.</description>
+    </item>
+    <item>
+      <title>Advanced recursion and memoization in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</link>
+      <pubDate>Wed, 27 Nov 2013 00:03:15 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</guid>
+      <description>As a follow-up to my original article on recursion in Puppet, and in my attempt to Push Puppet (to its limit), I&amp;rsquo;ll now attempt some more advanced recursion techniques in Puppet.&#xA;In my original recursion example, the type does recurse, but the callee cannot return any value to the caller because it is a type, and not strictly a function. This limitation immediately limits the usefulness of this technique, but I&amp;rsquo;ll try to press on!</description>
+    </item>
+    <item>
+      <title>Documentation for Puppet-Gluster</title>
+      <link>https://purpleidea.com/blog/2013/11/20/documentation-for-puppet-gluster/</link>
+      <pubDate>Wed, 20 Nov 2013 06:36:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/20/documentation-for-puppet-gluster/</guid>
+      <description>Ironically, one of the reasons that I started writing Puppet code, was so that I could spend more time designing and building, and less time writing documentation. I suppose I&amp;rsquo;m a victim of my success, because Puppet-Gluster has grown large enough to warrant its own documentation.&#xA;So I gave in, and put together some documentation.&#xA;It&amp;rsquo;s available as markdown, and, also as a pdf. As before, there is an examples/ directory which you might want to use as additional reference.</description>
+    </item>
+    <item>
+      <title>Iteration in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</link>
+      <pubDate>Sun, 17 Nov 2013 04:25:01 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</guid>
+      <description>People often ask how to do iteration in Puppet. Most Puppet users have a background in imperative programming, and are already very familiar with for loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a declarative, domain-specific language. In general, DSL&amp;rsquo;s aren&amp;rsquo;t always Turing complete, nor do they need to support loops, but this doesn&amp;rsquo;t mean you can&amp;rsquo;t iterate.&#xA;Until recently, Puppet didn&amp;rsquo;t have an explicit looping construct, and it is quite possible to build complex modules without using this new construct.</description>
+    </item>
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>Hi there,&#xA;I hope you enjoyed my &amp;ldquo;Pushing Puppet (to its limit)&amp;rdquo; talk and demos from Puppet Camp D.C., LISA 2013. As requested, I&amp;rsquo;ve posted the code and slides.&#xA;Here is the code: https://github.com/purpleidea/puppet-pushing&#xA;This module will require three modules as dependencies. The dependencies are:&#xA;My Puppet-Common module https://github.com/purpleidea/puppet-common My Puppet-Runonce module https://github.com/purpleidea/puppet-runonce My Puppet-FSM module https://github.com/purpleidea/puppet-fsm Each example doesn&#39;t require all the dependencies, so if you&#39;re only interested in the FSM, you only need that module.</description>
+    </item>
+    <item>
+      <title>Gluster Community Day, LISA 2013, Monday</title>
+      <link>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</link>
+      <pubDate>Tue, 05 Nov 2013 01:30:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</guid>
+      <description>I&amp;rsquo;m here at LISA 2013 at the Gluster Community Day. I&amp;rsquo;ve been asked by Joe Brockmeier to give a little recap about what&amp;rsquo;s been going on. So here it is!&#xA;Wesley Duffee-Braun started off with a nice overview talk about GlusterFS. The great thing about his talk was that he gave a live demo, running on virtual machines, on his laptop. If you&amp;rsquo;re a new GlusterFS user, this is good exposure to help you get started.</description>
+    </item>
+    <item>
+      <title>Speaking at LISA 2013 about Puppet and GlusterFS</title>
+      <link>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</link>
+      <pubDate>Sun, 03 Nov 2013 19:40:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</guid>
+      <description>I&amp;rsquo;m speaking at LISA 2013, the &amp;ldquo;Large Installation System Administration&amp;rdquo; conference. This conference runs all week in Washington. I&amp;rsquo;ll be giving two talks during the week, and attending at least one BOF.&#xA;My first talk is on Monday during the Gluster Community Day. I&amp;rsquo;ll be speaking about puppet-gluster, and giving a live demo. I&amp;rsquo;ll be showing some new features too. If you&amp;rsquo;d like to talk more about puppet-gluster, or want to attend the talk, give me a shout, or sign up at the above Gluster Community Day link.</description>
+    </item>
+    <item>
+      <title>Easier strace of scripts with pidof -x</title>
+      <link>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</link>
+      <pubDate>Sat, 26 Oct 2013 16:02:12 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</guid>
+      <description>Here&amp;rsquo;s a one minute read, about a trick which I discovered today:&#xA;When running an strace, it&amp;rsquo;s common to do something like:&#xA;strace -p&amp;lt;pid&amp;gt; Smarter hackers know that they can use some bash magic and do:&#xA;strace -p`pidof &amp;lt;process name&amp;gt;` However, if you&amp;rsquo;re tracing a script named foo.py, this won&amp;rsquo;t work because the real process is the script&amp;rsquo;s interpreter, and pidof python, might return other unrelated python scripts.&#xA;strace -p`pidof foo.</description>
+    </item>
+    <item>
+      <title>first release of puppet-shorewall</title>
+      <link>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</link>
+      <pubDate>Mon, 21 Oct 2013 00:07:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</guid>
+      <description>Oh, hi there.&#xA;In case you&amp;rsquo;re interested, I&amp;rsquo;ve just made a first release of my puppet-shorewall module. This isn&amp;rsquo;t meant as an exhaustive shorewall module, but it does provide most of the usual functionality that most users need.&#xA;In particular, it&amp;rsquo;s the module dependency that I use for many of my other puppet modules that provide firewalling. This is probably where you&amp;rsquo;re most likely to consume it.&#xA;In general most modules just implement shorewall::rule, so if you really don&amp;rsquo;t want to use this code, you can implement that signature yourself, or not use automatic firewalling.</description>
+    </item>
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>I&amp;rsquo;m usually on IRC, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;&#xA;The Setup&#xA;Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run irssi in a screen session on an SSH server that I manage, and I use gnome-terminal on my laptop.</description>
+    </item>
+    <item>
+      <title>GNOME Montreal Summit</title>
+      <link>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</link>
+      <pubDate>Tue, 15 Oct 2013 16:52:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</guid>
+      <description>This October 12th to 14th Montreal hosted the GNOME boston summit. Many thanks to Canonical for sponsoring breakfast, Savoir Faire Linux for hosting a great 6 à 10 with fancy snacks, and RedHat for sponsoring a pool night. What follows is some technical commentary about stuff that went on.&#xA;JHBuild&#xA;JHBuild is a tool to make it easy to download/clone (from git) and compile all the GNOME modules and applications. It was easy to get going.</description>
+    </item>
+    <item>
+      <title>Show current git branch in PS1 when branch is not master</title>
+      <link>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</link>
+      <pubDate>Thu, 10 Oct 2013 22:16:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</guid>
+      <description>Short post, long command&amp;hellip;&#xA;I&amp;rsquo;ve decided to start showing the current git branch in my PS1. However, since I don&amp;rsquo;t want to know when I&amp;rsquo;m on master, I had to write a new PS1 that I haven&amp;rsquo;t yet seen anywhere. Add the following to your .bashrc: PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &amp;#39; if [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then . /usr/share/git-core/contrib/completion/git-prompt.sh PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w$([ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;&amp;#34; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;master&amp;#34; ] &amp;amp;&amp;amp; (echo -e &amp;#34; (\[33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[33[0m\])&amp;#34;) || echo &amp;#34;&amp;#34;)\$ &amp;#39; fi</description>
+    </item>
+    <item>
+      <title>Finite state machines in puppet</title>
+      <link>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</link>
+      <pubDate>Sat, 28 Sep 2013 06:09:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</guid>
+      <description>In my attempt to push puppet to its limits, (for no particular reason), to develop more powerful puppet modules, to build in a distributed lock manager, and to be more dynamic, I&amp;rsquo;m now attempting to build a Finite State Machine (FSM) in puppet.&#xA;Is this a real finite state machine, and why would you do this?&#xA;Computer science professionals might not approve of the purity level, but they will hopefully appreciate the hack value.</description>
+    </item>
+    <item>
+      <title>No Ads!</title>
+      <link>https://purpleidea.com/blog/2013/09/26/no-ads/</link>
+      <pubDate>Thu, 26 Sep 2013 23:18:34 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/26/no-ads/</guid>
+      <description>I just shelled out to wordpress.com to buy the No Ads upgrade. I think they&amp;rsquo;re good people. I hope you all appreciate it. Let me know if you do.&#xA;Happy hacking,&#xA;James&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+    <item>
+      <title>Installing missing GNOME games</title>
+      <link>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</link>
+      <pubDate>Thu, 26 Sep 2013 00:43:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/26/installing-missing-gnome-games/</guid>
+      <description>I just realized that my Fedora 19 installation didn&amp;rsquo;t have any of the GNOME games installed by default any more. I guess there&amp;rsquo;s no love for nibbles. Here&amp;rsquo;s a quick one-liner to get them all back:&#xA;$ sudo yum search game | grep gnome | awk &amp;#39;{print $1}&amp;#39; | xargs sudo yum install -y Loaded plugins: etckeeper, langpacks, refresh-packagekit Package gnome-nibbles-3.8.0-2.fc19.x86_64 already installed and latest version Resolving Dependencies --&amp;gt; Running transaction check ---&amp;gt; Package gnome-chess.</description>
+    </item>
+    <item>
+      <title>Bittorent sync for repository mirroring</title>
+      <link>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</link>
+      <pubDate>Mon, 23 Sep 2013 02:06:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</guid>
+      <description>Theron Conrey writes about using:&#xA;BitTorrent Sync as Geo-Replication for Storage We got a chance to talk about this idea at Linuxcon. I&#39;m not entirely convinced there aren&#39;t some problem edge cases with this solution, but I think it will be hard to tell as long as the BitTorrent sync library is proprietary. I did come up with a special case of Theron&#39;s idea that I believe could work well. The special case uses the optimization that the synchronization (or file transferring) is unidirectional.</description>
+    </item>
+    <item>
+      <title>Gluster Community Day, Thursday</title>
+      <link>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</link>
+      <pubDate>Fri, 20 Sep 2013 16:23:12 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</guid>
+      <description>I&amp;rsquo;m here in New Orleans hacking up a storm and getting to meet fellow gluster users IRL. John Mark Walker started off with a great &amp;ldquo;State of the GlusterFS union&amp;rdquo; style talk.&#xA;Today Louis (semiosis) gave a great talk about running glusterfs on amazon. It was highly pragmatic and he explained how he chose the number of bricks per host. The talk will be posted online shortly.&#xA;Marco Ceppi from Canonical gave a talk about juju and gluster.</description>
+    </item>
+    <item>
+      <title>Linuxcon day three, Wednesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:59:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-three-wednesday/</guid>
+      <description>After hacking away on Monday and Tuesday and meeting fellow nerds IRL, I&amp;rsquo;ve landed even more changes to puppet-gluster. My git master branch now sits at 47 commits.&#xA;$ git clone https://github.com/purpleidea/puppet-gluster.git Cloning into &amp;#39;puppet-gluster&amp;#39;... remote: Counting objects: 317, done. remote: Compressing objects: 100% (144/144), done. remote: Total 317 (delta 187), reused 275 (delta 148) Receiving objects: 100% (317/317), 82.17 KiB | 12.00 KiB/s, done. Resolving deltas: 100% (187/187), done. $ cd puppet-gluster/ $ git log | grep &amp;#39;^commit&amp;#39; | wc -l 47 $ git log | head commit &amp;lt;a href=&amp;#34;https://github.</description>
+    </item>
+    <item>
+      <title>Linuxcon day two, Tuesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:05:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</guid>
+      <description>Continuing on from yesterday, I&amp;rsquo;ve met even more interesting people. I chatted with Dianne Mueller about some interesting ideas for gluster+openshift. More to come on that front soon. Hung out with Jono Bacon and talked a bit about puppet-gluster on Ubuntu. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks.</description>
+    </item>
+    <item>
+      <title>Linuxcon day one, Monday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</link>
+      <pubDate>Wed, 18 Sep 2013 22:32:16 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</guid>
+      <description>I&amp;rsquo;m here in New Orleans at Linux Con, hacking on puppet-gluster and talking to lots of interesting folks. I&amp;rsquo;ve met gluster hacker Theron Conrey, and my host John Mark Walker, Fedora and Raspberry Pi experts Spot and Ruth Suehle, and many others too.&#xA;The hotel is very nice. The bathroom sink has two taps of course, but both of them are hot. The New Orleans heat is probably the cause of this.</description>
+    </item>
+    <item>
+      <title>New puppet-gluster features before Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</link>
+      <pubDate>Sun, 08 Sep 2013 04:51:14 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/08/new-puppet-gluster-features-before-linuxcon/</guid>
+      <description>Hey there,&#xA;I&amp;rsquo;ve done a bit of puppet-gluster hacking lately to try to squeeze some extra features and testing in before Linuxcon. Here&amp;rsquo;s a short list:&#xA;SELinux fixes to keep Dan Walsh happy :) Ping and status checks before volume creation. Now puppet-gluster will be less noisy about failures or missing executions that are due to the necessary incremental nature of puppet-gluster runs. You&#39;ll need multiple puppet runs to get a complete setup, so don&#39;t let puppet complain part way through.</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster and me at Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</link>
+      <pubDate>Mon, 02 Sep 2013 05:50:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</guid>
+      <description>John Mark Walker, (from Redhat) has been kind enough to invite me to speak at the Linuxcon Gluster Workshop in New Orleans. I&amp;rsquo;ll be speaking about puppet-gluster, giving demos, and hopefully showing off some new features. I&amp;rsquo;m also looking forward to meeting up with gluster expert Joe Julian.&#xA;If there are features that puppet-gluster is missing, or you have a use case that I haven&amp;rsquo;t covered, please let me know, and I&amp;rsquo;ll try to work on it for you ahead of the conference.</description>
+    </item>
+    <item>
+      <title>Finding YAML errors in puppet</title>
+      <link>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</link>
+      <pubDate>Sun, 25 Aug 2013 04:31:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/08/25/finding-yaml-errors-in-puppet/</guid>
+      <description>I love tabs, they&amp;rsquo;re so much easier to work with, but YAML doesn&amp;rsquo;t like them. I&amp;rsquo;m constantly adding them in accidentally, and puppet&amp;rsquo;s error message is a bit cryptic:&#xA;Error: Could not retrieve catalog from remote server: Error 400 on SERVER: malformed format string - %S at /etc/puppet/manifests/foo.pp:18 on node bar.example.com This happens during a puppet run, which in my case loads up YAML files. The tricky part was that the error wasn&amp;rsquo;t at all related to the foo.</description>
+    </item>
+    <item>
+      <title>Upgrading from Fedora 18 to Fedora 19</title>
+      <link>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</link>
+      <pubDate>Sun, 04 Aug 2013 05:02:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</guid>
+      <description>It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. Fedora 18 was one of the worst releases ever, so I figured it could only get better. I ran my backups as usual, however this time I didn&amp;rsquo;t seem to need them, the upgrade process went off without a hitch! I used the fedup-cli process over the network. I always run these things inside of screen.</description>
+    </item>
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>A simple hack to add a user type to my puppet-ipa module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:&#xA;3 files changed, 1401 insertions(+), 215 deletions(-) You should now have a highly capable user type, along with some quick examples.&#xA;I&amp;rsquo;ve also done a rewrite of the difference engine, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms.</description>
+    </item>
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:&#xA;I&amp;rsquo;ve just released the third stage of my puppet-ipa module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my puppet-nfs module to allow you to easily setup and run an NFSv4 kerberized server and client.&#xA;While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a puppet-nfs module to make your /etc/exports management easier.</description>
+    </item>
+    <item>
+      <title>Playing with FreeIPA and puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</link>
+      <pubDate>Tue, 18 Jun 2013 12:36:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</guid>
+      <description>So I just rolled a new vm to hack around with FreeIPA. Here are some things that I&amp;rsquo;ve come across so far. I was planning on configuring LDAP, and Kerberos manually, but the included webui looks like a lovely tool to have for the data entry, user administrator type who likes to click on things. Let&amp;rsquo;s explore&amp;hellip;&#xA;/etc/hosts:&#xA;FreeIPA is choosy about how your /etc/hosts is formatted. It requires an entry that has a particular order, that is:</description>
+    </item>
+    <item>
+      <title>puppet lsi hardware raid module</title>
+      <link>https://purpleidea.com/blog/2013/06/17/puppet-lsi-hardware-raid-module/</link>
+      <pubDate>Mon, 17 Jun 2013 18:11:02 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/17/puppet-lsi-hardware-raid-module/</guid>
+      <description>In response to some discussion in the gluster community, I am releasing my puppet-lsi module. It&amp;rsquo;s quite simple, but it is very useful for rebuilding machines. It could do a lot more, but I wanted to depend on the proprietary LSI tools as little as possible. Running megacli with puppet would be a very doable hack, but I&amp;rsquo;m not sure enough devops out there who would use that feature.&#xA;Usage is straightforward if you like the sensible defaults:</description>
+    </item>
+    <item>
+      <title>Collecting duplicate resources in puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</link>
+      <pubDate>Tue, 04 Jun 2013 23:39:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</guid>
+      <description>I could probably write a long design article explaining why identical duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, Mr. Bode has already written part one of the hack: ensure_resource.&#xA;Why?&#xA;Suppose you have a given infrastructure with N vaguely identical nodes.</description>
+    </item>
+    <item>
+      <title>puppet matlab module</title>
+      <link>https://purpleidea.com/blog/2013/06/04/puppet-matlab-module/</link>
+      <pubDate>Tue, 04 Jun 2013 02:46:27 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/puppet-matlab-module/</guid>
+      <description>I don&amp;rsquo;t like repetitive work, and installing matlab counts doubly as so. Once I figured out the correct steps, I automated it with a puppet module. The downside is that the install takes a while because puppet needs to copy the iso locally. This is okay because I can be busy doing something else while this is happening.&#xA;Using the module is quite easy:&#xA;matlab::install { &amp;#39;R2011a&amp;#39;: iso =&amp;gt; &amp;#39;puppet://files/matlab/MATHWORKS_R2011A.iso&amp;#39;, licensekey =&amp;gt; &amp;#39;#####-#####-#####-#####&amp;#39;, # provide your own here licensefile =&amp;gt; &amp;#39;puppet:///files/matlab/license.</description>
+    </item>
+    <item>
+      <title>puppet rsnapshot module</title>
+      <link>https://purpleidea.com/blog/2013/06/04/puppet-rsnapshot-module/</link>
+      <pubDate>Tue, 04 Jun 2013 02:29:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/puppet-rsnapshot-module/</guid>
+      <description>Today I am releasing a puppet module for rsnapshot. The nice feature of this module, is that it lets you configure multiple different instances of rsnapshot, so that they could all run in parallel. Rsnapshot doesn&amp;rsquo;t support this directly, so this puppet module does the heavy lifting of separating out and managing each instance.&#xA;https://github.com/purpleidea/puppet-rsnapshot&#xA;The examples/ directory should give you a hint on how to use it. For everything else, have a look at the code, or feel free to leave me a comment.</description>
+    </item>
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to off.&#xA;Since we already agree that HTML and the web are a terrible idea, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me.</description>
+    </item>
+    <item>
+      <title>Overriding attributes of collected exported resources</title>
+      <link>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</link>
+      <pubDate>Tue, 14 May 2013 01:41:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</guid>
+      <description>This post is about a particularly elegant (and crucial) feature in puppet exported resources: attribute overriding. If you&amp;rsquo;re not already familiar with exported resources, you should start there, as they are the killer feature that makes configuration management with puppet awesome. (I haven&amp;rsquo;t found any explicit docs about this feature either, so feel free to comment if you know where they&amp;rsquo;re hidden.)&#xA;Setup: I&amp;rsquo;ve got a virtual machine which exports a resource to N different nodes.</description>
+    </item>
+    <item>
+      <title>Mothers day hacks</title>
+      <link>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</link>
+      <pubDate>Sun, 12 May 2013 07:32:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</guid>
+      <description>Firstly Happy Mother&amp;rsquo;s day to my mother.&#xA;Google is, as usual, busily releasing doodles. Today, the doodle takes you through a Rube Goldberg -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:&#xA;3 * 3 * 3 * 3 = 81 different permutations. At the end of the process, you can print your image.</description>
+    </item>
+    <item>
+      <title>Upgrading to centos 6.4 with shorewall onboard</title>
+      <link>https://purpleidea.com/blog/2013/04/25/upgrading-to-centos-6-4-with-shorewall-onboard/</link>
+      <pubDate>Thu, 25 Apr 2013 04:10:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/25/upgrading-to-centos-6-4-with-shorewall-onboard/</guid>
+      <description>In case you upgrade your CentOS 6.x box to version 6.4, the shorewall service might complain. With a scary message:&#xA;ERROR: Your kernel/iptables do not include state match support. No version of Shorewall will run on this system This is selinux at work, and the problem can easily be solved by running:&#xA;# restorecon -Rv /sbin Thanks shorewall-users and&#xA;Happy hacking,&#xA;James&#xA;You can hire James and his team at m9rx corporation.</description>
+    </item>
+    <item>
+      <title>Fixing jerky scrolling in Firefox</title>
+      <link>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</link>
+      <pubDate>Thu, 11 Apr 2013 05:53:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</guid>
+      <description>Fedora did a lovely job of updating me to the latest version (v. 20) of Firefox. One problem I found, was that scrolling on certain pages was quite jerky. Performance was worse (or more likely) on pages with a frameset, and pages which were long. Pages with many images made this problem worse.&#xA;It turns out that the workaround is to disable hardware acceleration:&#xA;After you&amp;rsquo;ve unchecked this box, restart Firefox, and scrolling is now considerably smoother.</description>
+    </item>
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support releasing early and often, for some value of $early and $often. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;&#xA;I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many.</description>
+    </item>
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:&#xA;james@computer:~/some/awesome/directory$ nautilus . Initializing nautilus-open-terminal extension Shutting down nautilus-open-terminal extension james@computer:~/some/awesome/directory$ This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it.</description>
+    </item>
+    <item>
+      <title>adding range support to python&#39;s http server to kickstart with anaconda</title>
+      <link>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</link>
+      <pubDate>Thu, 14 Mar 2013 00:34:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/14/adding-range-support-to-pythons-http-server-to-kickstart-with-anaconda/</guid>
+      <description>I&amp;rsquo;ve been working on automatic installs using kickstart and puppet. I&amp;rsquo;m using a modified python httpserver because it&amp;rsquo;s lightweight, and easy to integrate into my existing python code base. The server was churning away perfectly until anaconda started downloading the full rpm&amp;rsquo;s for installation. What was going wrong?&#xA;Traceback (most recent call last): [...] error: [Errno 32] Broken pipe BorkedError: See TTBOJ for explanation and discussion As it turns out, anaconda first downloads the headers, and then later requests the full rpm with an http range request.</description>
+    </item>
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&#xA;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections.</description>
+    </item>
+    <item>
+      <title>A quick anaconda trick</title>
+      <link>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</link>
+      <pubDate>Mon, 04 Mar 2013 05:00:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/04/a-quick-anaconda-trick/</guid>
+      <description>Here&amp;rsquo;s a quick anaconda solution that I am now using in some of my kickstart files&amp;hellip;&#xA;I wanted to bootstrap a machine and do all the partitioning and logical volume creation, but not format or mount one of the logical volumes. The magic parameter I needed was:&#xA;--fstype=none This seems to work perfectly for me. It&amp;rsquo;s not 100% intuitive to me, but it does work. I hope it&amp;rsquo;s not an accidental bug in the anaconda code!</description>
+    </item>
+    <item>
+      <title>Automatic hiera lookups in puppet 3.x</title>
+      <link>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</link>
+      <pubDate>Wed, 20 Feb 2013 00:43:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x/</guid>
+      <description>Dear readers,&#xA;I&amp;rsquo;ve started the slow migration of code from puppet 2.6 all the way to 3.x+. There were a few things I wasn&amp;rsquo;t clear on, so hopefully this will help to discuss these and make your migration easier!&#xA;I used hiera in 2.6, and I actually like it a lot so far. I was concerned that automatic lookups would pull in values that I wasn&amp;rsquo;t expecting. This is not the case or a worry.</description>
+    </item>
+    <item>
+      <title>Picking up the pieces after a Fedora 18 install</title>
+      <link>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</link>
+      <pubDate>Tue, 12 Feb 2013 01:15:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/</guid>
+      <description>I love GNOME and Fedora, but &amp;ldquo;upgrading&amp;rdquo; from Fedora 17 to 18 did not go well for me. I recommend you wait until either these are all fixed, or Fedora 19+ suits your needs. Here are a list of problems I had, and some workarounds. Hopefully proper patches to these bugs will get merged quickly, so that you don&amp;rsquo;t need to use these fixes.&#xA;Problem: Boot fails after upgrade from Fedora 17 to Fedora 18.</description>
+    </item>
+    <item>
+      <title>How to send and receive files like a professional</title>
+      <link>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</link>
+      <pubDate>Mon, 04 Feb 2013 10:56:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/02/04/how-to-send-and-receive-files-like-a-professional/</guid>
+      <description>Everyone needs to send and receive files sometimes. Traditionally people send files as email attachments. This still works great, and supports encryption, but many mail servers are slow and cap the upper file size limit.&#xA;ICQ was a great solution back in the 1990&amp;rsquo;s, but those days are now over. (I still remember my number.)&#xA;A lot of folks use dropbox, which requires a dropbox account, and for you to trust them with your files.</description>
+    </item>
+    <item>
+      <title>Renaming a GNOME keyring (for seahorse, the passwords and keyrings application)</title>
+      <link>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</link>
+      <pubDate>Sun, 27 Jan 2013 15:33:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/01/27/renaming-a-gnome-keyring-for-seahorse-the-passwords-and-keyrings-application/</guid>
+      <description>The GNOME Keyring is a great tool to unify password management across the desktop. Sadly, Firefox is the one application that doesn&amp;rsquo;t support this natively. (Chrome actually does!)&#xA;Seahorse is a useful tool to browse and manage your keyrings. Each keyring is physically stored in: ~/.gnome2/keyrings/$something.keyring&#xA;Usually the &amp;ldquo;$something&amp;rdquo;, matches the name of the keyring, however the real name comes from within the file. I had an older ubuntu machine running GNOME, and I wanted to import my keyring.</description>
+    </item>
+    <item>
+      <title>SElinux causes pain when using puppet 2.x with hiera</title>
+      <link>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</link>
+      <pubDate>Thu, 17 Jan 2013 03:03:36 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/01/17/selinux-causes-pain-when-using-puppet-2-x-with-hiera/</guid>
+      <description>So hiera wasn&amp;rsquo;t working when used through my puppetmaster. It worked perfectly when I was running my scripts manually with: puppet apply site.pp but the moment I switched over to regular puppetmasterd usage, everything went dead.&#xA;I realized a while back, that I could always expect some hiera failures from time to time. Whether this is hiera&amp;rsquo;s fault or not is irrelevant, the relevant part is that I quickly added:</description>
+    </item>
+    <item>
+      <title>Dynamically including classes in puppet</title>
+      <link>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</link>
+      <pubDate>Wed, 16 Jan 2013 07:29:14 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/</guid>
+      <description>As you might already know, I like pushing the boundaries of what puppet is able to do. Today, I realized that I needed to include a class by variable name. A simple way to do this is possible with:&#xA;$foo = &amp;#39;world&amp;#39; class { &amp;#34;hello::${foo}::params&amp;#34;: } I then realized that you could also do this with the standard include keyword:&#xA;$foo = &amp;#39;world&amp;#39; include &amp;#34;hello::${foo}::params&amp;#34; If you&amp;rsquo;re really insane enough to need to have your include depend on a variable, then this should suit your needs.</description>
+    </item>
+    <item>
+      <title>Clustering virtual machines with rgmanager and clusvcadm</title>
+      <link>https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/</link>
+      <pubDate>Thu, 03 Jan 2013 04:25:15 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/01/03/clustering-virtual-machines-with-rgmanager-and-clusvcadm/</guid>
+      <description>This could be a post detailing how to host clustered virtual machines with rgmanager and clusvcadm, but that is a longer story and there is much work to do. For now, I will give you a short version including an informative &amp;ldquo;gotcha&amp;rdquo;.&#xA;With my cluster up and running, I added a virtual machine entry to my cluster.conf:&#xA;&amp;lt;vm name=&amp;#34;test1&amp;#34; domain=&amp;#34;somedomain&amp;#34; path=&amp;#34;/shared/vm/&amp;#34; autostart=&amp;#34;0&amp;#34; exclusive=&amp;#34;0&amp;#34; recovery=&amp;#34;restart&amp;#34; use_virsh=&amp;#34;1&amp;#34; /&amp;gt; This goes inside the block.</description>
+    </item>
+    <item>
+      <title>How I broke (and fixed) my rgmanager service</title>
+      <link>https://purpleidea.com/blog/2012/12/31/how-i-broke-and-fixed-my-rgmanager-service/</link>
+      <pubDate>Mon, 31 Dec 2012 00:34:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/12/31/how-i-broke-and-fixed-my-rgmanager-service/</guid>
+      <description>Rgmanager, clustat and clusvcadm are useful tools in cluster land. I recently built a custom resource which I added to one of my service chains. Upon inspecting clustat, I noticed:&#xA;[root@server1 ~]# clustat Member Status: Quorate Member Name ID Status ------ ---- ---- ------ server1 1 Online, Local, rgmanager server2 2 Online, rgmanager Service Name Owner (Last) State ------- ---- ----- ------ ----- service:service-main-server1 (server1) failed Looking at /var/log/messages, I found:</description>
+    </item>
+    <item>
+      <title>visible close buttons on every firefox tab (including the last one)</title>
+      <link>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</link>
+      <pubDate>Mon, 26 Nov 2012 05:42:20 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</guid>
+      <description>After hacking around with a few firefox internals the other day, I decided there was another little annoyance that I had&amp;hellip; When I&amp;rsquo;m acting insane and using my mouse to open and close tabs, the per tab close button disappears when there is only one tab left! This is apparently a feature, and while I can respect it as a default, it certainly isn&amp;rsquo;t an option for me. Thankfully, there are a lot of common minded individuals on the net, and the (hack) solution already existed.</description>
+    </item>
+    <item>
+      <title>more rows and columns on firefox new tab page</title>
+      <link>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</link>
+      <pubDate>Sat, 24 Nov 2012 19:09:37 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</guid>
+      <description>Firefox has a &amp;ldquo;new tab&amp;rdquo; speed dial type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.&#xA;My one gripe is that it only shows you a default grid of 3 x 3. You can easily change that if you look in the secret preferences. Open a new tab and type in: about:config, accept the warning, and then search for: browser.</description>
+    </item>
+    <item>
+      <title>hello planet puppet</title>
+      <link>https://purpleidea.com/blog/2012/11/23/hello-planet-puppet/</link>
+      <pubDate>Fri, 23 Nov 2012 05:59:30 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/23/hello-planet-puppet/</guid>
+      <description>Hello planet puppet readers!&#xA;Brice Figureau[1] who runs planet puppet has just syndicated my blog, so thanks go out to him.&#xA;To all readers, I hope you enjoy my content, and please don&amp;rsquo;t be shy to comment and let me know if there are particular subjects or posts that I should elaborate on. I&amp;rsquo;ve got a whack of technical posts in the archives, so feel free to browse and let me know what&amp;rsquo;s good!</description>
+    </item>
+    <item>
+      <title>recursion in puppet (for no particular reason)</title>
+      <link>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</link>
+      <pubDate>Tue, 20 Nov 2012 06:25:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/</guid>
+      <description>I&amp;rsquo;m working on some fancy puppet &amp;ldquo;code&amp;rdquo;, and I realized recursion could be very useful. I decided to try out a little hack to see if I could get it to work. I&amp;rsquo;ll jump right into the code: #!/usr/bin/puppet define recursion( $count ) { notify { &amp;#34;count-${count}&amp;#34;: } $minus1 = inline_template(&amp;#39;&amp;lt;%= count.to_i - 1 %&amp;gt;&amp;#39;) if &amp;#34;${minus1}&amp;#34; == &amp;#39;0&amp;#39; { notify { &amp;#39;done counting!&amp;#39;: } } else { # recurse recursion { &amp;#34;count-${minus1}&amp;#34;: count =&amp;gt; $minus1, } } } # kick it off.</description>
+    </item>
+    <item>
+      <title>continuous display of log files (better tail -f)</title>
+      <link>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</link>
+      <pubDate>Sun, 18 Nov 2012 01:02:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</guid>
+      <description>All good sysadmins know about using tail -f to follow a log file. I use this all the time to follow /var/log/messages and my gluster logs in particular. Maybe everyone already knows this, but it deserves a PSA: after a certain amount of time (~days) it seems that new messages don&amp;rsquo;t appear!&#xA;What happens by default is that tail -f follows the file descriptor, not the file name, so when your log files get rotated, the file descriptor still points to the (now renamed) file which no longer gets updates any more.</description>
+    </item>
+    <item>
+      <title>setting timed events in puppet</title>
+      <link>https://purpleidea.com/blog/2012/11/14/setting-timed-events-in-puppet/</link>
+      <pubDate>Wed, 14 Nov 2012 01:31:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/14/setting-timed-events-in-puppet/</guid>
+      <description>I&amp;rsquo;ve tried to push puppet to its limits, and so far I&amp;rsquo;ve succeeded. When you hit the kind of bug that forces you to hack around it, you know you are close. In any case, this isn&amp;rsquo;t about that embarrassing bug, it&amp;rsquo;s about how to set delayed actions in puppet.&#xA;Enter puppet-runonce, a module that I&amp;rsquo;ve just finished writing. It starts off with the realization that you can exec an action which also writes to a file.</description>
+    </item>
+    <item>
+      <title>preventing duplicate parameter values in puppet types</title>
+      <link>https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/</link>
+      <pubDate>Wed, 07 Nov 2012 18:30:31 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types/</guid>
+      <description>I am writing a keepalived module for puppet. It will naturally be called: &amp;ldquo;puppet-keepalived&amp;rdquo;, and I will be releasing the code in the near future! In any case, if you&amp;rsquo;re familiar with VRRP, you&amp;rsquo;ll know that each managed link (eg: resource or VIP) has a common routerid and password which are shared among all members in the group. It is important that these parameters are unique across the type definitions on a single node.</description>
+    </item>
+    <item>
+      <title>changing *that* keyboard shortcut right there (in gnome)</title>
+      <link>https://purpleidea.com/blog/2012/11/03/changing-that-keyboard-shortcut-right-there-in-gnome/</link>
+      <pubDate>Sat, 03 Nov 2012 03:12:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/03/changing-that-keyboard-shortcut-right-there-in-gnome/</guid>
+      <description>I love my keyboard shortcuts, and I sometimes I want to change them. If you&amp;rsquo;re ever in a gnome application and wanted to change that one right there, you can now live-edit them!&#xA;In a terminal, first enable this feature:&#xA;gsettings set org.gnome.desktop.interface can-change-accels true Next, hover over the menu item shortcut that you want to change. Enter the shortcut you want. It should update immediately! I like to disable this live-editing, so that I don&amp;rsquo;t accidentally change any shortcuts.</description>
+    </item>
+    <item>
+      <title>Multifile mode for text editors</title>
+      <link>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</link>
+      <pubDate>Wed, 24 Oct 2012 04:08:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</guid>
+      <description>Dear internets,&#xA;I&amp;rsquo;m a sysadmin/architect, which means I spend a good amount of time coding in puppet and other languages. Puppet is a great tool, however the puppet community is a bit anal strict about their style policies. I can respect this because I understand how important uniformity is when many developers are sharing code.&#xA;(On a side note, I absolutely can&amp;rsquo;t stand using spaces for indentation, but that&amp;rsquo;s another story.</description>
+    </item>
+    <item>
+      <title>Our fusion future</title>
+      <link>https://purpleidea.com/blog/2012/10/20/our-fusion-future/</link>
+      <pubDate>Sat, 20 Oct 2012 03:02:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/10/20/our-fusion-future/</guid>
+      <description>I always find myself reading about fusion. This time, I&amp;rsquo;ve come across an excellent Q&amp;amp;A on slashdot by some MIT Fusion Researchers. It&amp;rsquo;s well worth the read, and so is the http://www.fusionfuture.org/ website for some clear explanations about nuclear fusion.&#xA;Enjoy,&#xA;James&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>including a recursive tree of files with distutils</title>
+      <link>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</link>
+      <pubDate>Mon, 01 Oct 2012 06:17:58 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/10/01/including-a-recursive-tree-of-files-with-distutils/</guid>
+      <description>It turns out it is non trivial (afaict) to include a tree of files (a directory) in a python distutils data_files argument. Here&amp;rsquo;s how I managed to do it, while also allowing the programmer to include manual entries: NAME = &amp;#39;project_name&amp;#39; distutils.core.setup( # ... data_files=[ (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;README&amp;#39;]), (&amp;#39;share/%s&amp;#39; % NAME, [&amp;#39;files/somefile&amp;#39;]), (&amp;#39;share/%s/templates&amp;#39; % NAME, [ &amp;#39;files/templates/template1.tmpl&amp;#39;, &amp;#39;files/templates/template2.tmpl&amp;#39;, ]), ] + [(&amp;#39;share/%s/%s&amp;#39; % (NAME, x[0]), map(lambda y: x[0]+&amp;#39;/&amp;#39;+y, x[2])) for x in os.</description>
+    </item>
+    <item>
+      <title>finding your software install $prefix from inside python</title>
+      <link>https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/</link>
+      <pubDate>Thu, 20 Sep 2012 04:12:00 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/</guid>
+      <description>Good python software developers tend to use distutils and include a setup.py with their code. The problem I often encounter is finding out which prefix your software has been installed in from within the python code. This might be necessary if you want to interact with some data that you&amp;rsquo;ve installed into: $prefix/share/projectname/ Here are the various steps:&#xA;1) Distutils: NAME=&amp;#39;someproject&amp;#39; distutils.core.setup( name=NAME, version=&amp;#39;0.1&amp;#39;, author=&amp;#39;James Shubin&amp;#39;, author_email=&amp;#39;secret@purpleidea.com&amp;#39;, url=&amp;#39;https://purpleidea.com/&amp;#39;, description=&amp;#39;This is an example project&amp;#39;, # http://pypi.</description>
+    </item>
+    <item>
+      <title>How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet</title>
+      <link>https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/</link>
+      <pubDate>Thu, 23 Aug 2012 16:14:44 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/</guid>
+      <description>I&amp;rsquo;ve been working on a puppet module for gluster. Both this, my puppet-gfs2 module, and other puppet clustering modules all share a common problem: How does one make sure that only certain operations happen on one node at a time?&#xA;The inelegant solutions are simple:&#xA;Specify manually (in puppet) which node the &#34;master&#34; is, and have it carry out all the special operations. Downside: Single point of failure for your distributed cluster, and you&#39;ve also written ugly asymmetrical code.</description>
+    </item>
+    <item>
+      <title>puppet gluster module now in git</title>
+      <link>https://purpleidea.com/blog/2012/07/27/puppet-gluster-module-now-in-git/</link>
+      <pubDate>Fri, 27 Jul 2012 00:48:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/27/puppet-gluster-module-now-in-git/</guid>
+      <description>The thoughtful bodepd has been kind enough to help me get my puppet-gluster module off the ground and publicized a bit too. My first few commits have been all clean up to get my initial hacking up to snuff with the puppet style guidelines. Sadly, I love indenting my code with tabs, and this is against the puppet rules :(&#xA;http://www.emacswiki.org/emacs/TabsSpacesBoth I&amp;rsquo;ll be accepting patches by email, but I&amp;rsquo;d prefer discussion first, especially since I&amp;rsquo;ve got a few obvious things brewing in my mental queue that should hit master shortly.</description>
+    </item>
+    <item>
+      <title>a puppet module for gluster</title>
+      <link>https://purpleidea.com/blog/2012/07/24/a-puppet-module-for-gluster/</link>
+      <pubDate>Tue, 24 Jul 2012 15:56:40 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/24/a-puppet-module-for-gluster/</guid>
+      <description>I am an avid cobbler+puppet user. This allows me to rely on my cobbler server and puppet manifests to describe how servers/workstations are setup. I only backup my configs and data, and I regenerate failed machines PRN.&#xA;I&amp;rsquo;ll be publishing my larger cobbler+puppet infrastructure in the future once it&amp;rsquo;s been cleaned up a bit, but for now I figured I&amp;rsquo;d post my work-in-progress &amp;ldquo;puppet-gluster&amp;rdquo; module, since it seems there&amp;rsquo;s a real interest.</description>
+    </item>
+    <item>
+      <title>now syndicated on “planet gluster”</title>
+      <link>https://purpleidea.com/blog/2012/07/24/now-syndicated-on-planet-gluster/</link>
+      <pubDate>Tue, 24 Jul 2012 15:11:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/24/now-syndicated-on-planet-gluster/</guid>
+      <description>Many thanks to johnmark in #gluster for syndicating my &amp;ldquo;gluster&amp;rdquo; tagged blog posts on http://www.gluster.org/blog/&#xA;I aim to keep these posts technical and informative, aimed mostly at other sysadmins and gluster users. Please don&amp;rsquo;t be shy to comment on my writing style or to let me know if you need more information about a particular subject. If you have any ideas about things you&amp;rsquo;d like me to write about, let me know and I&amp;rsquo;ll try to do my best.</description>
+    </item>
+    <item>
+      <title>building intel nic driver (igb) for gluster on centos</title>
+      <link>https://purpleidea.com/blog/2012/07/20/building-intel-nic-driver-igb-for-gluster-on-centos/</link>
+      <pubDate>Fri, 20 Jul 2012 18:47:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/20/building-intel-nic-driver-igb-for-gluster-on-centos/</guid>
+      <description>I&amp;rsquo;ve been having some strange networking issues with gluster. &amp;ldquo;Eco__&amp;rdquo; from #gluster suggested I try an up to date Intel nic driver. Here are the steps I followed to make that happen. No news yet on if that solved the problem.&#xA;Currently my system is using the igb (intel gigabit) driver. To find out what version you are running:&#xA;# modinfo -F version igb 3.2.10-k I found a newer version from the supermicro ftp site.</description>
+    </item>
+    <item>
+      <title>my gluster setup, described</title>
+      <link>https://purpleidea.com/blog/2012/07/19/my-gluster-setup-described/</link>
+      <pubDate>Thu, 19 Jul 2012 18:26:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/19/my-gluster-setup-described/</guid>
+      <description>For the last ~two or so years I&amp;rsquo;ve played and tested gluster on and off and hanging out in the awesome #gluster channel on Libera.chat. In case you haven&amp;rsquo;t heard, gluster was acquired by RedHat back in October 2011. This post describes my current setup. I urge you to send your comments and suggestions for improvement. I&amp;rsquo;ll update this as needed.&#xA;Hardware: Ideology: I wanted to build individual self-contained storage hosts.</description>
+    </item>
+    <item>
+      <title>gnome3&#43;others glipper/klipper replacement</title>
+      <link>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</link>
+      <pubDate>Thu, 05 Jul 2012 18:56:40 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</guid>
+      <description>So a friend of mine uses kde4 for its klipper feature. Turns out he&amp;rsquo;s right that it&amp;rsquo;s an awesome feature! I realized I couldn&amp;rsquo;t let gnome3 take second place to a clipboard app, so after a bit of searching&amp;hellip;&#xA;$ sudo yum install gnome-shell-extension-gpaste gpaste xsel Next hit up: https://extensions.gnome.org/local/ to flip on the extension. I had to first type: ALT-F2, &amp;ldquo;r&amp;rdquo; (to restart the gnome shell). Don&amp;rsquo;t worry your apps won&amp;rsquo;t die.</description>
+    </item>
+    <item>
+      <title>fedora 14 to 17 upgrade</title>
+      <link>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</link>
+      <pubDate>Mon, 04 Jun 2012 22:31:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</guid>
+      <description>I&amp;rsquo;ve been reluctantly dreading the switch to gnome 3 + shell until it&amp;rsquo;s been ironed out a little bit more than gnome 3.0 - finally took the plunge. overall it&amp;rsquo;s working well. here are some (hopefully) useful notes:&#xA;preupgrade 14-&amp;gt;17 in one step doesn&#39;t work. it lets you wait an hour for all the downloads to finish, but once you&#39;ve rebooted, the preupgrade installer tells you it can&#39;t jump this far.</description>
+    </item>
+    <item>
+      <title>IPMI for linux professionals</title>
+      <link>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</link>
+      <pubDate>Wed, 25 Apr 2012 01:22:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</guid>
+      <description>The nostalgia of serial console servers, kvm&amp;rsquo;s and switched PDU&amp;rsquo;s is hopefully no longer visible in your server room. If not, you must definitely start playing catch up. Please forgive my ignorance, but these things might still be common for big windows shops, however if that&amp;rsquo;s the case, you&amp;rsquo;ve got an entirely different set of problems ;)&#xA;IPMI is an IP based protocol that allows you to talk directly to a little computer, usually built in to your server.</description>
+    </item>
+    <item>
+      <title>how to use ssh escape characters</title>
+      <link>https://purpleidea.com/blog/2012/04/25/how-to-use-ssh-escape-characters/</link>
+      <pubDate>Wed, 25 Apr 2012 00:59:01 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/04/25/how-to-use-ssh-escape-characters/</guid>
+      <description>So you&amp;rsquo;ve learned screen, ssh and vim. Time to take your skills to level two.&#xA;Day one: You&amp;rsquo;ve logged in to your server remotely via ssh. You run &amp;ldquo;screen -xRR&amp;rdquo;, and two minutes later you&amp;rsquo;re busy chatting away in irssi and vim is running in the other window, because, you know, real sysadmins don&amp;rsquo;t use emacs.&#xA;Lunch time: You grab your laptop and head off for lunch. When you open the lid and look at your terminals, they&amp;rsquo;re all frozen, because the tcp connections have died.</description>
+    </item>
+    <item>
+      <title>Dear internets</title>
+      <link>https://purpleidea.com/blog/2012/02/22/dear-internets/</link>
+      <pubDate>Wed, 22 Feb 2012 23:04:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/02/22/dear-internets/</guid>
+      <description>Dear internets,&#xA;During my daily grind of computer architecturing, I often learn something new that I wish a mentor had taught me earlier. I will post my babbles here, so that the interested might learn, and for the wiser to comment on.&#xA;Happy Hacking!&#xA;James&#xA;PS: I had a previous blog, but that server was taken down. It has been merged into this one!&#xA;You can hire James and his team at m9rx corporation.</description>
+    </item>
+    <item>
+      <title>sparse rsync magic</title>
+      <link>https://purpleidea.com/blog/2012/02/22/sparse-rsync-magic/</link>
+      <pubDate>Wed, 22 Feb 2012 18:50:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/02/22/sparse-rsync-magic/</guid>
+      <description>Dear internets,&#xA;Once upon a time, I had one of those &amp;ldquo;brain teaser-of-the-day&amp;rdquo; calendars. Free business tip: someone should make an &amp;lsquo;rsync&amp;rsquo; version. That would be brilliant. (If you don&amp;rsquo;t know what rsync is, then you should probably go read a different blog.)&#xA;Anyone who&amp;rsquo;s used kvm might know, linux virtual machines can have sparse .raw file backing stores. This means the operating system could think it has one TiB of space, when it is actually sharing a one TiB physical harddrive with many others.</description>
+    </item>
+    <item>
+      <title>git, gitosis, gitweb and friends...</title>
+      <link>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</link>
+      <pubDate>Thu, 19 Aug 2010 11:03:46 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/08/19/git-gitosis-gitweb-and-friends/</guid>
+      <description>In case it wasn&amp;rsquo;t already obvious, I am a huge fan of git, and often prefer it over sliced bread. Recently to help a small team of programmers collaborate, I decided to setup a private git server for them to use. By no claim of mine is the following tutorial unique, however I am writing this to aid those who had trouble following other online tutorials.&#xA;Goal: Setup a central git server for private or public source sharing, without having to give everyone a separate shell account.</description>
+    </item>
+    <item>
+      <title>gnome-do trick</title>
+      <link>https://purpleidea.com/blog/2010/03/31/gnome-do-trick/</link>
+      <pubDate>Wed, 31 Mar 2010 12:17:21 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/gnome-do-trick/</guid>
+      <description>I use gnome-do. It&amp;rsquo;s fairly useful. One quick trick: press SHIFT - &amp;lt;ENTER&amp;gt; instead of plain &amp;lt;ENTER&amp;gt; to launch without closing the launcher box. Therefore, if you want three terminals, type: &amp;lt;SUPER&amp;gt; - &amp;lt;SPACE&amp;gt;, t(erminal), (&amp;lt;SHIFT&amp;gt; - &amp;lt;ENTER&amp;gt; X 2), &amp;lt;ENTER&amp;gt;.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>lecturing and git-bisect</title>
+      <link>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</link>
+      <pubDate>Wed, 31 Mar 2010 10:13:48 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</guid>
+      <description>I was recently asked to give a lecture for the PRELUDE series at McGill. Here was my abstract:&#xA;I don&#39;t like computers, and neither should you. We spend too much time figuring out how to talk to them, instead of having them figure out how to understand us. There&#39;s a big discontinuity between what software is providing, and the killer features we want! We&#39;re not completely lost though. There are a lot of good tools and methodologies available!</description>
+    </item>
+    <item>
+      <title>scary cool bash scripting inside a Makefile</title>
+      <link>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</link>
+      <pubDate>Wed, 31 Mar 2010 10:05:21 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</guid>
+      <description>Makefiles are both scary and wonderful. When both these adjectives are involved, it often makes for interesting hacking. This is likely the reason I use bash.&#xA;In any case, I digress, back to real work. I use Makefiles as a general purpose tool to launch any of a number of shell scripts which I use to maintain my code, and instead of actually having external shell scripts, I just build any necessary bash right into the Makefile.</description>
+    </item>
+    <item>
+      <title>getting gedit to work like magic</title>
+      <link>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</link>
+      <pubDate>Tue, 09 Mar 2010 17:17:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</guid>
+      <description>i use gnu/linux. it&amp;rsquo;s probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using gedit for editing text. i still use vim, echo (gnu bash) and emacs (but only for org-mode).&#xA;vim is really, really great. but for day to day full-screen coding, i love working in gedit. i only have one [1] longstanding gripe, and today i believe that it is solved.</description>
+    </item>
+    <item>
+      <title>n900 features that should be added</title>
+      <link>https://purpleidea.com/blog/2010/03/02/n900-features-that-should-be-added/</link>
+      <pubDate>Tue, 02 Mar 2010 17:59:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/02/n900-features-that-should-be-added/</guid>
+      <description>i decided i&amp;rsquo;d compile a short list of features / functionality which should be added to the new nokia N900 to make it totally pro. it&amp;rsquo;s pretty good as it is, despite it not working with the bell networks. i&amp;rsquo;ve attempted to order this list in order of importance (more or less).&#xA;all the closed source bits must become free software under a GPL or AGPL license. it should support a fully encrypted file system.</description>
+    </item>
+    <item>
+      <title>a custom epiphany location bar</title>
+      <link>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</link>
+      <pubDate>Mon, 22 Feb 2010 17:04:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</guid>
+      <description>since i do much research on the internets, i often find myself in a web browser. my favourite of the lot is epiphany. this post isn&amp;rsquo;t about its merits or failures, but about the awesome way to make my location bar be exactly how i like it: monospaced.&#xA;just add the following into your ~/.gtkrc-2.0 file and then restart epiphany. feel free to modify as you wish.&#xA;# ~/.gtkrc-2.0 style &amp;#34;Epiphany_Locationbar&amp;#34; { # leave out the font size if you wish font_name = &amp;#34;Monospace 12&amp;#34; #bg[NORMAL] = &amp;#34;#ff0000&amp;#34; } # both of these seem to work.</description>
+    </item>
+    <item>
+      <title>reading obscure documentation</title>
+      <link>https://purpleidea.com/blog/2010/02/08/reading-obscure-documentation/</link>
+      <pubDate>Mon, 08 Feb 2010 13:05:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/08/reading-obscure-documentation/</guid>
+      <description>Sometimes the interfaces you need just aren&amp;rsquo;t well documented, but thanks to the internets, some websearches, and a useful dictionary, you can often decipher random web documentation jargon to help you produce useful code.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>getopt vs. optparse vs. argparse</title>
+      <link>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</link>
+      <pubDate>Wed, 03 Feb 2010 12:25:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</guid>
+      <description>sooner or later you&amp;rsquo;ll end up needing to do some argument parsing. the foolish end up writing their own yucky parser that ends up having a big if statement filled with things like:&#xA;if len(sys.argv) &amp;gt; 1&#xA;in it. don&amp;rsquo;t do this unless you have a really good excuse.&#xA;sooner or later, someone directs you to getopt, and you happily continue on with buggy manual parsing thinking you&amp;rsquo;ve &amp;ldquo;found the way&amp;rdquo;.</description>
+    </item>
+    <item>
+      <title>sorting out the confusion</title>
+      <link>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</link>
+      <pubDate>Wed, 27 Jan 2010 13:03:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</guid>
+      <description>if i&amp;rsquo;ve been silent as of late, it&amp;rsquo;s because i&amp;rsquo;ve been furiously coding away. i&amp;rsquo;ve got what i think are some elegant implementations cooking, and with any luck my extra work will pay off in hours and days and months of time saved down the road. i&amp;rsquo;ve got a few interesting (interesting with respect to your average rating of the blog posts on this site) posts cooking in my mind, and hopefully they&amp;rsquo;ll appear shortly!</description>
+    </item>
+    <item>
+      <title>piping data through ssh</title>
+      <link>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</link>
+      <pubDate>Wed, 09 Dec 2009 22:36:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</guid>
+      <description>not that what i&amp;rsquo;m about to tell you is brilliant, new or revolutionary, however i thought i&amp;rsquo;d mention it in case you&amp;rsquo;re not doing it. also feel free to let me know if there is a better way.&#xA;problem: i have some stdout which comes from a command and i want it in a file on another machine.&#xA;i could first send it to a temp file, scp that over, and then remove the temp file; but instead, i&amp;rsquo;ll just:</description>
+    </item>
+    <item>
+      <title>really well written article</title>
+      <link>https://purpleidea.com/blog/2009/11/16/really-well-written-article/</link>
+      <pubDate>Mon, 16 Nov 2009 13:14:15 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/11/16/really-well-written-article/</guid>
+      <description>i&amp;rsquo;m sure that most (if not all) of the technically inclined readers know about this already, but since it&amp;rsquo;s such a well written article (and detailed in the right places), i felt i should bump up it&amp;rsquo;s link count.&#xA;http://en.wikipedia.org/wiki/Binary_prefix&#xA;as an aside, i really liked Knuth&amp;rsquo;s suggestion; in the meantime let&amp;rsquo;s use the stupid kibi&amp;rsquo;s.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>IPVS &#43; shorewall</title>
+      <link>https://purpleidea.com/blog/2009/11/05/ipvs-shorewall/</link>
+      <pubDate>Thu, 05 Nov 2009 11:29:16 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/11/05/ipvs-shorewall/</guid>
+      <description>lvs load balancing always felt like an elusive task. here i will document how to get it working with the excellent shorewall firewall, as an extension to their two interface common use case. this was all necessary for a group of grad students that needed to test out and develop some distributed algorithms. it turns out that once you get going, all this is quite easy and fun!&#xA;the various components and files used for this setup include:</description>
+    </item>
+    <item>
+      <title>scary man pages</title>
+      <link>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</link>
+      <pubDate>Mon, 02 Nov 2009 23:21:57 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/11/02/scary-man-pages/</guid>
+      <description>while doing a little reading and research, i ended up reading a bit of the hdparm man page. never in my life have i read such a scary man page. i guess it is appropriate for halloween, but it came 2 days late in my case. as a result of my being so impressed with the sheer amount of warnings in the manual, i have decided to compile them here.</description>
+    </item>
+    <item>
+      <title>multi monitors and how it should all work (long babble)</title>
+      <link>https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/</link>
+      <pubDate>Fri, 23 Oct 2009 21:09:13 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/</guid>
+      <description>at work i use two screens for my day to day workflow. i find it&amp;rsquo;s much more efficient for doing work, like coding. i&amp;rsquo;ll often have at least one terminal open, a full screen text editor, and usually a number of references, such as the dbus specification open in a web browser.&#xA;i recently just realized that one of the reasons multiple monitors are so useful to me, isn&amp;rsquo;t because of the increased screen real estate (although that certaintly is an important factor) but because of how the window manager deals with the windows.</description>
+    </item>
+    <item>
+      <title>tech support for a keyboard</title>
+      <link>https://purpleidea.com/blog/2009/10/23/tech-support-for-a-keyboard/</link>
+      <pubDate>Fri, 23 Oct 2009 13:14:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/23/tech-support-for-a-keyboard/</guid>
+      <description>so my boss was recently kind enough to purchase a new keyboard and mouse combo to attempt to relieve the elbow-and-down pain that i endure due to constant programming and mouse moving. thanks.&#xA;i received my &amp;ldquo;logitech cordless desktop wave pro&amp;rdquo; today, and 15 seconds later i&amp;rsquo;m up and running in linux. the keyboard and mouse seem to be really nice, however i won&amp;rsquo;t dwell on their merits here, i&amp;rsquo;m sure you can read about that elsewhere on the internets.</description>
+    </item>
+    <item>
+      <title>vanilla: my favourite flavour of gnome</title>
+      <link>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</link>
+      <pubDate>Thu, 22 Oct 2009 17:14:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/22/vanilla-my-favourite-flavour-of-gnome/</guid>
+      <description>after a recent upgrade to ubuntu 9.04, it seems that i&amp;rsquo;ve been pushed into using some &amp;ldquo;unfeatures&amp;rdquo; that i didn&amp;rsquo;t ask for. well apparently they won&amp;rsquo;t be unfeatures forever, but for me, notify-osd and indicator-applet aren&amp;rsquo;t quite ready for my consumption. i realize that ubuntu is trying to improve the desktop experience, but i&amp;rsquo;m going to need to wait for some more polish first.&#xA;so how do i get rid of these horrible things ?</description>
+    </item>
+    <item>
+      <title>why linux is powerful or: how to erase half your system and then fix it</title>
+      <link>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</link>
+      <pubDate>Wed, 14 Oct 2009 16:00:57 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/14/why-linux-is-powerful-or-how-to-erase-half-your-system-and-then-fix-it/</guid>
+      <description>after a brief bout of stupidity i quickly realized that my makefile had gone awry and was quickly eating through my filesystem.&#xA;after ^C killing it, it seems i only took out most of /lib/* and /usr/sbin/* &amp;ndash; who needs those anyways&amp;hellip; apparently almost everyone.&#xA;what happened next. well it turns out i was lucky and had a few shells and a webbrowser open&amp;ndash; attempts to launch new programs will fail, but existing programs are already loaded in memory so i was able to work.</description>
+    </item>
+    <item>
+      <title>the python subprocess module</title>
+      <link>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</link>
+      <pubDate>Wed, 07 Oct 2009 10:24:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</guid>
+      <description>i&amp;rsquo;m sure that i won&amp;rsquo;t be able to tell you anything revolutionary which can&amp;rsquo;t be found out by reading the manual, but i thought i would clarify it, and by showing you a specific example which i needed.&#xA;subprocess.Popen accepts a bunch or args, one of which is the shell argument, which is False by default. If you specify shell=True then the first argument of popen should be a string which is what gets parsed by the shell and then eventually run.</description>
+    </item>
+    <item>
+      <title>the power to yield a better console interface</title>
+      <link>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</link>
+      <pubDate>Thu, 20 Aug 2009 13:15:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/08/20/the-power-to-yield-a-better-console-interface/</guid>
+      <description>as part of a different project, i needed to duplicate some existing terminal magic in python. what i needed to write was something similar to the getch() function in curses. it can be found in: ncurses*/base/lib_getch.c after doing an: apt-get source libncurses5&#xA;what&amp;rsquo;s the magic? i need to stay in a continuous loop reading from the file descriptor, however i want to return periodically so that gobject doesn&amp;rsquo;t block and the interface can remain responsive.</description>
+    </item>
+    <item>
+      <title>ssh hanging</title>
+      <link>https://purpleidea.com/blog/2009/07/29/ssh-hanging/</link>
+      <pubDate>Wed, 29 Jul 2009 09:40:46 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/29/ssh-hanging/</guid>
+      <description>i&amp;rsquo;m sure everyone who has used ssh has experienced this, but couldn&amp;rsquo;t put their finger on what was happening exactly. this article explains.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+    <item>
+      <title>cheetah == fortran</title>
+      <link>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</link>
+      <pubDate>Tue, 21 Jul 2009 16:59:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</guid>
+      <description>turns out the cheetah python templating engine (2.0 since year 2006) is quite reminiscent of fortran (since the 1950&amp;rsquo;s) in their use of the #slurp directive (cheetah) and the $ string. either one, when appended to the end of a string, remove the implicit newline which usually gets printed. it took me ages to figure out how to suppress newline printing back when i did someone&amp;rsquo;s fortran homework, now i&amp;rsquo;ve had to struggle with it all over again.</description>
+    </item>
+    <item>
+      <title>[py]inotify, polling, gtk and gio</title>
+      <link>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</link>
+      <pubDate>Tue, 21 Jul 2009 10:19:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</guid>
+      <description>i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel inotify support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with pyinotify and io_add_watch, but on closer inspection into the pyinotify code it turns out that it seems to actually use polling! (search for: select.</description>
+    </item>
+    <item>
+      <title>evanescent 0.3</title>
+      <link>https://purpleidea.com/blog/2009/07/14/evanescent-03/</link>
+      <pubDate>Tue, 14 Jul 2009 14:53:30 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/14/evanescent-03/</guid>
+      <description>new evanescent released. get your tar balls today. now with pro dbus support, and happier than 0.2 in every way. please send in any patches and bug reports.&#xA;ps: easy one line installation too!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>logging out of $SESSION</title>
+      <link>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</link>
+      <pubDate>Mon, 13 Jul 2009 10:05:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</guid>
+      <description>the software (evanescent) that i&amp;rsquo;m working on is supposed to log out the user from its current X session. originally i had some yucky looking code that ran a kill on gnome-session, which quickly got replaced with:&#xA;os.system(&amp;#39;gnome-session-save --logout-dialog&amp;#39;) i&amp;rsquo;ve decided this was still a little crufty, so i&amp;rsquo;ve recently replaced this with:&#xA;bus = dbus.SessionBus() remote_object = bus.get_object(&amp;#39;org.gnome.SessionManager&amp;#39;, &amp;#39;/org/gnome/SessionManager&amp;#39;) # specify the dbus_interface in each call remote_object.Logout(0, dbus_interface=&amp;#39;org.gnome.SessionManager&amp;#39;) # or create an Interface wrapper for the remote object #iface = dbus.</description>
+    </item>
+    <item>
+      <title>convert .ai to .svg using uniconverter</title>
+      <link>https://purpleidea.com/blog/2009/06/16/convert-ai-to-svg-using-uniconverter/</link>
+      <pubDate>Tue, 16 Jun 2009 11:32:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/06/16/convert-ai-to-svg-using-uniconverter/</guid>
+      <description>needed to convert a proprietary vector .ai adobe illustrator file to the open .svg format, inkscape failed, ai2svg failed, uniconverted worked! yay. very easy just do:&#xA;$ uniconverter Martlet.ai Martlet.svg&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+    <item>
+      <title>brilliant: get rid of mono</title>
+      <link>https://purpleidea.com/blog/2009/06/08/brilliant-get-rid-of-mono/</link>
+      <pubDate>Mon, 08 Jun 2009 14:08:14 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/06/08/brilliant-get-rid-of-mono/</guid>
+      <description>fedora announces that they&amp;rsquo;ll be replacing potentially patent encumbered mono based note taking application tomboy with the line for line port to c++ called gnote.&#xA;https://www.redhat.com/archives/fedora-desktop-list/2009-June/msg00003.html&#xA;with any luck we&#39;ll be able to replace f-spot, and banshee too. have a look at: http://santanu-sinha.blogspot.com/2009/06/solang.html&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>coloured tab completion</title>
+      <link>https://purpleidea.com/blog/2009/06/02/coloured-tab-completion/</link>
+      <pubDate>Tue, 02 Jun 2009 15:06:58 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/06/02/coloured-tab-completion/</guid>
+      <description>i &amp;lt;3 tab completion, coloured grep, and coloured ls, however i would love to see coloured tab completion.&#xA;what would this entail? imagine you have files: &amp;ldquo;apply&amp;rdquo;, &amp;ldquo;applied&amp;rdquo; and &amp;ldquo;applications&amp;rdquo; in a directory, and you typed: &amp;ldquo;cat ap&amp;rdquo; &amp;lt;TAB&amp;gt;, then i would expect to see: apply applied applications (highlighting the rest of the words / options. or perhaps there could be a mode that just highlights the next letter that needs to be typed.</description>
+    </item>
+    <item>
+      <title>grep, shopt:dotglob and (hidden) dot files</title>
+      <link>https://purpleidea.com/blog/2009/06/02/grep-shoptdotglob-and-hidden-dot-files/</link>
+      <pubDate>Tue, 02 Jun 2009 11:56:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/06/02/grep-shoptdotglob-and-hidden-dot-files/</guid>
+      <description>i thought grep was broken, but it&amp;rsquo;s not. see below:&#xA;james@dazzle:~$ echo $0 bash james@dazzle:~$ echo &amp;#39;hello world&amp;#39; &amp;gt; .hello james@dazzle:~$ grep &amp;#39;hello world&amp;#39; * james@dazzle:~$ grep &amp;#39;hello world&amp;#39; .* .hello:hello world james@dazzle:~$ shopt | grep dotglob dotglob off james@dazzle:~$ shopt -s dotglob james@dazzle:~$ shopt | grep dotglob dotglob on james@dazzle:~$ grep &amp;#39;hello world&amp;#39; * .hello:hello world james@dazzle:~$ shopt -u dotglob james@dazzle:~$ shopt | grep dotglob dotglob off james@dazzle:~$ rm .</description>
+    </item>
+    <item>
+      <title>Server Fault</title>
+      <link>https://purpleidea.com/blog/2009/05/27/server-fault/</link>
+      <pubDate>Wed, 27 May 2009 11:10:37 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/05/27/server-fault/</guid>
+      <description>Server Fault, the question and answer forum for systems administrators opened their doors today to the public. It is created by the same notorious bloggers who brought you Stack Overflow, Joel on Software and the Daily WTF.&#xA;Go have a look, ask a question, answer a question and have fun!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>community</title>
+      <link>https://purpleidea.com/blog/2009/05/27/community/</link>
+      <pubDate>Wed, 27 May 2009 09:36:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/05/27/community/</guid>
+      <description>so the idea was to open this up to sys admins in other mcgill departments, so if we don&amp;rsquo;t know about you, drop us a line and we&amp;rsquo;ll get you added to the blog. if people like the idea, then we&amp;rsquo;ll host this on a better cs machine than dazzle.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>first babble</title>
+      <link>https://purpleidea.com/blog/2009/05/22/hello-world/</link>
+      <pubDate>Fri, 22 May 2009 16:16:04 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/05/22/hello-world/</guid>
+      <description>hello! this blog is intended to be a place where ramblings and discoveries, by and for systems administrators and programmers can be posted and seen by many to ultimately help in the dissemination of useful findings that we wish we had been able to have read here earlier.&#xA;if that didn&amp;rsquo;t make too much sense, perhaps i could rephrase it.&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+  </channel>
+</rss>

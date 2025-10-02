@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Golang parallelism issues causing “too many open files” error - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Golang parallelism issues causing “too many open files” error</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;ve been hacking in <a href="https://en.wikipedia.org/wiki/Go_%28programming_language%29">golang</a> for a while, but I&rsquo;ll admit that I didn&rsquo;t get too deep into some of the language nuances until more recently. Since some of them have started to bite me, here&rsquo;s a little post-mortem of one of the problems I was having.</p>
+<p>After hacking and testing code all day, I made a seemingly innocuous change, and when running my program, I saw the following error:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>2015/07/10 14:34:12 too many open files
+</span></span></code></pre></div><p>I didn&rsquo;t know what I broke, but it was obviously my fault. I reverted my recent changes, but still the error persisted. Internet searches and many painful hours of debugging ensued.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="wtfmeme.png"><img class="wp-image-1112 size-full" src="wtfmeme.png" alt="I had definitely hit some sort of heisenbug." width="100%" height="100%" /></a></td></tr><tr><td> I had definitely hit some sort of <a href="https://en.wikipedia.org/wiki/Heisenbug">Heisenbug</a>.</td></tr></table></br />
+<p>What had gone wrong? Digging around my system, I noticed something weird in my <code>ps</code> output:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ ps auxww | grep go
+</span></span><span style="display:flex;"><span>james     3446  0.0  0.1 197392  9240 pts/4    Sl   11:48   0:00 go run ./main.go
+</span></span><span style="display:flex;"><span>james     3457  0.0  0.0   6268  1980 pts/4    Sl   11:48   0:00 /tmp/go-build030949627/command-line-arguments/_obj/exe/event
+</span></span><span style="display:flex;"><span>james     3487  0.0  0.1 197392  9184 pts/4    Sl   11:49   0:00 go run ./main.go
+</span></span><span style="display:flex;"><span>james     3501  0.0  0.0   6268  2040 pts/4    Sl   11:49   0:00 /tmp/go-build037131602/command-line-arguments/_obj/exe/event
+</span></span><span style="display:flex;"><span>james     3556  0.0  0.1 197392  9168 pts/4    Sl   11:49   0:00 go run ./main.go
+</span></span><span style="display:flex;"><span>james     3567  0.0  0.0   6268  1976 pts/4    Sl   11:49   0:00 /tmp/go-build957487534/command-line-arguments/_obj/exe/event
+</span></span><span style="display:flex;"><span>james     3788  0.0  0.0 197392  1636 pts/4    Sl   Jul04   0:07 go run ./main.go
+</span></span><span style="display:flex;"><span>james     3800  0.0  0.0   5180  1944 pts/4    Sl   Jul04   0:01 /tmp/go-build552106841/command-line-arguments/_obj/exe/event
+</span></span><span style="display:flex;"><span>[...]
+</span></span></code></pre></div><p>Hoards and hoards of lingering <code>go build</code> artefacts, were still running. At one time I noticed over 42 of these! I quickly killed them all off:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># processes are named `event`, and I don&#39;t have any unrelated event processes running.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="">$</span><span style="color:#bbb"> </span>killall<span style="color:#bbb"> </span><span style="color:#666">-</span><span style="color:#666">9</span><span style="color:#bbb"> </span>event<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>kernel:<span style="color:#bbb"> </span>ahh,<span style="color:#bbb"> </span>much<span style="color:#bbb"> </span>better<span style="color:#666">!</span><span style="color:#bbb"> </span>:)<span style="color:#bbb">
+</span></span></span></code></pre></div><p>Which brought my program back to life! Heisenbug gone&hellip; or was it? I soon noticed, that each time I ran my program, the left over process count would increment by one. What was causing this? After another session of debugging, I found that these leftovers were caused by a lack of clean up due to some buggy code. That buggy code is the interesting part. Let&rsquo;s look at it:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">for</span> v <span style="color:#666">:=</span> <span style="color:#a2f;font-weight:bold">range</span> obj.<span style="color:#00a000">GetSomeChannel</span>() {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;Processing: %v\n&#34;</span>, v.Name)
+</span></span><span style="display:flex;"><span>    wg.<span style="color:#00a000">Add</span>(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// BAD
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#a2f;font-weight:bold">go</span> <span style="color:#a2f;font-weight:bold">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">defer</span> wg.<span style="color:#00a000">Done</span>()
+</span></span><span style="display:flex;"><span>        v.<span style="color:#00a000">Start</span>() <span style="color:#080;font-style:italic">// some method
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;Finished: %v\n&#34;</span>, v.Name)
+</span></span><span style="display:flex;"><span>    }()
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+I&rsquo;m not sure how common this issue is, so if you&rsquo;re not yet familiar with it, take a moment to try and figure it out.</p>
+<p>&hellip;</p>
+<p>Okay. The issue is that when you iterate through the loop, the <em>v</em> value which is passed in to the function (the closure) is actually referencing the memory space of <em>v</em>. As a result, whenever the v value changes (as it does in the loop) the <em>v</em> variable instantly contains the new value, and the go routine will see the value of whatever it happens to be when it uses it.</p>
+<p>To get around this race (and it is a race) you need to <em>copy</em> in the value to the goroutine:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">for</span> v <span style="color:#666">:=</span> <span style="color:#a2f;font-weight:bold">range</span> obj.<span style="color:#00a000">GetSomeChannel</span>() {
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;Processing: %v\n&#34;</span>, v.Name)
+</span></span><span style="display:flex;"><span>    wg.<span style="color:#00a000">Add</span>(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// GOOD
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#a2f;font-weight:bold">go</span> <span style="color:#a2f;font-weight:bold">func</span>(v <span style="color:#666">*</span>Objtype) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">defer</span> wg.<span style="color:#00a000">Done</span>()
+</span></span><span style="display:flex;"><span>            v.<span style="color:#00a000">Start</span>() <span style="color:#080;font-style:italic">// some method
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;Finished: %v\n&#34;</span>, v.Name)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }(v)
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+It so happens that <em>v</em> is a pointer, but that&rsquo;s irrelevant. The value of the pointer still needs to be copied in to the goroutine that is being called to use it. In my case, <em>v</em> needs to be a pointer, because we want the same copy of our data to be used throughout the code.</p>
+<p>Many thanks to <a href="https://twitter.com/bleidl">bleidl</a> for helping me with some of the analysis!</p>
+<p>As a quick aside, I&rsquo;m using <a href="https://machiel.me/gracefully-stopping-goroutines/">this WaitGroup pattern</a>, which replaced the much uglier version of this loop which I had previously written. For a language that claims to <em>not</em> be pattern and idiom heavy, there sure are a bunch that I&rsquo;ve found so far, many of which come with gotchas.</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>July 27, 2015<br>
+				<small>714 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/channels">channels</a> <a class="label label-default" href="/tags/concurrency">concurrency</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/goroutine">goroutine</a> <a class="label label-default" href="/tags/parallelism">parallelism</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/pointers">pointers</a> <a class="label label-default" href="/tags/race">race</a> <a class="label label-default" href="/tags/sync.waitgroup">sync.WaitGroup</a> <a class="label label-default" href="/tags/too-many-open-files">too many open files</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/"><small>https://ttboj.wordpress.com/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Testing Evolution&#39;s git master and GNOME continuous - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Testing Evolution&#39;s git master and GNOME continuous</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;ve wanted a feature in <a href="https://wiki.gnome.org/Apps/Evolution/">Evolution</a> for a while. It was <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621">formally requested in 2002</a>, and it just recently <a href="https://git.gnome.org/browse/evolution/commit/?id=f6c0c8226ef8895f15c0221c94869ac5c663694f">got fixed in git master</a>. I only started <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621#c9">publicly groaning about this missing feature in 2013</a>, and mcrha finally patched it. I tested the feature and found a small bug, <a href="https://git.gnome.org/browse/evolution/commit/?id=ba3c08c7108519658b1d46a49ea3b2a834bc8e79">mcrha patched that too</a>, and I finally re-tested it. Now I&rsquo;m blogging about this process so that you can get involved too!</p>
+<p><span style="text-decoration:underline;">Why Evolution</span>?</p>
+<ul>
+	<li>Evolution supports GPG (<a href="https://bugzilla.gnome.org/show_bug.cgi?id=713403">Geary doesn't</a>, Gmail doesn't)</li>
+	<li>Evolution has a beautiful composer (Gmail's sucks, just try to reply inline)</li>
+	<li>Evolution is <a href="https://www.gnu.org/philosophy/free-sw.html">Open Source</a> and <a href="https://www.gnu.org/philosophy/why-free.html">Free Software</a> (Gmail is proprietary)</li>
+	<li>Evolution integrates with GNOME (Gmail doesn't)</li>
+	<li>Evolution has lots of fancy, mature features (Geary doesn't)</li>
+	<li>Evolution cares about your privacy (<a href="https://en.wikipedia.org/wiki/Gmail#Criticism">Gmail doesn't</a>)</li>
+</ul>
+<span style="text-decoration:underline;">The feature</span>:
+<p>I&rsquo;d like to be able to select a bunch of messages and click an archive action to move them to a specific folder. <a href="https://en.wikipedia.org/wiki/Gmail">Gmail popularized this idea in 2004</a>, two years after it was proposed for Evolution. It has finally landed.</p>
+<p>In your account editor, you can select the &ldquo;<em>Archive Folder</em>&rdquo; that you want messages moved to:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-account-archive-folder.png"><img class="alignnone size-large wp-image-941" src="evolution-account-archive-folder.png" alt="evolution-account-archive-folder" width="100%" height="100%" /></a></td></tr></table></br />
+<p>This will let you have a different folder set per account.</p>
+<p><span style="text-decoration:underline;">Archive like Gmail does</span>:</p>
+<p>If you use Evolution with a Gmail account, and you want the same functionality as the Gmail archive button, you can accomplish this by setting the Evolution archive folder to point to the Gmail &ldquo;<em>All Mail</em>&rdquo; folder, which will cause the Evolution archive action to behave as Gmail&rsquo;s does.</p>
+<p>To use this functionality (with or without Gmail), simply select the messages you want to move, and click the &ldquo;<em>Archive&hellip;</em>&rdquo; button:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-context-menu-archive.png"><img class="alignnone wp-image-944 size-full" src="evolution-context-menu-archive.png" alt="evolution-context-menu-archive" width="100%" height="100%" /></a></td></tr></table></br />
+<p>This is also available via the &ldquo;<em>Message</em>&rdquo; menu. You can also activate with the <strong>Control-Alt-a</strong> shortcut. For more information, please <a href="https://bugzilla.gnome.org/show_bug.cgi?id=223621#c11">read the description from mcrha</a>.</p>
+<p><span style="text-decoration:underline;">GNOME Continuous</span>:</p>
+<p>Once the feature was patched in git master, I wanted to try it out right away! The easiest way for me to do this, was to use the <a href="https://wiki.gnome.org/Projects/GnomeContinuous">GNOME Continuous</a> project that <a href="http://blog.verbum.org/">walters</a> started. This GNOME project automatically kicks off integration builds of multiple git master trees for the most common GNOME applications.</p>
+<p>If you <a href="https://wiki.gnome.org/Projects/GnomeContinuous">follow the Gnome Continuous instructions</a>, it is fairly easy to download an image, and then import it with virt-manager or boxes. Once it had booted up, I logged into the machine, and was able to test Evolution&rsquo;s git master.</p>
+<p><span style="text-decoration:underline;">Digging deep into the app</span>:</p>
+<p>If you want to tweak the app for debugging purposes, it is quite easy to do this with <a href="https://blogs.gnome.org/mclasen/2014/05/15/introducing-gtkinspector/">GTKInspector</a>. Launch it with <strong>Control-Shift-i</strong> or <strong>Control-Shift-d</strong>, and you&rsquo;ll soon be poking around the app&rsquo;s internals. You can change the properties you want in real-time, and then you&rsquo;ll know which corresponding changes in the upstream source are necessary.</p>
+<p><span style="text-decoration:underline;">Finding a bug and re-testing</span>:</p>
+<p>I did find one small bug with the Evolution patches. I&rsquo;m glad I found it now, instead of having to wait six months for a new Fedora version. The maintainer fixed it quickly, and all that was left to do was to re-test the new git master. To do this, I updated my GNOME Continuous image.</p>
+<ol>
+	<li>Click on <strong>Control-Alt-F2</strong> from the virt-manager "Send Key" menu.</li>
+	<li>Log in as root (no password)</li>
+	<li>Set the password to something by running the <code>passwd</code> command.</li>
+	<li>Click on Control-Alt-F1 to return to your GNOME session.</li>
+	<li>Open a terminal and run: <code>pkexec bash</code>.</li>
+	<li>Enter your root password.</li>
+	<li>Run <code>ostree admin upgrade</code>.</li>
+	<li>Once it has finished downloading the updates, reboot the vm.</li>
+</ol>
+You'll now be able to test the newest git master. Please note that it takes a bit of time for it to build, so it is not instant, but it's pretty quick.
+<p><span style="text-decoration:underline;">Taking screenshots</span>:</p>
+<p>I took a few screenshots from inside the VM to show to you in this blog post. Extracting them was a bit trickier because I couldn&rsquo;t get SSHD running. To do so, I installed the <a href="http://people.redhat.com/~rjones/guestfs-browser/">guestfs browser</a> on my host OS. It was very straight forward to use it to read the VM image, browse to the <em>~/Pictures/</em> directory, and then download the images to my host. Thanks <a href="https://rwmj.wordpress.com/">rwmjones</a>!</p>
+<p><span style="text-decoration:underline;">Conclusion</span>:</p>
+<p>Hopefully this will motivate you to contribute to GNOME early and often! There are lots of great tools available, and lots of applications that need <a href="https://wiki.gnome.org/GnomeLove">some love</a>.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 22, 2014<br>
+				<small>774 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/archive">archive</a> <a class="label label-default" href="/tags/continuous">continuous</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/email">email</a> <a class="label label-default" href="/tags/evolution">evolution</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/geary">geary</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gmail">gmail</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/gnome-continuous">gnome continuous</a> <a class="label label-default" href="/tags/gpg">gpg</a> <a class="label label-default" href="/tags/gtkinspector">gtkinspector</a> <a class="label label-default" href="/tags/guestfs-browser">guestfs-browser</a> <a class="label label-default" href="/tags/libguestfs">libguestfs</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/virt-manager">virt-manager</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/"><small>https://ttboj.wordpress.com/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/10/22/testing-evolutions-git-master-and-gnome-continuous.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

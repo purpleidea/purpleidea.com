@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>multi monitors and how it should all work (long babble) - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>multi monitors and how it should all work (long babble)</strong><br><small></small></h3>
+					<hr>
+					<p>at work i use two screens for my day to day workflow. i find it&rsquo;s much more efficient for doing work, like coding. i&rsquo;ll often have at least one terminal open, a full screen text editor, and usually a number of references, such as the <a href="http://dbus.freedesktop.org/doc/dbus-specification.html">dbus specification</a> open in a <a href="http://projects.gnome.org/epiphany/">web browser</a>.</p>
+<p>i recently just realized that one of the reasons multiple monitors are so useful to me, isn&rsquo;t because of the increased screen real estate (although that certaintly is an important factor) but because of how the window manager deals with the windows. for example, when i click maximize, the chosen window expands to fill that monitors capacity, and not the entire set of monitors. it would be nice for this type of behaviour to be configurable somewhere for people with ultra large screens, who want to manage their windows better. the closest i&rsquo;ve found is: <a href="https://launchpad.net/winwrangler">winwrangler</a> which i&rsquo;ve started using at home where i only have one screen. it works sort of along those lines, however i still want more. multiple &ldquo;workspaces&rdquo; are essential. no matter how many screens i have, i&rsquo;ll always need a few workspaces to be able to flip between email and coding&ndash; there is no sense in mixing it all together.</p>
+<p>the cheeses (&ldquo;the cheddar&rdquo;, aka the suggestions i want to make in this babble):</p>
+<ul>
+	<li> as i change workspaces both/(all) screens change along with me. adding multiple monitors, essentially extends the size of the workspace. let us call this "<em>mode 1</em>".</li>
+</ul>
+<ul>
+	<li>an alternate behaviour could be to allow "x" independent workspaces on monitor 1, and "y" independent workspaces on monitor 2, and so on... i read somewhere that someone accomplished this with two different x sessions somehow; the problem was that you couldn't drag windows from one to the other. if someone was able to solve that problem and that type of usability was possible, then we could call this "<em>mode 2</em>"</li>
+</ul>
+<ul>
+	<li>even more exciting would be to have a workspace on each monitor sharing a common set of workspaces. for example workspace "c" could be displayed on monitor 1, and workspace "e" could be displayed on monitor 2. you could switch each independently, and in the special case that both monitors were displaying the same workspace, then you would be getting an almost "clone". the one exception to this being a true clone is that when using multiple monitors, you usually have a static per-monitor panel layout which doesn't change as you switch workspaces. that functionality is good. all this would be called "<em>mode 3</em>"</li>
+</ul>
+<ul>
+	<li>for completeness sake, a *true* clone of one screen to another is a possibility, and should be called "<em>mode 0</em>".</li>
+</ul>
+the complicated point to this discussion is doing what any good mathematician, computer scientist, or ropes-technician (because of the knot tying) would do, and that is to extend the idea of our our modes to the more general case where we can mix and match them for N screens. (to take it a step further would be to let any physical screen be split into M virtual screens, and then use those to solve the above problem!)
+<p>think of combining two screens in mode 1, which together are in mode 2 with a second screen, which all together could be in mode 3 with an auxiliary monitor. you&rsquo;ve got a big mess, and maybe it would be nice to dump this whole setup to your clone output in mode 0 to the projector. now i&rsquo;m pretty sure that nobody would want <strong>that</strong> particular setup, but there should be some sensible way to choose what setup you do want, and to configure it appropriately.</p>
+<p>i&rsquo;ve heard that <a href="http://xmonad.org/">xmonad</a> can apparently do something like mode 3. it makes me want to switch to using that. mode 1 is currently what i&rsquo;m using. mode 2 could probably be emulated in a window manager which supports mode 3, by confining monitor 1 to only allow even numbered workspaces, and monitor 2 to only allow odd numbered workspaces (mod N if you have N monitors), and mode 0 already exists and is nice for presentations.</p>
+<p>i think there are two important things to get right:</p>
+<ol>
+<li>have a way to create &ldquo;virtual screens&rdquo; - it would be nice to be able to benefit from multiple screen logic, without physically buying 8 screens. also this would be indispensible for testing.</li>
+<li>have a beautifully designed tool for managing the configuration, which obviously uses a well thought out configuration file format.</li>
+</ol>
+<p>i would love to hear your thoughts, and if anyone knows of projects with great goals like these, please let me know.</p>
+<p>ps: <a href="http://www.compiz-fusion.org/">compiz</a> has a &ldquo;multi output mode&rdquo; but i&rsquo;m not sure exactly what it does and if it helps with any of this.</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 23, 2009<br>
+				<small>859 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/babble">babble</a> <a class="label label-default" href="/tags/compiz">compiz</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/multi-head">multi-head</a> <a class="label label-default" href="/tags/multiple-monitors">multiple monitors</a> <a class="label label-default" href="/tags/reference">reference</a> <a class="label label-default" href="/tags/window-manager">window manager</a> <a class="label label-default" href="/tags/xmonad">xmonad</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/"><small>https://ttboj.wordpress.com/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2009/10/23/multi-monitors-and-how-it-should-all-work-long-babble.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

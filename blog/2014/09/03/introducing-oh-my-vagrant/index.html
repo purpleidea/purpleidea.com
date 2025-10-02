@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Introducing: Oh My Vagrant! - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Introducing: Oh My Vagrant!</strong><br><small></small></h3>
+					<hr>
+					<p>If you&rsquo;re a reader of my <a href="https://github.com/purpleidea/">code</a> or of <a href="/blog/">this blog</a>, it&rsquo;s no secret that I hack on a lot of <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">puppet</a> and <a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">vagrant</a>. Recently I&rsquo;ve fooled around with a bit of <a href="https://en.wikipedia.org/wiki/Docker_%28software%29">docker</a>, too. I realized that the <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/Vagrantfile">vagrant</a>, <a href="https://github.com/purpleidea/puppet-ipa/blob/master/vagrant/Vagrantfile">environments</a> I built for <a href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a> and <a href="https://github.com/purpleidea/puppet-ipa/">puppet-ipa</a> needed to be generalized, and they needed new features too. Therefore&hellip;</p>
+<p>Introducing: <strong>Oh My Vagrant!</strong></p>
+<p><em>Oh My Vagrant</em> is an attempt to provide an <em>easy</em> to use development environment so that you can be up and hacking <em>quickly</em>, and focusing on the real <em>devops</em> problems. The <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/README">README</a> explains my choice of project name.</p>
+<p><span style="text-decoration:underline;">Prerequisites</span>:</p>
+<p>I use a <a href="https://fedoraproject.org/">Fedora 20</a> laptop with <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. Efforts are underway to create an RPM of vagrant-libvirt, but in the meantime you&rsquo;ll have to read: <a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a>. This should work with other distributions too, but I don&rsquo;t test them very often. Please step up and help test :)</p>
+<p><span style="text-decoration:underline;">The bits</span>:</p>
+<p>First clone the <a href="https://github.com/purpleidea/oh-my-vagrant">oh-my-vagrant repository</a> and look inside:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git clone --recursive https://github.com/purpleidea/oh-my-vagrant
+</span></span><span style="display:flex;"><span>cd oh-my-vagrant/vagrant/
+</span></span></code></pre></div><p>The included <em>Vagrantfile</em> is the current heart of this project. You&rsquo;re welcome to use it as a template and edit it directly, or you can use the facilities it provides. I&rsquo;d recommend starting with the latter, which I&rsquo;ll walk you through now.</p>
+<p><span style="text-decoration:underline;">Getting started</span>:</p>
+<p>Start by running <code>vagrant status</code> (<code>vs</code>) and taking a look at the <code>vagrant.yaml</code> file that appears.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ ls
+</span></span><span style="display:flex;"><span>Dockerfile  puppet/  Vagrantfile
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vs
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>template1                 not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Libvirt domain is not created. Run `vagrant up` to create it.
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ cat vagrant.yaml 
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>:domain: example.com
+</span></span><span style="display:flex;"><span>:network: 192.168.123.0/24
+</span></span><span style="display:flex;"><span>:image: centos-7.0
+</span></span><span style="display:flex;"><span>:sync: rsync
+</span></span><span style="display:flex;"><span>:puppet: false
+</span></span><span style="display:flex;"><span>:docker: false
+</span></span><span style="display:flex;"><span>:cachier: false
+</span></span><span style="display:flex;"><span>:vms: []
+</span></span><span style="display:flex;"><span>:namespace: template
+</span></span><span style="display:flex;"><span>:count: 1
+</span></span><span style="display:flex;"><span>:username: &#39;&#39;
+</span></span><span style="display:flex;"><span>:password: &#39;&#39;
+</span></span><span style="display:flex;"><span>:poolid: []
+</span></span><span style="display:flex;"><span>:repos: []
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$
+</span></span></code></pre></div><p>Here you&rsquo;ll see the list of resultant machines that vagrant thinks is defined (currently just <em>template1</em>), and a bunch of different settings in YAML format. The values of these settings help define the vagrant environment that you&rsquo;ll be hacking in.</p>
+<p><span style="text-decoration:underline;">Changing settings</span>:</p>
+<p>The settings exist so that your vagrant environment is <em>dynamic</em> and can be changed <em>quickly</em>. You can change the settings by editing the <code>vagrant.yaml</code> file. They will be used by vagrant when it runs. You can also change them at runtime with <code>&ndash;vagrant-foo</code> flags. Running a <em>vagrant status</em> will show you how vagrant currently sees the environment. Let&rsquo;s change the number of machines that are defined. Note the location of the <code>&ndash;vagrant-count</code> flag and how it doesn&rsquo;t work when positioned incorrectly.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vagrant status --vagrant-count=4
+</span></span><span style="display:flex;"><span>&lt;span style=&#34;color:#ff0000;&#34;&gt;An invalid option was specified. The help for this command&lt;/span&gt;
+</span></span><span style="display:flex;"><span>&lt;span style=&#34;color:#ff0000;&#34;&gt;is available below.&lt;/span&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;span style=&#34;color:#ff0000;&#34;&gt;Usage: vagrant status [name]&lt;/span&gt;
+</span></span><span style="display:flex;"><span>&lt;span style=&#34;color:#ff0000;&#34;&gt;    -h, --help                       Print this help&lt;/span&gt;
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vagrant --vagrant-count=4 status
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>template1                 not created (libvirt)
+</span></span><span style="display:flex;"><span>template2                 not created (libvirt)
+</span></span><span style="display:flex;"><span>template3                 not created (libvirt)
+</span></span><span style="display:flex;"><span>template4                 not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This environment represents multiple VMs. The VMs are all listed
+</span></span><span style="display:flex;"><span>above with their current state. For more information about a specific
+</span></span><span style="display:flex;"><span>VM, run `vagrant status NAME`.
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ cat vagrant.yaml 
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>:domain: example.com
+</span></span><span style="display:flex;"><span>:network: 192.168.123.0/24
+</span></span><span style="display:flex;"><span>:image: centos-7.0
+</span></span><span style="display:flex;"><span>:sync: rsync
+</span></span><span style="display:flex;"><span>:puppet: false
+</span></span><span style="display:flex;"><span>:docker: false
+</span></span><span style="display:flex;"><span>:cachier: false
+</span></span><span style="display:flex;"><span>:vms: []
+</span></span><span style="display:flex;"><span>:namespace: template
+</span></span><span style="display:flex;"><span>:count: 4
+</span></span><span style="display:flex;"><span>:username: &#39;&#39;
+</span></span><span style="display:flex;"><span>:password: &#39;&#39;
+</span></span><span style="display:flex;"><span>:poolid: []
+</span></span><span style="display:flex;"><span>:repos: []
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$
+</span></span></code></pre></div><p>As you can see in the above example, changing the <em>count</em> variable to <strong>4</strong>, causes vagrant to see a possible <em>four</em> machines in the vagrant environment. You can change as many of these parameters at a time by using the <code>&ndash;vagrant-</code> flags, or you can edit the <code>vagrant.yaml</code> file. The latter is much easier and more expressive, in particular for expressing complex data types. The former is much more powerful when building one-liners, such as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>vagrant --vagrant-count=8 --vagrant-namespace=gluster up gluster{1..8}
+</span></span></code></pre></div><p>which should bring up eight hosts in parallel, named <em>gluster1</em> to <em>gluster8</em>.</p>
+<p><span style="text-decoration:underline;">Other VM&rsquo;s</span>:</p>
+<p>Since one often wants to be more expressive in machine naming and heterogeneity of machine type, you can specify a list of machines to define in the <code>vagrant.yaml</code> file <code>vms</code> array. If you&rsquo;d rather define these machines in the <em>Vagrantfile</em> itself, you can also set them up in the <code>vms</code> array defined there. It is empty by default, but it is easy to uncomment out one of the many examples. These will be used as the defaults if nothing else overrides the selection in the <code>vagrant.yaml</code> file. I&rsquo;ve uncommented a few to show you this functionality:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ grep example[124] Vagrantfile 
+</span></span><span style="display:flex;"><span>    {:name =&gt; &#39;example1&#39;, :docker =&gt; true, :puppet =&gt; true, },    # example1
+</span></span><span style="display:flex;"><span>    {:name =&gt; &#39;example2&#39;, :docker =&gt; [&#39;centos&#39;, &#39;fedora&#39;], },    # example2
+</span></span><span style="display:flex;"><span>    {:name =&gt; &#39;example4&#39;, :image =&gt; &#39;centos-6&#39;, :puppet =&gt; true, },    # example4
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ rm vagrant.yaml # note that I remove the old settings
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vs
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>template1                 not created (libvirt)
+</span></span><span style="display:flex;"><span>example1                  not created (libvirt)
+</span></span><span style="display:flex;"><span>example2                  not created (libvirt)
+</span></span><span style="display:flex;"><span>example4                  not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This environment represents multiple VMs. The VMs are all listed
+</span></span><span style="display:flex;"><span>above with their current state. For more information about a specific
+</span></span><span style="display:flex;"><span>VM, run `vagrant status NAME`.
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ cat vagrant.yaml 
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>:domain: example.com
+</span></span><span style="display:flex;"><span>:network: 192.168.123.0/24
+</span></span><span style="display:flex;"><span>:image: centos-7.0
+</span></span><span style="display:flex;"><span>:sync: rsync
+</span></span><span style="display:flex;"><span>:puppet: false
+</span></span><span style="display:flex;"><span>:docker: false
+</span></span><span style="display:flex;"><span>:cachier: false
+</span></span><span style="display:flex;"><span>:vms:
+</span></span><span style="display:flex;"><span>- :name: example1
+</span></span><span style="display:flex;"><span>  :docker: true
+</span></span><span style="display:flex;"><span>  :puppet: true
+</span></span><span style="display:flex;"><span>- :name: example2
+</span></span><span style="display:flex;"><span>  :docker:
+</span></span><span style="display:flex;"><span>  - centos
+</span></span><span style="display:flex;"><span>  - fedora
+</span></span><span style="display:flex;"><span>- :name: example4
+</span></span><span style="display:flex;"><span>  :image: centos-6
+</span></span><span style="display:flex;"><span>  :puppet: true
+</span></span><span style="display:flex;"><span>:namespace: template
+</span></span><span style="display:flex;"><span>:count: 1
+</span></span><span style="display:flex;"><span>:username: &#39;&#39;
+</span></span><span style="display:flex;"><span>:password: &#39;&#39;
+</span></span><span style="display:flex;"><span>:poolid: []
+</span></span><span style="display:flex;"><span>:repos: []
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vim vagrant.yaml # edit vagrant.yaml file...
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ cat vagrant.yaml 
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>:domain: example.com
+</span></span><span style="display:flex;"><span>:network: 192.168.123.0/24
+</span></span><span style="display:flex;"><span>:image: centos-7.0
+</span></span><span style="display:flex;"><span>:sync: rsync
+</span></span><span style="display:flex;"><span>:puppet: false
+</span></span><span style="display:flex;"><span>:docker: false
+</span></span><span style="display:flex;"><span>:cachier: false
+</span></span><span style="display:flex;"><span>:vms:
+</span></span><span style="display:flex;"><span>- :name: example1
+</span></span><span style="display:flex;"><span>  :docker: true
+</span></span><span style="display:flex;"><span>  :puppet: true
+</span></span><span style="display:flex;"><span>- :name: example4
+</span></span><span style="display:flex;"><span>  :image: centos-7.0
+</span></span><span style="display:flex;"><span>  :puppet: true
+</span></span><span style="display:flex;"><span>:namespace: template
+</span></span><span style="display:flex;"><span>:count: 1
+</span></span><span style="display:flex;"><span>:username: &#39;&#39;
+</span></span><span style="display:flex;"><span>:password: &#39;&#39;
+</span></span><span style="display:flex;"><span>:poolid: []
+</span></span><span style="display:flex;"><span>:repos: []
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$ vs
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>template1                 not created (libvirt)
+</span></span><span style="display:flex;"><span>example1                  not created (libvirt)
+</span></span><span style="display:flex;"><span>example4                  not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This environment represents multiple VMs. The VMs are all listed
+</span></span><span style="display:flex;"><span>above with their current state. For more information about a specific
+</span></span><span style="display:flex;"><span>VM, run `vagrant status NAME`.
+</span></span><span style="display:flex;"><span>james@computer:/oh-my-vagrant/vagrant$
+</span></span></code></pre></div><p>The above output might seem a little long, but if you try these steps out in your terminal, you should get a hang of it fairly quickly. If you poke around in the <em>Vagrantfile</em>, you should see the format of the <code>vms</code> array. Each element in the array should be a dictionary, where the keys correspond to the flags you wish to set. Look at the examples if you need help with the formatting.</p>
+<p><span style="text-decoration:underline;">Other settings</span>:</p>
+<p>As you saw, other settings are available. There are a few notable ones that are worth mentioning. This will also help explain some of the other features that this <em>Vagrantfile</em> provides.</p>
+<ul>
+	<li><em>domain</em>: This sets the domain part of each vm's <a href="https://en.wikipedia.org/wiki/Fully_qualified_domain_name">FQDN</a>. The default is <em>example.com</em>, which should work for most environments, but you're welcome to change this as you see fit.</li>
+	<li><em>network</em>: This sets the network that is used for the vm's. You should pick a <em>network</em>/<a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing"><em>cidr</em></a> that doesn't conflict with any other networks on your machine. This is particularly useful when you have multiple vagrant environments hosted off of the same laptop.</li>
+	<li><em>image</em>: This is the default base image to use for each machine. It can be overridden per-machine in the vm's list of dictionaries.</li>
+	<li><em>sync</em>: This is the sync type used for vagrant. <em>rsync</em> is the default and works in all environments. If you'd prefer to fight with the <em>nfs</em> mounts, or try out <em>9p</em>, both those options are available too.</li>
+	<li><em>puppet</em>: This option enables or disables integration with puppet. It is possible to override this per machine. This functionality will be expanded in a future version of <em>Oh My Vagrant</em>.</li>
+	<li><em>docker</em>: This option enables and lists the docker images to set up per vm. It is possible to override this per machine. This functionality will be expanded in a future version of <em>Oh My Vagrant</em>.</li>
+	<li><em>namespace</em>: This sets the namespace that your Vagrantfile operates in. This value is used as a prefix for the numbered vm's, as the libvirt network name, and as the primary puppet module to execute.</li>
+</ul>
+<span style="text-decoration:underline;">More on the <em>docker</em> option</span>:
+<p>For now, if you specify a list of docker images, they will be automatically pulled into your vm environment. It is recommended that you pre-cache them in an existing base image to save bandwidth. Custom base vagrant images can be easily be built with <a href="https://github.com/purpleidea/vagrant-builder">vagrant-builder</a>, but this process is currently undocumented.</p>
+<p>I&rsquo;ll try to write-up a post on this process if there are enough requests. To keep you busy in the meantime, <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-7.0-docker/">I&rsquo;ve published a CentOS 7 vagrant base image that includes docker images for CentOS and Fedora</a>. It is being graciously hosted by the <a href="https://www.gluster.org/">GlusterFS community</a>.</p>
+<p><span style="text-decoration:underline;">What other magic does this all do</span>?</p>
+<p>There is a certain amount of magic glue that happens behind the scenes. Here&rsquo;s a list of some of it:</p>
+<ul>
+	<li>Idempotent /etc/hosts based DNS</li>
+	<li>Easy docker base image installation</li>
+	<li>IP address calculations and assignment with <em>ipaddr</em></li>
+	<li>Clever cleanup on '<em>vagrant destroy</em>'</li>
+	<li>Vagrant docker base image detection</li>
+	<li>Integration with Puppet</li>
+</ul>
+If you don't understand what all of those mean, and you don't want to go source diving, don't worry about it! I will explain them in greater detail when it's important, and hopefully for now everything "just works" and stays out of your way.
+<p><span style="text-decoration:underline;">Future work</span>:</p>
+<p>There&rsquo;s still a lot more that I have planned, and some parts of the <em>Vagrantfile</em> need clean up, but I figured I&rsquo;d try and release this early so that you can get hacking right away. If it&rsquo;s useful to you, please leave a <a href="#comments">comment</a> and let me know.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>September 3, 2014<br>
+				<small>1621 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/docker">docker</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/oh-my-vagrant">oh-my-vagrant</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/09/03/introducing-oh-my-vagrant/"><small>https://ttboj.wordpress.com/2014/09/03/introducing-oh-my-vagrant/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/09/03/introducing-oh-my-vagrant">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/09/03/introducing-oh-my-vagrant.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to make git branch filtering more palatable">
+	<meta name="author" content="James Shubin">
+
+	<title>Git branch filtering - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2024/01/28/git-branch-filtering/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Git branch filtering</strong><br><small>How to make git branch filtering more palatable</small></h3>
+					<hr>
+					<p>If you have more than one git branch up in the air at the same time, having a
+system to track them and filter them is essential. Here are the stages I went
+through with <code>git branch</code>.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="https://xkcd.com/1597/"><img class="alignnone size-full" src="git_2x.png"  width="50%" /></a></td></tr><tr><td>xkcd reminds us that we&#39;re insane</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Prefixes</span>:<br /><br />
+
+<p>My first tip involves using a memorable prefix. For new features I name my
+branches with <code>feat/</code>. For example <code>feat/my-new-feature</code>. Yes the slash and the
+dashes are treated like any regular character. I also commonly use <code>bug/</code>. You
+can see all of the branches with <code>git branch -a</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Sorting</span>:<br /><br />
+
+<p>I found I wanted the most recently used branches at the bottom. Let&rsquo;s add an
+alias to do that. In your <code>~/.gitconfig</code> file, in the <code>[alias]</code> section, add:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rbranch = for-each-ref --sort=&#39;committerdate&#39; --format=&#34;%20%20%(refname:short)&#34; refs/heads/
+</span></span></code></pre></div><p>This even adds the two spaces that you normally see with <code>git branch</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Aliases</span>:<br /><br />
+
+<p>I then improved things with a git alias. I use <code>r</code> for that, since I list all my
+branches fairly often.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>r = rbranch
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Filtering</span>:<br /><br />
+
+<p>I previously wanted to filter things with grep. Many years ago I couldn&rsquo;t get
+this working. I eventually ended up with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rbranch = for-each-ref --sort=&#39;committerdate&#39; --format=&#34;%20%20%(refname:short)&#34; --exclude &#39;refs/heads/delete/*&#39; --exclude &#39;refs/heads/old/*&#39; refs/heads/
+</span></span></code></pre></div><p>The above command filters out branches that have a short name starting with
+<code>old/</code> or <code>delete/</code>, which are two prefixes I use temporarily for old branches
+and ones I plan to eventually delete.</p>
+<p>Git matches on the actual ref name. Keep in mind that it uses the full refname,
+so if you added a <code>--format</code> option, remove that to see what it&rsquo;s actually
+matching against when debugging.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Maximum count</span>:<br /><br />
+
+<p>I don&rsquo;t like filling my whole terminal when I usually only care about the last
+20 or so active branches. You can use the <code>--count</code> option to filter this down.
+Unfortunately for me, I want to see the newest ones at the bottom.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Finally</span>:<br /><br />
+
+<p>It was at this point, that I dug back into my git alias issues, and got bash
+pipes working. I decided to rewrite it all in terms of a shell command which is
+enclosed in the git alias. I also swapped out the <code>--exclude</code> matching for grep
+which can be more succinct. I&rsquo;m now left with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rbranch = ! git for-each-ref --sort=&#39;-committerdate&#39; --format=&#39;%20%20%(refname:short)&#39; refs/heads/ | grep -v --max-count 20 -E &#39;^  (delete|old)/&#39; | tac
+</span></span></code></pre></div><p>Note that including the dash as a prefix in sort, we get this in the reverse
+order. We then filter those through grep, matching with <code>-v</code> for excludes, and
+also limiting the number to 20. We finally run everything through <code>tac</code> (which
+is like <code>cat</code> but does things in reverse order, get it?) to finish things off.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Example</span>:<br /><br />
+
+<p>Combined with my ability to <a href="/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/">show the current git branch in PS1</a>
+I now have a pretty nifty setup.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@hostname:~/code/mgmt <span style="color:#666">(</span>feat/new-magic<span style="color:#666">)</span>$ git r
+</span></span><span style="display:flex;"><span>  bug/race-condition
+</span></span><span style="display:flex;"><span>  feat/world-peace
+</span></span><span style="display:flex;"><span>  feat/remote-resource
+</span></span><span style="display:flex;"><span>  bug/off-by-one-error
+</span></span><span style="display:flex;"><span>  master
+</span></span><span style="display:flex;"><span>  feat/world-domination
+</span></span><span style="display:flex;"><span>  feat/graph-shape
+</span></span><span style="display:flex;"><span>  feat/mcl-provisioner
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope that makes your git filtering easier!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 28, 2024<br>
+				<small>555 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/branch">branch</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2024/01/28/git-branch-filtering/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2024/01/28/git-branch-filtering">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2024/01/28/git-branch-filtering.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

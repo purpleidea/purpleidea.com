@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Getting USB audio working on a Sony ZS-RS60BT">
+	<meta name="author" content="James Shubin">
+
+	<title>USB Audio on a Boombox - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>USB Audio on a Boombox</strong><br><small>Getting USB audio working on a Sony ZS-RS60BT</small></h3>
+					<hr>
+					<p>In an earlier post, <a href="/blog/2020/08/11/usb-car-audio-in-a-civic/">I got USB audio working on my used, manual, 2013 Honda Civic EX</a>.
+Today I&rsquo;ll do the same for a Sony ZS-RS60BT <a href="https://en.wikipedia.org/wiki/Boombox">boombox</a>.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="boombox.jpg"><img class="alignnone size-full" src="boombox.jpg"  width="100%" /></a></td></tr><tr><td>Here it is in all its used glory after a little cleaning.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>I decided I should get a small portable boombox to practice my <a href="https://en.wikipedia.org/wiki/Popping">dope dance moves</a>.
+I currently still suck because I think I spend more time computering than out on
+the floor. In any case, in a stroke of luck, I happened upon a used boombox that
+was getting discarded due to a broken CD player. Nobody seemed either able or
+interested in getting USB audio working, so I took it home and gave it a go!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Initial attempts</span>:<br /><br />
+
+<p>Some initial attempts at formatting the USB key ended up with this:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="nodev.jpg"><img class="alignnone size-full" src="nodev.jpg"  width="100%" /></a></td></tr><tr><td>The device printing a NO DEV message.</td></tr></table></br />
+
+<p>Others got it showing a marquee message of &ldquo;NOT SUPPORT&rdquo;.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="not.jpg"><img class="alignnone size-full" src="not.jpg"  width="100%" /></a></td></tr><tr><td>NOT!</td></tr></table></br />
+
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="support.jpg"><img class="alignnone size-full" src="support.jpg"  width="100%" /></a></td></tr><tr><td>... NOT SUPPORT</td></tr></table></br />
+
+<p>Hmmm, I guess we have to go really old school here.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Identification</span>:<br /><br />
+
+<p>The code inside this thing must be really old. So after some digging, I found
+out the magic incantation. The device expects a drive with a single partition,
+labelled in a magic way.</p>
+<p>My usb drive was <code>/dev/sdb</code>. You can find this out by watching <code>dmesg --follow</code>
+when you put it in&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># dmesg --follow</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.765853<span style="color:#666">]</span> usb 2-1: new SuperSpeed Gen <span style="color:#666">1</span> USB device number <span style="color:#666">5</span> using xhci_hcd
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.783603<span style="color:#666">]</span> usb 2-1: New USB device found, <span style="color:#b8860b">idVendor</span><span style="color:#666">=</span>090c, <span style="color:#b8860b">idProduct</span><span style="color:#666">=</span>1000, <span style="color:#b8860b">bcdDevice</span><span style="color:#666">=</span>11.00
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.783606<span style="color:#666">]</span> usb 2-1: New USB device strings: <span style="color:#b8860b">Mfr</span><span style="color:#666">=</span>1, <span style="color:#b8860b">Product</span><span style="color:#666">=</span>2, <span style="color:#b8860b">SerialNumber</span><span style="color:#666">=</span><span style="color:#666">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.783607<span style="color:#666">]</span> usb 2-1: Product: USB Flash Disk
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.783608<span style="color:#666">]</span> usb 2-1: Manufacturer: General
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.783609<span style="color:#666">]</span> usb 2-1: SerialNumber: <span style="color:#666">0123456789001234</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.789512<span style="color:#666">]</span> usb-storage 2-1:1.0: USB Mass Storage device detected
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.791203<span style="color:#666">]</span> usb-storage 2-1:1.0: Quirks match <span style="color:#a2f;font-weight:bold">for</span> vid 090c pid 1000: <span style="color:#666">400</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143018.791371<span style="color:#666">]</span> scsi host2: usb-storage 2-1:1.0
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.047718<span style="color:#666">]</span> scsi 2:0:0:0: Direct-Access     General  USB Flash Disk   <span style="color:#666">1100</span> PQ: <span style="color:#666">0</span> ANSI: <span style="color:#666">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.048078<span style="color:#666">]</span> sd 2:0:0:0: Attached scsi generic sg1 <span style="color:#a2f">type</span> <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.048561<span style="color:#666">]</span> sd 2:0:0:0: <span style="color:#666">[</span>sdb<span style="color:#666">]</span> <span style="color:#666">31457280</span> 512-byte logical blocks: <span style="color:#666">(</span>16.1 GB/15.0 GiB<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.048980<span style="color:#666">]</span> sd 2:0:0:0: <span style="color:#666">[</span>sdb<span style="color:#666">]</span> Write Protect is off
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.048983<span style="color:#666">]</span> sd 2:0:0:0: <span style="color:#666">[</span>sdb<span style="color:#666">]</span> Mode Sense: <span style="color:#666">43</span> <span style="color:#666">00</span> <span style="color:#666">00</span> <span style="color:#666">00</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.049433<span style="color:#666">]</span> sd 2:0:0:0: <span style="color:#666">[</span>sdb<span style="color:#666">]</span> Write cache: enabled, <span style="color:#a2f">read</span> cache: enabled, doesn<span style="">&#39;</span>t support DPO or FUA
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.060954<span style="color:#666">]</span>  sdb:
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>143020.063291<span style="color:#666">]</span> sd 2:0:0:0: <span style="color:#666">[</span>sdb<span style="color:#666">]</span> Attached SCSI removable disk
+</span></span></code></pre></div><p>&hellip;or by being clever and looking through <code>lsblk</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># lsblk</span>
+</span></span><span style="display:flex;"><span>NAME                                          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>snip<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>sdb                                             8:16   <span style="color:#666">1</span>    15G  <span style="color:#666">0</span> disk  
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Partitioning</span>:<br /><br />
+
+<p>I popped open <code>fdisk</code> next. You can use <code>p</code> to print the current state. You can
+type <code>m</code> for the menu. You&rsquo;ll want to use <code>n</code> to make a new partition, then use
+all the defaults. After that you&rsquo;ll need to change the partition type with <code>t</code>.
+The code we want is <code>W95 FAT32</code> which is represented by a <code>b</code>. Select that and
+then exit with <code>w</code> to write everything to disk. My logs of this are included:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~$ sudo fdisk /dev/sdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Welcome to fdisk <span style="color:#666">(</span>util-linux 2.35.2<span style="color:#666">)</span>.
+</span></span><span style="display:flex;"><span>Changes will remain in memory only, <span style="color:#a2f;font-weight:bold">until</span> you decide to write them.
+</span></span><span style="display:flex;"><span>Be careful before using the write command.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Command <span style="color:#666">(</span>m <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#a2f">help</span><span style="color:#666">)</span>: p
+</span></span><span style="display:flex;"><span>Disk /dev/sdb: <span style="color:#666">15</span> GiB, <span style="color:#666">16106127360</span> bytes, <span style="color:#666">31457280</span> sectors
+</span></span><span style="display:flex;"><span>Disk model: USB Flash Disk  
+</span></span><span style="display:flex;"><span>Units: sectors of <span style="color:#666">1</span> * <span style="color:#b8860b">512</span> <span style="color:#666">=</span> <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>Sector size <span style="color:#666">(</span>logical/physical<span style="color:#666">)</span>: <span style="color:#666">512</span> bytes / <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>I/O size <span style="color:#666">(</span>minimum/optimal<span style="color:#666">)</span>: <span style="color:#666">512</span> bytes / <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>Disklabel type: dos
+</span></span><span style="display:flex;"><span>Disk identifier: 0x390298e3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Command <span style="color:#666">(</span>m <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#a2f">help</span><span style="color:#666">)</span>: n
+</span></span><span style="display:flex;"><span>Partition <span style="color:#a2f">type</span>
+</span></span><span style="display:flex;"><span>   p   primary <span style="color:#666">(</span><span style="color:#666">0</span> primary, <span style="color:#666">0</span> extended, <span style="color:#666">4</span> free<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>   e   extended <span style="color:#666">(</span>container <span style="color:#a2f;font-weight:bold">for</span> logical partitions<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>Select <span style="color:#666">(</span>default p<span style="color:#666">)</span>: p
+</span></span><span style="display:flex;"><span>Partition number <span style="color:#666">(</span>1-4, default 1<span style="color:#666">)</span>: <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>First sector <span style="color:#666">(</span>2048-31457279, default 2048<span style="color:#666">)</span>: 
+</span></span><span style="display:flex;"><span>Last sector, +/-sectors or +/-size<span style="color:#666">{</span>K,M,G,T,P<span style="color:#666">}</span> <span style="color:#666">(</span>2048-31457279, default 31457279<span style="color:#666">)</span>: 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Created a new partition <span style="color:#666">1</span> of <span style="color:#a2f">type</span> <span style="color:#b44">&#39;Linux&#39;</span> and of size <span style="color:#666">15</span> GiB.
+</span></span><span style="display:flex;"><span>Partition <span style="color:#080;font-style:italic">#1 contains a vfat signature.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Do you want to remove the signature? <span style="color:#666">[</span>Y<span style="color:#666">]</span>es/<span style="color:#666">[</span>N<span style="color:#666">]</span>o: Y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The signature will be removed by a write command.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Command <span style="color:#666">(</span>m <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#a2f">help</span><span style="color:#666">)</span>: t
+</span></span><span style="display:flex;"><span>Selected partition <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>Hex code <span style="color:#666">(</span><span style="color:#a2f">type</span> L to list all codes<span style="color:#666">)</span>: L
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#666">0</span>  Empty           <span style="color:#666">24</span>  NEC DOS         <span style="color:#666">81</span>  Minix / old Lin bf  Solaris        
+</span></span><span style="display:flex;"><span> <span style="color:#666">1</span>  FAT12           <span style="color:#666">27</span>  Hidden NTFS Win <span style="color:#666">82</span>  Linux swap / So c1  DRDOS/sec <span style="color:#666">(</span>FAT-
+</span></span><span style="display:flex;"><span> <span style="color:#666">2</span>  XENIX root      <span style="color:#666">39</span>  Plan <span style="color:#666">9</span>          <span style="color:#666">83</span>  Linux           c4  DRDOS/sec <span style="color:#666">(</span>FAT-
+</span></span><span style="display:flex;"><span> <span style="color:#666">3</span>  XENIX usr       3c  PartitionMagic  <span style="color:#666">84</span>  OS/2 hidden or  c6  DRDOS/sec <span style="color:#666">(</span>FAT-
+</span></span><span style="display:flex;"><span> <span style="color:#666">4</span>  FAT16 &lt;32M      <span style="color:#666">40</span>  Venix <span style="color:#666">80286</span>     <span style="color:#666">85</span>  Linux extended  c7  Syrinx         
+</span></span><span style="display:flex;"><span> <span style="color:#666">5</span>  Extended        <span style="color:#666">41</span>  PPC PReP Boot   <span style="color:#666">86</span>  NTFS volume <span style="color:#a2f">set</span> da  Non-FS data    
+</span></span><span style="display:flex;"><span> <span style="color:#666">6</span>  FAT16           <span style="color:#666">42</span>  SFS             <span style="color:#666">87</span>  NTFS volume <span style="color:#a2f">set</span> db  CP/M / CTOS / .
+</span></span><span style="display:flex;"><span> <span style="color:#666">7</span>  HPFS/NTFS/exFAT 4d  QNX4.x          <span style="color:#666">88</span>  Linux plaintext de  Dell Utility   
+</span></span><span style="display:flex;"><span> <span style="color:#666">8</span>  AIX             4e  QNX4.x 2nd part 8e  Linux LVM       df  BootIt         
+</span></span><span style="display:flex;"><span> <span style="color:#666">9</span>  AIX bootable    4f  QNX4.x 3rd part <span style="color:#666">93</span>  Amoeba          e1  DOS access     
+</span></span><span style="display:flex;"><span> a  OS/2 Boot Manag <span style="color:#666">50</span>  OnTrack DM      <span style="color:#666">94</span>  Amoeba BBT      e3  DOS R/O        
+</span></span><span style="display:flex;"><span> b  W95 FAT32       <span style="color:#666">51</span>  OnTrack DM6 Aux 9f  BSD/OS          e4  SpeedStor      
+</span></span><span style="display:flex;"><span> c  W95 FAT32 <span style="color:#666">(</span>LBA<span style="color:#666">)</span> <span style="color:#666">52</span>  CP/M            a0  IBM Thinkpad hi ea  Linux extended 
+</span></span><span style="display:flex;"><span> e  W95 FAT16 <span style="color:#666">(</span>LBA<span style="color:#666">)</span> <span style="color:#666">53</span>  OnTrack DM6 Aux a5  FreeBSD         eb  BeOS fs        
+</span></span><span style="display:flex;"><span> f  W95 Ext’d <span style="color:#666">(</span>LBA<span style="color:#666">)</span> <span style="color:#666">54</span>  OnTrackDM6      a6  OpenBSD         ee  GPT            
+</span></span><span style="display:flex;"><span><span style="color:#666">10</span>  OPUS            <span style="color:#666">55</span>  EZ-Drive        a7  NeXTSTEP        ef  EFI <span style="color:#666">(</span>FAT-12/16/
+</span></span><span style="display:flex;"><span><span style="color:#666">11</span>  Hidden FAT12    <span style="color:#666">56</span>  Golden Bow      a8  Darwin UFS      f0  Linux/PA-RISC b
+</span></span><span style="display:flex;"><span><span style="color:#666">12</span>  Compaq diagnost 5c  Priam Edisk     a9  NetBSD          f1  SpeedStor      
+</span></span><span style="display:flex;"><span><span style="color:#666">14</span>  Hidden FAT16 &lt;<span style="color:#666">3</span> <span style="color:#666">61</span>  SpeedStor       ab  Darwin boot     f4  SpeedStor      
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>  Hidden FAT16    <span style="color:#666">63</span>  GNU HURD or Sys af  HFS / HFS+      f2  DOS secondary  
+</span></span><span style="display:flex;"><span><span style="color:#666">17</span>  Hidden HPFS/NTF <span style="color:#666">64</span>  Novell Netware  b7  BSDI fs         fb  VMware VMFS    
+</span></span><span style="display:flex;"><span><span style="color:#666">18</span>  AST SmartSleep  <span style="color:#666">65</span>  Novell Netware  b8  BSDI swap       <span style="color:#a2f">fc</span>  VMware VMKCORE 
+</span></span><span style="display:flex;"><span>1b  Hidden W95 FAT3 <span style="color:#666">70</span>  DiskSecure Mult bb  Boot Wizard hid fd  Linux raid auto
+</span></span><span style="display:flex;"><span>1c  Hidden W95 FAT3 <span style="color:#666">75</span>  PC/IX           bc  Acronis FAT32 L fe  LANstep        
+</span></span><span style="display:flex;"><span>1e  Hidden W95 FAT1 <span style="color:#666">80</span>  Old Minix       be  Solaris boot    ff  BBT            
+</span></span><span style="display:flex;"><span>Hex code <span style="color:#666">(</span><span style="color:#a2f">type</span> L to list all codes<span style="color:#666">)</span>: b
+</span></span><span style="display:flex;"><span>Changed <span style="color:#a2f">type</span> of partition <span style="color:#b44">&#39;Linux&#39;</span> to <span style="color:#b44">&#39;W95 FAT32&#39;</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Command <span style="color:#666">(</span>m <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#a2f">help</span><span style="color:#666">)</span>: p
+</span></span><span style="display:flex;"><span>Disk /dev/sdb: <span style="color:#666">15</span> GiB, <span style="color:#666">16106127360</span> bytes, <span style="color:#666">31457280</span> sectors
+</span></span><span style="display:flex;"><span>Disk model: USB Flash Disk  
+</span></span><span style="display:flex;"><span>Units: sectors of <span style="color:#666">1</span> * <span style="color:#b8860b">512</span> <span style="color:#666">=</span> <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>Sector size <span style="color:#666">(</span>logical/physical<span style="color:#666">)</span>: <span style="color:#666">512</span> bytes / <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>I/O size <span style="color:#666">(</span>minimum/optimal<span style="color:#666">)</span>: <span style="color:#666">512</span> bytes / <span style="color:#666">512</span> bytes
+</span></span><span style="display:flex;"><span>Disklabel type: dos
+</span></span><span style="display:flex;"><span>Disk identifier: 0x390298e3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Device     Boot Start      End  Sectors Size Id Type
+</span></span><span style="display:flex;"><span>/dev/sdb1        <span style="color:#666">2048</span> <span style="color:#666">31457279</span> <span style="color:#666">31455232</span>  15G  b W95 FAT32
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Filesystem/RAID signature on partition <span style="color:#666">1</span> will be wiped.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Command <span style="color:#666">(</span>m <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#a2f">help</span><span style="color:#666">)</span>: w
+</span></span><span style="display:flex;"><span>The partition table has been altered.
+</span></span><span style="display:flex;"><span>Calling ioctl<span style="color:#666">()</span> to re-read partition table.
+</span></span><span style="display:flex;"><span>Syncing disks.
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Filesystem</span>:<br /><br />
+
+<p>Finally, let&rsquo;s build a filesystem.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># mkfs.vfat -F 32 -n BREAKBEATS /dev/sdb1</span>
+</span></span><span style="display:flex;"><span>mkfs.fat 4.1 <span style="color:#666">(</span>2017-01-24<span style="color:#666">)</span>
+</span></span></code></pre></div><p>Make sure that your label is all UPPERCASE if you decide to use one. After this
+I mounted the partition, and copied over some non-copyrighted mp3&rsquo;s to it. It
+will even read into nested folders.</p>
+<p>You might want to consider using <code>fatsort -n /dev/sdb1</code> if you want to get
+things playing in their desired filesystem order. I explained this in my earlier
+<a href="/blog/2020/08/11/usb-car-audio-in-a-civic/">car audio article</a>. For this
+use-case, I didn&rsquo;t bother to because all my break beats are random tracks that
+don&rsquo;t have a particular album order anyways!</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="nodev.jpg"><img class="alignnone size-full" src="nodev.jpg"  width="100%" /></a></td></tr><tr><td>It shows the title on insertion!</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Battery life</span>:<br /><br />
+
+<p>When plugged-in or running off of batteries, there is a small amount of
+<a href="https://en.wikipedia.org/wiki/Standby_power">phantom draw</a>, so I take out one
+battery when it&rsquo;s not in use. (The 6x1.5V C cell&rsquo;s are in series, so you can
+remove any of them to disconnect the circuit.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>As a bonus, it even comes with a storage drawer for your AUX cable and extra USB
+drives!</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="open.jpg"><img class="alignnone size-full" src="open.jpg"  width="100%" /></a></td></tr><tr><td>Store some stuff here if you don&#39;t care about breaking the CD player!</td></tr></table></br />
+
+<p>And here&rsquo;s one last thing to make you all jealous&hellip; My machine&rsquo;s volume can go
+<a href="https://en.wikipedia.org/wiki/Up_to_eleven">up to eleven</a>.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="11.jpg"><img class="alignnone size-full" src="11.jpg"  width="100%" /></a></td></tr><tr><td>Up to eleven!</td></tr></table></br />
+
+<p>If anyone in the Montreal area wants to break/pop with me, <a href="/contact/">please say hi</a>.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 11, 2021<br>
+				<small>1352 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/boombox">boombox</a> <a class="label label-default" href="/tags/fat">fat</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fdisk">fdisk</a> <a class="label label-default" href="/tags/gnu">gnu</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/mkfs">mkfs</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/sony">sony</a> <a class="label label-default" href="/tags/usb">usb</a> <a class="label label-default" href="/tags/vfat">vfat</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2021/01/11/usb-audio-on-a-boombox">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2021/01/11/usb-audio-on-a-boombox.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Hiera data in modules and OS independent puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Hiera data in modules and OS independent puppet</strong><br><small></small></h3>
+					<hr>
+					<p>Earlier this year, <a href="https://github.com/ripienaar">R.I.Pienaar</a> released his brilliant <a href="https://github.com/ripienaar/puppet-module-data/">data in modules hack</a>, a few months ago, I got the chance to start <a href="https://github.com/purpleidea/puppet-gluster/commit/32fdb618625f011b7d7387428520441a91321e0e">implementing it in Puppet-Gluster</a>, and today I have found the time to blog about it.</p>
+<p><span style="text-decoration:underline;">What is it</span>?</p>
+<p>R.I.&rsquo;s hack lets you store <a href="https://github.com/puppetlabs/hiera">hiera</a> data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly <code>params.pp</code>, and replace it with something file based that is elegant and hierarchical. For my use case, I&rsquo;m using it to build OS independent puppet modules, without storing this data as code. The secondary win is that porting your module to a new GNU/Linux distribution or version could be as simple as adding a <a href="https://en.wikipedia.org/wiki/YAML">YAML</a> file.</p>
+<p><span style="text-decoration:underline;">How does it work</span>?</p>
+<p><em>(For the specifics on the hack in general, please read <a href="http://www.devco.net/archives/2013/12/08/better-puppet-modules-using-hiera-data.php">R.I. Pienaar&rsquo;s blog post</a>. After you&rsquo;re comfortable with that, please continue&hellip;)</em></p>
+<p>In the <code>hiera.yaml</code> <code>data/</code> hierarchy, I define an <a href="https://github.com/purpleidea/puppet-gluster/blob/master/data/hiera.yaml">OS / version structure</a> that should probably cover all use cases. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>:hierarchy:
+</span></span><span style="display:flex;"><span>- params/%{::osfamily}/%{::operatingsystem}/%{::operatingsystemrelease}
+</span></span><span style="display:flex;"><span>- params/%{::osfamily}/%{::operatingsystem}
+</span></span><span style="display:flex;"><span>- params/%{::osfamily}
+</span></span><span style="display:flex;"><span>- common
+</span></span></code></pre></div><p>At the bottom, you can specify common data, which can be overridden by <a href="http://futurist.se/gldt/wp-content/uploads/12.10/gldt1210.svg">OS family</a> specific data (think <a href="http://upload.wikimedia.org/wikipedia/commons/9/97/RedHatFamilyTree1210.svg">RedHat &ldquo;like&rdquo;</a> vs. <a href="https://upload.wikimedia.org/wikipedia/commons/6/69/DebianFamilyTree1210.svg">Debian &ldquo;like&rdquo;</a>), which can be overridden with operating system specific data (think CentOS vs. Fedora), which can finally be overridden with operating system version specific data (think RHEL6 vs. RHEL7).</p>
+<p>Grouping the commonalities near the bottom of the tree, avoids duplication, and makes it possible to support new OS versions with fewer changes. It would be especially cool if someone could write a script to refactor commonalities downwards, and to refactor new uniqueness upwards.</p>
+<p><a href="https://github.com/purpleidea/puppet-gluster/blob/master/data/tree/RedHat/Fedora.yaml#L1">This is an except of the Fedora specific YAML file</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>gluster::params::package_glusterfs_server: <span style="color:#b44">&#39;glusterfs-server&#39;</span>
+</span></span><span style="display:flex;"><span>gluster::params::program_mkfs_xfs: <span style="color:#b44">&#39;/usr/sbin/mkfs.xfs&#39;</span>
+</span></span><span style="display:flex;"><span>gluster::params::program_mkfs_ext4: <span style="color:#b44">&#39;/usr/sbin/mkfs.ext4&#39;</span>
+</span></span><span style="display:flex;"><span>gluster::params::program_findmnt: <span style="color:#b44">&#39;/usr/bin/findmnt&#39;</span>
+</span></span><span style="display:flex;"><span>gluster::params::service_glusterd: <span style="color:#b44">&#39;glusterd&#39;</span>
+</span></span><span style="display:flex;"><span>gluster::params::misc_gluster_reload: <span style="color:#b44">&#39;/usr/bin/systemctl reload glusterd&#39;</span>
+</span></span></code></pre></div><p>Since we use full paths in Puppet-Gluster, and since they are uniquely different in Fedora (no more: <code>/bin</code>) it&rsquo;s nice to specify them all here. The added advantage is that you can easily drop in different versions of these utilities if you want to test a patched release without having to edit your system utilities. In addition, you&rsquo;ll see that the OS specific RPM package name and service names are in here too. On a Debian system, they are usually different.</p>
+<p><span style="text-decoration:underline;">Dependencies</span>:</p>
+<p>This depends on Puppet &gt;= 3.x and having the <em>puppet-module-data</em> module included. <a href="https://github.com/purpleidea/puppet-gluster/blob/32fdb618625f011b7d7387428520441a91321e0e/.gitmodules#L22">I do so for integration with vagrant like so.</a></p>
+<p><span style="text-decoration:underline;">Should I still use <code>params.pp</code></span>?</p>
+<p>I think that this answer is yes. I use a <code>params.pp</code> file with a <a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/params.pp#L18">single class</a> specifying all the defaults:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> gluster<span style="color:#666">::</span>params(
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># packages...</span>
+</span></span><span style="display:flex;"><span>	$package_glusterfs_server <span style="color:#666">=</span> <span style="color:#b44">&#39;glusterfs-server&#39;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	$program_mkfs_xfs <span style="color:#666">=</span> <span style="color:#b44">&#39;/sbin/mkfs.xfs&#39;</span>,
+</span></span><span style="display:flex;"><span>	$program_mkfs_ext4 <span style="color:#666">=</span> <span style="color:#b44">&#39;/sbin/mkfs.ext4&#39;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># services...</span>
+</span></span><span style="display:flex;"><span>	$service_glusterd <span style="color:#666">=</span> <span style="color:#b44">&#39;glusterd&#39;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># misc...</span>
+</span></span><span style="display:flex;"><span>	$misc_gluster_reload <span style="color:#666">=</span> <span style="color:#b44">&#39;/sbin/service glusterd reload&#39;</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># comment...</span>
+</span></span><span style="display:flex;"><span>	$comment <span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#b44">&#34;${comment}&#34;</span> <span style="color:#666">==</span> <span style="color:#b44">&#39;&#39;</span> {
+</span></span><span style="display:flex;"><span>		warning(<span style="color:#b44">&#39;Unable to load yaml data/ directory!&#39;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># ...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
+<p>In my <code>data/common.yaml</code> I include a bogus comment canary so that I can trigger a warning if the <em>data in modules</em> module isn&rsquo;t working. This shouldn&rsquo;t be a <em>fail</em> as long as you want to allow backwards compatibility, otherwise it should be! The defaults I use correspond to the primary OS I hack and use this module with, which in this case is <em>CentOS 6.x</em>.</p>
+<p>To use this data in your module, <em>include</em> the <code>params.pp</code> file, and start using it. Example:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#a2f">include</span> gluster<span style="color:#666">::</span>params
+</span></span><span style="display:flex;"><span>package { <span style="color:#b44">&#34;${::gluster::params::package_glusterfs_server}&#34;</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+Unfortunately the readability isn&rsquo;t nearly as nice as it is without this, however it&rsquo;s an essential evil, due to the puppet language limitations.</p>
+<p><span style="text-decoration:underline;">Common patterns</span>:</p>
+<p>There are a few common code patterns, which you might need for this technique. The first few, I&rsquo;ve already mentioned above. These are the <em>tree layout in hiera.yaml</em>, the <em>comment canary</em>, and the <em>params.pp defaults</em>. There&rsquo;s one more that you might find helpful&hellip;</p>
+<p><span style="text-decoration:underline;">The split package pattern</span>:</p>
+<p>Certain packages are split into multiple pieces on some operating systems, and grouped together on others. This means there isn&rsquo;t always a one-to-one mapping between the data and the package type. For simple cases you can use a hiera array:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># this hiera value could be an array of strings...</span>
+</span></span><span style="display:flex;"><span>package { $:<span style="color:#b8860b">:some_module</span><span style="color:#666">::</span>params<span style="color:#666">::</span>package<span style="color:#666">::</span><span style="color:#b8860b">some_package_list</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">alias</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;some_package&#39;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>service { <span style="color:#b44">&#39;foo&#39;</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">require</span> <span style="color:#666">=&gt;</span> <span style="color:#800">Package</span><span style="color:#666">[</span><span style="color:#b44">&#39;some_package&#39;</span><span style="color:#666">]</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+For this to work you must always define at least one element in the array. For more complex cases you might need to test for the secondary package in the split:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#b44">&#34;${::some_module::params::package::some_package}&#34;</span> <span style="color:#666">!=</span> <span style="color:#b44">&#39;&#39;</span> {
+</span></span><span style="display:flex;"><span>	package { <span style="color:#b44">&#34;${::some_module::params::package::some_package}&#34;</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">alias</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;some_package&#39;</span>, <span style="color:#080;font-style:italic"># or use the $name and skip this</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>service { <span style="color:#b44">&#39;foo&#39;</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">require</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${::some_module::params::package::some_package}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>		<span style="color:#b44">&#39;&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f;font-weight:bold">undef</span>,
+</span></span><span style="display:flex;"><span>		default <span style="color:#666">=&gt;</span> <span style="color:#800">Package</span><span style="color:#666">[</span><span style="color:#b44">&#39;some_package&#39;</span><span style="color:#666">]</span>,
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+This pattern is used in Puppet-Gluster in more than one place. It turns out that it&rsquo;s also useful when optional python packages get pulled into the system python. (<a href="https://github.com/purpleidea/puppet-gluster/commit/cae38f0e5e90134d997ea28b926c47ac6e7f8d6b">example</a>)</p>
+<p>Hopefully you found this useful. Please help increase the multi-os aspect of <a href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> by submitting patches to the YAML files, and by testing it on your favourite GNU/Linux distro!</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><strong>EDIT</strong>: I&rsquo;ve updated the article to use the new recommended directory naming convention of &lsquo;params&rsquo; instead of &rsquo;tree&rsquo;. <a href="https://github.com/purpleidea/puppet-gluster/commit/b9709099a6402b19b403200221b1537e23e38dd1">Example</a>.</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 4, 2014<br>
+				<small>924 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/data-in-modules">data-in-modules</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/hiera">hiera</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/yaml">yaml</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/"><small>https://ttboj.wordpress.com/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

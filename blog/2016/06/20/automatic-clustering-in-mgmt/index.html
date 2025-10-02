@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Automatic clustering in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Automatic clustering in mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>In <a href="https://github.com/purpleidea/mgmt/">mgmt</a>, deploying and managing your clustered config management infrastructure needs to be as automatic as the infrastructure you&rsquo;re using mgmt to manage. With mgmt, instead of a centralized data store, we function as a distributed system, built on top of <a href="https://github.com/coreos/etcd">etcd</a> and the <a href="https://en.wikipedia.org/wiki/Raft_(computer_science)">raft protocol</a>.</p>
+<p>In this article, I&rsquo;ll cover how this feature works.</p>
+<p><strong><span style="text-decoration:underline;">Foreword</span>:</strong></p>
+<p>Mgmt is a next generation configuration management project. If you haven&rsquo;t heard of it yet, or you don&rsquo;t remember why we use a distributed database, start by reading the previous articles:</p>
+<ul>
+    <li><a href="/blog/2016/01/18/next-generation-configuration-mgmt/">Next generation config mgmt</a></li>
+    <li><a href="/blog/2016/03/14/automatic-edges-in-mgmt/">Automatic edges in mgmt</a></li>
+    <li><a href="/blog/2016/03/30/automatic-grouping-in-mgmt/">Automatic grouping in mgmt</a></li>
+</ul>
+<p><strong><span style="text-decoration:underline;">Embedded etcd</span>:</strong></p>
+<p>Since mgmt and etcd are both written in <a href="https://en.wikipedia.org/wiki/Golang">golang</a>, the etcd code can be built into the same binary as mgmt. As a result, etcd can be managed directly from within mgmt. Unfortunately, there&rsquo;s currently no recommended API to do this, but I&rsquo;ve tried to get such a feature <a href="https://github.com/coreos/etcd/pull/5584">upstream</a> to avoid code duplication in mgmt. If you can help out here, I&rsquo;d really appreciate it! In the meantime, I&rsquo;ve had to <a href="https://github.com/purpleidea/mgmt/commit/d26b503dcaa59707723212db8c2d86af0c1b0d30">copy+paste the necessary portions into mgmt</a>.</p>
+<p><strong><span style="text-decoration:underline;">Clustering mechanics</span>:</strong></p>
+<p>You can deploy an automatically clustered mgmt cluster by following these three steps:</p>
+<ol>
+<li>If no mgmt servers exist you can start one up by running mgmt normally:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./mgmt run --file examples/graph0.yaml
+</span></span></code></pre></div><ol start="2">
+<li>To add any subsequent mgmt server, run mgmt normally, but point it at any number of existing mgmt servers with the <code>&ndash;seeds</code> command:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./mgmt run --file examples/graph0.yaml --seeds &lt;ip address:port&gt;
+</span></span></code></pre></div><ol start="3">
+<li>Profit!</li>
+</ol>
+<p>We internally implement a clustering algorithm which does the hard-working of building and managing the etcd cluster for you, so that you don&rsquo;t have to. If you&rsquo;re interested, keep reading to find out how it works!</p>
+<p><strong><span style="text-decoration:underline;">Clustering algorithm</span>:</strong></p>
+<p>The clustering algorithm works as follows:</p>
+<p>If you aren&rsquo;t given any seeds, then assume you are the first etcd server (peer) and start-up. If you are given a seeds argument, then connect to that peer to join the cluster as a client. If you&rsquo;d like to be promoted to a server, then you can &ldquo;volunteer&rdquo; by setting a special key in the cluster data store.</p>
+<p>The existing cluster of peers will decide if they want additional peers, and if so, they can &ldquo;nominate&rdquo; someone from the pool of volunteers. If you have been nominated, you can start-up an etcd peer and peer with the rest of the cluster. Similarly, the cluster can decide to un-nominate a peer, and if you&rsquo;ve been un-nominated, then you should shutdown your etcd server.</p>
+<p>All cluster decisions are made by consensus using the raft algorithm. In practice this means that the elected cluster leader looks at the state of the system, and makes the necessary nomination changes.</p>
+<p>Lastly, if you don&rsquo;t want to be a peer any more, you can revoke your volunteer message, which will be seen by the cluster, and if you were running a server, you should receive an un-nominate message in response, which will let you shutdown cleanly.</p>
+<p><strong><span style="text-decoration:underline;">Disclaimer</span>:</strong></p>
+<p>It&rsquo;s probably worth mentioning that the <a href="https://github.com/purpleidea/mgmt/commit/5363839ac849bd257ec40eba026a7934aa756868">current implementation</a> has a few issues, and at least one <a href="https://en.wikipedia.org/wiki/Race_condition">race</a>. The goal is to have it polished up by the time etcd v3 is released, but it&rsquo;s perfectly usable for testing and experimentation today! If you don&rsquo;t want to automatically cluster, you can always use the <code>&ndash;no-server</code> flag, and point mgmt at a manually managed mgmt cluster using the <code>&ndash;seeds</code> flag.</p>
+<p><strong><span style="text-decoration:underline;">Testing</span>:</strong></p>
+<p>Testing this feature on a single machine makes development and experimentation easier, so as a result, there are a few flags which make this possible.</p>
+<p><code>&ndash;hostname</code> <hostname>
+With this flag, you can force your mgmt client to pretend it is running on a host with the above mentioned name. You can use this to specify <code>&ndash;hostname h1</code>, or <code>&ndash;hostname h2</code>, and so on; one for each mgmt agent you want to run on the same machine.</p>
+<p><code>&ndash;server-urls</code> <a href="ip:port">ip:port</a>
+With this flag you can specify which IP address and port the etcd server will listen on for peer requests. By default this will use <code>127.0.0.1:2379</code>, but when running multiple mgmt agents on the same machine you&rsquo;ll need to specify this manually to avoid collisions. You can specify as many IP address and port pairs as you&rsquo;d like by separating them with commas or semicolons. The <code>&ndash;peer-urls</code> flag is an alias which does the same thing.</p>
+<p><code>&ndash;client-urls</code> <a href="ip:port">ip:port</a>
+This flag specifies which IP address and port the etcd server will listen on for client connections. It defaults to <code>127.0.0.1:2380</code>, but you&rsquo;ll occasionally want to specify this manually for the same reasons as mentioned above. You can specify as many IP address and port pairs as you&rsquo;d like by separating them with commas or semicolons. This is the address that will be used by the <code>&ndash;seeds</code> flag when joining an existing cluster.</p>
+<p><strong><span style="text-decoration:underline;">Elastic clustering</span>:</strong></p>
+<p>In the future, you&rsquo;ll be able to specify a much more elaborate method to decide how many hosts should be promoted into peers, and which hosts should be nominated or un-nominated when growing or shrinking the cluster.</p>
+<p>At the moment, we do the grow or shrink operation when the current peer count does not match the requested cluster size. This value has a default of 5, and can even be changed dynamically. To do so you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 put /_mgmt/idealClusterSize 3
+</span></span></code></pre></div><p>You can also set it at start-up by using the <code>&ndash;ideal-cluster-size</code> flag.</p>
+<p><strong><span style="text-decoration:underline;">Example</span>:</strong></p>
+<p>Here&rsquo;s a real example if you want to dive in. Try running the following four commands in separate terminals:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>./mgmt run --file examples/etcd1a.yaml --hostname h1 --ideal-cluster-size 3
+</span></span><span style="display:flex;"><span>./mgmt run --file examples/etcd1b.yaml --hostname h2 --seeds http://127.0.0.1:2379 --client-urls http://127.0.0.1:2381 --server-urls http://127.0.0.1:2382
+</span></span><span style="display:flex;"><span>./mgmt run --file examples/etcd1c.yaml --hostname h3 --seeds http://127.0.0.1:2379 --client-urls http://127.0.0.1:2383 --server-urls http://127.0.0.1:2384
+</span></span><span style="display:flex;"><span>./mgmt run --file examples/etcd1d.yaml --hostname h4 --seeds http://127.0.0.1:2379 --client-urls http://127.0.0.1:2385 --server-urls http://127.0.0.1:2386
+</span></span></code></pre></div><p>Once you&rsquo;ve done this, you should have a three host cluster! Check this by running any of these commands:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2379 member list
+</span></span><span style="display:flex;"><span>ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2381 member list
+</span></span><span style="display:flex;"><span>ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2383 member list
+</span></span></code></pre></div><p>Note that you&rsquo;ll need a v3 beta version of the <code>etcdctl</code> command which you can get by running <code>./build</code> in the <a href="https://github.com/coreos/etcd">etcd git repo</a>.</p>
+<p>To grow your cluster, try increasing the desired cluster size to five:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>ETCDCTL_API=3 etcdctl --endpoints 127.0.0.1:2381 put /_mgmt/idealClusterSize 5
+</span></span></code></pre></div><p>You should see the last host start-up an etcd server. If you reduce the <code>idealClusterSize</code>, you&rsquo;ll see servers shutdown! You&rsquo;re responsible if you destroy the cluster by setting it too low! You can then try growing your cluster again, but unfortunately due to a bug, hosts can&rsquo;t be re-used yet, and you&rsquo;ll get a &ldquo;bind: address already in use&rdquo; error. We hope to have this fixed shortly!</p>
+<p><strong><span style="text-decoration:underline;">Security</span>:</strong></p>
+<p>Unfortunately no authentication security or transport security has been implemented yet. We have a great design, but are busy working on other parts of the project at the moment. If you&rsquo;d like to help out here, <a href="/contact/">please let us know</a>!</p>
+<p><strong><span style="text-decoration:underline;">Future work</span>:</strong></p>
+<p>There&rsquo;s still a lot of work to do, to improve this feature. The biggest challenge has been getting a reasonable <a href="https://github.com/coreos/etcd/pull/5584">embedded server API upstream</a>. It&rsquo;s not clear whether this patch can be made to work or if something different will need to be written, but <a href="https://github.com/openshift/origin/tree/master/pkg/cmd/server/etcd/etcdserver">at least one other project</a> looks like it could benefit from this as well.</p>
+<p><strong><span style="text-decoration:underline;">Video</span>:</strong></p>
+<p><a href="https://www.youtube.com/watch?v=KVmDCUA42wc">A recording from the recent Berlin CoreOSFest 2016 has been published!</a> I demoed these recent features, but one interesting note is that I am actually presenting an earlier version of the code which used the etcd V2 API. I&rsquo;ve since ported the code to V3, but it is functionally similar. It&rsquo;s probably worth mentioning, that I found the V3 API to be more difficult, but also more correct and powerful. I think it is a net improvement to the project.</p>
+<p><strong><span style="text-decoration:underline;">Community</span>:</strong></p>
+<p>I can&rsquo;t end this blog post without mentioning some of the great stuff that&rsquo;s been happening in the mgmt community! In particular, <a href="https://ffrank.github.io/">Felix</a> has written <a href="https://github.com/purpleidea/mgmt/commit/8f83ecee65e070da53fc884e5a7ddbf93b7af1f6">some great code</a> to run existing Puppet code on mgmt. <a href="https://ffrank.github.io/features/2016/06/19/puppet-powered-mgmt/">Check out his work!</a></p>
+<p><strong><span style="text-decoration:underline;">Upcoming speaking</span>:</strong></p>
+<p>I&rsquo;ve got some upcoming speaking in <a href="https://2016.opensource.hk/topics/next-generation-config-mgmt/">Hong Kong at HKOSCon16</a> and in <a href="https://debconf16.debconf.org/">Cape Town at DebConf16</a> about the project. Please ping me if you&rsquo;ll be in one of these cities and would like to hack on mgmt or just chat about the project. I&rsquo;m happy to give some impromptu demos if you ask!</p>
+<p>Thanks for reading!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p>PS: We now have a <a href="https://twitter.com/mgmtconfig">community run twitter account</a>. Check us out!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 20, 2016<br>
+				<small>1462 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/clustering">clustering</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/elastic">elastic</a> <a class="label label-default" href="/tags/embedded">embedded</a> <a class="label label-default" href="/tags/etcd">etcd</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/raft">raft</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/06/20/automatic-clustering-in-mgmt/"><small>https://ttboj.wordpress.com/2016/06/20/automatic-clustering-in-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/06/20/automatic-clustering-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/06/20/automatic-clustering-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/06/20/automatic-clustering-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

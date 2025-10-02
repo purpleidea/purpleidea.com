@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Vagrant on Fedora with libvirt (reprise) - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Vagrant on Fedora with libvirt (reprise)</strong><br><small></small></h3>
+					<hr>
+					<p><a href="http://www.vagrantup.com/">Vagrant</a> has become the <em>de facto</em> tool for <em>devops</em>. Faster iterations, clean environments, and less overhead. This <em>isn&rsquo;t</em> an article about <em>why</em> you should use Vagrant. This is an article about <em>how</em> to get up and running with Vagrant on Fedora with libvirt <em>easily</em>!</p>
+<p><span style="text-decoration:underline;">Background</span>:</p>
+<p>This article is an update of my original <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a> article. There is still lots of good information in that article, but this one should be easier to follow and uses updated versions of Vagrant and vagrant-libvirt.</p>
+<p><span style="text-decoration:underline;">Why vagrant-libvirt</span>?</p>
+<p>Vagrant ships by default with support for virtualbox. This makes sense as a default since it is available on Windows, Mac, and GNU/Linux. Real hackers use GNU/Linux, and in my opinion the best tool for GNU/Linux is <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a>. Proprietary, closed source platforms aren&rsquo;t hackable and therefore aren&rsquo;t cool!</p>
+<p>Another advantage to using the <a href="https://github.com/pradels/vagrant-libvirt/">vagrant-libvirt</a> plugin is that it plays nicely with the existing ecosystem of <a href="http://libvirt.org/apps.html">libvirt tools</a>. You can use virsh, virt-manager, and guestfish alongside Vagrant, and if your development work needs to go into production, you can be confident in knowing that it was already tested on the same awesome KVM virtualization platform that your servers run.</p>
+<p><span style="text-decoration:underline;">Prerequisites</span>:</p>
+<p>Let&rsquo;s get going. What do you need?</p>
+<ul>
+	<li>A Fedora 20 machine</li>
+</ul>
+I recommend hardware that supports VT extensions. Most does these days. This should also work with other GNU/Linux distro's, but I haven't tested them.
+<p><span style="text-decoration:underline;">Installation</span>:</p>
+<p>I&rsquo;m going to go through this in a logical hacking order. This means you could group all the <code>yum install</code> commands into a single execution at the beginning, but you would learn much less by doing so.</p>
+<p>First install some of your favourite hacking dependencies. I did this on a minimal, headless F20 installation. You might want to add some of these too:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y wget tree vim screen mtr nmap telnet tar git
+</span></span></code></pre></div><p>Update the system to make sure it&rsquo;s fresh:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum update -y
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">Update</span>:</strong> I&rsquo;m actually now using vagrant 1.6.5, and you should try that instead. It should work for you too. Modify the below to match the newer version.</p>
+<p>Download Vagrant version 1.5.4. No, don&rsquo;t use the latest version, it probably won&rsquo;t work! Vagrant has new releases practically as often as there are sunsets, and they typically cause lots of breakages.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.4_x86_64.rpm
+</span></span></code></pre></div><p>and install it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y vagrant_1.5.4_x86_64.rpm
+</span></span></code></pre></div><p><span style="text-decoration:underline;">RVM installation</span>:</p>
+<p>In order to get vagrant-libvirt working, you&rsquo;ll need some ruby dependencies. It turns out that <a href="https://rvm.io/">RVM</a> seems to be the best way to get exactly what you need. Use the sketchy RVM installer:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># \curl -sSL https://get.rvm.io | bash -s stable
+</span></span></code></pre></div><p>If you don&rsquo;t know why that&rsquo;s sketchy, then you probably shouldn&rsquo;t be hacking! I did that as root, but it probably works when you run it as a normal user. At this point <code>rvm</code> should be installed. The last important thing you&rsquo;ll need to do is to add yourself to the <code>rvm</code> group. This is only needed if you installed rvm as root:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># usermod -aG rvm &lt;username&gt;
+</span></span></code></pre></div><p>You&rsquo;ll probably need to logout and log back in for this to take effect. Run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ groups
+</span></span></code></pre></div><p>to make sure you can see <em>rvm</em> in the list. If you ran rvm as root, you&rsquo;ll want to source the <code>rvm.sh</code> file:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ source /etc/profile.d/rvm.sh
+</span></span></code></pre></div><p>or simply use a new terminal. If you ran it as a normal user, I think RVM adds something to your <code>~/.bashrc</code>. You might want to reload it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ source ~/.bashrc
+</span></span></code></pre></div><p>At this point RVM should be working. Let&rsquo;s see which ruby&rsquo;s it can install:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rvm list known
+</span></span></code></pre></div><p>Ruby version <code>ruby-2.0.0-p353</code> seems closest to what is available on my Fedora 20 machine, so I&rsquo;ll use that:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rvm install ruby-2.0.0-p353
+</span></span></code></pre></div><p>If the exact patch number isn&rsquo;t available, choose what&rsquo;s closest. Installing ruby requires a bunch of dependencies. The <code>rvm install</code> command will ask yum for a bunch of dependencies, but if you&rsquo;d rather install them yourself, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># yum install -y patch libyaml-devel libffi-devel glibc-headers autoconf gcc-c++ glibc-devel patch readline-devel zlib-devel openssl-devel bzip2 automake libtool bison</span>
+</span></span></code></pre></div><p><span style="text-decoration:underline;">GEM installation</span>:</p>
+<p>Now we need the GEM dependencies for the vagrant-libvirt plugin. These GEM&rsquo;s happen to have their own build dependencies, but thankfully I&rsquo;ve already figured those out for you:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y libvirt-devel libxslt-devel libxml2-devel
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">Update</span>:</strong> Typically we used to now have to install the nokogiri dependencies. With newer versions of vagrant-libvirt, this is no longer necessarily required. Consider skipping this step, and trying to install the vagrant-libvirt plugin without specifying a version. If it doesn&rsquo;t work, try vagrant-libvirt version 0.0.20, if that doesn&rsquo;t work, install nokogiri. Feel free to post your updated experiences in the comments!</p>
+<p>Now, install the <em>nokogiri</em> gem that vagrant-libvirt needs:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ gem install nokogiri -v &#39;1.5.11&#39;
+</span></span></code></pre></div><p>and finally we can install the actual vagrant-libvirt plugin:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant plugin install --plugin-version 0.0.16 vagrant-libvirt
+</span></span></code></pre></div><p>You don&rsquo;t have to specify the &ndash;plugin-version 0.0.16 part, but doing so will make sure that you get a version that I have tested to be compatible with Vagrant 1.5.4 should a newer vagrant-libvirt release not be compatible with the Vagrant version you&rsquo;re using. If you&rsquo;re feeling brave, please test newer versions, <a href="https://github.com/pradels/vagrant-libvirt/issues/new">report bugs</a>, and write patches!</p>
+<p><span style="text-decoration:underline;">Making Vagrant more useful</span>:</p>
+<p>Vagrant should basically work at this point, but it&rsquo;s missing some awesome. I&rsquo;m proud to say that I wrote this awesome. I recommend my bash function and alias additions. If you&rsquo;d like to include them, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> wget https:<span style="color:#666">//</span>gist<span style="color:#666">.</span>githubusercontent<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span><span style="color:#666">8071962</span><span style="color:#666">/</span>raw<span style="color:#666">/</span>ee27c56e66aafdcb9fd9760f123e7eda51a6a51e<span style="color:#666">/.</span>bashrc_vagrant<span style="color:#666">.</span>sh
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> echo <span style="color:#b44">&#39;. ~/.bashrc_vagrant.sh&#39;</span> <span style="color:#666">&gt;&gt;</span> <span style="color:#666">~/.</span>bashrc
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> <span style="color:#666">.</span> <span style="color:#666">~/.</span>bashrc    <span style="color:#080;font-style:italic"># reload</span>
+</span></span></code></pre></div><p>to pull in my most used Vagrant aliases and functions. I&rsquo;ve written about them before. If you&rsquo;re interested, please read:</p>
+<ul>
+	<li><a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></li>
+	<li><a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">Vagrant clustered SSH and ‘screen’</a></li>
+</ul>
+<span style="text-decoration:underline;">KVM/QEMU installation</span>:
+<p>As I mentioned earlier, I&rsquo;m assuming you have a minimal Fedora 20 installation, so you might not have all the libvirt pieces installed! Here&rsquo;s how to install any potentially missing pieces:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y libvirt{,-daemon-kvm}
+</span></span></code></pre></div><p>This should pull in a whole bunch of dependencies too. You will need to start and (optionally) enable the libvirtd service:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># systemctl start libvirtd.service
+</span></span><span style="display:flex;"><span># systemctl enable libvirtd.service
+</span></span></code></pre></div><p>You&rsquo;ll notice that I&rsquo;m using the <em>systemd</em> commands instead of the deprecated <code>service</code> command. My biggest (only?) gripe with systemd is that the command line tools aren&rsquo;t as friendly as they could be! The <code>systemctl</code> equivalent requires more typing, and make it harder to start or stop the same service in quick succession, because it buries the <em>action</em> in the <em>middle</em> of the command instead of leaving it at the <em>end</em>!</p>
+<p>The libvirtd service should finally be running. On my machine, it comes with a <em>default</em> network which got in the way of my vagrant-libvirt networking. If you want to get rid of it, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># virsh net-destroy default
+</span></span><span style="display:flex;"><span># virsh net-undefine default
+</span></span></code></pre></div><p>and it shouldn&rsquo;t bother you anymore. One last hiccup. If it&rsquo;s your first time installing KVM, you might run into <a href="https://bugzilla.redhat.com/show_bug.cgi?id=950436">bz#950436</a>. To workaround this issue, I had to run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># rmmod kvm_intel
+</span></span><span style="display:flex;"><span># rmmod kvm
+</span></span><span style="display:flex;"><span># modprobe kvm
+</span></span><span style="display:flex;"><span># modprobe kvm_intel
+</span></span></code></pre></div><p>Without this &ldquo;module re-loading&rdquo; you might see this error:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Call to virDomainCreateWithFlags failed: internal error: Process exited while reading console log output: char device redirected to /dev/pts/2 (label charserial0)
+</span></span><span style="display:flex;"><span>Could not access KVM kernel module: Permission denied
+</span></span><span style="display:flex;"><span>failed to initialize KVM: Permission denied
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Additional installations</span>:</p>
+<p>To make your machine somewhat more palatable, you might want to consider installing bash-completion:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y bash-completion
+</span></span></code></pre></div><p>You&rsquo;ll also probably want to add the PolicyKit (polkit) <code>.pkla</code> file that I recommend in my <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">earlier article</a>. Typically that means adding something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[Allow james libvirt management permissions]
+</span></span><span style="display:flex;"><span>Identity=unix-user:james
+</span></span><span style="display:flex;"><span>Action=org.libvirt.unix.manage
+</span></span><span style="display:flex;"><span>ResultAny=yes
+</span></span><span style="display:flex;"><span>ResultInactive=yes
+</span></span><span style="display:flex;"><span>ResultActive=yes
+</span></span></code></pre></div><p>as root to somewhere like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/etc/polkit-1/localauthority/50-local.d/vagrant.pkla
+</span></span></code></pre></div><p>Your machine should now be setup perfectly! The last thing you&rsquo;ll need to do is to make sure that you get a Vagrantfile that does things properly! Here are some recommendations.</p>
+<p><span style="text-decoration:underline;">Shared folders</span>:</p>
+<p>Shared folders are a mechanism that Vagrant uses to pass data into (and sometimes out of) the virtual machines that it is managing. Typically you can use NFS, rsync, and some provider specific folder sharing like <a href="http://www.linux-kvm.org/page/9p_virtio">9p</a>. Using rsync is the simplest to set up, and works exceptionally well. Make sure you include the following line in your Vagrantfile:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>config.vm.synced_folder &#39;./&#39;, &#39;/vagrant&#39;, type: &#39;rsync&#39;
+</span></span></code></pre></div><p>If you want to see an example of this in action, you can have a look at my <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/gluster/Vagrantfile#L267">puppet-gluster Vagrantfile</a>. If you are using the <a href="https://docs.vagrantup.com/v2/provisioning/puppet_apply.html">puppet apply</a> provisioner, you will have to set it to use rsync as well:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>puppet.synced_folder_type = &#39;rsync&#39;
+</span></span></code></pre></div><p><span style="text-decoration:underline;">KVM performance</span>:</p>
+<p>Due to a regression in vagrant-libvirt, the default driver used for virtual machines is <em>qemu</em>. If you want to use the accelerated KVM domain type, you&rsquo;ll have to <a href="https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/Vagrantfile#L578">set</a> it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>libvirt.driver = &#39;kvm&#39;
+</span></span></code></pre></div><p>This typically gives me a <em>5x</em> performance increase over plain qemu. <a href="https://github.com/pradels/vagrant-libvirt/pull/182">This fix is available in the latest vagrant-libvirt version.</a> <a href="https://github.com/pradels/vagrant-libvirt/pull/185">The default has been set to KVM in the latest git master.</a></p>
+<p><span style="text-decoration:underline;">Dear internets</span>!</p>
+<p>I think this was fairly straightforward. You could probably even put all of these commands in a shell script and just run it to get it all going. What we really need is proper RPM packaging. If you can help out, that would be excellent!</p>
+<p>If we had a version of vagrant-libvirt alongside a matching Vagrant version in Fedora, then developers and hackers could target that, and we could easily exchange dev environments, hackers could distribute product demos as full vagrant-libvirt clusters, and I could stop having to write these types of articles ;)</p>
+<p>I hope this was helpful to you. Please let me know in the <a href="#comments">comments</a>.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>May 13, 2014<br>
+				<small>1661 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fedora-20">fedora 20</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/libvirt">libvirt</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/polkit">polkit</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> <a class="label label-default" href="/tags/virsh">virsh</a> <a class="label label-default" href="/tags/virt-manager">virt-manager</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/"><small>https://ttboj.wordpress.com/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Building inexpensive dynamic dns infrastructure for sysadmins">
+	<meta name="author" content="James Shubin">
+
+	<title>Inexpensive Dynamic DNS over IRC - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Inexpensive Dynamic DNS over IRC</strong><br><small>Building inexpensive dynamic dns infrastructure for sysadmins</small></h3>
+					<hr>
+					<p>The one thing that I&rsquo;ve been using for longer than <code>ssh</code> is dynamic dns. In this
+article I&rsquo;ll explain how I built an inexpensive, reliable, private alternative
+to the mainstream tools commonly available today using only golang and <a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>I&rsquo;ve had an account with <code>dyndns.org</code> for a long time. They used to be free, but
+then they cut off the free tier, but left existing accounts alone, until they
+eventually cut all the non-payers off entirely. I think we need an inexpensive
+way of giving up-and-coming GNU+Linux hackers a way to <code>ssh</code> home, and run their
+<a href="https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/">irssi sessions</a>,
+without having to pay. I also wanted something reliable that wouldn&rsquo;t disappear
+the way dyndns did.</p>
+<p>I don&rsquo;t need to broadcast the changing IP on the public DNS infrastructure. For
+that, there is <code>ddclient</code>. However, I&rsquo;ve found that it&rsquo;s incredibly unreliable,
+and when it fails, I&rsquo;d like to still be able to find that machine so that I or
+<a href="https://github.com/purpleidea/mgmt/"><code>mgmt</code></a> can connect to it and fix it.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The design</span>:<br /><br />
+
+<p>I realized that I would need a &ldquo;third-party&rdquo; to relay the messages. I&rsquo;d like
+that to be something inexpensive that will be around in another 30 years.
+The only thing that came to mind was IRC! I&rsquo;ve been using <a href="https://libera.chat/">Libera.chat</a>
+for many years as a way to exchange quality information with other hackers, and
+I hope it remains available. I decided to use them as my relay. In the horrible
+chance that they ever disappear, I could easily migrate to a different IRC
+server since the protocol is open.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="design.png"><img class="alignnone size-full" src="design.png"  width="100%" /></a></td></tr><tr><td>third-party relay</td></tr></table></br />
+
+<p>Each &ldquo;server&rdquo; which you deploy and setup runs a small systemd service. That
+service then connects to the IRC server and sits there listening. If a &ldquo;client&rdquo;
+user connects to the channel and sends a &ldquo;ping&rdquo; message, then all the listening
+servers respond with a &ldquo;pong&rdquo; message that includes their desired hostname and
+associated IP address. That client then adds those messages to a local cache to
+be used for the host resolution that we require!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Code</span>:<br /><br />
+
+<p><a href="https://github.com/purpleidea/ircdns">The code is available right here.</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Usage</span>:<br /><br />
+
+<p>After downloading the code and the dependencies, you simply:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>sudo make install
+</span></span><span style="display:flex;"><span>sudo systemctl start ircdns
+</span></span></code></pre></div><p>and your service is happily chugging away! Do this on as many machines as you
+manage. I do this on all of the servers and desktops that I manage.</p>
+<p>To setup the client on your laptop, you simply:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make client
+</span></span><span style="display:flex;"><span>sudo make client_install
+</span></span></code></pre></div><p>You&rsquo;ll then need to add <code>ircdns</code> to the <code>hosts</code> line in <code>/etc/nsswitch.conf</code>.
+You should add the entry before the other network backends like <code>dns</code> or <code>mdns</code>
+to ensure faster resolution. I haven&rsquo;t found a simple, elegant, robust way to
+automate this step, but feel free to send a patch if you&rsquo;d like to.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Testing</span>:<br /><br />
+
+<p>Pretty simple to test, it&rsquo;s all automatic!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ ping -c <span style="color:#666">1</span> -W <span style="color:#666">1</span> example.com.ircdns
+</span></span><span style="display:flex;"><span>PING example.com.ircdns <span style="color:#666">(</span>192.0.2.13<span style="color:#666">)</span> 56<span style="color:#666">(</span>84<span style="color:#666">)</span> bytes of data.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--- example.com.ircdns ping statistics ---
+</span></span><span style="display:flex;"><span><span style="color:#666">1</span> packets transmitted, <span style="color:#666">0</span> received, 100% packet loss, <span style="color:#a2f">time</span> 0ms
+</span></span></code></pre></div><p>I personally like adding it to my <code>~/.ssh/config</code> so that I can do even more
+magic with <em>SSH</em>. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-make" data-lang="make"><span style="display:flex;"><span><span style="">Host</span> <span style="">example</span>
+</span></span><span style="display:flex;"><span>	<span style="">Hostname</span> <span style="">example.ircdns</span>
+</span></span><span style="display:flex;"><span>	<span style="">User</span> <span style="">root</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#00a000">LocalForward 1443 192.0.2.42</span><span style="color:#666">:</span>443
+</span></span><span style="display:flex;"><span>	DynamicForward <span style="color:#666">1080</span>
+</span></span></code></pre></div><p>So that I can <code>ssh example</code> with ease! Note that you&rsquo;ll want to use the
+<code>.ircdns</code> suffix to explicitly request hostnames through this IRC service. This
+allows regular dns lookups to not get slowed down by the higher latency
+IRC-based lookups.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Classic Mode and Logs</span>:<br /><br />
+
+<p>Since everything is happening over IRC, we can actually interact with this
+manually. This is useful for debugging, and for situations where you just want a
+single lookup without installing the client code.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="irssi.png"><img class="alignnone size-full" src="irssi.png"  width="100%" /></a></td></tr><tr><td>view from inside of my IRC client</td></tr></table></br />
+
+<p>In the above session, you can see that I joined the magic IRC channel and listed
+the users with <code>/names</code>. Then, I sent a <code>ping</code> message and saw the responses.
+Lastly, I ran <code>/lastlog hostname4</code> to get a recent history from anything
+matching that pattern. This gives me a useful log of the current and previous IP
+addresses for that hostname!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Internals</span>:<br /><br />
+
+<p>How does this magic work? On the server-side, it&rsquo;s fairly easy. I wrote a small
+IRC bot. I did it very quickly, and there&rsquo;s nothing particularly exciting there.
+On the client-side it&rsquo;s more interesting! Your <code>libc</code> has this incredibly old
+thing called the <a href="http://www.gnu.org/software/libc/manual/html_node/Name-Service-Switch.html">name service switch</a>,
+and everything basically plugs into that when there&rsquo;s name resolution to do.</p>
+<p>(Astute readers might notice that I&rsquo;ve conflated &ldquo;DNS&rdquo; with &ldquo;name resolution&rdquo;,
+but it&rsquo;s not accidental and is mostly to keep things easy to understand for
+others.)</p>
+<p>The &ldquo;name resolution&rdquo; happens according to the <code>hosts</code> line in <code>/etc/nsswitch.conf</code>.
+Mine now looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ grep <span style="color:#b44">&#39;^hosts:&#39;</span> /etc/nsswitch.conf
+</span></span><span style="display:flex;"><span>hosts:	files ircdns dns myhostname
+</span></span></code></pre></div><p>Anytime glibc does name resolution, it checks that line, and then runs all the
+various plugins listed there. We now have one more listed. It&rsquo;s clever enough to
+be very fast and return right away so as not to block the entire lookup if the
+request doesn&rsquo;t end in <code>.ircdns</code>. (But this is configurable.)</p>
+<p>Building such a plugin in golang required a bit of <code>import &quot;C&quot;</code>, but all the
+hard trail blazing had already been done by <a href="https://twitter.com/costela">Leo Antunes</a>
+for his <a href="https://github.com/costela/nss-docker">docker-nss</a> resolver. You just
+need to implement the <code>_nss_*_gethostbyname*_r</code> functions and build it with
+<code>go build -buildmode=c-shared</code> and some
+<a href="https://github.com/purpleidea/ircdns/blob/1bc537ad978a6eba1f479afee54cdf1447b03d6d/Makefile#L143">linker flags</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Performance</span>:<br /><br />
+
+<p>With a cold-cache, a lookup takes about 10 seconds. This might seem like a long
+time, but it&rsquo;s entirely free. As a result you might want to use caching to keep
+the most recently used entries fresh. If your workloads are particularly latency
+sensitive, then you could run the client as a <code>systemd</code> service to watch for new
+messages and to keep the cache warm so that lookups would be almost instant.
+This could also spin-up on demand, and shutoff after some calculated period of
+time.</p>
+<p>There&rsquo;s also an option to immediately return once the first valid result comes
+in. This can speed things up a little as well, and is possible because the IRC
+client streams the results to be processed in real-time.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Security</span>:<br /><br />
+
+<p>Currently, this is running in my own private IRC channel, and I only use it for
+<code>ssh</code>, where I already verify host keys before connecting, so security is not a
+major priority for me, and I&rsquo;m not particularly worried about anyone <code>dos</code>-ing
+my IRC channel.</p>
+<p>However, improvements could be made! Each server could have a public and private
+key pair, and the public halves could be copied to the client laptop. All their
+messages could be signed so that the client could automatically ignore any
+unsigned broadcasts. Similarly, the server could have a public and private key
+pair, and the public halves could be copied to the server machines. Any &ldquo;ping&rdquo;
+message that is not signed appropriately could be ignored!</p>
+<p>(All signed messages should also include a monotonic timestamp to prevent replay
+attacks!)</p>
+<p>This project has been built as a standalone golang binary that embeds all of its
+configuration. As a result, it would be easy to embed and deploy the necessary
+key pairs automatically.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Improvements</span>:<br /><br />
+
+<p>Currently we detect the public IP address by polling. I&rsquo;d like to avoid having
+to ping an external server (even though it checks a whole list of them to avoid
+SPOF) and I&rsquo;d also like to avoid polling. If you know of a robust, event-driven
+mechanism to replace this, please let me know!</p>
+<p>As discussed, improved caching could be a huge benefit if your use-case requires
+it. More robust cryptographic security could also be added, again, if your
+use-case requires it. Lastly, an <a href="https://github.com/purpleidea/mgmt/">mgmt config</a>
+module to automatically deploy this would be useful. If you&rsquo;d like to work on,
+or <a href="https://github.com/sponsors/purpleidea/">sponsor</a> any or all of these,
+please <a href="https://purpleidea.com/contact/">contact me</a> and let me know.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Custom configuration</span>:<br /><br />
+
+<p>A lot of custom configuration can be changed for your own personalized <code>ircdns</code>
+builds. I haven&rsquo;t fully documented or implemented that, since it&rsquo;s outside the
+scope of what I needed for my use-case. It currently connects to the #ircdns
+channel on <a href="https://libera.chat/">Libera.chat</a>, but that can be changed. If
+you&rsquo;d like some custom builds and a hand setting this up, please let me know! I
+will offer this service for an extremely low price matched to meet your budget.
+If you write <a href="https://www.gnu.org/philosophy/free-sw.html">open source</a> software
+that I use, then I will probably do it for free.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<ol>
+<li>
+<p>Reliable, long-term name resolution relay via IRC protocol. This depends on
+<a href="https://libera.chat/">Libera.chat</a> existing, so please send them a few dollars.</p>
+</li>
+<li>
+<p>Natively integrated with the venerable <em>name service switch</em> so lookups work
+with your existing tools.</p>
+</li>
+<li>
+<p>Free.</p>
+</li>
+</ol>
+<p>I hope you enjoyed this and found it useful.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>September 1, 2020<br>
+				<small>1503 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/dns">dns</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/irc">irc</a> <a class="label label-default" href="/tags/irssi">irssi</a> <a class="label label-default" href="/tags/libc">libc</a> <a class="label label-default" href="/tags/libera">libera</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/nss">nss</a> <a class="label label-default" href="/tags/name-service-switch">name service switch</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/systemd">systemd</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2020/09/01/inexpensive-dns-over-irc">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2020/09/01/inexpensive-dns-over-irc.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</strong><br><small></small></h3>
+					<hr>
+					<p>Making <a href="https://github.com/purpleidea/oh-my-vagrant">Oh-My-Vagrant</a> (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&rsquo;ll explain how &ldquo;mainstream&rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)</p>
+<p><strong><span style="text-decoration:underline;">Prerequisites</span>:</strong></p>
+<p>If you haven&rsquo;t read any of the <a href="/tags/oh-my-vagrant/">previous articles about Oh-My-Vagrant</a>, I&rsquo;d recommend you start there. Many of the articles include screencasts, and combined with the <a href="https://github.com/purpleidea/oh-my-vagrant/tree/master/examples">examples/</a> folder, this is probably the best way to learn OMV, because the <a href="https://github.com/purpleidea/oh-my-vagrant/issues/79">documentation could use some love</a>.</p>
+<p><strong><span style="text-decoration:underline;">Installation</span>:</strong></p>
+<p>OMV is now easily installable on Fedora 22 via COPR. It probably works on other distros and versions, but I haven&rsquo;t tested all of those combinations. This is a colossal improvement from when I <a href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/" target="_blank">first posted about this publicly in 2013</a>. There is still <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1221304" target="_blank">one annoying bug</a> that I occasionally hit. Let me know if you can reproduce.</p>
+<p>Install from COPR:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~$</span> sudo dnf copr enable purpleidea<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You are about to enable a Copr repository<span style="color:#666">.</span> Please note that this
+</span></span><span style="display:flex;"><span>repository is <span style="color:#a2f;font-weight:bold">not</span> part of the main Fedora distribution, <span style="color:#a2f;font-weight:bold">and</span> quality
+</span></span><span style="display:flex;"><span>may vary<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Fedora Project does <span style="color:#a2f;font-weight:bold">not</span> exercise any power over the contents of
+</span></span><span style="display:flex;"><span>this repository beyond the rules outlined <span style="color:#a2f;font-weight:bold">in</span> the Copr FAQ at
+</span></span><span style="display:flex;"><span>, <span style="color:#a2f;font-weight:bold">and</span>
+</span></span><span style="display:flex;"><span>packages are <span style="color:#a2f;font-weight:bold">not</span> held to any quality <span style="color:#a2f;font-weight:bold">or</span> security level<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Please <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#a2f;font-weight:bold">not</span> file bug reports about these packages <span style="color:#a2f;font-weight:bold">in</span> Fedora
+</span></span><span style="display:flex;"><span>Bugzilla<span style="color:#666">.</span> In <span style="color:#a2f;font-weight:bold">case</span> of problems, contact the owner of this repository<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Do you want to <span style="color:#a2f;font-weight:bold">continue</span><span style="">?</span> [y<span style="color:#666">/</span>N]: y
+</span></span><span style="display:flex;"><span>Repository successfully enabled<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~$</span> sudo dnf install oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant
+</span></span><span style="display:flex;"><span>Last metadata expiration check performed <span style="color:#666">0</span>:<span style="color:#666">05</span>:<span style="color:#666">08</span> ago on Tue Jul  <span style="color:#666">7</span> <span style="color:#666">22</span>:<span style="color:#666">58</span>:<span style="color:#666">45</span> <span style="color:#666">2015.</span>
+</span></span><span style="display:flex;"><span>Dependencies resolved<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span> Package           Arch     Version            Repository                  Size
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span>Installing:
+</span></span><span style="display:flex;"><span> oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant     noarch   <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1</span>            purpleidea<span style="color:#666">-</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant   <span style="color:#666">270</span> k
+</span></span><span style="display:flex;"><span> vagrant           noarch   <span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22       updates                    <span style="color:#666">428</span> k
+</span></span><span style="display:flex;"><span> vagrant<span style="color:#666">-</span>libvirt   noarch   <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22      fedora                      <span style="color:#666">57</span> k
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Transaction Summary
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span>Install  <span style="color:#666">3</span> Packages
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total download size: <span style="color:#666">755</span> k
+</span></span><span style="display:flex;"><span>Installed size: <span style="color:#666">2.5</span> M
+</span></span><span style="display:flex;"><span>Is this ok [y<span style="color:#666">/</span>N]: n
+</span></span><span style="display:flex;"><span>Operation aborted<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~$</span> sudo dnf install <span style="color:#666">-</span>y oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant
+</span></span><span style="display:flex;"><span>Last metadata expiration check performed <span style="color:#666">0</span>:<span style="color:#666">05</span>:<span style="color:#666">19</span> ago on Tue Jul  <span style="color:#666">7</span> <span style="color:#666">22</span>:<span style="color:#666">58</span>:<span style="color:#666">45</span> <span style="color:#666">2015.</span>
+</span></span><span style="display:flex;"><span>Dependencies resolved<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span> Package           Arch     Version            Repository                  Size
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span>Installing:
+</span></span><span style="display:flex;"><span> oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant     noarch   <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1</span>            purpleidea<span style="color:#666">-</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant   <span style="color:#666">270</span> k
+</span></span><span style="display:flex;"><span> vagrant           noarch   <span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22       updates                    <span style="color:#666">428</span> k
+</span></span><span style="display:flex;"><span> vagrant<span style="color:#666">-</span>libvirt   noarch   <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22      fedora                      <span style="color:#666">57</span> k
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Transaction Summary
+</span></span><span style="display:flex;"><span><span style="color:#666">================================================================================</span>
+</span></span><span style="display:flex;"><span>Install  <span style="color:#666">3</span> Packages
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total download size: <span style="color:#666">755</span> k
+</span></span><span style="display:flex;"><span>Installed size: <span style="color:#666">2.5</span> M
+</span></span><span style="display:flex;"><span>Downloading Packages:
+</span></span><span style="display:flex;"><span>(<span style="color:#666">1</span><span style="color:#666">/</span><span style="color:#666">3</span>): vagrant<span style="color:#666">-</span><span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22<span style="color:#666">.</span>noarch<span style="color:#666">.</span>rpm          <span style="color:#666">626</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span> <span style="color:#666">428</span> kB     <span style="color:#666">00</span>:<span style="color:#666">00</span>    
+</span></span><span style="display:flex;"><span>(<span style="color:#666">2</span><span style="color:#666">/</span><span style="color:#666">3</span>): vagrant<span style="color:#666">-</span>libvirt<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22<span style="color:#666">.</span>noarch<span style="color:#666">.</span>rpm  <span style="color:#666">70</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span>  <span style="color:#666">57</span> kB     <span style="color:#666">00</span>:<span style="color:#666">00</span>    
+</span></span><span style="display:flex;"><span>(<span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span>): oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1.</span>noarch<span style="color:#666">.</span>rpm         <span style="color:#666">243</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span> <span style="color:#666">270</span> kB     <span style="color:#666">00</span>:<span style="color:#666">01</span>    
+</span></span><span style="display:flex;"><span><span style="color:#666">--------------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>Total                                           <span style="color:#666">246</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span> <span style="color:#666">755</span> kB     <span style="color:#666">00</span>:<span style="color:#666">03</span>     
+</span></span><span style="display:flex;"><span>Running transaction check
+</span></span><span style="display:flex;"><span>Transaction check succeeded<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Running transaction test
+</span></span><span style="display:flex;"><span>Transaction test succeeded<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Running transaction
+</span></span><span style="display:flex;"><span>  Installing  : vagrant<span style="color:#666">-</span><span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22<span style="color:#666">.</span>noarch                                 <span style="color:#666">1</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>  Installing  : vagrant<span style="color:#666">-</span>libvirt<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22<span style="color:#666">.</span>noarch                        <span style="color:#666">2</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>  Installing  : oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1.</span>noarch                                <span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>  Verifying   : oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1.</span>noarch                                <span style="color:#666">1</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>  Verifying   : vagrant<span style="color:#666">-</span>libvirt<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22<span style="color:#666">.</span>noarch                        <span style="color:#666">2</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>  Verifying   : vagrant<span style="color:#666">-</span><span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22<span style="color:#666">.</span>noarch                                 <span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Installed:
+</span></span><span style="display:flex;"><span>  oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">.</span>noarch <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">7</span><span style="color:#666">-</span><span style="color:#666">1</span>                vagrant<span style="color:#666">.</span>noarch <span style="color:#666">1.7</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">7.</span>fc22       
+</span></span><span style="display:flex;"><span>  vagrant<span style="color:#666">-</span>libvirt<span style="color:#666">.</span>noarch <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">26</span><span style="color:#666">-</span><span style="color:#666">2.</span>fc22       
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Complete<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~$</span>
+</span></span></code></pre></div><p>If you&rsquo;d like to avoid typing passwords over and over again when using vagrant, you can add yourself into the vagrant group. 99% of people do this. The downside is that it could allow your user account to get root privileges. Since most developers have a single user environment, it&rsquo;s not a big issue. This is necessary because vagrant uses the <code>qemu:///system</code> connection instead of <code>qemu:///session</code>. If you can help fix this, <a href="https://github.com/pradels/vagrant-libvirt/issues/272">please hack on it</a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~$ groups
+</span></span><span style="display:flex;"><span>james wheel docker
+</span></span><span style="display:flex;"><span>james@computer:~$ sudo usermod -aG vagrant james
+</span></span><span style="display:flex;"><span># you&#39;ll need to logout/login for this change to take effect...
+</span></span></code></pre></div><p>Lastly, there is a user session plugin addition that is required. Installation is automatic the first time you create a new OMV project. Let&rsquo;s do that and see how it works!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~$ mkdir /tmp/omvtest
+</span></span><span style="display:flex;"><span>james@computer:~$ cd !$
+</span></span><span style="display:flex;"><span>cd /tmp/omvtest
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest$ which omv
+</span></span><span style="display:flex;"><span>/usr/bin/omv
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest$ omv init
+</span></span><span style="display:flex;"><span>Oh-My-Vagrant needs to install a modified vagrant-hostmanager plugin.
+</span></span><span style="display:flex;"><span>Is this ok [y/N]: y
+</span></span><span style="display:flex;"><span>Cloning into &#39;vagrant-hostmanager&#39;...
+</span></span><span style="display:flex;"><span>remote: Counting objects: 801, done.
+</span></span><span style="display:flex;"><span>remote: Total 801 (delta 0), reused 0 (delta 0), pack-reused 801
+</span></span><span style="display:flex;"><span>Receiving objects: 100% (801/801), 132.22 KiB | 0 bytes/s, done.
+</span></span><span style="display:flex;"><span>Resolving deltas: 100% (467/467), done.
+</span></span><span style="display:flex;"><span>Checking connectivity... done.
+</span></span><span style="display:flex;"><span>Branch feat/oh-my-vagrant set up to track remote branch feat/oh-my-vagrant from origin.
+</span></span><span style="display:flex;"><span>Switched to a new branch &#39;feat/oh-my-vagrant&#39;
+</span></span><span style="display:flex;"><span>sending incremental file list
+</span></span><span style="display:flex;"><span>./
+</span></span><span style="display:flex;"><span>vagrant-hostmanager.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/action.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/command.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/config.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/errors.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/plugin.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/provisioner.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/util.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/version.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/action/
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/action/update_all.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/action/update_guest.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/action/update_host.rb
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/hosts_file/
+</span></span><span style="display:flex;"><span>vagrant-hostmanager/hosts_file/updater.rb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sent 20,560 bytes  received 286 bytes  41,692.00 bytes/sec
+</span></span><span style="display:flex;"><span>total size is 19,533  speedup is 0.94
+</span></span><span style="display:flex;"><span>Patched successfully!
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>omv1                      not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Libvirt domain is not created. Run `vagrant up` to create it.
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest$ ls
+</span></span><span style="display:flex;"><span>ansible/  docker/  kubernetes/  omv.yaml  puppet/  shell/
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest$
+</span></span></code></pre></div><p>You can see that the plugin installation worked perfectly, and that OMV created a few files and folders.</p>
+<p><strong><span style="text-decoration:underline;">More usage</span>:</strong></p>
+<p>You can hide that generated mess in a subfolder if you prefer:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/tmp/omvtest$ mkdir /tmp/omvtest2
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest$ cd !$
+</span></span><span style="display:flex;"><span>cd /tmp/omvtest2
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest2$ omv init mess
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>omv1                      not created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Libvirt domain is not created. Run `vagrant up` to create it.
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest2$ ls
+</span></span><span style="display:flex;"><span>mess/  omv.yaml@
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest2$ ls -lAh
+</span></span><span style="display:flex;"><span>total 0
+</span></span><span style="display:flex;"><span>drwxrwxr-x. 7 james 160 Jul  7 23:26 mess/
+</span></span><span style="display:flex;"><span>lrwxrwxrwx. 1 james  13 Jul  7 23:26 omv.yaml -&gt; mess/omv.yaml
+</span></span><span style="display:flex;"><span>drwxrwxr-x. 3 james  60 Jul  7 23:26 .vagrant/
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest2$ tree
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── mess
+</span></span><span style="display:flex;"><span>│   ├── ansible
+</span></span><span style="display:flex;"><span>│   │   └── modules
+</span></span><span style="display:flex;"><span>│   ├── docker
+</span></span><span style="display:flex;"><span>│   ├── kubernetes
+</span></span><span style="display:flex;"><span>│   │   ├── applications
+</span></span><span style="display:flex;"><span>│   │   └── templates
+</span></span><span style="display:flex;"><span>│   ├── omv.yaml
+</span></span><span style="display:flex;"><span>│   ├── puppet
+</span></span><span style="display:flex;"><span>│   │   └── modules
+</span></span><span style="display:flex;"><span>│   └── shell
+</span></span><span style="display:flex;"><span>└── omv.yaml -&gt; mess/omv.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>10 directories, 2 files
+</span></span><span style="display:flex;"><span>james@computer:/tmp/omvtest2$
+</span></span></code></pre></div><p>As you can see all the mess is wrapped up in a single folder. This could even be named <code>.omv</code> if you prefer, and should all be committed inside of your project. Now that we&rsquo;re installed, let&rsquo;s get hacking!</p>
+<p><strong><span style="text-decoration:underline;">Mainstream mode</span>:</strong></p>
+<p>Mainstream mode further hides the ruby/<code>Vagrantfile</code> aspect of a <a href="https://en.wikipedia.org/wiki/Vagrant_%28software%29">Vagrant</a> project and extends OMV so that you can define your entire project via the <code>omv.yaml</code> file, without the rest of the OMV project cluttering up your development tree. This makes it possible to have your project use OMV by only committing that one <em>yaml</em> file into the project repo.</p>
+<p>The main difference is that you now control everything with the new <code>omv</code> command line tool. It&rsquo;s essentially a smart wrapper around the <code>vagrant</code> command, so any command you used to use <code>vagrant</code> for, you can now substitute in <code>omv</code>. It also saves typing four extra characters!</p>
+<p>As it turns out (and by no accident) the <code>omv</code> tool works exactly like the <code>vagrant</code> tool. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">/</span>omvtest2<span style="color:#666">$</span> omv status
+</span></span><span style="display:flex;"><span>Current machine states:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>omv1                      <span style="color:#a2f;font-weight:bold">not</span> created (libvirt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The Libvirt domain is <span style="color:#a2f;font-weight:bold">not</span> created<span style="color:#666">.</span> Run <span style="">`</span>vagrant up<span style="">`</span> to create it<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">/</span>omvtest2<span style="color:#666">$</span> omv up
+</span></span><span style="display:flex;"><span>Bringing machine <span style="color:#b44">&#39;omv1&#39;</span> up with <span style="color:#b44">&#39;libvirt&#39;</span> provider<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">==&gt;</span> omv1: Box <span style="color:#b44">&#39;centos-7.1&#39;</span> could <span style="color:#a2f;font-weight:bold">not</span> be found<span style="color:#666">.</span> Attempting to find <span style="color:#a2f;font-weight:bold">and</span> install<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>    omv1: Box Provider: libvirt
+</span></span><span style="display:flex;"><span>    omv1: Box Version: <span style="color:#666">&gt;=</span> <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">==&gt;</span> omv1: Adding box <span style="color:#b44">&#39;centos-7.1&#39;</span> (v0) <span style="color:#a2f;font-weight:bold">for</span> provider: libvirt
+</span></span><span style="display:flex;"><span>    omv1: Downloading: https:<span style="color:#666">//</span>dl<span style="color:#666">.</span>fedoraproject<span style="color:#666">.</span>org<span style="color:#666">/</span>pub<span style="color:#666">/</span>alt<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>vagrant<span style="color:#666">/</span>centos<span style="color:#666">-</span><span style="color:#666">7.1</span><span style="color:#666">/</span>centos<span style="color:#666">-</span><span style="color:#666">7.1</span><span style="color:#666">.</span>box
+</span></span><span style="display:flex;"><span>[snip]
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">/</span>omvtest2<span style="color:#666">$</span> omv destroy
+</span></span><span style="display:flex;"><span>Unlocking shell provisioning <span style="color:#a2f;font-weight:bold">for</span>: omv1<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">==&gt;</span> omv1: Domain is <span style="color:#a2f;font-weight:bold">not</span> created<span style="color:#666">.</span> Please run <span style="">`</span>vagrant up<span style="">`</span> first<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">/</span>omvtest2<span style="color:#666">$</span>
+</span></span></code></pre></div><p><em>BUT THAT&rsquo;S NOT ALL&hellip;</em></p>
+<p>The existing tools you know and love, like <code>vlog</code>, <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/"><code>vsftp</code></a>, <code>vscreen</code>, <a href="/blog/2014/01/02/vagrant-clustered-ssh-and-screen/"><code>vcssh</code></a>, <code>vfwd</code>, <code>vansible</code>, have all been modified to work with OMV mainstream mode as well. The same goes for common aliases such as <code>vs</code>, <code>vp</code>, <code>vup</code>, <code>vdestroy</code>, <code>vrsync</code>, and the useful (but occasionally dangerous) <code>vrm-rf</code>. Have a look at the above links on my blog and <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/extras/vagrant.bashrc">the source</a> to see what these do. If it&rsquo;s not clear enough, <a href="#comment">let me know</a>!</p>
+<p>All of these are now packaged up in the <em>oh-my-vagrant</em> COPR and are installed automatically into <code>/etc/profile.d/oh-my-vagrant.sh</code> for your convenience. Since they&rsquo;re part of the OMV project, you&rsquo;ll get updates when new functions or bug fixes are made.</p>
+<p><strong><span style="text-decoration:underline;">The plumbing</span>:</strong></p>
+<p>Mainstream mode is possible because of an idea <a href="https://github.com/rbarlow">rbarlow</a> had. He gets full credit for the idea, in particular for teaching me about <code>VAGRANT_CWD</code> which is what makes it all work. I <a href="https://github.com/purpleidea/oh-my-vagrant/pull/89">rejected his 6 line prototype</a>, but loved the idea, and since he was busy making <a href="http://www.pulpproject.org/">juice</a>, I got bored one day and hacked on a <a href="https://github.com/purpleidea/oh-my-vagrant/commit/aa764ae79d69475b87f293c43af4f20fd7d1d000">full implementation</a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$ git diff --stat 853073431d227cbb0ba56aaf4fedd721904de9a8 aa764ae79d69475b87f293c43af4f20fd7d1d000
+</span></span><span style="display:flex;"><span> DOCUMENTATION.md    | 18 &lt;span style=&#34;color:#00ff00;&#34;&gt;+++++++++++++++&lt;/span&gt;
+</span></span><span style="display:flex;"><span> bin/omv.sh          | 50 &lt;span style=&#34;color:#00ff00;&#34;&gt;+++++++++++++++++++++++++++++++++++++++++&lt;/span&gt;
+</span></span><span style="display:flex;"><span> vagrant/Vagrantfile | 65 &lt;span style=&#34;color:#ff0000;&#34;&gt;&lt;span style=&#34;color:#00ff00;&#34;&gt;++++++++++++++++++++++++++++++++++&lt;/span&gt;-------------------&lt;/span&gt;
+</span></span><span style="display:flex;"><span> 3 files changed, 110 insertions(+), 23 deletions(-)
+</span></span><span style="display:flex;"><span>james@computer:~/code/oh-my-vagrant$
+</span></span></code></pre></div><p>It turned out it was a little longer, but I artificially inflated this by including some quick doc patches. What does it actually do differently? It sets <code>VAGRANT_CWD</code> and <code>VAGRANT_DOTFILE_PATH</code> so that the vagrant command looks in a different directory for the <code>Vagrantfile</code> and <code>.vagrant/</code> directories. That way, all the plumbing is hidden and part of the RPM.</p>
+<p><strong><span style="text-decoration:underline;">Making the RPM</span>:</strong></p>
+<p>The RPM&rsquo;s happened because <a href="https://github.com/stefwalter">stefw</a> made me feel bad about not having them. He was right to do so. In an case, RPM packaging still scares me. I think <a href="https://www.xkcd.com/1205/">repetitive work</a> scares me even more. That&rsquo;s why I <a href="https://xkcd.com/1319/">automate</a> as much as I can. So <a href="https://twitter.com/purpleidea/status/618167815388794881" target="_blank">after a lot of brain loss</a>, I finally made you an RPM so that you could easily install it. Here&rsquo;s how it went:</p>
+<p><a href="https://github.com/purpleidea/oh-my-vagrant/commit/8ee3fdab7451bb30b56e42c4586e4304b5805faf">I started by adding the magic so that my Makefile could build an RPM</a>.</p>
+<p>This made it so I can easily run <code>make srpm</code> to get a new RPM or SRPM.</p>
+<p><a href="https://github.com/purpleidea/oh-my-vagrant/commit/6a6d1f2be89ac0ef932f98368fcf672c7a0d95cc">Then I added COPR integration</a>, so a <code>make copr</code> automatically kicks off a new COPR build. This was the interesting part. You&rsquo;ll need a <a href="https://apps.fedoraproject.org/#FAS">Fedora account</a> for this to work. Once you&rsquo;re logged in, if you go to <a href="https://copr.fedoraproject.org/api"><a href="https://copr.fedoraproject.org/api">https://copr.fedoraproject.org/api</a></a> you&rsquo;ll be able to download a snippet to put in your <code>~/.config/copr</code> file. Lastly, the work happens in <a href="https://github.com/purpleidea/oh-my-vagrant/blob/master/extras/copr-build.py">copr-build.py</a> where the python <em>copr</em> library does the heavy lifting.</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#080;font-style:italic">#!/usr/bin/python</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># README:</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># for initial setup, browse to: https://copr.fedoraproject.org/api/</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># and it will have a ~/.config/copr config that you can download.</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># happy hacking!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">sys</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">copr</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COPR <span style="color:#666">=</span> <span style="color:#b44">&#39;oh-my-vagrant&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">len</span>(sys<span style="color:#666">.</span>argv) <span style="color:#666">!=</span> <span style="color:#666">2</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f">print</span>(<span style="color:#b44">&#34;Usage: </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44"> &lt;srpm url&gt;&#34;</span> <span style="color:#666">%</span> sys<span style="color:#666">.</span>argv[<span style="color:#666">0</span>])
+</span></span><span style="display:flex;"><span>    sys<span style="color:#666">.</span>exit(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>url <span style="color:#666">=</span> sys<span style="color:#666">.</span>argv[<span style="color:#666">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#666">=</span> copr<span style="color:#666">.</span>CoprClient<span style="color:#666">.</span>create_from_file_config(os<span style="color:#666">.</span>path<span style="color:#666">.</span>expanduser(<span style="color:#b44">&#34;~/.config/copr&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result <span style="color:#666">=</span> client<span style="color:#666">.</span>create_new_build(COPR, [url])
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> result<span style="color:#666">.</span>output <span style="color:#666">!=</span> <span style="color:#b44">&#34;ok&#34;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f">print</span>(result<span style="color:#666">.</span>error)
+</span></span><span style="display:flex;"><span>    sys<span style="color:#666">.</span>exit(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span>(result<span style="color:#666">.</span>message)</span></span></code></pre></div>
+A build looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">$</span> git tag <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">8</span> <span style="color:#080;font-style:italic"># set a new tag</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">$</span> make copr 
+</span></span><span style="display:flex;"><span>Running templater<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Running git archive<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Running git archive submodules<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Running rpmbuild <span style="color:#666">-</span>bs<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Wrote: <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">/</span>rpmbuild<span style="color:#666">/</span>SRPMS<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">8</span><span style="color:#666">-</span><span style="color:#666">1.</span>src<span style="color:#666">.</span>rpm
+</span></span><span style="display:flex;"><span>Running SRPMS sha256sum<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant
+</span></span><span style="display:flex;"><span>Running SRPMS gpg<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>You need a passphrase to unlock the secret key <span style="color:#a2f;font-weight:bold">for</span>
+</span></span><span style="display:flex;"><span>user: <span style="color:#b44">&#34;James Shubin (Third PGP key.) &lt;james@shubin.ca&gt;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">4096</span><span style="color:#666">-</span>bit RSA key, ID <span style="color:#666">24090</span>D66, created <span style="color:#666">2012</span><span style="color:#666">-</span><span style="color:#666">05</span><span style="color:#666">-</span><span style="color:#666">09</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>gpg: WARNING: The GNOME keyring manager hijacked the GnuPG agent<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>gpg: WARNING: GnuPG will <span style="color:#a2f;font-weight:bold">not</span> work properly <span style="color:#666">-</span> please configure that <span style="color:#a2f;font-weight:bold">tool</span> to <span style="color:#a2f;font-weight:bold">not</span> interfere with the GnuPG system<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>Running SRPMS upload<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>sending incremental file list
+</span></span><span style="display:flex;"><span>SHA256SUMS
+</span></span><span style="display:flex;"><span>SHA256SUMS<span style="color:#666">.</span>asc
+</span></span><span style="display:flex;"><span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">-</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">8</span><span style="color:#666">-</span><span style="color:#666">1.</span>src<span style="color:#666">.</span>rpm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sent <span style="color:#666">8</span>,<span style="color:#666">583</span> bytes  received <span style="color:#666">2</span>,<span style="color:#666">184</span> bytes  <span style="color:#666">4</span>,<span style="color:#666">306.80</span> bytes<span style="color:#666">/</span>sec
+</span></span><span style="display:flex;"><span>total size is <span style="color:#666">1</span>,<span style="color:#666">456</span>,<span style="color:#666">741</span>  speedup is <span style="color:#666">135.30</span>
+</span></span><span style="display:flex;"><span>Build was added to oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>oh<span style="color:#666">-</span>my<span style="color:#666">-</span>vagrant<span style="color:#666">$</span>
+</span></span></code></pre></div><p>A few minutes later, the COPR build page should look like this:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="omv-copr.png"><img class="size-medium wp-image-1098" src="omv-copr.png" alt="a screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output" width="100%" height="100%" /></a></td></tr><tr><td> A screenshot of the Oh-My-Vagrant COPR build page for people who like to look at pretty pictures instead of just terminal output.</td></tr></table></br />
+<p>There was a bunch of additional fixing and polishing required to get this as seamless as possible for you. Have a look at the <a href="https://github.com/purpleidea/oh-my-vagrant/commits/master">git commits</a> and you&rsquo;ll get an idea of all the work that was done, and you&rsquo;ll probably even learn about some <a href="https://github.com/purpleidea/oh-my-vagrant/commit/853073431d227cbb0ba56aaf4fedd721904de9a8">new</a>, <a href="https://github.com/purpleidea/oh-my-vagrant/commit/cec25b9a9c17a81956cc6457706bab0b358a9708">features</a> I haven&rsquo;t blogged about yet. It was exhausting!</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://twitter.com/purpleidea/status/618340109738450944" target="_blank"><img class="wp-image-1091 aligncenter" src="omv-exhausted.png" alt="omv-exhausted" width="100%" height="100%" /></a></td></tr></table></br />
+<p>As a result of all this, you can download fresh builds easily. Visit the COPR page to see how things are cooking:</p>
+<p style="text-align:center;"><strong><a href="https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/">https://copr.fedoraproject.org/coprs/purpleidea/oh-my-vagrant/</a></strong></p>
+I'll try to keep this pumping out releases regularly. If I lag behind, please holler at me. In any case, please let me know if you appreciate this work. <a href="#comment">Comment</a>, <a href="https://twitter.com/#!/purpleidea">tweeter</a>, or <a href="/contact/">contact me</a>!
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>July 8, 2015<br>
+				<small>1983 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/vagrant_cwd">VAGRANT_CWD</a> <a class="label label-default" href="/tags/vagrant_dotfile_path">VAGRANT_DOTFILE_PATH</a> <a class="label label-default" href="/tags/copr">copr</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/mainstream-mode">mainstream mode</a> <a class="label label-default" href="/tags/makefile">makefile</a> <a class="label label-default" href="/tags/oh-my-vagrant">oh-my-vagrant</a> <a class="label label-default" href="/tags/omv">omv</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/python">python</a> <a class="label label-default" href="/tags/rpm">rpm</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vagrant-libvirt">vagrant-libvirt</a> <a class="label label-default" href="/tags/vansible">vansible</a> <a class="label label-default" href="/tags/vcssh">vcssh</a> <a class="label label-default" href="/tags/vdestroy">vdestroy</a> <a class="label label-default" href="/tags/vfwd">vfwd</a> <a class="label label-default" href="/tags/vlog">vlog</a> <a class="label label-default" href="/tags/vp">vp</a> <a class="label label-default" href="/tags/vrm-rf">vrm-rf</a> <a class="label label-default" href="/tags/vrsync">vrsync</a> <a class="label label-default" href="/tags/vscreen">vscreen</a> <a class="label label-default" href="/tags/vsftp">vsftp</a> <a class="label label-default" href="/tags/vup">vup</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/"><small>https://ttboj.wordpress.com/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

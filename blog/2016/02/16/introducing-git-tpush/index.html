@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Introducing: git tpush - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Introducing: git tpush</strong><br><small></small></h3>
+					<hr>
+					<p>On today&rsquo;s issue of &ldquo;one hour hacks&rdquo;, I&rsquo;ll show you how you can stop your git drive-by&rsquo;s to git master from breaking your CI tests&hellip; Let&rsquo;s continue!</p>
+<p><strong><span style="text-decoration:underline;">The problem</span>:</strong></p>
+<p>Sometimes I&rsquo;ve got a shitty one-line patch that I want to push to <code>git master</code>. I&rsquo;m usually right, and everything tests out fine, but usually isn&rsquo;t always, and then I look silly while I frantically try to fix <code>git master</code> on a <a href="https://github.com/purpleidea/mgmt/">project that I maintain</a>. Let&rsquo;s use tools to hide our human flaws!</p>
+<p><strong><span style="text-decoration:underline;">How you&rsquo;re really supposed to do it</span>:</strong></p>
+<p>Good hackers know that you&rsquo;re supposed to:</p>
+<ul>
+	<li>checkout a new feature branch for your patch
+<ul>
+	<li><code>checkout -b feat/foo</code></li>
+</ul>
+</li>
+	<li>write the patch and commit it
+<ul>
+	<li><code>git add -p && git commit -m 'my foo'</code></li>
+</ul>
+</li>
+	<li>push that branch up to origin
+<ul>
+	<li><code>git push origin feat/foo</code></li>
+</ul>
+</li>
+	<li>wait for the tests to succeed
+<ul>
+	<li><code>hub ci-status && sleep 1m && ...</code></li>
+</ul>
+</li>
+	<li>merge and push to git master
+<ul>
+	<li><code>git checkout master && git merge feat/foo && git push</code></li>
+</ul>
+</li>
+	<li>delete your local branch
+<ul>
+	<li><code>git branch -d feat/foo</code></li>
+</ul>
+</li>
+	<li>delete the remote branch
+<ul>
+	<li><code>git push origin :feat/foo</code></li>
+</ul>
+</li>
+	<li>mourn all the lost time it took to push this patch
+<ul>
+	<li><code>cat && drink && sleep 8h</code></li>
+</ul>
+</li>
+</ul>
+If it happens to fail, you have to remember what the safe <code>git reset</code> command is, and then you have to start all over!
+<p><strong><span style="text-decoration:underline;">How do we make this easy</span>?</strong></p>
+<p><a href="https://github.com/purpleidea/mgmt/">I write tools</a>, so I sat down and wrote a cheap little bash script to do it for me! Sharing is caring, so please enjoy a copy!</p>
+<p><strong><span style="text-decoration:underline;">How does it work</span>?</strong></p>
+<p>It actually just does all of the above for you automatically, and it automatically cleans up all of the temporary branches when it&rsquo;s done! Here are two example runs to help show you the tool in action:</p>
+<p><strong><span style="text-decoration:underline;">A failure scenario</span>:</strong></p>
+<p>Here I add a patch with some trailing whitespace, which will easily get caught by the automatic test suite. You&rsquo;ll note that I actually had to force the commit locally with <code>git commit -n</code>, because the <code>pre-commit</code> hook actually caught this first. You could extend this script to run your test suite locally before you push the patch, but that defeats the idea of a drive-by.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">$</span> git add <span style="color:#666">-</span>p
+</span></span><span style="display:flex;"><span>diff <span style="color:#666">--</span>git a<span style="color:#666">/</span>README<span style="color:#666">.</span>md b<span style="color:#666">/</span>README<span style="color:#666">.</span>md
+</span></span><span style="display:flex;"><span>index <span style="color:#666">277</span>aa73<span style="color:#666">..</span><span style="color:#666">2</span>c31356 <span style="color:#666">100644</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">---</span> a<span style="color:#666">/</span>README<span style="color:#666">.</span>md
+</span></span><span style="display:flex;"><span><span style="color:#666">+++</span> b<span style="color:#666">/</span>README<span style="color:#666">.</span>md
+</span></span><span style="display:flex;"><span><span style="">@@</span> <span style="color:#666">-</span><span style="color:#666">34</span>,<span style="color:#666">6</span> <span style="color:#666">+</span><span style="color:#666">34</span>,<span style="color:#666">7</span> <span style="">@@</span> Please get involved by working on one of these items <span style="color:#a2f;font-weight:bold">or</span> by suggesting something
+</span></span><span style="display:flex;"><span> Please grab one of the straightforward [<span style="color:#080;font-style:italic">#mgmtlove](https://github.com/purpleidea/mgmt/labels/mgmtlove) issues if you&#39;re a first time contributor.</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> <span style="color:#080;font-style:italic">## Bugs:</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">+</span>Some bugs are caused by bad drive<span style="color:#666">-</span>by patches to git master<span style="color:#666">!</span> 
+</span></span><span style="display:flex;"><span> Please set the <span style="">`</span>DEBUG<span style="">`</span> constant <span style="color:#a2f;font-weight:bold">in</span> [main<span style="color:#666">.</span>go](https:<span style="color:#666">//</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>blob<span style="color:#666">/</span>master<span style="color:#666">/</span>main<span style="color:#666">.</span>go) to <span style="">`</span>true<span style="">`</span>, <span style="color:#a2f;font-weight:bold">and</span> post the logs when you report the [issue](https:<span style="color:#666">//</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>issues)<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span> Bonus points <span style="color:#a2f;font-weight:bold">if</span> you provide a [shell](https:<span style="color:#666">//</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>tree<span style="color:#666">/</span>master<span style="color:#666">/</span>test<span style="color:#666">/</span>shell) <span style="color:#a2f;font-weight:bold">or</span> [OMV](https:<span style="color:#666">//</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>tree<span style="color:#666">/</span>master<span style="color:#666">/</span>test<span style="color:#666">/</span>omv) reproducible test <span style="color:#a2f;font-weight:bold">case</span><span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Stage this hunk [y,n,q,a,d,<span style="color:#666">/</span>,e,<span style="">?</span>]<span style="">?</span> y
+</span></span><span style="display:flex;"><span><span style="color:#666">&lt;</span>stdin<span style="color:#666">&gt;</span>:<span style="color:#666">9</span>: trailing whitespace<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Some bugs are caused by bad drive<span style="color:#666">-</span>by patches to git master<span style="color:#666">!</span> 
+</span></span><span style="display:flex;"><span>warning: <span style="color:#666">1</span> line adds whitespace errors<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">$</span> git commit <span style="color:#666">-</span>m <span style="color:#b44">&#39;XXX this is a bad patch&#39;</span>
+</span></span><span style="display:flex;"><span>README<span style="color:#666">.</span>md:<span style="color:#666">37</span>: trailing whitespace<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">+</span>Some bugs are caused by bad drive<span style="color:#666">-</span>by patches to git master<span style="color:#666">!</span> 
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">$</span> git commit <span style="color:#666">-</span>nm <span style="color:#b44">&#39;XXX this is a bad patch&#39;</span>
+</span></span><span style="display:flex;"><span>[master <span style="color:#666">8</span>b29fb3] XXX this is a bad patch
+</span></span><span style="display:flex;"><span> <span style="color:#666">1</span> file changed, <span style="color:#666">1</span> insertion(<span style="color:#666">+</span>)
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">$</span> git tpush 
+</span></span><span style="display:flex;"><span>tpush branch is: tpush<span style="color:#666">/</span>test<span style="color:#666">-</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>Switched to a new branch <span style="color:#b44">&#39;tpush/test-0&#39;</span>
+</span></span><span style="display:flex;"><span>Counting objects: <span style="color:#666">3</span>, done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Delta compression using up to <span style="color:#666">4</span> threads<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Compressing objects: <span style="color:#666">100</span><span style="color:#666">%</span> (<span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span>), done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Writing objects: <span style="color:#666">100</span><span style="color:#666">%</span> (<span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span>), <span style="color:#666">357</span> bytes <span style="color:#666">|</span> <span style="color:#666">0</span> bytes<span style="color:#666">/</span>s, done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Total <span style="color:#666">3</span> (delta <span style="color:#666">2</span>), reused <span style="color:#666">0</span> (delta <span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span>To git<span style="">@</span>github<span style="color:#666">.</span>com:purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">.</span>git
+</span></span><span style="display:flex;"><span> <span style="color:#666">*</span> [new branch]      tpush<span style="color:#666">/</span>test<span style="color:#666">-</span><span style="color:#666">0</span> <span style="color:#666">-&gt;</span> tpush<span style="color:#666">/</span>test<span style="color:#666">-</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>Switched to branch <span style="color:#b44">&#39;master&#39;</span>
+</span></span><span style="display:flex;"><span>Your branch is ahead of <span style="color:#b44">&#39;origin/master&#39;</span> by <span style="color:#666">1</span> commit<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>  (use <span style="color:#b44">&#34;git push&#34;</span> to publish your local commits)
+</span></span><span style="display:flex;"><span><span style="color:#666">-</span> CI is starting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span> Waiting <span style="color:#a2f;font-weight:bold">for</span> CI<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">-</span> Waiting <span style="color:#a2f;font-weight:bold">for</span> CI<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>\ Waiting <span style="color:#a2f;font-weight:bold">for</span> CI<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">|</span> Waiting <span style="color:#a2f;font-weight:bold">for</span> CI<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span>Deleted branch tpush<span style="color:#666">/</span>test<span style="color:#666">-</span><span style="color:#666">0</span> (was <span style="color:#666">8</span>b29fb3)<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>To git<span style="">@</span>github<span style="color:#666">.</span>com:purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">.</span>git
+</span></span><span style="display:flex;"><span> <span style="color:#666">-</span> [deleted]         tpush<span style="color:#666">/</span>test<span style="color:#666">-</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>Upstream CI failed with:
+</span></span><span style="display:flex;"><span>failure: https:<span style="color:#666">//</span>travis<span style="color:#666">-</span>ci<span style="color:#666">.</span>org<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>builds<span style="color:#666">/</span><span style="color:#666">109472293</span>
+</span></span><span style="display:flex;"><span>Fix branch <span style="color:#b44">&#39;master&#39;</span> with:
+</span></span><span style="display:flex;"><span>git commit <span style="color:#666">--</span>amend
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">or</span>:
+</span></span><span style="display:flex;"><span>git reset <span style="color:#666">--</span>soft HEAD<span style="color:#666">^</span>
+</span></span><span style="display:flex;"><span>Happy hacking<span style="color:#666">!</span>
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">A successful scenario</span>:</strong></p>
+<p>In this example, I amended the previous patch in my local copy of <code>git master</code> (which never got pushed to the public git master!) and then I ran <code>git tpush</code> again.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~/code/mgmt$ git commit --amend
+</span></span><span style="display:flex;"><span>[master 1186d63] Add a link to my article about debugging golang
+</span></span><span style="display:flex;"><span> Date: Mon Feb 15 17:28:01 2016 -0500
+</span></span><span style="display:flex;"><span> 1 file changed, 1 insertion(+)
+</span></span><span style="display:flex;"><span>james@computer:~/code/mgmt$ git tpush 
+</span></span><span style="display:flex;"><span>tpush branch is: tpush/test-0
+</span></span><span style="display:flex;"><span>Switched to a new branch &#39;tpush/test-0&#39;
+</span></span><span style="display:flex;"><span>Counting objects: 3, done.
+</span></span><span style="display:flex;"><span>Delta compression using up to 4 threads.
+</span></span><span style="display:flex;"><span>Compressing objects: 100% (3/3), done.
+</span></span><span style="display:flex;"><span>Writing objects: 100% (3/3), 397 bytes | 0 bytes/s, done.
+</span></span><span style="display:flex;"><span>Total 3 (delta 2), reused 0 (delta 0)
+</span></span><span style="display:flex;"><span>To git@github.com:purpleidea/mgmt.git
+</span></span><span style="display:flex;"><span> * [new branch]      tpush/test-0 -&gt; tpush/test-0
+</span></span><span style="display:flex;"><span>Switched to branch &#39;master&#39;
+</span></span><span style="display:flex;"><span>Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+</span></span><span style="display:flex;"><span>  (use &#34;git push&#34; to publish your local commits)
+</span></span><span style="display:flex;"><span>- CI is starting...
+</span></span><span style="display:flex;"><span>/ Waiting for CI...
+</span></span><span style="display:flex;"><span>- Waiting for CI...
+</span></span><span style="display:flex;"><span>\ Waiting for CI...
+</span></span><span style="display:flex;"><span>| Waiting for CI...
+</span></span><span style="display:flex;"><span>Deleted branch tpush/test-0 (was 1186d63).
+</span></span><span style="display:flex;"><span>To git@github.com:purpleidea/mgmt.git
+</span></span><span style="display:flex;"><span> - [deleted]         tpush/test-0
+</span></span><span style="display:flex;"><span>Counting objects: 3, done.
+</span></span><span style="display:flex;"><span>Delta compression using up to 4 threads.
+</span></span><span style="display:flex;"><span>Compressing objects: 100% (3/3), done.
+</span></span><span style="display:flex;"><span>Writing objects: 100% (3/3), 397 bytes | 0 bytes/s, done.
+</span></span><span style="display:flex;"><span>Total 3 (delta 2), reused 0 (delta 0)
+</span></span><span style="display:flex;"><span>To git@github.com:purpleidea/mgmt.git
+</span></span><span style="display:flex;"><span>   6e68d6d..1186d63  master -&gt; master
+</span></span><span style="display:flex;"><span>Done!
+</span></span></code></pre></div><p>Please take note of the &ldquo;Waiting for CI&hellip;&rdquo; text. This is actually a spinner which updates itself. Run this tool yourself to get the full effect! This avoids having 200 line scrollback in your terminal while you wait for your CI to complete.</p>
+<p>Lastly, you&rsquo;ll note that I run <code>git tpush</code> instead of <code>git-tpush</code>. This is because I added an alias to my ~/.gitconfig. It&rsquo;s quite easy, just add:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>tpush = !git-tpush
+</span></span></code></pre></div><p>under the <code>[alias]</code> section, and ensure the <code>git-tpush</code> shell script is in your <code>~/bin/</code> folder and is executable.</p>
+<p><strong><span style="text-decoration:underline;">Pre-requisites</span>:</strong></p>
+<p>This actually depends on the <a href="https://github.com/github/hub">hub</a> command line tool which knows how to ask our CI about the test status. It sucks using a distributed tool like git with a centralized thing like github, but it&rsquo;s still pretty easy for me to move away if they go bad. You&rsquo;ll also want the <code>tput</code> installed if you want the fancy spinner, but that comes with most GNU/Linux distros by default.</p>
+<p><strong><span style="text-decoration:underline;">The code</span>:</strong></p>
+<p><a href="https://gist.github.com/purpleidea/1b769e2cd1bd7b01a406">Grab a copy here!</a></p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p>PS: No, I couldn&rsquo;t think of a better name than git-tpush, if you don&rsquo;t like it feel free to rename it yourself!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>February 16, 2016<br>
+				<small>1119 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/ci">ci</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/git-tpush">git-tpush</a> <a class="label label-default" href="/tags/github">github</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/hub">hub</a> <a class="label label-default" href="/tags/jenkins">jenkins</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetfreeipa">planetfreeipa</a> <a class="label label-default" href="/tags/planetipa">planetipa</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/tpush">tpush</a> <a class="label label-default" href="/tags/tput">tput</a> <a class="label label-default" href="/tags/travis">travis</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/02/16/introducing-git-tpush/"><small>https://ttboj.wordpress.com/2016/02/16/introducing-git-tpush/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/02/16/introducing-git-tpush">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/02/16/introducing-git-tpush.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

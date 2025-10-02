@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>scary man pages - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2009/11/02/scary-man-pages/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>scary man pages</strong><br><small></small></h3>
+					<hr>
+					<p>while doing a little reading and research,  i ended up reading a bit of the hdparm man page. never in my life have i read such a scary man page. i guess it <em>is</em> appropriate for halloween, but it came 2 days late in my case. as a result of my being so impressed with the sheer amount of warnings in the manual, i have decided to compile them here.</p>
+<pre>
+<i>--dco-restore</i>
+Reset all drive settings, features, and accessible capacities back to factory defaults and full capabilities. This command will fail if DCO is frozen/locked, or if a -Np maximum size restriction has also been set. This is <strong>EXTREMELY DANGEROUS</strong> and will very likely cause massive loss of data. <strong>DO NOT USE THIS COMMAND.</strong>
+</pre>
+<pre>
+<i>--drq-hsm-error</i>
+<strong>VERY DANGEROUS, DON'T EVEN THINK ABOUT USING IT.</strong> This flag causes hdparm to issue an IDENTIFY command to the kernel, but incorrectly marked as a "non-data" command. This results in the drive being left with its DataReQust(DRQ) line "stuck" high. This confuses the kernel drivers, and may crash the system immediately with massive data loss. The option exists to help in testing and fortifying the kernel against similar real-world drive malfunctions. <strong>VERY DANGEROUS, DO NOT USE!!</strong>
+</pre>
+<pre>
+<i>--fwdownload</i>
+When used, this should be the only flag given. It requires a file path immediately after the flag, indicating where the new drive firmware should be read from. The contents of this file will be sent to the drive using the (S)ATA DOWNLOAD MICROCODE command, using either transfer protocol 7 (entire file at once), or, if the drive supports it, transfer protocol 3 (segmented download). This command is <strong>EXTREMELY DANGEROUS</strong> and <strong>HAS NEVER BEEN PROVEN TO WORK</strong> and will probably destroy both the drive and all data on it. <strong>DO NOT USE THIS COMMAND</strong>.
+</pre>
+<pre>
+<i>-m</i>
+Get/set sector count for multiple sector I/O on the drive. A setting of 0 disables this feature. Multiple sector mode (aka IDE Block Mode), is a feature of most modern IDE hard drives, permitting the transfer of multiple sectors per I/O interrupt, rather than the usual one sector per interrupt. When this feature is enabled, it typically reduces operating system overhead for disk I/O by 30-50%. On many systems, it also provides increased data throughput of anywhere from 5% to 50%. Some drives, however (most notably the WD Caviar series), seem to run slower with multiple mode enabled. Your mileage may vary. Most drives support the minimum settings of 2, 4, 8, or 16 (sectors). Larger settings may also be possible, depending on the drive. A setting of 16 or 32 seems optimal on many systems. Western Digital recommends lower settings of 4 to 8 on many of their drives, due tiny (32kB) drive buffers and non-optimized buffering algorithms. The -i flag can be used to find the maximum setting supported by an installed drive (look for MaxMultSect in the output). Some drives claim to support multiple mode, but lose data at some settings. Under rare circumstances, such failures can result in <strong>massive filesystem corruption</strong>.
+</pre>
+<pre>
+<i>-R</i>
+Register an IDE interface <strong>(DANGEROUS)</strong>. See the -U option for more information.
+</pre>
+<pre>
+<i>-u</i>
+Get/set interrupt-unmask flag for the drive. A setting of 1 permits the driver to unmask other interrupts during processing of a disk interrupt, which greatly improves Linux´s responsiveness and eliminates "serial port overrun" errors. Use this feature with caution: some drive/controller combinations do not tolerate the increased I/O latencies possible when this feature is enabled, resulting in <strong>massive filesystem corruption</strong>. In particular, CMD-640B and RZ1000 (E)IDE interfaces can be unreliable (due to a hardware flaw) when this option is used with kernel versions earlier than 2.0.13. Disabling the IDE prefetch feature of these interfaces (usually a BIOS/CMOS setting) provides a safe fix for the problem for use with earlier kernels.
+</pre>
+<pre>
+<i>-U</i>
+Un-register an IDE interface <strong>(DANGEROUS)</strong>. The companion for the -R option. Intended for use with hardware made specifically for hot-swapping (very rare!). Use with knowledge and extreme caution as this can easily hang or damage your system. The hdparm source distribution includes a ´contrib´ directory with some user-donated scripts for hot-swapping on the UltraBay of a ThinkPad 600E. <strong>Use at your own risk.</strong>
+</pre>
+<pre>
+<i>-w</i>
+Perform a device reset <strong>(DANGEROUS)</strong>. <strong>Do NOT use this option.</strong> It exists for unlikely situations where a reboot might otherwise be required to get a confused drive back into a useable state.
+</pre>
+<pre>
+<i>-x</i>
+Tristate device for hotswap <strong>(DANGEROUS)</strong>.
+</pre>
+<pre>
+<i>--security-unlock PWD</i>
+<i>--security-set-pass PWD</i>
+<i>--security-disable PWD</i>
+<i>--security-erase PWD</i>
+<i>--security-erase-enhanced PWD</i>
+<i>--user-master USER</i>
+<i>--security-mode MODE</i>
+[...]
+<strong>THIS FEATURE IS EXPERIMENTAL AND NOT WELL TESTED. USE AT YOUR OWN RISK.</strong>
+</pre>
+<p>i think it is now safe to say that:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># rm -rf /
+</span></span></code></pre></div><p>has now officially been replaced with the much more dangerous:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># hdparm -mRuUwx --dco-restore --drq-hsm-error --fwdownload --security-unlock PWD --security-set-pass PWD --security-disable PWD --security-erase PWD --security-erase-enhanced PWD --user-master USER --security-mode MODE [device]</span>
+</span></span></code></pre></div><p>have fun kiddies!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 2, 2009<br>
+				<small>873 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/dangerous">dangerous</a> <a class="label label-default" href="/tags/hdparm">hdparm</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/manpages">manpages</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2009/11/02/scary-man-pages/"><small>https://ttboj.wordpress.com/2009/11/02/scary-man-pages/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2009/11/02/scary-man-pages/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2009/11/02/scary-man-pages">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2009/11/02/scary-man-pages.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+
