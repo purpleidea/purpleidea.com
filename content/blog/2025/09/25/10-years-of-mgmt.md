@@ -61,7 +61,7 @@ still testing and perfecting for our first customers. The products we have:
 
 These automation suites all come as a yearly subscription. For our early
 adopters, for a limited time, we're now offering a
-[**ten year subscription for $10,000**](http://localhost:1313/news/10-years-of-mgmt/).
+[**ten year subscription for $10,000**](https://m9rx.com/news/10-years-of-mgmt/).
 This offer comes with basic support, and let's you run these products on up to
 10 machines or 100 cores. (Your choice.) You'll also get access to our insiders
 channel where you get early access to inside information and more.
