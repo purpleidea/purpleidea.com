@@ -793,7 +793,7 @@ documentation by sending a patch!
 I hope you love the language! Please help sponsor this project if you want to
 see more of it.
 
-[Enterprise support, training, and consulting are all available.](https://mgmtconfig.com/)
+[Enterprise support, training, and consulting are all available.](https://m9rx.com/)
 
 Happy Hacking,
 

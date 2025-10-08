@@ -623,8 +623,8 @@ about them, then I'm more than willing to accept a patch that does "go.mod"
 style versioning, but under the hood is just running the `git` commands for you.
 
 If you're not convinced about submodules, then first book a
-[training session](https://mgmtconfig.com/services/) and we'll make sure you
-feel like a pro!
+[training session](https://m9rx.com/services/) and we'll make sure you feel like
+a pro!
 
 {{< blog-paragraph-header "Modules vs. packages" >}}
 
@@ -655,7 +655,7 @@ is a good starting point, and I've been using that pattern for now.
 I know this is a long article, and I'm sorry I didn't write it sooner, but I
 hope it serves as a good reference for you to put `mgmt` in production!
 
-[Enterprise support, training, and consulting are all available.](https://mgmtconfig.com/)
+[Enterprise support, training, and consulting are all available.](https://m9rx.com/)
 
 Happy Hacking,
 

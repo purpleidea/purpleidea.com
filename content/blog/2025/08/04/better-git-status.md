@@ -61,7 +61,7 @@ Now whenever you run `git s`, you'll only see the columns when it won't fit.
 
 Save seconds of keystrokes, and the hours will take care of themselves.
 
-[Enterprise support, training, and consulting are all available.](https://mgmtconfig.com/)
+[Enterprise support, training, and consulting are all available.](https://m9rx.com/)
 
 Happy Hacking,
 

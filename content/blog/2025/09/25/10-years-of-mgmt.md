@@ -10,7 +10,7 @@ tags:
   - "distributed"
   - "events"
   - "mgmt"
-  - "mgmt config"
+  - "mgmtconfig"
   - "m9rx"
   - "parallel"
   - "planetfedora"

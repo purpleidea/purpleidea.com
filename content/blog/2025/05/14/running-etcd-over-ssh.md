@@ -100,7 +100,7 @@ command="echo 'Port forwarding only'; exit",no-agent-forwarding,no-pty,no-user-r
 If you like hacking on this part of the stack, get involved with [mgmt](https://github.com/purpleidea/mgmt/)
 and you'll have a lot of fun!
 
-[Enterprise support, training, and consulting are all available.](https://mgmtconfig.com/)
+[Enterprise support, training, and consulting are all available.](https://m9rx.com/)
 
 Happy Hacking,
 
