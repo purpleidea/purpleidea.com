@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Replying to mailing lists with Evolution - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Replying to mailing lists with Evolution</strong><br><small></small></h3>
+					<hr>
+					<p>I use the <a href="http://en.wikipedia.org/wiki/Evolution_%28software%29">Evolution</a> mail <a href="https://en.wikipedia.org/wiki/Mail_user_agent">client</a>. It does have a few annoying bugs, but it has a plethora of great features too! Hopefully this post will inspire you to help hack on this piece of software and fix the bugs!</p>
+<p><span style="text-decoration:underline;">Mailing list etiquette</span>:</p>
+<p>When replying to mailing lists, it&rsquo;s typically very friendly to include the email address of the person you&rsquo;re replying to in the <em>to</em> or <em>cc</em> fields along with the mailing list address. This lets that person know that someone has answered their question. In some cases, if they&rsquo;re not subscribed to that mailing list, (if you don&rsquo;t do this), then they might not see your reply at all.</p>
+<p>To enable this feature, there is a check box inside of the Evolution mail preferences. It is labelled: &ldquo;<em>Ignore Reply-To: for mailing lists</em>&rdquo;.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-ignore-reply-to.png"><img class="size-medium wp-image-1005" src="evolution-ignore-reply-to.png" alt="You can find this option in the Evolution &quot;Composer Preferences&quot; tab, under the &quot;Replies and Forwards&quot; heading." width="100%" height="100%" /></a></td></tr><tr><td> You can find this option in the Evolution "Composer Preferences" tab, under the "Replies and Forwards" heading.</td></tr></table></br />
+<p>This works, because by default, most mailing lists set the &ldquo;Reply-To:&rdquo; address to be that of the mailing list. In this case, when you click &ldquo;Group Reply&rdquo; (&ldquo;Reply to all&rdquo;) in your MUA, then that field will be ignored, and the correct recipients will be selected in your composer window.</p>
+<p>If instead you simply click &ldquo;Reply&rdquo;, then you will be prompted to choose the kind of reply you&rsquo;d like to send.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-send-private-reply.png"><img class="alignnone size-medium wp-image-1006" src="evolution-send-private-reply.png" alt="evolution-send-private-reply" width="100%" height="100%" /></a></td></tr></table></br />
+<p><span style="text-decoration:underline;">Doesn&rsquo;t this annoy users</span>?</p>
+<p>No, this actually gives the recipients <a href="https://www.redhat.com/archives/fedora-devel-list/2008-January/msg00861.html">more choice</a>! If they&rsquo;d prefer not to see your reply in their inbox, they can set up a filter so that mail that <em>includes</em> the mailing list address goes to a special folder. If they prefer to see your reply in their inbox, then they can configure their filters so that mail that comes <em>exclusively</em> from the mailing list address goes to a specific folder.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="evolution-mailing-list-filter.png"><img class="size-large wp-image-1009" src="evolution-mailing-list-filter.png" alt="Instead of choosing the &quot;contains&quot; (in_array) operator, you could have chosen &quot;is&quot; (equals)." width="100%" height="100%" /></a></td></tr><tr><td> Instead of choosing the "contains" (in_array) operator, you could have chosen "is" (equals).</td></tr></table></br />
+<p><span style="text-decoration:underline;">Won&rsquo;t this cause duplicate messages being sent to the user</span>?</p>
+<p>Again, that&rsquo;s up to the user. Most mailing lists allow you to configure this setting.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="mailman-avoid-duplicate-copies-of-messages.png"><img class="size-medium wp-image-1007" src="mailman-avoid-duplicate-copies-of-messages.png" alt="In this particular example, it is a very low-volume list, therefore I don't filter messages into a separate folder, they go to my inbox, so there's no need to get two copies." width="100%" height="100%" /></a></td></tr><tr><td> This particular example is of a very low-volume list, therefore I don't filter messages into a separate folder; they go to my inbox, so there's no need to get two copies.</td></tr></table></br />
+<p>Ultimately, Evolution is a great MUA, which has the best message composer available. Some might prefer mutt+vim, but for my money, I&rsquo;ll stick with Evolution for now.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p>PS: If you hack on Evolution, and write a good feature that I like, or fix a bug that affects me, I&rsquo;m happy to feature you on this blog and tweet about you as soon as your code hits <a href="https://git.gnome.org/browse/evolution/">git master</a>! &lt;/free promotion for good hackers!&gt;</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 27, 2014<br>
+				<small>512 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/email">email</a> <a class="label label-default" href="/tags/evolution">evolution</a> <a class="label label-default" href="/tags/evolution-mail">evolution mail</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/group-reply">group reply</a> <a class="label label-default" href="/tags/mail-filters">mail filters</a> <a class="label label-default" href="/tags/mailing-list">mailing-list</a> <a class="label label-default" href="/tags/mailman">mailman</a> <a class="label label-default" href="/tags/mutt">mutt</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/reply">reply</a> <a class="label label-default" href="/tags/reply-to-all">reply-to-all</a> <a class="label label-default" href="/tags/vim">vim</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/11/27/replying-to-mailing-lists-with-evolution/"><small>https://ttboj.wordpress.com/2014/11/27/replying-to-mailing-lists-with-evolution/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/11/27/replying-to-mailing-lists-with-evolution/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/11/27/replying-to-mailing-lists-with-evolution">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/11/27/replying-to-mailing-lists-with-evolution.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

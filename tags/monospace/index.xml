@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Monospace on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/monospace/</link>
+    <description>Recent content in Monospace on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 22 Feb 2010 17:04:38 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/monospace/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>a custom epiphany location bar</title>
+      <link>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</link>
+      <pubDate>Mon, 22 Feb 2010 17:04:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/22/a-custom-epiphany-location-bar/</guid>
+      <description>since i do much research on the internets, i often find myself in a web browser. my favourite of the lot is epiphany. this post isn&amp;rsquo;t about its merits or failures, but about the awesome way to make my location bar be exactly how i like it: monospaced.&#xA;just add the following into your ~/.gtkrc-2.0 file and then restart epiphany. feel free to modify as you wish.&#xA;# ~/.gtkrc-2.0 style &amp;#34;Epiphany_Locationbar&amp;#34; { # leave out the font size if you wish font_name = &amp;#34;Monospace 12&amp;#34; #bg[NORMAL] = &amp;#34;#ff0000&amp;#34; } # both of these seem to work.</description>
+    </item>
+  </channel>
+</rss>

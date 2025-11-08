@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Debugging golang programs - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Debugging golang programs</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;ve been writing a lot of <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">golang</a> lately. <a href="/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/">I&rsquo;ve hit painful problems in the past.</a> Here are some debugging tips. Hopefully they help you out. I bet you don&rsquo;t know #2.</p>
+<p><strong><span style="text-decoration:underline;">#0 Use log.Printf</span>:</strong></p>
+<p>This should go without saying, but I&rsquo;m ashamed to say it&rsquo;s what I use the most. We&rsquo;ve only been <a href="https://en.wikipedia.org/wiki/C_%28programming_language%29">C programming</a> for 44+ years, and it&rsquo;s still what is most useful!</p>
+<p><strong><span style="text-decoration:underline;">#1 Use go run -race</span>:</strong></p>
+<p>Since many problems are caused by random races, ensuring you use the built-in tools will help you catch some problems. One of these is a race detector. You can use it by adding the <code>-race</code> flag to the <code>go run</code>, <code>go build</code> or <code>go test</code> commands. In practice, it only ever caught beginner issues, and it hasn&rsquo;t set off any alarms since. Maybe I need to write more test cases! Maybe <a href="https://github.com/purpleidea/mgmt/compare?expand=1"><strong><em>you</em></strong> need to write more test cases!</a></p>
+<p><strong><span style="text-decoration:underline;">#2 Use Control+Backslash</span>:</strong></p>
+<p>Say what? If you press control+backslash, you will cause a core dump. Example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/tmp$ sleep 42h
+</span></span><span style="display:flex;"><span>^\Quit (core dumped)
+</span></span></code></pre></div><p>Obviously there are nicer ways to kill a process (I for one, welcome our robotic overlords) but in times of emergency, use what you&rsquo;ve got. The interesting thing, is that when you do this to a golang program, you&rsquo;ll get much more interesting output:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">~/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">$</span> <span style="color:#666">./</span>mgmt run <span style="color:#666">--</span>file examples<span style="color:#666">/</span>graph0<span style="color:#666">.</span>yaml 
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">65</span>: This is: mgmt, version: <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">2</span><span style="color:#666">-</span><span style="color:#666">6</span><span style="color:#666">-</span>g6e68d6d
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">66</span>: Main: Start: <span style="color:#666">1455571166809588335</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">196</span>: Main: Running<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">106</span>: Etcd: Starting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">132</span>: Etcd: Watching<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> configwatch<span style="color:#666">.</span>go:<span style="color:#666">54</span>: Watching: examples<span style="color:#666">/</span>graph0<span style="color:#666">.</span>yaml
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">159</span>: Etcd: Waiting <span style="color:#666">1000</span> ms <span style="color:#a2f;font-weight:bold">for</span> connection<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">149</span>: Graph: Vertices(<span style="color:#666">2</span>), Edges(<span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">152</span>: Graphviz: No filename given<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">163</span>: State: graphNil <span style="color:#666">-&gt;</span> graphStarting
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> main<span style="color:#666">.</span>go:<span style="color:#666">165</span>: State: graphStarting <span style="color:#666">-&gt;</span> graphStarted
+</span></span><span style="display:flex;"><span><span style="color:#666">16</span>:<span style="color:#666">19</span>:<span style="color:#666">26</span> file<span style="color:#666">.</span>go:<span style="color:#666">340</span>: <span style="color:#d2413a;font-weight:bold">File</span>[file1]: Apply
+</span></span><span style="display:flex;"><span><span style="color:#666">^</span>\SIGQUIT: quit
+</span></span><span style="display:flex;"><span>PC<span style="color:#666">=</span><span style="color:#666">0x482a53</span> m<span style="color:#666">=</span><span style="color:#666">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">0</span> [idle]:
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>futex(<span style="color:#666">0xecae00</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x7f6f5dd8fde8</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x4828ac</span>, <span style="color:#666">0x3c</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x43392b</span>, <span style="color:#666">0xecae00</span>, <span style="color:#666">...</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>sys_linux_amd64<span style="color:#666">.</span>s:<span style="color:#666">289</span> <span style="color:#666">+</span><span style="color:#666">0x23</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>futexsleep(<span style="color:#666">0xecae00</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0xdf8475800</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>os1_linux<span style="color:#666">.</span>go:<span style="color:#666">56</span> <span style="color:#666">+</span><span style="color:#666">0xf0</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>notetsleep_internal(<span style="color:#666">0xecae00</span>, <span style="color:#666">0xdf8475800</span>, <span style="color:#666">0xc820000900</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>lock_futex<span style="color:#666">.</span>go:<span style="color:#666">171</span> <span style="color:#666">+</span><span style="color:#666">0x12b</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>notetsleep(<span style="color:#666">0xecae00</span>, <span style="color:#666">0xdf8475800</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>lock_futex<span style="color:#666">.</span>go:<span style="color:#666">191</span> <span style="color:#666">+</span><span style="color:#666">0x6b</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>sysmon()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>proc1<span style="color:#666">.</span>go:<span style="color:#666">3022</span> <span style="color:#666">+</span><span style="color:#666">0x4aa</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>mstart1()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>proc1<span style="color:#666">.</span>go:<span style="color:#666">715</span> <span style="color:#666">+</span><span style="color:#666">0xe8</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>mstart()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>proc1<span style="color:#666">.</span>go:<span style="color:#666">685</span> <span style="color:#666">+</span><span style="color:#666">0x72</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">1</span> [select]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>waitForSignal(<span style="color:#666">0xc820076300</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>main<span style="color:#666">.</span>go:<span style="color:#666">48</span> <span style="color:#666">+</span><span style="color:#666">0x5da</span>
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>run(<span style="color:#666">0xc82011c0f0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>main<span style="color:#666">.</span>go:<span style="color:#666">198</span> <span style="color:#666">+</span><span style="color:#666">0x779</span>
+</span></span><span style="display:flex;"><span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>codegangsta<span style="color:#666">/</span>cli<span style="color:#666">.</span>Command<span style="color:#666">.</span>Run(<span style="color:#666">0xb4e9d8</span>, <span style="color:#666">0x3</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0xc8200799d0</span>, <span style="color:#666">0x1</span>, <span style="color:#666">0x1</span>, <span style="color:#666">0xb4e9d8</span>, <span style="color:#666">0x3</span>, <span style="color:#666">0x0</span>, <span style="color:#666">...</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>codegangsta<span style="color:#666">/</span>cli<span style="color:#666">/</span>command<span style="color:#666">.</span>go:<span style="color:#666">127</span> <span style="color:#666">+</span><span style="color:#666">0x1052</span>
+</span></span><span style="display:flex;"><span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>codegangsta<span style="color:#666">/</span>cli<span style="color:#666">.</span>(<span style="color:#666">*</span>App)<span style="color:#666">.</span>Run(<span style="color:#666">0xc8200a8500</span>, <span style="color:#666">0xc820074100</span>, <span style="color:#666">0x4</span>, <span style="color:#666">0x4</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>codegangsta<span style="color:#666">/</span>cli<span style="color:#666">/</span>app<span style="color:#666">.</span>go:<span style="color:#666">159</span> <span style="color:#666">+</span><span style="color:#666">0xc2f</span>
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>main()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>main<span style="color:#666">.</span>go:<span style="color:#666">283</span> <span style="color:#666">+</span><span style="color:#666">0xced</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">17</span> [syscall, locked to thread]:
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>goexit()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>asm_amd64<span style="color:#666">.</span>s:<span style="color:#666">1721</span> <span style="color:#666">+</span><span style="color:#666">0x1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">21</span> [syscall]:
+</span></span><span style="display:flex;"><span>os<span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">signal</span><span style="color:#666">.</span>loop()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>os<span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">signal</span><span style="color:#666">/</span>signal_unix<span style="color:#666">.</span>go:<span style="color:#666">22</span> <span style="color:#666">+</span><span style="color:#666">0x18</span>
+</span></span><span style="display:flex;"><span>created by os<span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">signal</span><span style="color:#666">.</span>init<span style="color:#666">.</span><span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>os<span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">signal</span><span style="color:#666">/</span>signal_unix<span style="color:#666">.</span>go:<span style="color:#666">28</span> <span style="color:#666">+</span><span style="color:#666">0x37</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">22</span> [select]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>run<span style="color:#666">.</span>func2(<span style="color:#666">0xc82011c0f0</span>, <span style="color:#666">0xc820122040</span>, <span style="color:#666">0xc82011a5d0</span>, <span style="color:#666">0xc82011e130</span>, <span style="color:#666">0x5</span>, <span style="color:#666">0xc820076360</span>, <span style="color:#666">0xc82011e010</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>main<span style="color:#666">.</span>go:<span style="color:#666">110</span> <span style="color:#666">+</span><span style="color:#666">0x1061</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>run
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>main<span style="color:#666">.</span>go:<span style="color:#666">168</span> <span style="color:#666">+</span><span style="color:#666">0x60c</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">23</span> [select, locked to thread]:
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>gopark(<span style="color:#666">0xc8a258</span>, <span style="color:#666">0xc82002e728</span>, <span style="color:#666">0xb4ec08</span>, <span style="color:#666">0x6</span>, <span style="color:#666">0x18</span>, <span style="color:#666">0x2</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>proc<span style="color:#666">.</span>go:<span style="color:#666">185</span> <span style="color:#666">+</span><span style="color:#666">0x163</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>selectgoImpl(<span style="color:#666">0xc82002e728</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x18</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>select<span style="color:#666">.</span>go:<span style="color:#666">392</span> <span style="color:#666">+</span><span style="color:#666">0xa64</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>selectgo(<span style="color:#666">0xc82002e728</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>select<span style="color:#666">.</span>go:<span style="color:#666">212</span> <span style="color:#666">+</span><span style="color:#666">0x12</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>ensureSigM<span style="color:#666">.</span>func1()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>signal1_unix<span style="color:#666">.</span>go:<span style="color:#666">227</span> <span style="color:#666">+</span><span style="color:#666">0x353</span>
+</span></span><span style="display:flex;"><span>runtime<span style="color:#666">.</span>goexit()
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>asm_amd64<span style="color:#666">.</span>s:<span style="color:#666">1721</span> <span style="color:#666">+</span><span style="color:#666">0x1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">7</span> [select]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>FileType)<span style="color:#666">.</span>Watch(<span style="color:#666">0xc820174180</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>file<span style="color:#666">.</span>go:<span style="color:#666">156</span> <span style="color:#666">+</span><span style="color:#666">0x15f4</span>
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>Graph)<span style="color:#666">.</span>Start<span style="color:#666">.</span>func1(<span style="color:#666">0xc82011e010</span>, <span style="color:#666">0xc820010b80</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>pgraph<span style="color:#666">.</span>go:<span style="color:#666">558</span> <span style="color:#666">+</span><span style="color:#666">0x7e</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>(<span style="color:#666">*</span>Graph)<span style="color:#666">.</span>Start
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>pgraph<span style="color:#666">.</span>go:<span style="color:#666">560</span> <span style="color:#666">+</span><span style="color:#666">0x171</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">25</span> [select]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>ConfigWatch<span style="color:#666">.</span>func1(<span style="color:#666">0xc82009db40</span>, <span style="color:#666">0x14</span>, <span style="color:#666">0xc820076660</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>configwatch<span style="color:#666">.</span>go:<span style="color:#666">74</span> <span style="color:#666">+</span><span style="color:#666">0x13c8</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>ConfigWatch
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>configwatch<span style="color:#666">.</span>go:<span style="color:#666">153</span> <span style="color:#666">+</span><span style="color:#666">0x67</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">26</span> [sleep]:
+</span></span><span style="display:flex;"><span>time<span style="color:#666">.</span>Sleep(<span style="color:#666">0x3b9aca00</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>runtime<span style="color:#666">/</span>time<span style="color:#666">.</span>go:<span style="color:#666">59</span> <span style="color:#666">+</span><span style="color:#666">0xf9</span>
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>EtcdWObject)<span style="color:#666">.</span>EtcdWatch<span style="color:#666">.</span>func1(<span style="color:#666">0x7f6f5c512c20</span>, <span style="color:#666">0xc82009db80</span>, <span style="color:#666">0xc820122040</span>, <span style="color:#666">0xffffffffffffffff</span>, <span style="color:#666">0xc820076360</span>, <span style="color:#666">0xc820072af0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>etcd<span style="color:#666">.</span>go:<span style="color:#666">160</span> <span style="color:#666">+</span><span style="color:#666">0x7db</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>(<span style="color:#666">*</span>EtcdWObject)<span style="color:#666">.</span>EtcdWatch
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>etcd<span style="color:#666">.</span>go:<span style="color:#666">205</span> <span style="color:#666">+</span><span style="color:#666">0xc2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">27</span> [chan send]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>EtcdWObject)<span style="color:#666">.</span>EtcdChannelWatch<span style="color:#666">.</span>func1(<span style="color:#666">0x7f6f5c512c78</span>, <span style="color:#666">0xc820122140</span>, <span style="color:#666">0x7f6f5c512ca0</span>, <span style="color:#666">0xc8200786d0</span>, <span style="color:#666">0xc8200766c0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>etcd<span style="color:#666">.</span>go:<span style="color:#666">109</span> <span style="color:#666">+</span><span style="color:#666">0xd9</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>(<span style="color:#666">*</span>EtcdWObject)<span style="color:#666">.</span>EtcdChannelWatch
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>etcd<span style="color:#666">.</span>go:<span style="color:#666">111</span> <span style="color:#666">+</span><span style="color:#666">0x7b</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">34</span> [syscall]:
+</span></span><span style="display:flex;"><span>syscall<span style="color:#666">.</span>Syscall6(<span style="color:#666">0xe8</span>, <span style="color:#666">0x4</span>, <span style="color:#666">0xc82018dc24</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0xffffffffffffffff</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>syscall<span style="color:#666">/</span>asm_linux_amd64<span style="color:#666">.</span>s:<span style="color:#666">44</span> <span style="color:#666">+</span><span style="color:#666">0x5</span>
+</span></span><span style="display:flex;"><span>syscall<span style="color:#666">.</span>EpollWait(<span style="color:#666">0x4</span>, <span style="color:#666">0xc82018dc24</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0xffffffffffffffff</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>syscall<span style="color:#666">/</span>zsyscall_linux_amd64<span style="color:#666">.</span>go:<span style="color:#666">365</span> <span style="color:#666">+</span><span style="color:#666">0x89</span>
+</span></span><span style="display:flex;"><span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>(<span style="color:#666">*</span>fdPoller)<span style="color:#666">.</span>wait(<span style="color:#666">0xc820146000</span>, <span style="color:#666">0xc89a00</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify_poller<span style="color:#666">.</span>go:<span style="color:#666">85</span> <span style="color:#666">+</span><span style="color:#666">0xbc</span>
+</span></span><span style="display:flex;"><span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>(<span style="color:#666">*</span>Watcher)<span style="color:#666">.</span>readEvents(<span style="color:#666">0xc820158000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify<span style="color:#666">.</span>go:<span style="color:#666">179</span> <span style="color:#666">+</span><span style="color:#666">0x1af</span>
+</span></span><span style="display:flex;"><span>created by gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>NewWatcher
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify<span style="color:#666">.</span>go:<span style="color:#666">58</span> <span style="color:#666">+</span><span style="color:#666">0x315</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">8</span> [select]:
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>NoopType)<span style="color:#666">.</span>Watch(<span style="color:#666">0xc82001c230</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>types<span style="color:#666">.</span>go:<span style="color:#666">362</span> <span style="color:#666">+</span><span style="color:#666">0x31a</span>
+</span></span><span style="display:flex;"><span>main<span style="color:#666">.</span>(<span style="color:#666">*</span>Graph)<span style="color:#666">.</span>Start<span style="color:#666">.</span>func1(<span style="color:#666">0xc82011e010</span>, <span style="color:#666">0xc820010b60</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>pgraph<span style="color:#666">.</span>go:<span style="color:#666">558</span> <span style="color:#666">+</span><span style="color:#666">0x7e</span>
+</span></span><span style="display:flex;"><span>created by main<span style="color:#666">.</span>(<span style="color:#666">*</span>Graph)<span style="color:#666">.</span>Start
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>mgmt<span style="color:#666">/</span>pgraph<span style="color:#666">.</span>go:<span style="color:#666">560</span> <span style="color:#666">+</span><span style="color:#666">0x171</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">31</span> [syscall]:
+</span></span><span style="display:flex;"><span>syscall<span style="color:#666">.</span>Syscall6(<span style="color:#666">0xe8</span>, <span style="color:#666">0x9</span>, <span style="color:#666">0xc8201f7c24</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0xffffffffffffffff</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0xc82017c440</span>, <span style="color:#666">0xc82017c420</span>, <span style="color:#666">0x15</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>syscall<span style="color:#666">/</span>asm_linux_amd64<span style="color:#666">.</span>s:<span style="color:#666">44</span> <span style="color:#666">+</span><span style="color:#666">0x5</span>
+</span></span><span style="display:flex;"><span>syscall<span style="color:#666">.</span>EpollWait(<span style="color:#666">0x9</span>, <span style="color:#666">0xc8201f7c24</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0x7</span>, <span style="color:#666">0xffffffffffffffff</span>, <span style="color:#666">0x1</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>usr<span style="color:#666">/</span>lib<span style="color:#666">/</span>golang<span style="color:#666">/</span>src<span style="color:#666">/</span>syscall<span style="color:#666">/</span>zsyscall_linux_amd64<span style="color:#666">.</span>go:<span style="color:#666">365</span> <span style="color:#666">+</span><span style="color:#666">0x89</span>
+</span></span><span style="display:flex;"><span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>(<span style="color:#666">*</span>fdPoller)<span style="color:#666">.</span>wait(<span style="color:#666">0xc82009dcc0</span>, <span style="color:#666">0x8000</span>, <span style="color:#666">0x0</span>, <span style="color:#666">0x0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify_poller<span style="color:#666">.</span>go:<span style="color:#666">85</span> <span style="color:#666">+</span><span style="color:#666">0xbc</span>
+</span></span><span style="display:flex;"><span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>(<span style="color:#666">*</span>Watcher)<span style="color:#666">.</span>readEvents(<span style="color:#666">0xc820090cd0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify<span style="color:#666">.</span>go:<span style="color:#666">179</span> <span style="color:#666">+</span><span style="color:#666">0x1af</span>
+</span></span><span style="display:flex;"><span>created by gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">%</span><span style="color:#666">2</span>ev1<span style="color:#666">.</span>NewWatcher
+</span></span><span style="display:flex;"><span>    <span style="color:#666">/</span>home<span style="color:#666">/</span>james<span style="color:#666">/</span>code<span style="color:#666">/</span>src<span style="color:#666">/</span>gopath<span style="color:#666">/</span>src<span style="color:#666">/</span>gopkg<span style="color:#666">.</span><span style="color:#a2f;font-weight:bold">in</span><span style="color:#666">/</span>fsnotify<span style="color:#666">.</span>v1<span style="color:#666">/</span>inotify<span style="color:#666">.</span>go:<span style="color:#666">58</span> <span style="color:#666">+</span><span style="color:#666">0x315</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rax    <span style="color:#666">0xfffffffffffffffc</span>
+</span></span><span style="display:flex;"><span>rbx    <span style="color:#666">0x7f6f5dd8fde8</span>
+</span></span><span style="display:flex;"><span>rcx    <span style="color:#666">0x482a53</span>
+</span></span><span style="display:flex;"><span>rdx    <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>rdi    <span style="color:#666">0xecae00</span>
+</span></span><span style="display:flex;"><span>rsi    <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>rbp    <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>rsp    <span style="color:#666">0x7f6f5dd8fdb0</span>
+</span></span><span style="display:flex;"><span>r8     <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>r9     <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>r10    <span style="color:#666">0x7f6f5dd8fde8</span>
+</span></span><span style="display:flex;"><span>r11    <span style="color:#666">0x246</span>
+</span></span><span style="display:flex;"><span>r12    <span style="color:#666">0x7ffec7010a4f</span>
+</span></span><span style="display:flex;"><span>r13    <span style="color:#666">0x7f6f5dd90700</span>
+</span></span><span style="display:flex;"><span>r14    <span style="color:#666">0x800000</span>
+</span></span><span style="display:flex;"><span>r15    <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>rip    <span style="color:#666">0x482a53</span>
+</span></span><span style="display:flex;"><span>rflags <span style="color:#666">0x246</span>
+</span></span><span style="display:flex;"><span>cs     <span style="color:#666">0x33</span>
+</span></span><span style="display:flex;"><span>fs     <span style="color:#666">0x0</span>
+</span></span><span style="display:flex;"><span>gs     <span style="color:#666">0x0</span>
+</span></span></code></pre></div><p>I find this particularly useful when you have a &ldquo;stuck&rdquo; goroutine. Killing the program usually makes it easy to find where everyone was waiting. AFAIK, everything is ordered by most recently used at the top. You&rsquo;re welcome!</p>
+<p><strong><span style="text-decoration:underline;">#3 Use a real debugger</span>:</strong></p>
+<p>There is a GDB like golang debugger called &ldquo;<a href="https://github.com/derekparker/delve">delve</a>&rdquo;. It&rsquo;s probably something I would use more often, except I haven&rsquo;t needed that much power, and it still has a number of rough edges. I&rsquo;m sure if you could help improve that, it would help out the project. There was a <a href="https://fosdem.org/2016/schedule/event/delve/">talk at FOSDEM</a> about it. If we&rsquo;re lucky, <a href="https://video.fosdem.org/2016/h1302/">we&rsquo;ll eventually get video</a>. I&rsquo;m &ldquo;looking forward&rdquo; to using it more in the future.</p>
+<p>Hope this helped,</p>
+<p>Happy Hacking!</p>
+<p>James</p>
+<p>PS: The &ldquo;other&rdquo; slash, <strong>isn&rsquo;t</strong> called &ldquo;forward slash&rdquo;, it&rsquo;s just called &ldquo;slash&rdquo;</p>
+<p>PPS: Yes, I say &ldquo;golang&rdquo;, no &ldquo;go&rdquo;. I think it&rsquo;s shitty that <a href="https://en.wikipedia.org/wiki/Go!_%28programming_language%29#Conflict_with_Google">google basically ripped off the go! name</a>. I guess <a href="https://github.com/golang/go/issues/9">David lost this one</a>.</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>February 15, 2016<br>
+				<small>849 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/fosdem">FOSDEM</a> <a class="label label-default" href="/tags/control&#43;backslash">control&#43;backslash</a> <a class="label label-default" href="/tags/coredump">coredump</a> <a class="label label-default" href="/tags/debugging">debugging</a> <a class="label label-default" href="/tags/delve">delve</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gdb">gdb</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/printf">printf</a> <a class="label label-default" href="/tags/race">race</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/02/15/debugging-golang-programs/"><small>https://ttboj.wordpress.com/2016/02/15/debugging-golang-programs/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/02/15/debugging-golang-programs">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/02/15/debugging-golang-programs.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

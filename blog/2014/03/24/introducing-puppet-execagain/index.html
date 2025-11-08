@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Introducing Puppet Exec[&#39;again&#39;] - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Introducing Puppet Exec[&#39;again&#39;]</strong><br><small></small></h3>
+					<hr>
+					<p>Puppet is missing a number of much-needed features. That&rsquo;s the bad news. The good news is that I&rsquo;ve been able to write some of these as modules that don&rsquo;t need to change the Puppet core! This is an article about one of these features.</p>
+<p><strong><span style="text-decoration:underline;">Posit</span>:</strong> It&rsquo;s not possible to apply all of your Puppet manifests in a single run.</p>
+<p>I believe that this holds true for the current implementation of Puppet. Most manifests can, do and <em>should</em> apply completely in a single run. If your Puppet run takes more than one run to converge, then chances are that you&rsquo;re doing something wrong.</p>
+<p>(For the sake of this article, convergence means that everything has been applied cleanly, and that a subsequent Puppet run wouldn&rsquo;t have any work to do.)</p>
+<p>There are some advanced corner cases, where this is not possible. In these situations, you will either have to wait for the next Puppet run (by default it will run every 30 minutes) or keep running Puppet manually until your configuration has converged. Neither of these situations are acceptable because:</p>
+<ul>
+	<li>Waiting 30 minutes while your machines are idle is (<a href="https://xkcd.com/303/">mostly</a>) a waste of time.</li>
+	<li>Doing manual work to set up your automation kind of <a href="https://www.andertoons.com/technology/cartoon/6125/i-dunno-kind-of-defeats-purpose-doesnt-it">defeats the purpose</a>.</li>
+</ul>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="https://xkcd.com/303/"><img src="http://imgs.xkcd.com/comics/compiling.png" alt="'Are you stealing those LCDs?' 'Yeah, but I'm doing it while my code compiles.'" width="100%" height="100%" /></a></td></tr><tr><td> Waiting 30 minutes while your machines are idle is (mostly) a waste of time. Okay, maybe it's not entirely a waste of time :)</td></tr></table></br />
+<p>So what&rsquo;s the solution?</p>
+<p><strong><span style="text-decoration:underline;">Introducing</span>:</strong> Puppet <em>Exec[&lsquo;again&rsquo;]</em> !</p>
+<p><em>Exec[&lsquo;again&rsquo;]</em> is a feature which I&rsquo;ve added to my <a href="https://github.com/purpleidea/puppet-common">Puppet-Common</a> module.</p>
+<p><strong><span style="text-decoration:underline;">What does it do?</span></strong></p>
+<p>Each Puppet run, your code can decide if it thinks there is <em>more</em> work to do, or if the host is not in a <em>converged</em> state. If so, it will tell <em>Exec[&lsquo;again&rsquo;]</em>.</p>
+<p><strong><span style="text-decoration:underline;">What does Exec[&lsquo;again&rsquo;] do?</span></strong></p>
+<p><em>Exec[&lsquo;again&rsquo;]</em> will fork a process off from the running puppet process. It will wait until that parent process has finished, and then it will spawn (technically: <a href="http://docs.python.org/3/library/os#os.execvpe"><em>execvpe</em></a>) a new puppet process to run puppet again. The module is smart enough to inspect the parent puppet process, and it knows how to run the child puppet. Once the new child puppet process is running, you won&rsquo;t see any leftover process id from the parent Exec[&lsquo;again&rsquo;] tool.</p>
+<p><strong><span style="text-decoration:underline;">How do I tell it to run?</span></strong></p>
+<p>It&rsquo;s quite simple, all you have to do is import my puppet module, and then notify the magic <em>Exec[&lsquo;again&rsquo;]</em> type that my class defines. <span style="text-decoration:underline;">Example</span>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>include common::again
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$some_str = &#39;ttboj is awesome&#39;
+</span></span><span style="display:flex;"><span># you can notify from any type that can generate a notification!
+</span></span><span style="display:flex;"><span># typically, using exec is the most common, but is not required!
+</span></span><span style="display:flex;"><span>file { &#39;/tmp/foo&#39;:
+</span></span><span style="display:flex;"><span>    content =&gt; &#34;${some_str}\n&#34;,
+</span></span><span style="display:flex;"><span>    notify =&gt; Exec[&#39;again&#39;], # notify puppet!
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">How do I decide if I need to run again?</span></strong></p>
+<p>This depends on your module, and isn&rsquo;t always a trivial thing to figure out. In one case, I had to build a <a href="/blog/2013/09/28/finite-state-machines-in-puppet/">finite state machine in puppet</a> to help decide whether this was necessary or not. In some cases, <a href="https://github.com/purpleidea/puppet-gluster/blob/master/manifests/brick.pp#L397">the solution might be simpler</a>. In all cases, this is an advanced technique, so you&rsquo;ll probably already have a good idea about how to figure this out if you need this type of technique.</p>
+<p><strong><span style="text-decoration:underline;">Can I introduce a minimum delay before the next run happens?</span></strong></p>
+<p>Yes, absolutely. This is particularly useful if you are building a distributed system, and you want to give other hosts a chance to export resources before each successive run. <span style="text-decoration:underline;">Example</span>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>include common::again
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># when notified, this will run puppet again, delta sec after it ends!
+</span></span><span style="display:flex;"><span>common::again::delta { &#39;some-name&#39;:
+</span></span><span style="display:flex;"><span>    delta =&gt; 120, # 2 minutes (pick your own value)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># to run the above Exec[&#39;again&#39;] you can use:
+</span></span><span style="display:flex;"><span>exec { &#39;/bin/true&#39;:
+</span></span><span style="display:flex;"><span>    onlyif =&gt; &#39;/bin/false&#39;, # TODO: some condition
+</span></span><span style="display:flex;"><span>    notify =&gt; Common::Again::Delta[&#39;some-name&#39;],
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">Can you show me a real-world example of this module?</span></strong></p>
+<p>Have a look at the <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> module. This module was one of the reasons that I wrote the <em>Exec[&lsquo;again&rsquo;]</em> functionality.</p>
+<p><strong><span style="text-decoration:underline;">Are there any caveats?</span></strong></p>
+<p>Maybe! It&rsquo;s possible to cause a <em>fast</em> &ldquo;infinite loop&rdquo;, where Puppet gets run unnecessarily. This could effectively DDOS your <em>puppetmaster</em> if left unchecked, so please use with caution! Keep in mind that puppet typically runs in an infinite loop already, except with a 30 minute interval.</p>
+<p><strong><span style="text-decoration:underline;">Help, it won&rsquo;t stop!</span></strong></p>
+<p>Either your code has become sentient, and has decided it wants to <a href="https://github.com/purpleidea/puppet-ipa">enable kerberos</a> or you&rsquo;ve got a bug in your Puppet manifests. If you fix the bug, things should eventually go back to normal. To kill the process that&rsquo;s re-spawning puppet, look for it in your process tree. <span style="text-decoration:underline;">Example</span>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic"># ps auxww | grep again[.py]</span>
+</span></span><span style="display:flex;"><span>root <span style="color:#666">4079</span> <span style="color:#666">0.0</span> <span style="color:#666">0.7</span> <span style="color:#666">132700</span> <span style="color:#666">3768</span> <span style="">?</span> S <span style="color:#666">18</span>:<span style="color:#666">26</span> <span style="color:#666">0</span>:<span style="color:#666">00</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>python <span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">var</span><span style="color:#666">/</span>lib<span style="color:#666">/</span>puppet<span style="color:#666">/</span>tmp<span style="color:#666">/</span>common<span style="color:#666">/</span>again<span style="color:#666">/</span>again<span style="color:#666">.</span>py <span style="color:#666">--</span>delta <span style="color:#666">120</span>
+</span></span><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic"># killall again.py</span>
+</span></span><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic"># echo $?</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic"># ps auxww | grep again[.py]</span>
+</span></span><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic"># killall again.py</span>
+</span></span><span style="display:flex;"><span>again<span style="color:#666">.</span>py: no process killed
+</span></span><span style="display:flex;"><span>[root<span style="">@</span>server <span style="color:#666">~</span>]<span style="color:#080;font-style:italic">#</span>
+</span></span></code></pre></div><p><strong><span style="text-decoration:underline;">Does this work with puppet running as a service or with <em>puppet agent &ndash;test</em>?</span></strong></p>
+<p>Yes.</p>
+<p><strong><span style="text-decoration:underline;">How was the spawn/exec logic implemented?</span></strong></p>
+<p>The spawn/exec logic was implemented as a <a href="https://github.com/purpleidea/puppet-common/blob/master/templates/again/again.py.erb">standalone python program</a> that gets copied to your local system, and does all the heavy lifting. Please have a look and let me know if you can find any bugs!</p>
+<p><strong><span style="text-decoration:underline;">Conclusion</span></strong></p>
+<p>I hope you enjoyed this addition to your toolbox. Please remember to use it with care. If you have a legitimate use for it, please <a title="contact" href="/contact/">let me know</a> so that I can better understand your use case!</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 24, 2014<br>
+				<small>965 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/exec">exec</a> <a class="label label-default" href="/tags/execagain">Exec[&#39;again&#39;]</a> <a class="label label-default" href="/tags/execvpe">execvpe</a> <a class="label label-default" href="/tags/finite-state-machine">finite state machine</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/python">python</a> <a class="label label-default" href="/tags/spawn">spawn</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/03/24/introducing-puppet-execagain/"><small>https://ttboj.wordpress.com/2014/03/24/introducing-puppet-execagain/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/03/24/introducing-puppet-execagain">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/03/24/introducing-puppet-execagain.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Collecting duplicate resources in puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Collecting duplicate resources in puppet</strong><br><small></small></h3>
+					<hr>
+					<p>I could probably write a long design article explaining why <em>identical</em> duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, <a href="https://twitter.com/bodepd">Mr. Bode</a> has already written part one of the hack: <a href="https://github.com/puppetlabs/puppetlabs-stdlib#ensure_resource">ensure_resource</a>.</p>
+<p><strong>Why?</strong></p>
+<p>Suppose you have a given infrastructure with <em>N</em> vaguely identical nodes. <em>N</em> could equal <strong>2</strong> for a <em>dual primary</em> or <em>active-passive</em> cluster, or <em>N</em> could be greater than <strong>2</strong> for a more elaborate N-ary cluster. It is sufficient to say, that each of those <em>N</em> nodes might export an identical puppet resource which one (or many) clients might need to collect, to operate correctly. It&rsquo;s important that each node export this, so that there is no single point of failure if one or more of the cluster nodes goes missing.</p>
+<p><strong>How?</strong></p>
+<p>As I mentioned, <em>ensure_resources</em> is a good enough hack to start. Here&rsquo;s how you take an existing resource, and make it duplicate friendly. Take for example, the bulk of my <em>dhcp::subnet</em> resource:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>define dhcp<span style="color:#666">::</span>subnet(
+</span></span><span style="display:flex;"><span>      $subnet,
+</span></span><span style="display:flex;"><span>      <span style="color:#080;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>      $range <span style="color:#666">=</span> <span style="color:#666">[]</span>,
+</span></span><span style="display:flex;"><span>      $allow_duplicates <span style="color:#666">=</span> <span style="color:#a2f">false</span>
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a2f;font-weight:bold">if</span> $allow_duplicates { <span style="color:#080;font-style:italic"># a non empty string is also a true</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic"># allow the user to specify a specific split string to use...</span>
+</span></span><span style="display:flex;"><span>            $c <span style="color:#666">=</span> type($allow_duplicates) ? {
+</span></span><span style="display:flex;"><span>                  <span style="color:#b44">&#39;string&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${allow_duplicates}&#34;</span>,
+</span></span><span style="display:flex;"><span>                  default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;#&#39;</span>,
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#b44">&#34;${c}&#34;</span> <span style="color:#666">==</span> <span style="color:#b44">&#39;&#39;</span> {
+</span></span><span style="display:flex;"><span>                  <span style="color:#a2f">fail</span>(<span style="color:#b44">&#39;Split character(s) cannot be empty!&#39;</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic"># split into $realname-$uid where $realname can contain split chars</span>
+</span></span><span style="display:flex;"><span>            $realname <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#34;&lt;%= name.rindex(&#39;${c}&#39;).nil?? name : name.slice(0, name.rindex(&#39;${c}&#39;)) %&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>            $uid <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#34;&lt;%= name.rindex(&#39;${c}&#39;).nil?? &#39;&#39; : name.slice(name.rindex(&#39;${c}&#39;)+&#39;${c}&#39;.length, name.length-name.rindex(&#39;${c}&#39;)-&#39;${c}&#39;.length) %&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            $params <span style="color:#666">=</span> { <span style="color:#080;font-style:italic"># this must use all the args as listed above...</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#b44">&#39;subnet&#39;</span> <span style="color:#666">=&gt;</span> $subnet,
+</span></span><span style="display:flex;"><span>                  <span style="color:#080;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#b44">&#39;range&#39;</span> <span style="color:#666">=&gt;</span> $range,
+</span></span><span style="display:flex;"><span>                  <span style="color:#080;font-style:italic"># NOTE: don&#39;t include the allow_duplicates flag...</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            ensure_resource(<span style="color:#b44">&#39;dhcp::subnet&#39;</span>, <span style="color:#b44">&#34;${realname}&#34;</span>, $params)
+</span></span><span style="display:flex;"><span>      } <span style="color:#a2f;font-weight:bold">else</span> { <span style="color:#080;font-style:italic"># body of the actual resource...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic"># BUG: lol: https://projects.puppetlabs.com/issues/15813</span>
+</span></span><span style="display:flex;"><span>            $valid_range <span style="color:#666">=</span> type($range) ? {
+</span></span><span style="display:flex;"><span>                  <span style="color:#b44">&#39;array&#39;</span> <span style="color:#666">=&gt;</span> $range,
+</span></span><span style="display:flex;"><span>                  default <span style="color:#666">=&gt;</span> <span style="color:#666">[</span>$range<span style="color:#666">]</span>,
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic"># the templating part of the module... </span>
+</span></span><span style="display:flex;"><span>            frag { <span style="color:#b44">&#34;/etc/dhcp/subnets.d/${name}.subnet.frag&#34;</span>:
+</span></span><span style="display:flex;"><span>                  content <span style="color:#666">=&gt;</span> template(<span style="color:#b44">&#39;dhcp/subnet.frag.erb&#39;</span>),
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>As you can see, I added an <em>$allow_duplicates</em> parameter to my resource. If it is set to true, then when the resource is defined, it parses out a trailing <em><strong>#</strong>comment</em> from the <em>$namevar</em>. This can guarantee uniqueness for the <em>$name</em> (if they happen to be on the same node) but more importantly, it can guarantee uniqueness on a collector, where you will otherwise be unable to workaround the <em>$name</em> collision.</p>
+<p>This is how you use this on one of the exporting nodes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>@@dhcp<span style="color:#666">::</span>subnet { <span style="color:#b44">&#34;dmz#${hostname}&#34;</span>:
+</span></span><span style="display:flex;"><span>    subnet <span style="color:#666">=&gt;</span> <span style="color:#666">...</span>,
+</span></span><span style="display:flex;"><span>      range <span style="color:#666">=&gt;</span> <span style="color:#666">[...]</span>,
+</span></span><span style="display:flex;"><span>      allow_duplicates <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;#&#39;</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>and on the collector:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#800">Dhcp</span><span style="color:#666">::</span><span style="color:#800">Subnet</span> <span style="color:#666">&lt;&lt;|</span> tag <span style="color:#666">==</span> <span style="color:#b44">&#39;dhcp&#39;</span> <span style="color:#a2f;font-weight:bold">and</span> title <span style="color:#666">!=</span> <span style="color:#b44">&#34;${dhcp_zone}&#34;</span> <span style="color:#666">|&gt;&amp;</span>gt; {
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
+<p>There are a few things to notice:</p>
+<ol>
+	<li>The <em>$allow_duplicates</em> argument can be set to <em>true</em> (a boolean), or to any string. If you pick a string, then that will be used to "split" out the end comment. It's smart enough to split with a reverse index search so that your name can contain the #'s if need be. By default it looks for a single <strong>#</strong>, but you could replace this with '<em>XXX123HACK</em>' if that was the only unique string match you can manage. Make sure not to use the string value of '<em>true</em>'.</li>
+	<li>On my collector I like to filter by <em>title</em>. This is the <em>$namevar</em>. Sadly, this doesn't support any fancier matching like <em>in_array</em> or <em>startswith</em>. I consider this a puppet deficiency. Hopefully someone will fix this to allow general puppet code here.</li>
+	<li>Adding this to each resource is kind of annoying. It's obviously a hack, but it's the right thing to do for the time being <em>IMHO</em>.</li>
+</ol>
+Hope you had fun with this.
+<p>Happy hacking,</p>
+<p>James</p>
+<p>PS: [1] One side note, in the general case for custom resources, I actually think that by default duplicate parameters should be required, but that a resource could provide an optional function such as <em>is_matched</em> which would take as input the two parameter hash trees, and decide if they&rsquo;re &ldquo;functionally equivalent&rdquo;. This would let an individual resource decide if it matters that you specified <em>thing=&gt;yes</em> in one and <em>thing=&gt;true</em> in the other. Functionally it matters that duplicate resources don&rsquo;t have conflicting effects. I&rsquo;m sure this would be particularly bug prone, and probably cause thrashing in some cases, which is why, by default the parameters should all match. <em>&lt;/babble&gt;</em></p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 4, 2013<br>
+				<small>805 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/allow-duplicates">allow duplicates</a> <a class="label label-default" href="/tags/collector">collector</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/duplicate-definition">duplicate definition</a> <a class="label label-default" href="/tags/exported-resources">exported resources</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/technology">technology</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/06/04/collecting-duplicate-resources-in-puppet/"><small>https://ttboj.wordpress.com/2013/06/04/collecting-duplicate-resources-in-puppet/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/06/04/collecting-duplicate-resources-in-puppet">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/06/04/collecting-duplicate-resources-in-puppet.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

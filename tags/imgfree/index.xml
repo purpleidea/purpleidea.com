@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Imgfree on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/imgfree/</link>
+    <description>Recent content in Imgfree on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 23 Jan 2025 21:34:56 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/imgfree/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Working around an iPXE issue</title>
+      <link>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</link>
+      <pubDate>Thu, 23 Jan 2025 21:34:56 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</guid>
+      <description>iPXE is a terrific tool, but despite their very respectable documentation, it has some rough edges, and it still feels like an &amp;ldquo;in crowd&amp;rdquo; kind of thing, where you have to learn the common tricks by knowing someone.&#xA;The problem:&#xA;I&amp;rsquo;ve been building a provisioning tool in mgmt and instead of always relying on distro-specific boot images, I decided to use iPXE to handle the early boot, and have it hand-off to the kernel installer.</description>
+    </item>
+  </channel>
+</rss>

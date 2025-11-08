@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="how to use Slack via IRC since the gateway closed...">
+	<meta name="author" content="James Shubin">
+
+	<title>Breaking out of the Slack walled garden - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Breaking out of the Slack walled garden</strong><br><small>how to use Slack via IRC since the gateway closed...</small></h3>
+					<hr>
+					<p>I&rsquo;m old school cool. Real hackers chat on open, distributed platforms. Most
+technical discussion can be found on the <a href="https://libera.chat/">Libera.chat</a> IRC
+network. It&rsquo;s not perfect, but the advantages clearly outweigh the drawbacks.</p>
+<p>Recently, I needed to join an existing large &ldquo;community&rdquo; on the centralized,
+proprietary <a href="https://en.wikipedia.org/wiki/Closed_platform">walled garden</a> that
+is the <a href="https://slack.com/">Slack</a> network.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>Connecting to the the Slack server requires that you use either the proprietary
+client or their proprietary web app. There&rsquo;s zero chance I will install the
+former on my machine, and the latter uses an absurd amount of browser memory and
+CPU. I&rsquo;m already happy with my <a href="https://irssi.org/"><em>irssi</em></a> experience, and I
+didn&rsquo;t want to need another app.</p>
+<p>Initially, Slack offered an IRC bridge as part of its
+<a href="https://en.wikipedia.org/wiki/Embrace,_extend,_and_extinguish">embrace, extend, and extinguish</a>
+strategy, but this is now
+<a href="https://it.slashdot.org/story/18/03/08/2049255/slack-is-shutting-down-its-irc-gateway">closed</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Solution</span>:<br /><br />
+
+<p>Don&rsquo;t use Slack! Move your team to Libera.chat or run your own private IRC
+server. This lets everyone use the client of their choice on the <a href="https://www.gnu.org/">platform</a>
+of their choice.</p>
+<p>Luckily there&rsquo;s a workaround if you need to infiltrate an existing Slack
+community. ;) Here&rsquo;s how I did it.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Workaround: Step 1: Token</span>:<br /><br />
+
+<p>Log into Slack via the web browser and get a &ldquo;legacy token&rdquo;. You can get one
+from <a href="https://api.slack.com/custom-integrations/legacy-tokens">this web page</a>.
+Apparently an administrator needs to allow this per-user, but since nobdy was
+responsive, user <a href="https://twitter.com/42wim/status/1005200618808586240">42wim</a>
+pointed out that you could just sniff for the token being used in the web ui.</p>
+<p>I was unable to find it using Firefox, but if you open up the <code>Chrome Developer tools</code>, under the <code>Network</code> section, there&rsquo;s a <code>WS</code> (web socket) tab which will
+show you your token:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="slack-token.png"><img class="alignnone size-full" src="slack-token.png" alt="here&#39;s what finding your token looks like, they all seem to start with xoxs-" width="100%" /></a></td></tr></tr></table></br />
+
+<p>Do this with care, since I have no idea how to revoke this token if it is lost.
+Perhaps changing your password will cause it to change, but I haven&rsquo;t tested it.
+Nobody knows how long this token will last, but if things stop working you know
+how to go find it again.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Workaround: Step 2: IRC Server</span>:<br /><br />
+
+<p>Now we need to run a small local IRC server which speaks <code>Slack</code> protocol, and
+maps this to the standard IRC protocol that your IRC client will understand.
+There are three projects I&rsquo;ve found that do this.</p>
+<ol>
+<li>
+<p><a href="https://github.com/42wim/matterircd/">https://github.com/42wim/matterircd/</a></p>
+</li>
+<li>
+<p><a href="https://github.com/insomniacslk/irc-slack">https://github.com/insomniacslk/irc-slack</a></p>
+</li>
+<li>
+<p><a href="https://github.com/nolanlum/tanya/">https://github.com/nolanlum/tanya/</a></p>
+</li>
+</ol>
+<p>They&rsquo;re all easy to setup and install. I tested that the first two work, but I
+felt slightly more happy with the first option. They both happen to use
+<code>golang</code>, and once a recent version is installed, you can build a copy with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go get github.com/42wim/matterircd
+</span></span></code></pre></div><p>This produces a build of the latest <code>git master</code>, but if you&rsquo;d prefer a released
+version you can look for the <a href="https://github.com/42wim/matterircd/releases">latest tag</a>.
+In my case it was <code>v0.17.3</code>. You can then:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone --recursive github.com/42wim/matterircd
+</span></span><span style="display:flex;"><span>git checkout v0.17.3
+</span></span><span style="display:flex;"><span>go build
+</span></span></code></pre></div><p>I experienced a number of crashes with wim promptly fixed, and I think things
+are now pretty stable. I&rsquo;m currently running a git version:
+<code>a0ab000e02cfaedc136acd1da34afacdb7bf1791</code>. If you find any issues, wim has been
+very responsive in fixing them.</p>
+<p>Both of these installation methods should produce a <code>matterircd</code> binary. The
+former will cause it to appear in your <code>$GOPATH/bin/</code>. This is often found at
+<code>~/go/bin/</code>. The latter will produce it in your <code>go build</code> working directory. In
+either case, I copied that to the
+<a href="https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/">server where I run my IRC client</a>.
+In that <code>screen</code> session I then ran it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#666">[</span>james@computer ~<span style="color:#666">]</span>$ ./bin/matterircd
+</span></span><span style="display:flex;"><span>INFO<span style="color:#666">[</span>2018-06-19T15:51:04-04:00<span style="color:#666">]</span> Running version 0.18.2-dev                    <span style="color:#b8860b">module</span><span style="color:#666">=</span>matterircd
+</span></span><span style="display:flex;"><span>INFO<span style="color:#666">[</span>2018-06-19T15:51:04-04:00<span style="color:#666">]</span> WARNING: THIS IS A DEVELOPMENT VERSION. Things may break.  <span style="color:#b8860b">module</span><span style="color:#666">=</span>matterircd
+</span></span><span style="display:flex;"><span>INFO<span style="color:#666">[</span>2018-06-19T15:51:04-04:00<span style="color:#666">]</span> Listening on 127.0.0.1:6667                   <span style="color:#b8860b">module</span><span style="color:#666">=</span>matterircd
+</span></span></code></pre></div><p>You could probably add a systemd service for this, but I didn&rsquo;t bother.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Workaround: Step 3: IRC Client</span>:<br /><br />
+
+<p>I use <code>irssi</code> but have never had great success getting the internal CLI to work
+properly. As a result, I disobeyed the instructions, quit <code>irssi</code>, and then
+edited the <code>~/.irssi/config</code> file. I added the following sections&hellip;</p>
+<p>In the <code>chatnets = { ... };</code> block I added:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>teamname = {
+</span></span><span style="display:flex;"><span>  type = &#34;IRC&#34;;
+</span></span><span style="display:flex;"><span>  nick = &#34;purpleidea&#34;;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>In the <code>servers = ( ... );</code> block I added:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  address = &#34;localhost&#34;;
+</span></span><span style="display:flex;"><span>  chatnet = &#34;teamname&#34;;
+</span></span><span style="display:flex;"><span>  password = &#34;xoxs-your-secret-token-is-here...&#34;;
+</span></span><span style="display:flex;"><span>  port = &#34;6667&#34;;
+</span></span><span style="display:flex;"><span>  use_ssl = &#34;no&#34;;
+</span></span><span style="display:flex;"><span>  ssl_verify = &#34;no&#34;;
+</span></span><span style="display:flex;"><span>  autoconnect = &#34;yes&#34;;
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre></div><p>In the <code>channels = ( ... );</code> block I added:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>{ name = &#34;#chan1&#34;; chatnet = &#34;teamname&#34;; autojoin = &#34;yes&#34;; },
+</span></span><span style="display:flex;"><span>{ name = &#34;#whatever&#34;; chatnet = &#34;teamname&#34;; autojoin = &#34;yes&#34;; },
+</span></span></code></pre></div><p>In the above blocks you&rsquo;ll naturally want to replace <code>teamname</code> with the name
+you&rsquo;d like to give to this slack network. You&rsquo;ll also need to replace the
+<code>xoxs-your-secret-token-is-here...</code> string with the value that you found in part
+1.</p>
+<p>Now start <code>irssi</code>. If all goes well, you should be connected! In the <code>irssi</code>
+status window you should see:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>06:50 [teamname] -!- Irssi: Connecting to localhost [127.0.0.1] port 6667
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- Irssi: Connection to localhost established
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- Welcome! purpleidea!james@localhost.localdomain
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- Your host is matterircd, running version 0.17.4-dev
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- This server was created Mon Jun 11 06:50:56 EDT 2018
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- matterircd 0.17.4-dev o o debugmode false
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- There are 3 users and 0 services on 1 servers
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- - matterircd Message of the Day -
+</span></span><span style="display:flex;"><span>06:50 [teamname] -!- End of /MOTD command.
+</span></span></code></pre></div><p>In the <code>screen</code> window running <code>matterircd</code> you should see:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>INFO[2018-06-19T15:51:16-04:00] New connection: 127.0.0.1:44958               module=matterircd
+</span></span></code></pre></div><p>You can now join more channels and even direct message other users. The complete
+list of users should show up in a special <code>&amp;users</code> channel. Most things work as
+expected.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Additional Information</span>:<br /><br />
+
+<p>Some IRC clients (apparently Pidgin) convert a window close action into a Slack
+channel leave action. If that was an invite-only channel, you might need to be
+re-invited in order to re-join.</p>
+<p>As I write this article, <a href="https://twitter.com/42wim/status/1006308492897148928">wim</a>
+has added automatic token fetching to matterircd <a href="https://github.com/42wim/matterircd/releases/tag/v0.18.0">v0.18.0</a>.
+I haven&rsquo;t tested it, but if you&rsquo;d rather use your password directly, this looks
+like it should do it. You&rsquo;d probably want to replace the use of the token in the
+<code>password = &quot;xoxs-your-secret-token-is-here...&quot;;</code> line with your actual
+password.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>Hope you enjoyed this. Tell your friends to pick regular IRC instead.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 22, 2018<br>
+				<small>1075 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/irc">irc</a> <a class="label label-default" href="/tags/irssi">irssi</a> <a class="label label-default" href="/tags/matterircd">matterircd</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/slack">slack</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/06/22/breaking-out-of-the-slack-walled-garden">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/06/22/breaking-out-of-the-slack-walled-garden.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

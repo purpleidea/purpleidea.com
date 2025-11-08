@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Distributed on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/distributed/</link>
+    <description>Recent content in Distributed on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 25 Sep 2025 01:07:56 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/distributed/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>10 years of mgmt</title>
+      <link>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</link>
+      <pubDate>Thu, 25 Sep 2025 01:07:56 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/</guid>
+      <description>I publicly released mgmt to the internet 10 years ago. I can&amp;rsquo;t believe it&amp;rsquo;s been 10 years. In this post I&amp;rsquo;ll talk about:&#xA;The new mgmt company A one-time new customer offer Unexpected wins Past failures Some history A new release And more&amp;hellip;&#xA;The company:&#xA;I&amp;rsquo;ve officially started a company. I&amp;rsquo;ve been working on this for some time now, and it&amp;rsquo;s time to let you all know about it officially. As you already know (mgmt, purpleidea, etc&amp;hellip;) I&amp;rsquo;ve never been great at naming.</description>
+    </item>
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.&#xA;I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+  </channel>
+</rss>

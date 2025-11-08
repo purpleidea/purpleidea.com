@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to actually make this happen.">
+	<meta name="author" content="James Shubin">
+
+	<title>Five minute hacks: Swapping left and right headphone audio in wireplumber - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Five minute hacks: Swapping left and right headphone audio in wireplumber</strong><br><small>How to actually make this happen.</small></h3>
+					<hr>
+					<p>I&rsquo;m on Fedora 37 at the moment. My headphone audio is backwards. How do we fix
+it? I&rsquo;ve apparently never found the right magic until now.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Setup</span>:<br /><br />
+
+<p>I have a crappy &ldquo;couch computer&rdquo;. It&rsquo;s used for casual internet browsing and
+video watching. It has an analog audio out which goes to my speakers. I&rsquo;d like
+to use headphones for when I don&rsquo;t want to annoy my neighbours. I have a pair of
+wireless headphones that I got for free, but the battery doesn&rsquo;t last longer
+than an hour. I also have an old pair of analog headphones that work okay and
+don&rsquo;t run out of battery! I got a free USB to analog dongle, but for some reason
+the left and right audio channels are reversed!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Why?</span><br /><br />
+
+<p>I have no idea. I assume it&rsquo;s some driver issue. I have no idea how I&rsquo;d report
+it, but if you do, please do so. I&rsquo;m happy to provide any missing device ID&rsquo;s
+you need.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The fix</span>:<br /><br />
+
+<p><strong>(1)</strong> Find the <code>node.name</code> of your headphones. Run <code>wpctl status</code>. You want the
+<code>sinks</code> section. Mine looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ wpctl status
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>[snip]
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Audio
+</span></span><span style="display:flex;"><span> ├─ Devices:
+</span></span><span style="display:flex;"><span> │      74. H600 [Wireless Headset]             [alsa]
+</span></span><span style="display:flex;"><span> │     105. Built-in Audio                      [alsa]
+</span></span><span style="display:flex;"><span> │     124. Yealink UH33 [Crappy USB thing]     [alsa]
+</span></span><span style="display:flex;"><span> │
+</span></span><span style="display:flex;"><span> ├─ Sinks:
+</span></span><span style="display:flex;"><span> │      91. Yealink UH33 Analog Stereo [Crappy] [vol: 0.48]
+</span></span><span style="display:flex;"><span> │  *  153. Built-in Audio Analog Stereo        [vol: 0.23]
+</span></span><span style="display:flex;"><span> │     184. H600 [Wireless Headset] Analog Stereo [vol: 0.85]
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>[snip]
+</span></span></code></pre></div><p>You&rsquo;ll see some random int next to the device in question. In the above example
+it is <code>91</code>.</p>
+<p><strong>(2)</strong> Now run: <code>wpctl inspect 91</code>. I see something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ wpctl inspect 91
+</span></span><span style="display:flex;"><span>id 91, type PipeWire:Interface:Node
+</span></span><span style="display:flex;"><span>    alsa.card = &#34;3&#34;
+</span></span><span style="display:flex;"><span>    alsa.card_name = &#34;Yealink UH33&#34;
+</span></span><span style="display:flex;"><span>    alsa.class = &#34;generic&#34;
+</span></span><span style="display:flex;"><span>    alsa.device = &#34;0&#34;
+</span></span><span style="display:flex;"><span>    alsa.driver_name = &#34;snd_usb_audio&#34;
+</span></span><span style="display:flex;"><span>    alsa.id = &#34;USB Audio&#34;
+</span></span><span style="display:flex;"><span>    alsa.long_card_name = &#34;Yealink Yealink UH33 at usb-0000:00:14.0-10, full speed&#34;
+</span></span><span style="display:flex;"><span>    alsa.name = &#34;USB Audio&#34;
+</span></span><span style="display:flex;"><span>    alsa.resolution_bits = &#34;16&#34;
+</span></span><span style="display:flex;"><span>    alsa.subclass = &#34;generic-mix&#34;
+</span></span><span style="display:flex;"><span>    alsa.subdevice = &#34;0&#34;
+</span></span><span style="display:flex;"><span>    alsa.subdevice_name = &#34;subdevice #0&#34;
+</span></span><span style="display:flex;"><span>    api.alsa.card.longname = &#34;Yealink Yealink UH33 at usb-0000:00:14.0-10, full speed&#34;
+</span></span><span style="display:flex;"><span>    api.alsa.card.name = &#34;Yealink UH33&#34;
+</span></span><span style="display:flex;"><span>    api.alsa.path = &#34;front:3&#34;
+</span></span><span style="display:flex;"><span>    api.alsa.pcm.card = &#34;3&#34;
+</span></span><span style="display:flex;"><span>    api.alsa.pcm.stream = &#34;playback&#34;
+</span></span><span style="display:flex;"><span>    audio.adapt.follower = &#34;&#34;
+</span></span><span style="display:flex;"><span>    audio.channels = &#34;2&#34;
+</span></span><span style="display:flex;"><span>    audio.position = &#34;FL,FR&#34;
+</span></span><span style="display:flex;"><span>    card.profile.device = &#34;4&#34;
+</span></span><span style="display:flex;"><span>  * client.id = &#34;93&#34;
+</span></span><span style="display:flex;"><span>    clock.quantum-limit = &#34;8192&#34;
+</span></span><span style="display:flex;"><span>    device.api = &#34;alsa&#34;
+</span></span><span style="display:flex;"><span>    device.class = &#34;sound&#34;
+</span></span><span style="display:flex;"><span>  * device.id = &#34;124&#34;
+</span></span><span style="display:flex;"><span>    device.profile.description = &#34;Analog Stereo&#34;
+</span></span><span style="display:flex;"><span>    device.profile.name = &#34;analog-stereo&#34;
+</span></span><span style="display:flex;"><span>    device.routes = &#34;1&#34;
+</span></span><span style="display:flex;"><span>  * factory.id = &#34;18&#34;
+</span></span><span style="display:flex;"><span>    factory.mode = &#34;merge&#34;
+</span></span><span style="display:flex;"><span>    factory.name = &#34;api.alsa.pcm.sink&#34;
+</span></span><span style="display:flex;"><span>    library.name = &#34;audioconvert/libspa-audioconvert&#34;
+</span></span><span style="display:flex;"><span>  * media.class = &#34;Audio/Sink&#34;
+</span></span><span style="display:flex;"><span>  * node.description = &#34;Yealink UH33 Analog Stereo&#34;
+</span></span><span style="display:flex;"><span>    node.driver = &#34;true&#34;
+</span></span><span style="display:flex;"><span>  * node.name = &#34;alsa_output.usb-Yealink_Yealink_UH33_A02017101005-00.analog-stereo&#34;
+</span></span><span style="display:flex;"><span>  * node.nick = &#34;Yealink UH33&#34;
+</span></span><span style="display:flex;"><span>    node.pause-on-idle = &#34;false&#34;
+</span></span><span style="display:flex;"><span>  * object.path = &#34;alsa:pcm:3:front:3:playback&#34;
+</span></span><span style="display:flex;"><span>  * object.serial = &#34;68003&#34;
+</span></span><span style="display:flex;"><span>  * priority.driver = &#34;1009&#34;
+</span></span><span style="display:flex;"><span>  * priority.session = &#34;1009&#34;
+</span></span></code></pre></div><p><strong>(3)</strong> Look for <code>node.name</code>. We&rsquo;ll need that in a second. Mine is:
+<code>&quot;alsa_output.usb-Yealink_Yealink_UH33_A02017101005-00.analog-stereo&quot;</code>.</p>
+<p><strong>(4)</strong> Create a new file in: <code>~/.config/wireplumber/main.lua.d/51-alsa-swap-headphones.lua</code>.
+You might need to create those directories. You can name the file something
+different as long as it ends in <code>.lua</code>. The file contents should be:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>-- Thanks purpleidea!
+</span></span><span style="display:flex;"><span>rule = {
+</span></span><span style="display:flex;"><span>  matches = {
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      { &#34;node.name&#34;, &#34;matches&#34;, &#34;alsa_output.usb-Yealink_Yealink_UH33_A02017101005-00.analog-stereo&#34; },
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  apply_properties = {
+</span></span><span style="display:flex;"><span>--    [&#34;audio.channels&#34;]         = 2,
+</span></span><span style="display:flex;"><span>    [&#34;audio.position&#34;]         = &#34;FR,FL&#34;,
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>table.insert(alsa_monitor.rules, rule)
+</span></span></code></pre></div><p>You&rsquo;ll note I showed you how to add a comment, and I also commented out an
+unused property. You can use this format to add more if you want. The
+<code>audio.position</code> property has been swapped. &ldquo;Front Right&rdquo; now comes first, and
+then &ldquo;Front Left&rdquo; since the device has them backwards.</p>
+<p><strong>(5)</strong> Run <code>systemctl --user restart wireplumber.service</code>. Enjoy your fixed audio!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Identifying that it&#39;s backwards?</span><br /><br />
+
+<p>GNOME audio settings tester:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-speaker-test.png"><img class="alignnone size-full" src="gnome-speaker-test.png" alt="This thing will speak out the correct names for each channel." width="100%" /></a></td></tr></tr></table></br />
+
+<p>If you prefer the command line, you can use <code>speaker-test</code> like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>speaker-test -t wav -c <span style="color:#666">2</span> -l <span style="color:#666">1</span>
+</span></span></code></pre></div><p>Change the <code>-c</code> value to a bigger value like <code>6</code> if you have more channels.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">GNOME Love</span>:<br /><br />
+
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-sound-settings.png"><img class="alignnone size-full" src="gnome-sound-settings.png" alt="Can we add a checkbox to swap here please?" width="100%" /></a></td></tr></tr></table></br />
+
+<p>Add a &ldquo;swap channels&rdquo; option here under &ldquo;balance&rdquo;. Your users will love you.
+This seems to be a fairly common request.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Thanks</span>:<br /><br />
+
+<p>The two links that helped me finally solve this are:</p>
+<p><a href="https://bbs.archlinux.org/viewtopic.php?id=285115">https://bbs.archlinux.org/viewtopic.php?id=285115</a>
+and
+<a href="https://wiki.archlinux.org/title/WirePlumber#Obtain_interface_name_for_rules_matching">https://wiki.archlinux.org/title/WirePlumber#Obtain_interface_name_for_rules_matching</a></p>
+<p>Thanks to <code>haigioli</code> whoever you are!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this and that it helps you find the answer quicker.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 22, 2023<br>
+				<small>752 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/5-minute-hack">5 minute hack</a> <a class="label label-default" href="/tags/audio">audio</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/lua">lua</a> <a class="label label-default" href="/tags/pipewire">pipewire</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/wireplumber">wireplumber</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

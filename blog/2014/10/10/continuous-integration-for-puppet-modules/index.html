@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Continuous integration for Puppet modules - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Continuous integration for Puppet modules</strong><br><small></small></h3>
+					<hr>
+					<p>I just patched <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> and <a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a> to bring their infrastructure up to date with the current state of affairs&hellip;</p>
+<p><span style="text-decoration:underline;">What&rsquo;s new</span>?</p>
+<ul>
+	<li>Better README's</li>
+	<li><a href="https://github.com/purpleidea/puppet-ipa/blob/master/Rakefile">Rake syntax checking</a> (fewer oopsies)</li>
+	<li><a href="https://en.wikipedia.org/wiki/Continuous_integration">CI</a> (testing) with <a href="https://github.com/purpleidea/puppet-ipa/blob/master/.travis.yml">travis</a> on git push (automatic testing for everyone)</li>
+	<li>Use of <a href="https://projects.puppetlabs.com/issues/14651"><code>.pmtignore</code></a> to ignore files from puppet module packages (finally)</li>
+	<li>Pushing modules to the forge with <a href="https://github.com/maestrodev/puppet-blacksmith">blacksmith</a> (sweet!)</li>
+</ul>
+This last point deserves another mention. Puppetlabs created the "forge" to try to provide some sort of added value to their stewardship. Personally, I like to look for code on <a href="https://github.com/purpleidea/">github</a> instead, but nevertheless, some do use the forge. The problem is that to upload new releases, <a href="https://twitter.com/purpleidea/status/520635052850675712">you need to click your mouse like a windows user</a>! Someone has finally solved that problem! If you use blacksmith, a new build is just a <code>rake push</code> away!
+<p>Have a look at <a href="https://github.com/purpleidea/puppet-gluster/commit/f24cca2ac8d138aae71c019a9bf6f311395f562d">this example commit</a> if you&rsquo;re interested in seeing the plumbing.</p>
+<p><span style="text-decoration:underline;">Better documentation and FAQ answering</span>:</p>
+<p>I&rsquo;ve answered a lot of questions by email, but this only helps out individuals. From now on, I&rsquo;d appreciate if you asked your question in the form of a patch to my FAQ. (<a href="https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md#usage-and-frequently-asked-questions">puppet-gluster</a>, <a href="https://github.com/purpleidea/puppet-ipa/blob/master/DOCUMENTATION.md#usage-and-frequently-asked-questions">puppet-ipa</a>)</p>
+<p>I&rsquo;ll review and merge your patch, including a follow-up patch with the answer! This way you&rsquo;ll get more familiar with git and sending small patches, everyone will benefit from the response, and I&rsquo;ll be able to point you to the docs (and even a specific commit) to avoid responding to already answered questions. You&rsquo;ll also have the commit information of something else who already had this problem. Cool, right?</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 10, 2014<br>
+				<small>330 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/blacksmith">blacksmith</a> <a class="label label-default" href="/tags/ci">ci</a> <a class="label label-default" href="/tags/forge">forge</a> <a class="label label-default" href="/tags/freeipa">freeipa</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/jenkins">jenkins</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/puppet-ipa">puppet-ipa</a> <a class="label label-default" href="/tags/travis">travis</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/10/10/continuous-integration-for-puppet-modules/"><small>https://ttboj.wordpress.com/2014/10/10/continuous-integration-for-puppet-modules/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/10/10/continuous-integration-for-puppet-modules/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/10/10/continuous-integration-for-puppet-modules">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/10/10/continuous-integration-for-puppet-modules.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

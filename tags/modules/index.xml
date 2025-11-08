@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Modules on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/modules/</link>
+    <description>Recent content in Modules on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 03 Dec 2024 02:56:37 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/modules/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modules and imports in mgmt</title>
+      <link>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</link>
+      <pubDate>Tue, 03 Dec 2024 02:56:37 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</guid>
+      <description>Mgmt modules are used for structuring your code across multiple files. This keeps things readable and allows for code reusability. For example, it should be easy to write a single module which can be effectively used by many different parties. To me, it never felt like code reuse was a core design objective with other tools. In mgmt it has been since the very beginning. I&amp;rsquo;m very proud of our module system, so let me introduce you to it properly.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,5248 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/</link>
+    <description>Recent content in Tags on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 25 Sep 2025 01:07:56 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Config Management</title>
+      <link>https://purpleidea.com/tags/config-management/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/config-management/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Distributed</title>
+      <link>https://purpleidea.com/tags/distributed/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/distributed/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Events</title>
+      <link>https://purpleidea.com/tags/events/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/events/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>M9rx</title>
+      <link>https://purpleidea.com/tags/m9rx/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/m9rx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mgmt</title>
+      <link>https://purpleidea.com/tags/mgmt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mgmt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mgmtconfig</title>
+      <link>https://purpleidea.com/tags/mgmtconfig/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mgmtconfig/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Parallel</title>
+      <link>https://purpleidea.com/tags/parallel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/parallel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planetfedora</title>
+      <link>https://purpleidea.com/tags/planetfedora/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planetfedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Columns</title>
+      <link>https://purpleidea.com/tags/columns/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/columns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>https://purpleidea.com/tags/git/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git Status</title>
+      <link>https://purpleidea.com/tags/git-status/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-status/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tput</title>
+      <link>https://purpleidea.com/tags/tput/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tput/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Authorized_keys</title>
+      <link>https://purpleidea.com/tags/authorized_keys/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/authorized_keys/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Etcd</title>
+      <link>https://purpleidea.com/tags/etcd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/etcd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Localhost</title>
+      <link>https://purpleidea.com/tags/localhost/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/localhost/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ssh</title>
+      <link>https://purpleidea.com/tags/ssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Imgfree</title>
+      <link>https://purpleidea.com/tags/imgfree/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/imgfree/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Initrd</title>
+      <link>https://purpleidea.com/tags/initrd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/initrd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ipxe</title>
+      <link>https://purpleidea.com/tags/ipxe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ipxe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kernel</title>
+      <link>https://purpleidea.com/tags/kernel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kernel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Panic</title>
+      <link>https://purpleidea.com/tags/panic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/panic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Entrypoints</title>
+      <link>https://purpleidea.com/tags/entrypoints/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/entrypoints/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Imports</title>
+      <link>https://purpleidea.com/tags/imports/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/imports/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mcl</title>
+      <link>https://purpleidea.com/tags/mcl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mcl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Modules</title>
+      <link>https://purpleidea.com/tags/modules/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/modules/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devops</title>
+      <link>https://purpleidea.com/tags/devops/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dsl</title>
+      <link>https://purpleidea.com/tags/dsl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dsl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Frp</title>
+      <link>https://purpleidea.com/tags/frp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/frp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Functions</title>
+      <link>https://purpleidea.com/tags/functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/functions/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lambda</title>
+      <link>https://purpleidea.com/tags/lambda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lambda/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bash</title>
+      <link>https://purpleidea.com/tags/bash/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bash/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dmesg</title>
+      <link>https://purpleidea.com/tags/dmesg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dmesg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://purpleidea.com/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sysctl</title>
+      <link>https://purpleidea.com/tags/sysctl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sysctl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bootstrapping</title>
+      <link>https://purpleidea.com/tags/bootstrapping/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bootstrapping/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dhcp</title>
+      <link>https://purpleidea.com/tags/dhcp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dhcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora</title>
+      <link>https://purpleidea.com/tags/fedora/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnu</title>
+      <link>https://purpleidea.com/tags/gnu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Http</title>
+      <link>https://purpleidea.com/tags/http/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/http/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ipmi</title>
+      <link>https://purpleidea.com/tags/ipmi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ipmi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Openbmc</title>
+      <link>https://purpleidea.com/tags/openbmc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/openbmc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Provisioning</title>
+      <link>https://purpleidea.com/tags/provisioning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/provisioning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pxe</title>
+      <link>https://purpleidea.com/tags/pxe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pxe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redfish</title>
+      <link>https://purpleidea.com/tags/redfish/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/redfish/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sysadmin</title>
+      <link>https://purpleidea.com/tags/sysadmin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sysadmin/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tftp</title>
+      <link>https://purpleidea.com/tags/tftp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tftp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Uefi</title>
+      <link>https://purpleidea.com/tags/uefi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/uefi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Execignore</title>
+      <link>https://purpleidea.com/tags/execignore/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/execignore/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Filter</title>
+      <link>https://purpleidea.com/tags/filter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/filter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Path</title>
+      <link>https://purpleidea.com/tags/path/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/path/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Belgium</title>
+      <link>https://purpleidea.com/tags/belgium/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/belgium/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Brussels</title>
+      <link>https://purpleidea.com/tags/brussels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/brussels/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cfgmgmtcamp</title>
+      <link>https://purpleidea.com/tags/cfgmgmtcamp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cfgmgmtcamp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fosdem</title>
+      <link>https://purpleidea.com/tags/fosdem/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fosdem/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ghent</title>
+      <link>https://purpleidea.com/tags/ghent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ghent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Branch</title>
+      <link>https://purpleidea.com/tags/branch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/branch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>5 Minute Hack</title>
+      <link>https://purpleidea.com/tags/5-minute-hack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/5-minute-hack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Audio</title>
+      <link>https://purpleidea.com/tags/audio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/audio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome</title>
+      <link>https://purpleidea.com/tags/gnome/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lua</title>
+      <link>https://purpleidea.com/tags/lua/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lua/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pipewire</title>
+      <link>https://purpleidea.com/tags/pipewire/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pipewire/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wireplumber</title>
+      <link>https://purpleidea.com/tags/wireplumber/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wireplumber/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>1 Minute Hack</title>
+      <link>https://purpleidea.com/tags/1-minute-hack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/1-minute-hack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Anchor</title>
+      <link>https://purpleidea.com/tags/anchor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/anchor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Image</title>
+      <link>https://purpleidea.com/tags/image/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/image/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libreoffice</title>
+      <link>https://purpleidea.com/tags/libreoffice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/libreoffice/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planetdevops</title>
+      <link>https://purpleidea.com/tags/planetdevops/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planetdevops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dracut</title>
+      <link>https://purpleidea.com/tags/dracut/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dracut/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Driver</title>
+      <link>https://purpleidea.com/tags/driver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/driver/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Efi</title>
+      <link>https://purpleidea.com/tags/efi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/efi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Initramfs</title>
+      <link>https://purpleidea.com/tags/initramfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/initramfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lsi</title>
+      <link>https://purpleidea.com/tags/lsi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lsi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mdadm</title>
+      <link>https://purpleidea.com/tags/mdadm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mdadm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mpt2sas</title>
+      <link>https://purpleidea.com/tags/mpt2sas/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mpt2sas/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mpt3sas</title>
+      <link>https://purpleidea.com/tags/mpt3sas/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mpt3sas/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mpt3sas.ko</title>
+      <link>https://purpleidea.com/tags/mpt3sas.ko/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mpt3sas.ko/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Raid</title>
+      <link>https://purpleidea.com/tags/raid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/raid/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Diff</title>
+      <link>https://purpleidea.com/tags/diff/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/diff/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deadlock</title>
+      <link>https://purpleidea.com/tags/deadlock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/deadlock/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang</title>
+      <link>https://purpleidea.com/tags/golang/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Logging</title>
+      <link>https://purpleidea.com/tags/logging/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/logging/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sync</title>
+      <link>https://purpleidea.com/tags/sync/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sync/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Testing</title>
+      <link>https://purpleidea.com/tags/testing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/testing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wayland</title>
+      <link>https://purpleidea.com/tags/wayland/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wayland/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>X</title>
+      <link>https://purpleidea.com/tags/x/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/x/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xdotool</title>
+      <link>https://purpleidea.com/tags/xdotool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xdotool/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ydotool</title>
+      <link>https://purpleidea.com/tags/ydotool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ydotool/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Boombox</title>
+      <link>https://purpleidea.com/tags/boombox/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/boombox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fat</title>
+      <link>https://purpleidea.com/tags/fat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fdisk</title>
+      <link>https://purpleidea.com/tags/fdisk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fdisk/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mkfs</title>
+      <link>https://purpleidea.com/tags/mkfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mkfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sony</title>
+      <link>https://purpleidea.com/tags/sony/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sony/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Usb</title>
+      <link>https://purpleidea.com/tags/usb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/usb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vfat</title>
+      <link>https://purpleidea.com/tags/vfat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vfat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Amazon</title>
+      <link>https://purpleidea.com/tags/amazon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/amazon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>James</title>
+      <link>https://purpleidea.com/tags/james/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/james/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Open Source</title>
+      <link>https://purpleidea.com/tags/open-source/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/open-source/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Purpleidea</title>
+      <link>https://purpleidea.com/tags/purpleidea/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/purpleidea/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Systemd</title>
+      <link>https://purpleidea.com/tags/systemd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/systemd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dns</title>
+      <link>https://purpleidea.com/tags/dns/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dns/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Irc</title>
+      <link>https://purpleidea.com/tags/irc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/irc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Irssi</title>
+      <link>https://purpleidea.com/tags/irssi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/irssi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libc</title>
+      <link>https://purpleidea.com/tags/libc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/libc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libera</title>
+      <link>https://purpleidea.com/tags/libera/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/libera/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Name Service Switch</title>
+      <link>https://purpleidea.com/tags/name-service-switch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/name-service-switch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nss</title>
+      <link>https://purpleidea.com/tags/nss/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nss/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Civic</title>
+      <link>https://purpleidea.com/tags/civic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/civic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fatsort</title>
+      <link>https://purpleidea.com/tags/fatsort/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fatsort/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Honda</title>
+      <link>https://purpleidea.com/tags/honda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/honda/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Class</title>
+      <link>https://purpleidea.com/tags/class/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/class/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Include</title>
+      <link>https://purpleidea.com/tags/include/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/include/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Antwerp</title>
+      <link>https://purpleidea.com/tags/antwerp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/antwerp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gent</title>
+      <link>https://purpleidea.com/tags/gent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paris</title>
+      <link>https://purpleidea.com/tags/paris/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/paris/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>802.11n</title>
+      <link>https://purpleidea.com/tags/802.11n/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/802.11n/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Access Point</title>
+      <link>https://purpleidea.com/tags/access-point/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/access-point/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Aironet</title>
+      <link>https://purpleidea.com/tags/aironet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/aironet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Antenna</title>
+      <link>https://purpleidea.com/tags/antenna/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/antenna/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cisco</title>
+      <link>https://purpleidea.com/tags/cisco/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cisco/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Firmware</title>
+      <link>https://purpleidea.com/tags/firmware/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/firmware/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Md5sum</title>
+      <link>https://purpleidea.com/tags/md5sum/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/md5sum/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Minicom</title>
+      <link>https://purpleidea.com/tags/minicom/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/minicom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Picocom</title>
+      <link>https://purpleidea.com/tags/picocom/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/picocom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Poe</title>
+      <link>https://purpleidea.com/tags/poe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/poe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Power Over Ethernet</title>
+      <link>https://purpleidea.com/tags/power-over-ethernet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/power-over-ethernet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Screen</title>
+      <link>https://purpleidea.com/tags/screen/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/screen/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Serial</title>
+      <link>https://purpleidea.com/tags/serial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/serial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wireless</title>
+      <link>https://purpleidea.com/tags/wireless/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wireless/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Alv2</title>
+      <link>https://purpleidea.com/tags/alv2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/alv2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Copyleft</title>
+      <link>https://purpleidea.com/tags/copyleft/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/copyleft/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Copyright</title>
+      <link>https://purpleidea.com/tags/copyright/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/copyright/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fsf</title>
+      <link>https://purpleidea.com/tags/fsf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fsf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gpl</title>
+      <link>https://purpleidea.com/tags/gpl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gpl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ibm</title>
+      <link>https://purpleidea.com/tags/ibm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ibm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Legal</title>
+      <link>https://purpleidea.com/tags/legal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/legal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redhat</title>
+      <link>https://purpleidea.com/tags/redhat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/redhat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ANSI Escape Codes</title>
+      <link>https://purpleidea.com/tags/ansi-escape-codes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ansi-escape-codes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hyperlink</title>
+      <link>https://purpleidea.com/tags/hyperlink/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hyperlink/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ps1</title>
+      <link>https://purpleidea.com/tags/ps1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ps1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Terminal</title>
+      <link>https://purpleidea.com/tags/terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vte</title>
+      <link>https://purpleidea.com/tags/vte/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vte/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Matterircd</title>
+      <link>https://purpleidea.com/tags/matterircd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/matterircd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Slack</title>
+      <link>https://purpleidea.com/tags/slack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/slack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gluster</title>
+      <link>https://purpleidea.com/tags/gluster/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gluster/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planetpuppet</title>
+      <link>https://purpleidea.com/tags/planetpuppet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planetpuppet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet</title>
+      <link>https://purpleidea.com/tags/puppet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Make</title>
+      <link>https://purpleidea.com/tags/make/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/make/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Makefile</title>
+      <link>https://purpleidea.com/tags/makefile/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/makefile/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ten Minute Hacks</title>
+      <link>https://purpleidea.com/tags/ten-minute-hacks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ten-minute-hacks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hello World</title>
+      <link>https://purpleidea.com/tags/hello-world/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hello-world/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ttboj</title>
+      <link>https://purpleidea.com/tags/ttboj/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ttboj/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>501c6</title>
+      <link>https://purpleidea.com/tags/501c6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/501c6/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Freeipa</title>
+      <link>https://purpleidea.com/tags/freeipa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/freeipa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Helpwanted</title>
+      <link>https://purpleidea.com/tags/helpwanted/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/helpwanted/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Openstack</title>
+      <link>https://purpleidea.com/tags/openstack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/openstack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planetfreeipa</title>
+      <link>https://purpleidea.com/tags/planetfreeipa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planetfreeipa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Red Hat</title>
+      <link>https://purpleidea.com/tags/red-hat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/red-hat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>File-Roller</title>
+      <link>https://purpleidea.com/tags/file-roller/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/file-roller/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ods</title>
+      <link>https://purpleidea.com/tags/ods/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ods/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ACK</title>
+      <link>https://purpleidea.com/tags/ack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CAP Theorem</title>
+      <link>https://purpleidea.com/tags/cap-theorem/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cap-theorem/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CAS</title>
+      <link>https://purpleidea.com/tags/cas/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cas/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Declarative</title>
+      <link>https://purpleidea.com/tags/declarative/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/declarative/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Idempotent</title>
+      <link>https://purpleidea.com/tags/idempotent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/idempotent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Imperative</title>
+      <link>https://purpleidea.com/tags/imperative/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/imperative/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linear</title>
+      <link>https://purpleidea.com/tags/linear/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/linear/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linearalizable</title>
+      <link>https://purpleidea.com/tags/linearalizable/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/linearalizable/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Remote Control</title>
+      <link>https://purpleidea.com/tags/remote-control/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/remote-control/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>State</title>
+      <link>https://purpleidea.com/tags/state/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/state/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TCP</title>
+      <link>https://purpleidea.com/tags/tcp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>3g</title>
+      <link>https://purpleidea.com/tags/3g/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/3g/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Femtocell</title>
+      <link>https://purpleidea.com/tags/femtocell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/femtocell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Osmocom</title>
+      <link>https://purpleidea.com/tags/osmocom/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/osmocom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sysmocom</title>
+      <link>https://purpleidea.com/tags/sysmocom/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sysmocom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unboxing</title>
+      <link>https://purpleidea.com/tags/unboxing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/unboxing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autoedge</title>
+      <link>https://purpleidea.com/tags/autoedge/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/autoedge/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autoedges</title>
+      <link>https://purpleidea.com/tags/autoedges/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/autoedges/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autogrouping</title>
+      <link>https://purpleidea.com/tags/autogrouping/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/autogrouping/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Burst</title>
+      <link>https://purpleidea.com/tags/burst/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/burst/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Counting Semaphore</title>
+      <link>https://purpleidea.com/tags/counting-semaphore/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/counting-semaphore/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dag</title>
+      <link>https://purpleidea.com/tags/dag/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dag/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Delay</title>
+      <link>https://purpleidea.com/tags/delay/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/delay/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Directed Acyclic Graph</title>
+      <link>https://purpleidea.com/tags/directed-acyclic-graph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/directed-acyclic-graph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Limit</title>
+      <link>https://purpleidea.com/tags/limit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/limit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Metaparameters</title>
+      <link>https://purpleidea.com/tags/metaparameters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/metaparameters/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Noop</title>
+      <link>https://purpleidea.com/tags/noop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/noop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>P/V</title>
+      <link>https://purpleidea.com/tags/p/v/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/p/v/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Poll</title>
+      <link>https://purpleidea.com/tags/poll/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/poll/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Proofs</title>
+      <link>https://purpleidea.com/tags/proofs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/proofs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Retry</title>
+      <link>https://purpleidea.com/tags/retry/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/retry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Semaphore</title>
+      <link>https://purpleidea.com/tags/semaphore/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/semaphore/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Token Bucket</title>
+      <link>https://purpleidea.com/tags/token-bucket/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/token-bucket/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>$GOPATH</title>
+      <link>https://purpleidea.com/tags/gopath/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gopath/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gcc</title>
+      <link>https://purpleidea.com/tags/gcc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gcc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go Build</title>
+      <link>https://purpleidea.com/tags/go-build/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/go-build/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Posix</title>
+      <link>https://purpleidea.com/tags/posix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/posix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prometheus</title>
+      <link>https://purpleidea.com/tags/prometheus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/prometheus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>XDG</title>
+      <link>https://purpleidea.com/tags/xdg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xdg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Continue</title>
+      <link>https://purpleidea.com/tags/continue/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/continue/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devconf.cz</title>
+      <link>https://purpleidea.com/tags/devconf.cz/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/devconf.cz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hack</title>
+      <link>https://purpleidea.com/tags/hack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hacks</title>
+      <link>https://purpleidea.com/tags/hacks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hacks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pause</title>
+      <link>https://purpleidea.com/tags/pause/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pause/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Resume</title>
+      <link>https://purpleidea.com/tags/resume/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/resume/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Signals</title>
+      <link>https://purpleidea.com/tags/signals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/signals/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Notifications</title>
+      <link>https://purpleidea.com/tags/notifications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/notifications/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Notify</title>
+      <link>https://purpleidea.com/tags/notify/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/notify/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Password</title>
+      <link>https://purpleidea.com/tags/password/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/password/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Refresh</title>
+      <link>https://purpleidea.com/tags/refresh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/refresh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Send/Recv</title>
+      <link>https://purpleidea.com/tags/send/recv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/send/recv/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ansible</title>
+      <link>https://purpleidea.com/tags/ansible/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ansible/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cfengine</title>
+      <link>https://purpleidea.com/tags/cfengine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cfengine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Chef</title>
+      <link>https://purpleidea.com/tags/chef/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/chef/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>https://purpleidea.com/tags/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planet</title>
+      <link>https://purpleidea.com/tags/planet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ruby</title>
+      <link>https://purpleidea.com/tags/ruby/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ruby/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Systemd-Nspawn</title>
+      <link>https://purpleidea.com/tags/systemd-nspawn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/systemd-nspawn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agent-Less</title>
+      <link>https://purpleidea.com/tags/agent-less/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/agent-less/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kickstart</title>
+      <link>https://purpleidea.com/tags/kickstart/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kickstart/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/tags/oh-my-vagrant/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/oh-my-vagrant/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Orchestrator</title>
+      <link>https://purpleidea.com/tags/orchestrator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/orchestrator/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Planetipa</title>
+      <link>https://purpleidea.com/tags/planetipa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/planetipa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Remote Execution</title>
+      <link>https://purpleidea.com/tags/remote-execution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/remote-execution/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant</title>
+      <link>https://purpleidea.com/tags/vagrant/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pupper</title>
+      <link>https://purpleidea.com/tags/pupper/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pupper/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Journalctl</title>
+      <link>https://purpleidea.com/tags/journalctl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/journalctl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tail -F</title>
+      <link>https://purpleidea.com/tags/tail--f/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tail--f/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Electronic Displays</title>
+      <link>https://purpleidea.com/tags/electronic-displays/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/electronic-displays/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Airplane</title>
+      <link>https://purpleidea.com/tags/airplane/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/airplane/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Figure Eight</title>
+      <link>https://purpleidea.com/tags/figure-eight/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/figure-eight/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Headphones</title>
+      <link>https://purpleidea.com/tags/headphones/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/headphones/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Negative</title>
+      <link>https://purpleidea.com/tags/negative/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/negative/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Positive</title>
+      <link>https://purpleidea.com/tags/positive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/positive/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Splice</title>
+      <link>https://purpleidea.com/tags/splice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/splice/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stereo</title>
+      <link>https://purpleidea.com/tags/stereo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/stereo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Clustering</title>
+      <link>https://purpleidea.com/tags/clustering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/clustering/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Elastic</title>
+      <link>https://purpleidea.com/tags/elastic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/elastic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Embedded</title>
+      <link>https://purpleidea.com/tags/embedded/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/embedded/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Raft</title>
+      <link>https://purpleidea.com/tags/raft/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/raft/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Africa</title>
+      <link>https://purpleidea.com/tags/africa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/africa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Asia</title>
+      <link>https://purpleidea.com/tags/asia/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/asia/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Debconf</title>
+      <link>https://purpleidea.com/tags/debconf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/debconf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Debian</title>
+      <link>https://purpleidea.com/tags/debian/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/debian/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hkoscon</title>
+      <link>https://purpleidea.com/tags/hkoscon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hkoscon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hong Kong</title>
+      <link>https://purpleidea.com/tags/hong-kong/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hong-kong/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>South Africa</title>
+      <link>https://purpleidea.com/tags/south-africa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/south-africa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Speaking</title>
+      <link>https://purpleidea.com/tags/speaking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/speaking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LUKS</title>
+      <link>https://purpleidea.com/tags/luks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/luks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mount</title>
+      <link>https://purpleidea.com/tags/mount/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mount/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>One Hour Hack</title>
+      <link>https://purpleidea.com/tags/one-hour-hack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/one-hour-hack/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dnf</title>
+      <link>https://purpleidea.com/tags/dnf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dnf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fanotify</title>
+      <link>https://purpleidea.com/tags/fanotify/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fanotify/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Graph</title>
+      <link>https://purpleidea.com/tags/graph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/graph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Grouping</title>
+      <link>https://purpleidea.com/tags/grouping/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/grouping/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Inotify</title>
+      <link>https://purpleidea.com/tags/inotify/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/inotify/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Package</title>
+      <link>https://purpleidea.com/tags/package/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/package/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Packagekit</title>
+      <link>https://purpleidea.com/tags/packagekit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/packagekit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Parallelism</title>
+      <link>https://purpleidea.com/tags/parallelism/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/parallelism/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pkcon</title>
+      <link>https://purpleidea.com/tags/pkcon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pkcon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reachability</title>
+      <link>https://purpleidea.com/tags/reachability/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/reachability/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Science</title>
+      <link>https://purpleidea.com/tags/science/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Apt-Get</title>
+      <link>https://purpleidea.com/tags/apt-get/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/apt-get/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deb</title>
+      <link>https://purpleidea.com/tags/deb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/deb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dpkg</title>
+      <link>https://purpleidea.com/tags/dpkg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dpkg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libvirt</title>
+      <link>https://purpleidea.com/tags/libvirt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/libvirt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Network</title>
+      <link>https://purpleidea.com/tags/network/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/network/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pkg</title>
+      <link>https://purpleidea.com/tags/pkg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pkg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rpm</title>
+      <link>https://purpleidea.com/tags/rpm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rpm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Yum</title>
+      <link>https://purpleidea.com/tags/yum/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/yum/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ci</title>
+      <link>https://purpleidea.com/tags/ci/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ci/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git-Tpush</title>
+      <link>https://purpleidea.com/tags/git-tpush/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-tpush/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Github</title>
+      <link>https://purpleidea.com/tags/github/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/github/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hub</title>
+      <link>https://purpleidea.com/tags/hub/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hub/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jenkins</title>
+      <link>https://purpleidea.com/tags/jenkins/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tpush</title>
+      <link>https://purpleidea.com/tags/tpush/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tpush/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Travis</title>
+      <link>https://purpleidea.com/tags/travis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/travis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Control&#43;backslash</title>
+      <link>https://purpleidea.com/tags/control&#43;backslash/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/control&#43;backslash/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Coredump</title>
+      <link>https://purpleidea.com/tags/coredump/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/coredump/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Debugging</title>
+      <link>https://purpleidea.com/tags/debugging/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/debugging/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Delve</title>
+      <link>https://purpleidea.com/tags/delve/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/delve/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gdb</title>
+      <link>https://purpleidea.com/tags/gdb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gdb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Printf</title>
+      <link>https://purpleidea.com/tags/printf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/printf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Race</title>
+      <link>https://purpleidea.com/tags/race/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/race/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dbus</title>
+      <link>https://purpleidea.com/tags/dbus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dbus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Graphviz</title>
+      <link>https://purpleidea.com/tags/graphviz/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/graphviz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monitoring</title>
+      <link>https://purpleidea.com/tags/monitoring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ng</title>
+      <link>https://purpleidea.com/tags/ng/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ng/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paxos</title>
+      <link>https://purpleidea.com/tags/paxos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/paxos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prototype</title>
+      <link>https://purpleidea.com/tags/prototype/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/prototype/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Toposort</title>
+      <link>https://purpleidea.com/tags/toposort/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/toposort/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Centos</title>
+      <link>https://purpleidea.com/tags/centos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/centos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ceph</title>
+      <link>https://purpleidea.com/tags/ceph/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ceph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ceph-Deploy</title>
+      <link>https://purpleidea.com/tags/ceph-deploy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ceph-deploy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora 23</title>
+      <link>https://purpleidea.com/tags/fedora-23/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedora-23/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rbd</title>
+      <link>https://purpleidea.com/tags/rbd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rbd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>About:config</title>
+      <link>https://purpleidea.com/tags/aboutconfig/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/aboutconfig/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Default Applications</title>
+      <link>https://purpleidea.com/tags/default-applications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/default-applications/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Evolution</title>
+      <link>https://purpleidea.com/tags/evolution/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/evolution/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Firefox</title>
+      <link>https://purpleidea.com/tags/firefox/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/firefox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Firefox-Profiles</title>
+      <link>https://purpleidea.com/tags/firefox-profiles/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/firefox-profiles/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Firefox-Redirector</title>
+      <link>https://purpleidea.com/tags/firefox-redirector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/firefox-redirector/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google Docs</title>
+      <link>https://purpleidea.com/tags/google-docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/google-docs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gtk</title>
+      <link>https://purpleidea.com/tags/gtk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gtk/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Protocol-Handler</title>
+      <link>https://purpleidea.com/tags/protocol-handler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/protocol-handler/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>1.0.0</title>
+      <link>https://purpleidea.com/tags/1.0.0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/1.0.0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mainstream Mode</title>
+      <link>https://purpleidea.com/tags/mainstream-mode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mainstream-mode/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networking</title>
+      <link>https://purpleidea.com/tags/networking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/networking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Thanks</title>
+      <link>https://purpleidea.com/tags/thanks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/thanks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant-Libvirt</title>
+      <link>https://purpleidea.com/tags/vagrant-libvirt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant-libvirt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Centos7</title>
+      <link>https://purpleidea.com/tags/centos7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/centos7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Omv</title>
+      <link>https://purpleidea.com/tags/omv/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/omv/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rhel</title>
+      <link>https://purpleidea.com/tags/rhel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rhel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rhel7</title>
+      <link>https://purpleidea.com/tags/rhel7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rhel7/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Copr</title>
+      <link>https://purpleidea.com/tags/copr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/copr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cpio</title>
+      <link>https://purpleidea.com/tags/cpio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cpio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fpm</title>
+      <link>https://purpleidea.com/tags/fpm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fpm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rpmbuild</title>
+      <link>https://purpleidea.com/tags/rpmbuild/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rpmbuild/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Spec</title>
+      <link>https://purpleidea.com/tags/spec/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/spec/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Srpm</title>
+      <link>https://purpleidea.com/tags/srpm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/srpm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Channels</title>
+      <link>https://purpleidea.com/tags/channels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/channels/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Concurrency</title>
+      <link>https://purpleidea.com/tags/concurrency/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/concurrency/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Goroutine</title>
+      <link>https://purpleidea.com/tags/goroutine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/goroutine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pointers</title>
+      <link>https://purpleidea.com/tags/pointers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pointers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sync.WaitGroup</title>
+      <link>https://purpleidea.com/tags/sync.waitgroup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sync.waitgroup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Too Many Open Files</title>
+      <link>https://purpleidea.com/tags/too-many-open-files/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/too-many-open-files/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git Submodules</title>
+      <link>https://purpleidea.com/tags/git-submodules/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-submodules/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git-Archive</title>
+      <link>https://purpleidea.com/tags/git-archive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-archive/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Gluster</title>
+      <link>https://purpleidea.com/tags/puppet-gluster/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-gluster/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tar</title>
+      <link>https://purpleidea.com/tags/tar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tar/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tar --Concatenate</title>
+      <link>https://purpleidea.com/tags/tar---concatenate/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tar---concatenate/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xkcd</title>
+      <link>https://purpleidea.com/tags/xkcd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xkcd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://purpleidea.com/tags/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>VAGRANT_CWD</title>
+      <link>https://purpleidea.com/tags/vagrant_cwd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant_cwd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>VAGRANT_DOTFILE_PATH</title>
+      <link>https://purpleidea.com/tags/vagrant_dotfile_path/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant_dotfile_path/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vansible</title>
+      <link>https://purpleidea.com/tags/vansible/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vansible/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vcssh</title>
+      <link>https://purpleidea.com/tags/vcssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vcssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vdestroy</title>
+      <link>https://purpleidea.com/tags/vdestroy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vdestroy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vfwd</title>
+      <link>https://purpleidea.com/tags/vfwd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vfwd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vlog</title>
+      <link>https://purpleidea.com/tags/vlog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vlog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vp</title>
+      <link>https://purpleidea.com/tags/vp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vrm-Rf</title>
+      <link>https://purpleidea.com/tags/vrm-rf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vrm-rf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vrsync</title>
+      <link>https://purpleidea.com/tags/vrsync/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vrsync/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vscreen</title>
+      <link>https://purpleidea.com/tags/vscreen/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vscreen/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vsftp</title>
+      <link>https://purpleidea.com/tags/vsftp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vsftp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vup</title>
+      <link>https://purpleidea.com/tags/vup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Atomic</title>
+      <link>https://purpleidea.com/tags/atomic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/atomic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Facter</title>
+      <link>https://purpleidea.com/tags/facter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/facter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Spc</title>
+      <link>https://purpleidea.com/tags/spc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/spc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Spc-Puppet-Apply</title>
+      <link>https://purpleidea.com/tags/spc-puppet-apply/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/spc-puppet-apply/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Borg</title>
+      <link>https://purpleidea.com/tags/borg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/borg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Containers</title>
+      <link>https://purpleidea.com/tags/containers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/containers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google</title>
+      <link>https://purpleidea.com/tags/google/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/google/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Json</title>
+      <link>https://purpleidea.com/tags/json/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/json/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>https://purpleidea.com/tags/kubernetes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Openshift</title>
+      <link>https://purpleidea.com/tags/openshift/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/openshift/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pods</title>
+      <link>https://purpleidea.com/tags/pods/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pods/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Screencast</title>
+      <link>https://purpleidea.com/tags/screencast/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/screencast/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cherry-Pick</title>
+      <link>https://purpleidea.com/tags/cherry-pick/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cherry-pick/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cherryfetch</title>
+      <link>https://purpleidea.com/tags/cherryfetch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cherryfetch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git Alias</title>
+      <link>https://purpleidea.com/tags/git-alias/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-alias/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git Rebase</title>
+      <link>https://purpleidea.com/tags/git-rebase/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-rebase/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Acl</title>
+      <link>https://purpleidea.com/tags/acl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/acl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Btrfs</title>
+      <link>https://purpleidea.com/tags/btrfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/btrfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qemu</title>
+      <link>https://purpleidea.com/tags/qemu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/qemu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Red Hat Enterprise Linux</title>
+      <link>https://purpleidea.com/tags/red-hat-enterprise-linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/red-hat-enterprise-linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Setfacl</title>
+      <link>https://purpleidea.com/tags/setfacl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/setfacl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Subscription-Manager</title>
+      <link>https://purpleidea.com/tags/subscription-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/subscription-manager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant Boxes</title>
+      <link>https://purpleidea.com/tags/vagrant-boxes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant-boxes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant-Builder</title>
+      <link>https://purpleidea.com/tags/vagrant-builder/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant-builder/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virt-Builder</title>
+      <link>https://purpleidea.com/tags/virt-builder/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/virt-builder/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Counter</title>
+      <link>https://purpleidea.com/tags/counter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/counter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monotonic</title>
+      <link>https://purpleidea.com/tags/monotonic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/monotonic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Silent Counter</title>
+      <link>https://purpleidea.com/tags/silent-counter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/silent-counter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Email</title>
+      <link>https://purpleidea.com/tags/email/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/email/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Evolution Mail</title>
+      <link>https://purpleidea.com/tags/evolution-mail/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/evolution-mail/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Group Reply</title>
+      <link>https://purpleidea.com/tags/group-reply/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/group-reply/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mail Filters</title>
+      <link>https://purpleidea.com/tags/mail-filters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mail-filters/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mailing-List</title>
+      <link>https://purpleidea.com/tags/mailing-list/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mailing-list/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mailman</title>
+      <link>https://purpleidea.com/tags/mailman/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mailman/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mutt</title>
+      <link>https://purpleidea.com/tags/mutt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mutt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reply</title>
+      <link>https://purpleidea.com/tags/reply/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/reply/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reply-to-All</title>
+      <link>https://purpleidea.com/tags/reply-to-all/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/reply-to-all/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vim</title>
+      <link>https://purpleidea.com/tags/vim/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vim/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>/Cgi-Bin/Redirect.ha</title>
+      <link>https://purpleidea.com/tags/cgi-bin/redirect.ha/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cgi-bin/redirect.ha/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AT&amp;amp;T GUI</title>
+      <link>https://purpleidea.com/tags/atampt-gui/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/atampt-gui/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cache</title>
+      <link>https://purpleidea.com/tags/cache/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cache/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Captive Portal</title>
+      <link>https://purpleidea.com/tags/captive-portal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/captive-portal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTTPS</title>
+      <link>https://purpleidea.com/tags/https/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/https/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MITM</title>
+      <link>https://purpleidea.com/tags/mitm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mitm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ASIC</title>
+      <link>https://purpleidea.com/tags/asic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/asic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cumulus</title>
+      <link>https://purpleidea.com/tags/cumulus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cumulus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cumulusnetworks</title>
+      <link>https://purpleidea.com/tags/cumulusnetworks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cumulusnetworks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ifup/Ifdown</title>
+      <link>https://purpleidea.com/tags/ifup/ifdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ifup/ifdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Iproute2</title>
+      <link>https://purpleidea.com/tags/iproute2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/iproute2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Iptables</title>
+      <link>https://purpleidea.com/tags/iptables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/iptables/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NDA</title>
+      <link>https://purpleidea.com/tags/nda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nda/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Networkd</title>
+      <link>https://purpleidea.com/tags/networkd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/networkd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nftables</title>
+      <link>https://purpleidea.com/tags/nftables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nftables/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Shorewall</title>
+      <link>https://purpleidea.com/tags/puppet-shorewall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-shorewall/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rocket-Turtle</title>
+      <link>https://purpleidea.com/tags/rocket-turtle/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rocket-turtle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Selinux</title>
+      <link>https://purpleidea.com/tags/selinux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/selinux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shorewall</title>
+      <link>https://purpleidea.com/tags/shorewall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/shorewall/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Switch</title>
+      <link>https://purpleidea.com/tags/switch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/switch/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Switchd</title>
+      <link>https://purpleidea.com/tags/switchd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/switchd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Trident</title>
+      <link>https://purpleidea.com/tags/trident/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/trident/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Udev</title>
+      <link>https://purpleidea.com/tags/udev/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/udev/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Archive</title>
+      <link>https://purpleidea.com/tags/archive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/archive/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Continuous</title>
+      <link>https://purpleidea.com/tags/continuous/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/continuous/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Geary</title>
+      <link>https://purpleidea.com/tags/geary/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/geary/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gmail</title>
+      <link>https://purpleidea.com/tags/gmail/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gmail/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome Continuous</title>
+      <link>https://purpleidea.com/tags/gnome-continuous/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-continuous/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gpg</title>
+      <link>https://purpleidea.com/tags/gpg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gpg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gtkinspector</title>
+      <link>https://purpleidea.com/tags/gtkinspector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gtkinspector/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Guestfs-Browser</title>
+      <link>https://purpleidea.com/tags/guestfs-browser/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/guestfs-browser/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libguestfs</title>
+      <link>https://purpleidea.com/tags/libguestfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/libguestfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virt-Manager</title>
+      <link>https://purpleidea.com/tags/virt-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/virt-manager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bootstrap</title>
+      <link>https://purpleidea.com/tags/bootstrap/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bootstrap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pdf</title>
+      <link>https://purpleidea.com/tags/pdf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pdf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pdfdoc</title>
+      <link>https://purpleidea.com/tags/pdfdoc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pdfdoc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blacksmith</title>
+      <link>https://purpleidea.com/tags/blacksmith/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/blacksmith/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Forge</title>
+      <link>https://purpleidea.com/tags/forge/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/forge/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Ipa</title>
+      <link>https://purpleidea.com/tags/puppet-ipa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-ipa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dropbox</title>
+      <link>https://purpleidea.com/tags/dropbox/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dropbox/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Find</title>
+      <link>https://purpleidea.com/tags/find/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/find/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nautilus</title>
+      <link>https://purpleidea.com/tags/nautilus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nautilus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Script</title>
+      <link>https://purpleidea.com/tags/script/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/script/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Back-of-the-Envelope-Calculations</title>
+      <link>https://purpleidea.com/tags/back-of-the-envelope-calculations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/back-of-the-envelope-calculations/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Math</title>
+      <link>https://purpleidea.com/tags/math/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/math/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Difference Engine</title>
+      <link>https://purpleidea.com/tags/difference-engine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/difference-engine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Function Decorator</title>
+      <link>https://purpleidea.com/tags/function-decorator/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/function-decorator/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hiera</title>
+      <link>https://purpleidea.com/tags/hiera/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hiera/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hybrid Management</title>
+      <link>https://purpleidea.com/tags/hybrid-management/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hybrid-management/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Idm</title>
+      <link>https://purpleidea.com/tags/idm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/idm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Ipa&#43;vagrant</title>
+      <link>https://purpleidea.com/tags/puppet-ipa&#43;vagrant/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-ipa&#43;vagrant/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Totem</title>
+      <link>https://purpleidea.com/tags/totem/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/totem/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ipa</title>
+      <link>https://purpleidea.com/tags/ipa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ipa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Secrets</title>
+      <link>https://purpleidea.com/tags/secrets/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/secrets/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data-in-Modules</title>
+      <link>https://purpleidea.com/tags/data-in-modules/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/data-in-modules/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Yaml</title>
+      <link>https://purpleidea.com/tags/yaml/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/yaml/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome Shell</title>
+      <link>https://purpleidea.com/tags/gnome-shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Restart</title>
+      <link>https://purpleidea.com/tags/restart/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/restart/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora 20</title>
+      <link>https://purpleidea.com/tags/fedora-20/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedora-20/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Polkit</title>
+      <link>https://purpleidea.com/tags/polkit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/polkit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virsh</title>
+      <link>https://purpleidea.com/tags/virsh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/virsh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git Hooks</title>
+      <link>https://purpleidea.com/tags/git-hooks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-hooks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Post-Checkout</title>
+      <link>https://purpleidea.com/tags/post-checkout/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/post-checkout/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Common</title>
+      <link>https://purpleidea.com/tags/puppet-common/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-common/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Keepalived</title>
+      <link>https://purpleidea.com/tags/puppet-keepalived/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-keepalived/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Puppet</title>
+      <link>https://purpleidea.com/tags/puppet-puppet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-puppet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Yum</title>
+      <link>https://purpleidea.com/tags/puppet-yum/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-yum/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppetlabs-Stdlib</title>
+      <link>https://purpleidea.com/tags/puppetlabs-stdlib/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppetlabs-stdlib/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wizard</title>
+      <link>https://purpleidea.com/tags/wizard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wizard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exec</title>
+      <link>https://purpleidea.com/tags/exec/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/exec/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/tags/execagain/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/execagain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Execvpe</title>
+      <link>https://purpleidea.com/tags/execvpe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/execvpe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Finite State Machine</title>
+      <link>https://purpleidea.com/tags/finite-state-machine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/finite-state-machine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Spawn</title>
+      <link>https://purpleidea.com/tags/spawn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/spawn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome-Terminal</title>
+      <link>https://purpleidea.com/tags/gnome-terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pgo</title>
+      <link>https://purpleidea.com/tags/pgo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pgo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Infranext</title>
+      <link>https://purpleidea.com/tags/infranext/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/infranext/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scale</title>
+      <link>https://purpleidea.com/tags/scale/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/scale/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scale2014</title>
+      <link>https://purpleidea.com/tags/scale2014/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/scale2014/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Canada</title>
+      <link>https://purpleidea.com/tags/canada/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/canada/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Compaction</title>
+      <link>https://purpleidea.com/tags/compaction/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/compaction/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Maple Syrup</title>
+      <link>https://purpleidea.com/tags/maple-syrup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/maple-syrup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>O Canada</title>
+      <link>https://purpleidea.com/tags/o-canada/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/o-canada/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Polar Bears</title>
+      <link>https://purpleidea.com/tags/polar-bears/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/polar-bears/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Poutine</title>
+      <link>https://purpleidea.com/tags/poutine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/poutine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quinzee</title>
+      <link>https://purpleidea.com/tags/quinzee/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/quinzee/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Snow</title>
+      <link>https://purpleidea.com/tags/snow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/snow/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Snow Shelter</title>
+      <link>https://purpleidea.com/tags/snow-shelter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/snow-shelter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stratification</title>
+      <link>https://purpleidea.com/tags/stratification/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/stratification/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Winter</title>
+      <link>https://purpleidea.com/tags/winter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/winter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Keyboard</title>
+      <link>https://purpleidea.com/tags/keyboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/keyboard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lenovo</title>
+      <link>https://purpleidea.com/tags/lenovo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lenovo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RAM</title>
+      <link>https://purpleidea.com/tags/ram/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ram/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Warranty</title>
+      <link>https://purpleidea.com/tags/warranty/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/warranty/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>X201</title>
+      <link>https://purpleidea.com/tags/x201/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/x201/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>X240</title>
+      <link>https://purpleidea.com/tags/x240/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/x240/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exit Code</title>
+      <link>https://purpleidea.com/tags/exit-code/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/exit-code/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exit Status</title>
+      <link>https://purpleidea.com/tags/exit-status/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/exit-status/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Glusterfs</title>
+      <link>https://purpleidea.com/tags/glusterfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/glusterfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Screencasts</title>
+      <link>https://purpleidea.com/tags/screencasts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/screencasts/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Box</title>
+      <link>https://purpleidea.com/tags/box/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/box/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Boxes</title>
+      <link>https://purpleidea.com/tags/boxes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/boxes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dangerous</title>
+      <link>https://purpleidea.com/tags/dangerous/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dangerous/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Keepalived</title>
+      <link>https://purpleidea.com/tags/keepalived/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/keepalived/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qa</title>
+      <link>https://purpleidea.com/tags/qa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/qa/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vrrp</title>
+      <link>https://purpleidea.com/tags/vrrp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vrrp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exec[&#34;again&#34;]</title>
+      <link>https://purpleidea.com/tags/execagain/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/execagain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gluster::simple</title>
+      <link>https://purpleidea.com/tags/glustersimple/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/glustersimple/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NFS</title>
+      <link>https://purpleidea.com/tags/nfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vagrant-Cachier</title>
+      <link>https://purpleidea.com/tags/vagrant-cachier/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vagrant-cachier/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Clustered Ssh</title>
+      <link>https://purpleidea.com/tags/clustered-ssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/clustered-ssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cssh</title>
+      <link>https://purpleidea.com/tags/cssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sftp</title>
+      <link>https://purpleidea.com/tags/sftp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sftp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Apt</title>
+      <link>https://purpleidea.com/tags/apt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/apt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Caching</title>
+      <link>https://purpleidea.com/tags/caching/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/caching/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pulp</title>
+      <link>https://purpleidea.com/tags/pulp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pulp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pulpproject</title>
+      <link>https://purpleidea.com/tags/pulpproject/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pulpproject/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rsync</title>
+      <link>https://purpleidea.com/tags/rsync/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rsync/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pkla</title>
+      <link>https://purpleidea.com/tags/pkla/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pkla/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Policykit</title>
+      <link>https://purpleidea.com/tags/policykit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/policykit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fibonacci</title>
+      <link>https://purpleidea.com/tags/fibonacci/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fibonacci/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Memoization</title>
+      <link>https://purpleidea.com/tags/memoization/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/memoization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Recursion</title>
+      <link>https://purpleidea.com/tags/recursion/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/recursion/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Documentation</title>
+      <link>https://purpleidea.com/tags/documentation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/documentation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Markdown</title>
+      <link>https://purpleidea.com/tags/markdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/markdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Create_resources</title>
+      <link>https://purpleidea.com/tags/create_resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/create_resources/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Declarative Programming</title>
+      <link>https://purpleidea.com/tags/declarative-programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/declarative-programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Domain-Specific Language</title>
+      <link>https://purpleidea.com/tags/domain-specific-language/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/domain-specific-language/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Erb</title>
+      <link>https://purpleidea.com/tags/erb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/erb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>For Loop</title>
+      <link>https://purpleidea.com/tags/for-loop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/for-loop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Future Parser</title>
+      <link>https://purpleidea.com/tags/future-parser/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/future-parser/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Imperative Programming</title>
+      <link>https://purpleidea.com/tags/imperative-programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/imperative-programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Iteration</title>
+      <link>https://purpleidea.com/tags/iteration/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/iteration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Module Design</title>
+      <link>https://purpleidea.com/tags/module-design/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/module-design/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Templates</title>
+      <link>https://purpleidea.com/tags/templates/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/templates/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Turing Completeness</title>
+      <link>https://purpleidea.com/tags/turing-completeness/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/turing-completeness/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>While Loop</title>
+      <link>https://purpleidea.com/tags/while-loop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/while-loop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fsm</title>
+      <link>https://purpleidea.com/tags/fsm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fsm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lisa2013</title>
+      <link>https://purpleidea.com/tags/lisa2013/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lisa2013/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet Camp D.C.</title>
+      <link>https://purpleidea.com/tags/puppet-camp-d.c./</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-camp-d.c./</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet Hacks</title>
+      <link>https://purpleidea.com/tags/puppet-hacks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-hacks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Fsm</title>
+      <link>https://purpleidea.com/tags/puppet-fsm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-fsm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pushing Puppet</title>
+      <link>https://purpleidea.com/tags/pushing-puppet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pushing-puppet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Geo-Replication</title>
+      <link>https://purpleidea.com/tags/geo-replication/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/geo-replication/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gluster Community Day</title>
+      <link>https://purpleidea.com/tags/gluster-community-day/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gluster-community-day/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Microserver Cluster</title>
+      <link>https://purpleidea.com/tags/microserver-cluster/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/microserver-cluster/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>BOF</title>
+      <link>https://purpleidea.com/tags/bof/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bof/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet Camp DC</title>
+      <link>https://purpleidea.com/tags/puppet-camp-dc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-camp-dc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Usenix</title>
+      <link>https://purpleidea.com/tags/usenix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/usenix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Washington</title>
+      <link>https://purpleidea.com/tags/washington/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/washington/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hacking</title>
+      <link>https://purpleidea.com/tags/hacking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hacking/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pidof</title>
+      <link>https://purpleidea.com/tags/pidof/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pidof/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Strace</title>
+      <link>https://purpleidea.com/tags/strace/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/strace/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet Modules</title>
+      <link>https://purpleidea.com/tags/puppet-modules/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-modules/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Desktop Notifications</title>
+      <link>https://purpleidea.com/tags/desktop-notifications/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/desktop-notifications/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fnotify</title>
+      <link>https://purpleidea.com/tags/fnotify/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fnotify/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Notify-Send</title>
+      <link>https://purpleidea.com/tags/notify-send/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/notify-send/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Abiword</title>
+      <link>https://purpleidea.com/tags/abiword/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/abiword/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Accessibility</title>
+      <link>https://purpleidea.com/tags/accessibility/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/accessibility/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Aicd</title>
+      <link>https://purpleidea.com/tags/aicd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/aicd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome Boxes</title>
+      <link>https://purpleidea.com/tags/gnome-boxes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-boxes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome Summit</title>
+      <link>https://purpleidea.com/tags/gnome-summit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-summit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hacking Hearts</title>
+      <link>https://purpleidea.com/tags/hacking-hearts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hacking-hearts/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jhbuild</title>
+      <link>https://purpleidea.com/tags/jhbuild/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/jhbuild/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Montreal</title>
+      <link>https://purpleidea.com/tags/montreal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/montreal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Summit</title>
+      <link>https://purpleidea.com/tags/summit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/summit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Yorba</title>
+      <link>https://purpleidea.com/tags/yorba/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/yorba/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bashrc</title>
+      <link>https://purpleidea.com/tags/bashrc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bashrc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Awesome</title>
+      <link>https://purpleidea.com/tags/awesome/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/awesome/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Phase Transitions</title>
+      <link>https://purpleidea.com/tags/phase-transitions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/phase-transitions/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Thermodynamics</title>
+      <link>https://purpleidea.com/tags/thermodynamics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/thermodynamics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>No More Ads</title>
+      <link>https://purpleidea.com/tags/no-more-ads/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/no-more-ads/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wordpress</title>
+      <link>https://purpleidea.com/tags/wordpress/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wordpress/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gaming</title>
+      <link>https://purpleidea.com/tags/gaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gaming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome-Games</title>
+      <link>https://purpleidea.com/tags/gnome-games/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-games/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnu&#43;linux</title>
+      <link>https://purpleidea.com/tags/gnu&#43;linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnu&#43;linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nibbles</title>
+      <link>https://purpleidea.com/tags/nibbles/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nibbles/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bittorent Sync</title>
+      <link>https://purpleidea.com/tags/bittorent-sync/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bittorent-sync/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bittorrent</title>
+      <link>https://purpleidea.com/tags/bittorrent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bittorrent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mirrors</title>
+      <link>https://purpleidea.com/tags/mirrors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mirrors/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Repository</title>
+      <link>https://purpleidea.com/tags/repository/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/repository/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Use Case</title>
+      <link>https://purpleidea.com/tags/use-case/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/use-case/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gluster Day</title>
+      <link>https://purpleidea.com/tags/gluster-day/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gluster-day/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Juju</title>
+      <link>https://purpleidea.com/tags/juju/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/juju/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>New Orleans</title>
+      <link>https://purpleidea.com/tags/new-orleans/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/new-orleans/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Talks</title>
+      <link>https://purpleidea.com/tags/talks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/talks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ubuntu</title>
+      <link>https://purpleidea.com/tags/ubuntu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Beaglebone</title>
+      <link>https://purpleidea.com/tags/beaglebone/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/beaglebone/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linuxcon</title>
+      <link>https://purpleidea.com/tags/linuxcon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/linuxcon/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Minnowboard</title>
+      <link>https://purpleidea.com/tags/minnowboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/minnowboard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>The Cloudcast</title>
+      <link>https://purpleidea.com/tags/the-cloudcast/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/the-cloudcast/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gluster&#43;openshift</title>
+      <link>https://purpleidea.com/tags/gluster&#43;openshift/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gluster&#43;openshift/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Raspberry Pi</title>
+      <link>https://purpleidea.com/tags/raspberry-pi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/raspberry-pi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>New Features</title>
+      <link>https://purpleidea.com/tags/new-features/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/new-features/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet Module</title>
+      <link>https://purpleidea.com/tags/puppet-module/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-module/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>https://purpleidea.com/tags/programming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tabs</title>
+      <link>https://purpleidea.com/tags/tabs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tabs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora 19</title>
+      <link>https://purpleidea.com/tags/fedora-19/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedora-19/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedup</title>
+      <link>https://purpleidea.com/tags/fedup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gedit</title>
+      <link>https://purpleidea.com/tags/gedit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gedit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Upgrade Fedora</title>
+      <link>https://purpleidea.com/tags/upgrade-fedora/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/upgrade-fedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Upgrading</title>
+      <link>https://purpleidea.com/tags/upgrading/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/upgrading/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Examples</title>
+      <link>https://purpleidea.com/tags/examples/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/examples/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cobbler</title>
+      <link>https://purpleidea.com/tags/cobbler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cobbler/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kerberos</title>
+      <link>https://purpleidea.com/tags/kerberos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kerberos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Keytab</title>
+      <link>https://purpleidea.com/tags/keytab/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/keytab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>NFSv4</title>
+      <link>https://purpleidea.com/tags/nfsv4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nfsv4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Cobbler</title>
+      <link>https://purpleidea.com/tags/puppet-cobbler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-cobbler/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet-Nfs</title>
+      <link>https://purpleidea.com/tags/puppet-nfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet-nfs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Security</title>
+      <link>https://purpleidea.com/tags/security/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Krb5</title>
+      <link>https://purpleidea.com/tags/krb5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/krb5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ldap</title>
+      <link>https://purpleidea.com/tags/ldap/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ldap/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hardware Raid</title>
+      <link>https://purpleidea.com/tags/hardware-raid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hardware-raid/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sgpio</title>
+      <link>https://purpleidea.com/tags/sgpio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sgpio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Allow Duplicates</title>
+      <link>https://purpleidea.com/tags/allow-duplicates/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/allow-duplicates/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Collector</title>
+      <link>https://purpleidea.com/tags/collector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/collector/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Duplicate Definition</title>
+      <link>https://purpleidea.com/tags/duplicate-definition/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/duplicate-definition/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Exported Resources</title>
+      <link>https://purpleidea.com/tags/exported-resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/exported-resources/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Technology</title>
+      <link>https://purpleidea.com/tags/technology/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/technology/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Matlab</title>
+      <link>https://purpleidea.com/tags/matlab/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/matlab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Octave</title>
+      <link>https://purpleidea.com/tags/octave/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/octave/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rsnapshot</title>
+      <link>https://purpleidea.com/tags/rsnapshot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rsnapshot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autocomplete</title>
+      <link>https://purpleidea.com/tags/autocomplete/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/autocomplete/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bookmarklet</title>
+      <link>https://purpleidea.com/tags/bookmarklet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bookmarklet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Save Passwords</title>
+      <link>https://purpleidea.com/tags/save-passwords/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/save-passwords/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Collect</title>
+      <link>https://purpleidea.com/tags/collect/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/collect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Killer Feature</title>
+      <link>https://purpleidea.com/tags/killer-feature/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/killer-feature/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google Doodle</title>
+      <link>https://purpleidea.com/tags/google-doodle/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/google-doodle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mothers Day</title>
+      <link>https://purpleidea.com/tags/mothers-day/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mothers-day/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rube Goldberg</title>
+      <link>https://purpleidea.com/tags/rube-goldberg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rube-goldberg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shell</title>
+      <link>https://purpleidea.com/tags/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Centos 6.4</title>
+      <link>https://purpleidea.com/tags/centos-6.4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/centos-6.4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hardware Acceleration</title>
+      <link>https://purpleidea.com/tags/hardware-acceleration/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hardware-acceleration/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scrolling</title>
+      <link>https://purpleidea.com/tags/scrolling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/scrolling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Smooth Scrolling</title>
+      <link>https://purpleidea.com/tags/smooth-scrolling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/smooth-scrolling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FIXME</title>
+      <link>https://purpleidea.com/tags/fixme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fixme/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TODO</title>
+      <link>https://purpleidea.com/tags/todo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/todo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>XXX</title>
+      <link>https://purpleidea.com/tags/xxx/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xxx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>File Manager</title>
+      <link>https://purpleidea.com/tags/file-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/file-manager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nautilus-Open-Terminal</title>
+      <link>https://purpleidea.com/tags/nautilus-open-terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nautilus-open-terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nemo</title>
+      <link>https://purpleidea.com/tags/nemo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nemo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nemo-Open-Terminal</title>
+      <link>https://purpleidea.com/tags/nemo-open-terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nemo-open-terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nohup</title>
+      <link>https://purpleidea.com/tags/nohup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nohup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Open-Terminal</title>
+      <link>https://purpleidea.com/tags/open-terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/open-terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Anaconda</title>
+      <link>https://purpleidea.com/tags/anaconda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/anaconda/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Centos/Rhel</title>
+      <link>https://purpleidea.com/tags/centos/rhel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/centos/rhel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Http-Range</title>
+      <link>https://purpleidea.com/tags/http-range/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/http-range/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Httpd</title>
+      <link>https://purpleidea.com/tags/httpd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/httpd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Range</title>
+      <link>https://purpleidea.com/tags/range/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/range/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dconf</title>
+      <link>https://purpleidea.com/tags/dconf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dconf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gsettings</title>
+      <link>https://purpleidea.com/tags/gsettings/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gsettings/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Recent-Files</title>
+      <link>https://purpleidea.com/tags/recent-files/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/recent-files/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fstype</title>
+      <link>https://purpleidea.com/tags/fstype/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fstype/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automatic Lookup</title>
+      <link>https://purpleidea.com/tags/automatic-lookup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/automatic-lookup/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppet3</title>
+      <link>https://purpleidea.com/tags/puppet3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppet3/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora18</title>
+      <link>https://purpleidea.com/tags/fedora18/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fedora18/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Droopy</title>
+      <link>https://purpleidea.com/tags/droopy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/droopy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Icq</title>
+      <link>https://purpleidea.com/tags/icq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/icq/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Receive-File</title>
+      <link>https://purpleidea.com/tags/receive-file/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/receive-file/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Send-File</title>
+      <link>https://purpleidea.com/tags/send-file/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/send-file/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Simplehttpserver</title>
+      <link>https://purpleidea.com/tags/simplehttpserver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/simplehttpserver/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ssl</title>
+      <link>https://purpleidea.com/tags/ssl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ssl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Woof</title>
+      <link>https://purpleidea.com/tags/woof/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/woof/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome-Keyring</title>
+      <link>https://purpleidea.com/tags/gnome-keyring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-keyring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Seahorse</title>
+      <link>https://purpleidea.com/tags/seahorse/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/seahorse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Audit.log</title>
+      <link>https://purpleidea.com/tags/audit.log/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/audit.log/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pain</title>
+      <link>https://purpleidea.com/tags/pain/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/pain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Puppetmasterd</title>
+      <link>https://purpleidea.com/tags/puppetmasterd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/puppetmasterd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dynamic Include</title>
+      <link>https://purpleidea.com/tags/dynamic-include/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dynamic-include/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Clusvcadm</title>
+      <link>https://purpleidea.com/tags/clusvcadm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/clusvcadm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rgmanager</title>
+      <link>https://purpleidea.com/tags/rgmanager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/rgmanager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virtual Machine</title>
+      <link>https://purpleidea.com/tags/virtual-machine/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/virtual-machine/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vm</title>
+      <link>https://purpleidea.com/tags/vm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Clustat</title>
+      <link>https://purpleidea.com/tags/clustat/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/clustat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Close</title>
+      <link>https://purpleidea.com/tags/close/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/close/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tab</title>
+      <link>https://purpleidea.com/tags/tab/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tab-Close-Button</title>
+      <link>https://purpleidea.com/tags/tab-close-button/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tab-close-button/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Newtab</title>
+      <link>https://purpleidea.com/tags/newtab/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/newtab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Speeddial</title>
+      <link>https://purpleidea.com/tags/speeddial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/speeddial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hello</title>
+      <link>https://purpleidea.com/tags/hello/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hello/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>File Descriptor</title>
+      <link>https://purpleidea.com/tags/file-descriptor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/file-descriptor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agpl</title>
+      <link>https://purpleidea.com/tags/agpl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/agpl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agplv3&#43;</title>
+      <link>https://purpleidea.com/tags/agplv3&#43;/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/agplv3&#43;/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Run Once</title>
+      <link>https://purpleidea.com/tags/run-once/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/run-once/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Timers</title>
+      <link>https://purpleidea.com/tags/timers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/timers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dconf/Gsettings</title>
+      <link>https://purpleidea.com/tags/dconf/gsettings/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dconf/gsettings/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Keyboard Shortcuts</title>
+      <link>https://purpleidea.com/tags/keyboard-shortcuts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/keyboard-shortcuts/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Magic</title>
+      <link>https://purpleidea.com/tags/magic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/magic/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shortcuts</title>
+      <link>https://purpleidea.com/tags/shortcuts/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/shortcuts/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Feature Request</title>
+      <link>https://purpleidea.com/tags/feature-request/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/feature-request/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Inventions</title>
+      <link>https://purpleidea.com/tags/inventions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/inventions/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multifile Mode</title>
+      <link>https://purpleidea.com/tags/multifile-mode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/multifile-mode/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Text Editor</title>
+      <link>https://purpleidea.com/tags/text-editor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/text-editor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fusion</title>
+      <link>https://purpleidea.com/tags/fusion/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fusion/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nuclear Fusion</title>
+      <link>https://purpleidea.com/tags/nuclear-fusion/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/nuclear-fusion/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Slashdot</title>
+      <link>https://purpleidea.com/tags/slashdot/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/slashdot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data_files</title>
+      <link>https://purpleidea.com/tags/data_files/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/data_files/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Distutils</title>
+      <link>https://purpleidea.com/tags/distutils/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/distutils/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Installation Directory</title>
+      <link>https://purpleidea.com/tags/installation-directory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/installation-directory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python Programmers</title>
+      <link>https://purpleidea.com/tags/python-programmers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/python-programmers/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agpl3</title>
+      <link>https://purpleidea.com/tags/agpl3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/agpl3/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prefix</title>
+      <link>https://purpleidea.com/tags/prefix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/prefix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dlm</title>
+      <link>https://purpleidea.com/tags/dlm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dlm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vip</title>
+      <link>https://purpleidea.com/tags/vip/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vip/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Clipboard</title>
+      <link>https://purpleidea.com/tags/clipboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/clipboard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome3</title>
+      <link>https://purpleidea.com/tags/gnome3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome3/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gpaste</title>
+      <link>https://purpleidea.com/tags/gpaste/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gpaste/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xsel</title>
+      <link>https://purpleidea.com/tags/xsel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xsel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Upgrade</title>
+      <link>https://purpleidea.com/tags/upgrade/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/upgrade/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ipmitool</title>
+      <link>https://purpleidea.com/tags/ipmitool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ipmitool/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kvm</title>
+      <link>https://purpleidea.com/tags/kvm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kvm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sctp</title>
+      <link>https://purpleidea.com/tags/sctp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sctp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sparse</title>
+      <link>https://purpleidea.com/tags/sparse/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sparse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Etckeeper</title>
+      <link>https://purpleidea.com/tags/etckeeper/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/etckeeper/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gitolite</title>
+      <link>https://purpleidea.com/tags/gitolite/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gitolite/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gitosis</title>
+      <link>https://purpleidea.com/tags/gitosis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gitosis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gitweb</title>
+      <link>https://purpleidea.com/tags/gitweb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gitweb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sliced Bread</title>
+      <link>https://purpleidea.com/tags/sliced-bread/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/sliced-bread/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gnome-Do</title>
+      <link>https://purpleidea.com/tags/gnome-do/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gnome-do/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Launcher</title>
+      <link>https://purpleidea.com/tags/launcher/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/launcher/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tricks</title>
+      <link>https://purpleidea.com/tags/tricks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/tricks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bash-Tutor</title>
+      <link>https://purpleidea.com/tags/bash-tutor/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bash-tutor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git-Bisect</title>
+      <link>https://purpleidea.com/tags/git-bisect/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/git-bisect/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lectures</title>
+      <link>https://purpleidea.com/tags/lectures/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/lectures/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mcgill</title>
+      <link>https://purpleidea.com/tags/mcgill/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/mcgill/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Prelude</title>
+      <link>https://purpleidea.com/tags/prelude/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/prelude/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Babble</title>
+      <link>https://purpleidea.com/tags/babble/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/babble/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Indentation</title>
+      <link>https://purpleidea.com/tags/indentation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/indentation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wow</title>
+      <link>https://purpleidea.com/tags/wow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wow/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Epiphany</title>
+      <link>https://purpleidea.com/tags/epiphany/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/epiphany/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gtkrc</title>
+      <link>https://purpleidea.com/tags/gtkrc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gtkrc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Monospace</title>
+      <link>https://purpleidea.com/tags/monospace/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/monospace/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cool</title>
+      <link>https://purpleidea.com/tags/cool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cool/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Website</title>
+      <link>https://purpleidea.com/tags/website/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/website/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Argparse</title>
+      <link>https://purpleidea.com/tags/argparse/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/argparse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Getopt</title>
+      <link>https://purpleidea.com/tags/getopt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/getopt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ivan</title>
+      <link>https://purpleidea.com/tags/ivan/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/ivan/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Optparse</title>
+      <link>https://purpleidea.com/tags/optparse/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/optparse/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gstreamer</title>
+      <link>https://purpleidea.com/tags/gstreamer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gstreamer/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hth</title>
+      <link>https://purpleidea.com/tags/hth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hth/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Binary Prefix</title>
+      <link>https://purpleidea.com/tags/binary-prefix/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/binary-prefix/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kibi</title>
+      <link>https://purpleidea.com/tags/kibi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/kibi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Knuth</title>
+      <link>https://purpleidea.com/tags/knuth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/knuth/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wikipedia</title>
+      <link>https://purpleidea.com/tags/wikipedia/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/wikipedia/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hdparm</title>
+      <link>https://purpleidea.com/tags/hdparm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/hdparm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Manpages</title>
+      <link>https://purpleidea.com/tags/manpages/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/manpages/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Compiz</title>
+      <link>https://purpleidea.com/tags/compiz/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/compiz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multi-Head</title>
+      <link>https://purpleidea.com/tags/multi-head/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/multi-head/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multiple Monitors</title>
+      <link>https://purpleidea.com/tags/multiple-monitors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/multiple-monitors/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reference</title>
+      <link>https://purpleidea.com/tags/reference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/reference/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Window Manager</title>
+      <link>https://purpleidea.com/tags/window-manager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/window-manager/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xmonad</title>
+      <link>https://purpleidea.com/tags/xmonad/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/xmonad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vanilla</title>
+      <link>https://purpleidea.com/tags/vanilla/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/vanilla/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bad</title>
+      <link>https://purpleidea.com/tags/bad/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/bad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Subprocess</title>
+      <link>https://purpleidea.com/tags/subprocess/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/subprocess/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Subprocess.popen</title>
+      <link>https://purpleidea.com/tags/subprocess.popen/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/subprocess.popen/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gobject</title>
+      <link>https://purpleidea.com/tags/gobject/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gobject/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Readline</title>
+      <link>https://purpleidea.com/tags/readline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/readline/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Yield</title>
+      <link>https://purpleidea.com/tags/yield/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/yield/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cheetah</title>
+      <link>https://purpleidea.com/tags/cheetah/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/cheetah/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fortran</title>
+      <link>https://purpleidea.com/tags/fortran/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/fortran/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Evanescent</title>
+      <link>https://purpleidea.com/tags/evanescent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/evanescent/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gio</title>
+      <link>https://purpleidea.com/tags/gio/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/gio/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dorothy</title>
+      <link>https://purpleidea.com/tags/dorothy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/dorothy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Seymour Smith</title>
+      <link>https://purpleidea.com/tags/seymour-smith/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/tags/seymour-smith/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

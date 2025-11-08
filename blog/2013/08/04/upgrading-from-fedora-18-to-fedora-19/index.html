@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Upgrading from Fedora 18 to Fedora 19 - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Upgrading from Fedora 18 to Fedora 19</strong><br><small></small></h3>
+					<hr>
+					<p>It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. <a title="Picking up the pieces after a Fedora 18 install" href="/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/">Fedora 18 was one of the worst releases ever</a>, so I figured it could only get better. I ran my backups as usual, however this time I didn&rsquo;t seem to need them, the upgrade process went off without a hitch! <a href="https://fedoraproject.org/wiki/FedUp">I used the fedup-cli process over the network.</a> I always run these things inside of screen.</p>
+<p>Here are my post install notes and comments:</p>
+<p><strong><span style="text-decoration:underline;">Brown folder icons</span>:</strong></p>
+<p>Someone broke the icon theme, and folders are now an ugly brown. Even though you&rsquo;ll see a &ldquo;Fedora&rdquo; entry in the GNOME tweak tool, icon theme section, it won&rsquo;t work. You need to install a theme package first:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install fedora-icon-theme
+</span></span></code></pre></div><p>tweak tool will now let you fix the brown icon issue.</p>
+<p><strong><span style="text-decoration:underline;">Dash doesn&rsquo;t launch new windows</span>:</strong></p>
+<p>The GNOME shell is back to its old habit of trying to imitate Mac OSX. Thankfully there&rsquo;s an official extension to fix this: <a href="https://extensions.gnome.org/extension/600/launch-new-instance/"><a href="https://extensions.gnome.org/extension/600/launch-new-instance/">https://extensions.gnome.org/extension/600/launch-new-instance/</a></a></p>
+<p>If you search for &ldquo;<em>Classic Mode</em>&rdquo; on <a href="https://extensions.gnome.org/"><a href="https://extensions.gnome.org/">https://extensions.gnome.org/</a></a> you&rsquo;ll find some other useful add ons. You might enjoy: <a href="https://extensions.gnome.org/extension/15/alternatetab/">AlternateTab</a>, <a href="https://extensions.gnome.org/extension/586/avoid-overview/">AvoidOverview</a>, and <a href="https://extensions.gnome.org/extension/120/system-monitor/">SystemMonitor</a>.</p>
+<p><strong><span style="text-decoration:underline;">Evolution is snappier</span>:</strong></p>
+<p>Congratulations to the evolution developers, this release seems a bit snappier! I haven&rsquo;t tested it thoroughly, however closing evolution now happens in under ten seconds! Usually it would either hang or take much longer to close. Keep up the good work!</p>
+<p><strong><span style="text-decoration:underline;">Clocks deletes your old clocks</span>:</strong></p>
+<p>The clocks application deleted all the clocks that I had added. I suppose there are worse forms of data loss, but this is still pretty unprofessional! I had added one for every new place I had visited. Goodbye memories!</p>
+<p><strong><span style="text-decoration:underline;">YUM breaks pexpect scripts</span>:</strong></p>
+<p>A new version of YUM, now prompts you differently:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install foobar[...]
+</span></span><span style="display:flex;"><span>Is this ok [y/d/N]:
+</span></span></code></pre></div><p>No it&rsquo;s not okay that you&rsquo;re confusing my brain by adding a <strong>d</strong>. I actually don&rsquo;t have any pexpect scripts depending on this, but after years of seeing <em>y/N</em>, the change is not welcomed. It should have been handled with a YUM <em>download</em> target instead.</p>
+<p><strong><span style="text-decoration:underline;">Password prompts are annoying</span>:</strong></p>
+<p>The GNOME shell handles most of the password prompts. This makes sense because it can help prevent you typing your password into a chat room. The problem is that if you need to run an external password manager to find a password, you&rsquo;re out of luck. Maybe someone can add an option to minimize the focus stealing window. In addition, the &ldquo;remember password&rdquo; checkbox should NOT be on by default! It still is for evolution, and perhaps other apps too.</p>
+<p><strong><span style="text-decoration:underline;">GNOME shell isn&rsquo;t smooth, but it&rsquo;s better</span>:</strong></p>
+<p>Fedora 17 provided a smooth GNOME shell experience. Fedora 18, somehow killed the performance, and no fixes could be found. The performance seems to be a bit better in Fedora 19, but it&rsquo;s still not perfect. Drivers are probably partly to blame.</p>
+<p>New version of Gedit breaks some things:</p>
+<p>The Gedit dashboard plugin no longer seems to work. After debugging the issue, it seems to be a packaging problem. To fix:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install python3-dbus
+</span></span></code></pre></div><p>and dashboard should work when enabled. The gedit-autotab plugin is thoroughly broken. I&rsquo;d love to get that working again for <a href="https://github.com/purpleidea/gedit-plugins/tree/smarterspaces">smarter spaces</a>!</p>
+<p><strong><span style="text-decoration:underline;">EDIT: Here are some notes on my former <code>smarter-spaces</code> work</span></strong>:</p>
+<table><tr><td>
+Today, I am a gedit-plugins hacker! Here you'll find my first code contribution to gedit-plugins. I'm calling it "SmarterSpaces". This is an extension to the excellent "<a href="https://live.gnome.org/GeditPlugins">SmartSpaces</a>" plugin.
+<p>This plugin automatically treats the usage of spaces for indentation as if they were tabs. Now even though someone chose the wrong character for indentation, you don&rsquo;t have to waste time mashing your cursor keys to move through all those <em>0x20h</em>&rsquo;s. Alternatively, you could use <a href="http://en.wikipedia.org/wiki/Vim_%28text_editor%29">vim</a>. :)</p>
+<p>To install this plugin you need to put: <em>smarterspaces.py</em>, <em>smarterspaces.plugin</em> and <em>org.gnome.gedit.plugins.smarterspaces.gschema.xml</em> in your <em>~/.local/share/gedit/plugins</em> directory. The code is <a href="http://www.gnu.org/licenses/gpl.html">GPLv.3+</a>, so share and enjoy under these terms.</p>
+<p>It is recommended that you use this plugin in combination with the <em>autotab</em> and/or <em>modelines</em> plugins.</p>
+<p>I have tested this code, and it works perfectly for me. Please have a look at the source comments, for a few unresolved items.</p>
+<p>For more information, you can read my <a href="https://mail.gnome.org/archives/gedit-list/2013-February/msg00000.html">original mailing list announcement</a> and the <a href="https://bugzilla.gnome.org/show_bug.cgi?id=693283">bugzilla entry</a>.</p>
+<p>It would be awesome if someone could point me to, or hack together something similar in vim. Maybe purists don&rsquo;t need this kind of functionality, but dammit, sometimes I use my arrow keys while in insert mode.</p>
+</td></tr></table>
+<p>That&rsquo;s all for now,</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>August 4, 2013<br>
+				<small>809 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/evolution">evolution</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fedora-19">fedora 19</a> <a class="label label-default" href="/tags/fedup">fedup</a> <a class="label label-default" href="/tags/gedit">gedit</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/gnome-shell">gnome shell</a> <a class="label label-default" href="/tags/pgo">pgo</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/upgrade-fedora">upgrade fedora</a> <a class="label label-default" href="/tags/upgrading">upgrading</a> <a class="label label-default" href="/tags/yum">yum</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/08/04/upgrading-from-fedora-18-to-fedora-19/"><small>https://ttboj.wordpress.com/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

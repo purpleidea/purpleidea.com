@@ -1,0 +1,1014 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Function expressions and statements in the Mgmt Configuration Language">
+	<meta name="author" content="James Shubin">
+
+	<title>Mgmt Configuration Language: Functions - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Mgmt Configuration Language: Functions</strong><br><small>Function expressions and statements in the Mgmt Configuration Language</small></h3>
+					<hr>
+					<p>It&rsquo;s been a little while since I introduced the
+<a href="/blog/2018/02/05/mgmt-configuration-language/">Mgmt Configuration Language</a>. I
+originally wrote this article in 2019, and as I was working on it alongside the
+code for functions, when I realized that lambdas didn&rsquo;t work properly. It took
+some time to finally solve that properly. Since then I&rsquo;ve been working to get <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+production ready. It&rsquo;s properly useful for production now, and so it&rsquo;s time for
+me to catch up on my documentation. I&rsquo;ve revived and updated this article, let&rsquo;s
+go&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Intro</span>:<br /><br />
+
+<p>I&rsquo;d like to introduce some of the missing features that weren&rsquo;t available when
+the language was first introduced. If you haven&rsquo;t already read that <a href="/blog/2018/02/05/mgmt-configuration-language/">post</a>,
+and <a href="/blog/2019/07/26/class-and-include-in-mgmt/">the post</a> on classes, please
+start there and come back when you&rsquo;re finished. In this article we&rsquo;ll learn
+about functions.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Functions</span>:<br /><br />
+
+<p><a href="https://github.com/purpleidea/mgmt/"><em>Mgmt</em></a> has different kinds of functions
+in its <code>mcl</code> language. The built-in functions can be present in the global scope
+or provided by one of the <a href="https://github.com/purpleidea/mgmt/tree/master/lang/core">core</a>
+modules. Most of the functions are <a href="https://en.wikipedia.org/wiki/Pure_function">pure</a>,
+although there are a few inconsequential exceptions. A brilliant programmer
+friend of mine believes that the literature might refer to this model as:
+&ldquo;imperative shell, functional core&rdquo;. I&rsquo;m not entirely acquainted with how
+academia might perceive my work, so I&rsquo;ll leave it up to you to decide if that&rsquo;s
+an accurate description of <code>mcl</code>.</p>
+<p>These built-in functions must be implemented in <code>golang</code>. I merged a
+<a href="https://github.com/purpleidea/mgmt/commit/f53376cea1056649a147dfc7654381e46d4388a5">giant patch</a>
+which allows you to write custom functions in <code>mcl</code>. These can be used as core
+functions, or as user-defined functions inside your own code. You can use them
+as expressions anywhere you might normally find an expression. They can be
+defined with the <code>func</code> statement, or as a <a href="https://en.wikipedia.org/wiki/Anonymous_function">lambda</a>
+expression. The internal function API has changed a bit since I first
+implemented it, so make sure to read on below for more information.</p>
+<p>Similar to the <code>class</code> statement which lets you parameterize statements, the
+<code>func</code> statement lets you parameterize an expression, which it returns when
+invoked. They look like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># function statement</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> sq1(<span style="color:#666">$</span>x, <span style="color:#666">$</span>y) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>x <span style="color:#666">*</span> <span style="color:#666">$</span>x <span style="color:#666">+</span> <span style="color:#666">$</span>y
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># function expression</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>sq2 <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>x, <span style="color:#666">$</span>y) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>x <span style="color:#666">*</span> <span style="color:#666">$</span>x <span style="color:#666">+</span> <span style="color:#666">$</span>y
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>x1 <span style="color:#666">=</span> sq1(<span style="color:#666">3</span>, <span style="color:#666">4</span>) <span style="color:#080;font-style:italic"># 3^2 + 4 = 13</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>x2 <span style="color:#666">=</span> <span style="color:#666">$</span>sq2(<span style="color:#666">7</span>, <span style="color:#666">-</span><span style="color:#666">7</span>) <span style="color:#080;font-style:italic"># 7^2 - 7 = 42</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;fn1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;sq1: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>x1),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;fn2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;sq2: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>x2),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The body of any function must be a single expression, and in both cases, you
+call a function by invoking its name with a set of parentheses and the list of
+arguments. In the second situation where we&rsquo;re storing an anonymous lambda in
+the variable <code>$sq2</code>, you can use the variable name (including the leading <code>$</code>)
+to call it. (Calling a function is itself a valid expression, called a &ldquo;<code>call</code>
+expression&rdquo;.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Namespaced Scopes</span>:<br /><br />
+
+<p>Is the following code valid? It seems the identifier <code>foo</code> is over used.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> foo() {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">42</span> <span style="color:#080;font-style:italic"># returns 42</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">func</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">43</span> <span style="color:#080;font-style:italic"># returns 43</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> foo(<span style="color:#666">$</span>a) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">print</span> <span style="color:#b44">&#34;hello&#34;</span> {
+</span></span><span style="display:flex;"><span>		msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;is </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44"> the answer?&#34;</span>, <span style="color:#666">$</span>a),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include foo(<span style="color:#666">42</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;world&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;sum: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44"> + </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44"> = </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, foo(), <span style="color:#666">$</span>foo(), foo() <span style="color:#666">+</span> <span style="color:#666">$</span>foo()),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As it turns out, it is! There is no conflict, because the scope has a separate
+map to store function definitions, variable definitions (which may be either
+function values or ordinary values) and class definitions. While it might be
+confusing if you have one of each that are all named <code>foo</code>, it&rsquo;s still perfectly
+legal. You can even have an <code>import</code> that imports a module named <code>foo</code>, and it
+will not conflict with the other named nodes. Don&rsquo;t worry that you haven&rsquo;t seen
+<code>import</code> yet. We&rsquo;ll get to that in a future article, but it should be easy for
+you to make some assumptions for now.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Function Scope Capture</span>:<br /><br />
+
+<p>Functions can capture scope. This is particularly useful because the body can
+only contain a single expression. If you&rsquo;d like to break expressions into
+multiple lines, then scope capturing is essential. These are often called
+<a href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">&ldquo;closures&rdquo;</a>.</p>
+<p>Examine the following:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>x1 <span style="color:#666">=</span> <span style="color:#666">42</span> <span style="color:#080;font-style:italic"># this variable gets captured by foo</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>x2 <span style="color:#666">=</span> <span style="color:#666">13</span> <span style="color:#080;font-style:italic"># this variable gets captured by bar</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>somearg1) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>x1 <span style="color:#666">+</span> <span style="color:#666">$</span>somearg1
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> bar(<span style="color:#666">$</span>somearg1) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>x2 <span style="color:#666">+</span> <span style="color:#666">$</span>foo(<span style="color:#666">$</span>somearg1) <span style="color:#080;font-style:italic"># we even capture the $foo function here</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;answer&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;the answer is: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, bar(<span style="color:#666">45</span>)), <span style="color:#080;font-style:italic"># 100</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, both variables <code>$x1</code>, and <code>$x2</code>, as well as variable <code>$foo</code>,
+which holds a function value (an anonymous lambda function) are all captured
+somewhere in the program. This runs correctly as you&rsquo;d expect. It&rsquo;s a powerful
+tool, which I&rsquo;m sure you will benefit from when writing your programs.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Function Argument Shadowing</span>:<br /><br />
+
+<p>Now that you&rsquo;re familiar with scope capture in functions, you should also be
+aware of shadowing. If a function argument has the same name as a variable in a
+parent scope, then the argument will take precedence and overwrite that
+variable, but only within the scope of that function. To use a variable in a
+parent scope, either ensure that you name your argument differently, or pass in
+the variable when calling the function. Here&rsquo;s a simple example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#b44">&#34;bad1&#34;</span> <span style="color:#080;font-style:italic"># this won&#39;t get used</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> bar(<span style="color:#666">$</span>foo) {
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;hello &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>foo <span style="color:#080;font-style:italic"># shadows parent var</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>bar <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>foo) {
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;hello &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>foo <span style="color:#080;font-style:italic"># shadows parent var</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;answer1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> bar(<span style="color:#b44">&#34;world&#34;</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;answer2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> <span style="color:#666">$</span>bar(<span style="color:#b44">&#34;world&#34;</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In both cases, this will print <code>hello world</code>, because the variable in the global
+scope gets shadowed by the argument name.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Typed Function Signatures</span>:<br /><br />
+
+<p>As with every program, our type unification engine determines the static types
+that each variable and value will have at runtime. Functions can be polymorphic
+and can have more than one possible type signature before compile time, but this
+can be restricted by adding additional constraints. You can add these
+constraints on any function argument or its return type. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> weirdlen(<span style="color:#666">$</span>a []<span style="color:#d2413a;font-weight:bold">int</span>, <span style="color:#666">$</span>b) <span style="color:#d2413a;font-weight:bold">int</span> {
+</span></span><span style="display:flex;"><span>	len(<span style="color:#666">$</span>a) <span style="color:#666">+</span> <span style="color:#666">$</span>b
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>l1 <span style="color:#666">=</span> weirdlen(<span style="color:#b44">&#34;hello&#34;</span>, <span style="color:#666">5</span>) <span style="color:#080;font-style:italic"># won&#39;t compile because of type restriction on $a</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>l2 <span style="color:#666">=</span> weirdlen([<span style="color:#666">13</span>, <span style="color:#666">42</span>, <span style="color:#666">0</span>, <span style="color:#666">-</span><span style="color:#666">37</span>,], <span style="color:#666">-</span><span style="color:#666">3</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;l1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;l1: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>l1),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;l2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;l2: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>l2),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In the above example, we added a type restriction on the first arg of the
+function that forces that input to be a list of <code>int</code>&rsquo;s (<code>[]int</code>), and another
+that forces the return value to be an <code>int</code>. As a result, this won&rsquo;t compile,
+because the first invocation of the function passes in an <code>str</code>. If we remove
+the type limitation, then this works as expected. In general, it&rsquo;s recommended
+to avoid specifying any types, unless you want to explicitly prevent (for safety
+reasons) the user from specifying a specific type.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Polymorphic Functions</span>:<br /><br />
+
+<p>Interestingly, you can&rsquo;t have polymorphic lambdas. The following code is <strong>NOT</strong>
+valid, but if you remove either invocation, then it will work:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># polymorphic lambda variables (not supported!)</span>
+</span></span><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>double <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>x) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>x <span style="color:#666">+</span> <span style="color:#666">$</span>x
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>num <span style="color:#666">=</span> <span style="color:#666">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out1 <span style="color:#666">=</span> <span style="color:#666">$</span>double(<span style="color:#666">$</span>num) <span style="color:#080;font-style:italic"># 4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;t1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44"> + </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44"> is </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>num, <span style="color:#666">$</span>num, <span style="color:#666">$</span>out1), <span style="color:#080;font-style:italic"># simple math</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>val <span style="color:#666">=</span> <span style="color:#b44">&#34;hello&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out2 <span style="color:#666">=</span> <span style="color:#666">$</span>double(<span style="color:#666">$</span>val) <span style="color:#080;font-style:italic"># hellohello</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;t2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44"> + </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44"> is </span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>val, <span style="color:#666">$</span>val, <span style="color:#666">$</span>out2), <span style="color:#080;font-style:italic"># simple concat</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+This example is not possible because, while the <code>+</code> (plus) operator supports
+adding integers and floats, and even concatenation of strings, the <strong>variable</strong>
+<code>$double</code> must have a single type, which happens to be a function! If you want
+to write this kind of code, instead declare the <code>double</code> function as a statement
+which will work.
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Recursive Functions</span>:<br /><br />
+
+<p>Unfortunately, recursive functions are not supported. They present a form of
+dangerous iteration that would require a &ldquo;higher-order FRP&rdquo;, which would add a
+significant amount of complexity and danger to our programs. Here&rsquo;s a case of an
+invalid program, which is caught by the compiler:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># recursive function (not supported!)</span>
+</span></span><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> sum(<span style="color:#666">$</span>input) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>input <span style="color:#666">&lt;</span> <span style="color:#666">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#666">-</span><span style="color:#666">1</span> <span style="color:#666">*</span> sum(<span style="color:#666">-</span><span style="color:#666">1</span> <span style="color:#666">*</span> <span style="color:#666">$</span>input)
+</span></span><span style="display:flex;"><span>	} <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>input <span style="color:#666">==</span> <span style="color:#666">0</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#666">0</span> <span style="color:#080;font-style:italic"># terminate recursion</span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#666">$</span>input <span style="color:#666">+</span> sum(<span style="color:#666">$</span>input <span style="color:#666">-</span> <span style="color:#666">1</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out1 <span style="color:#666">=</span> sum(<span style="color:#666">4</span>)	<span style="color:#080;font-style:italic"># 4 + 3 + 2 + 1 + 0 = 10</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out2 <span style="color:#666">=</span> sum(<span style="color:#666">-</span><span style="color:#666">5</span>)	<span style="color:#080;font-style:italic"># -5 + -4 + -3 + -2 + -1 + -0 = -15</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;nope1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;sum(4) is </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>out1),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;nope2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;sum(-5) is </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>out2),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>While this looks like it would be a lot of fun, and as you can see I considered
+it carefully, it is not supported. Similar functions that co-recurse, as well as
+lambda variants, are all caught by the compiler and rejected. It&rsquo;s easy to catch
+these things, because in an <code>FRP</code>, they would not form a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a>!
+A simple topological sort will catch this, and as such, this code errors with:
+<code>could not set scope: recursive reference while setting scope: not a dag</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Returning Functions</span>:<br /><br />
+
+<p>Functions are first-class values alongside <code>bool</code>, <code>str</code>, <code>int</code>, <code>float</code>,
+<code>list</code>, <code>map</code>, and <code>struct</code>. As a result, there&rsquo;s no reason that a function
+can&rsquo;t return another function! This lets us build some interesting function
+generators. Here&rsquo;s an example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> funcgen() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#b44">&#34;hello&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>fn <span style="color:#666">=</span> funcgen() <span style="color:#080;font-style:italic"># get a function as a return value of calling this function</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out <span style="color:#666">=</span> <span style="color:#666">$</span>fn() <span style="color:#080;font-style:italic"># call that returned function</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;wow&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> <span style="color:#666">$</span>out,	<span style="color:#080;font-style:italic"># prints &#34;hello&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Of course this can get more complicated, and any of the functions involved can
+always have their own arguments. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> funcgen(<span style="color:#666">$</span>cond, <span style="color:#666">$</span>punctuation) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>cond {
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>a) { <span style="color:#080;font-style:italic"># the arg is ignored but is needed so the sig matches</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b44">&#34;hello world&#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>punctuation <span style="color:#080;font-style:italic"># i captured punctuation!</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	} <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">func</span>(<span style="color:#666">$</span>a) {
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>a <span style="color:#666">==</span> <span style="color:#b44">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#b44">&#34;hello&#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>punctuation
+</span></span><span style="display:flex;"><span>			} <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#b44">&#34;hello: &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>a <span style="color:#666">+</span> <span style="color:#b44">&#34; &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>punctuation
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>fn <span style="color:#666">=</span> funcgen(false, <span style="color:#b44">&#34;!&#34;</span>) <span style="color:#080;font-style:italic"># get a function as a return value of calling this</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out <span style="color:#666">=</span> <span style="color:#666">$</span>fn(<span style="color:#b44">&#34;hacker&#34;</span>) <span style="color:#080;font-style:italic"># call that returned function</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;complex wow&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> <span style="color:#666">$</span>out,	<span style="color:#080;font-style:italic"># prints &#34;hello: hacker !&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>While this code is a bit contrived, it&rsquo;s an example of how you can get fancy
+with returned functions. And the magic part is that all the type unification
+happens automatically without any hints!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Indexed Function Calling</span>:<br /><br />
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+This next section is a bit theoretical. Feel free to skip it if that&rsquo;s not for
+you.
+	</div>
+</div>
+
+<p>As is common in many programming languages, functions are defined with named
+arguments, and called with positional arguments. It&rsquo;s a bit of a strange
+behaviour to use two different systems, but as we&rsquo;ll see, there are some logical
+reasons why. As an example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> foo(<span style="color:#666">$</span>a, <span style="color:#666">$</span>bar, <span style="color:#666">$</span>cat) {
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># use $a, $bar, and $cat in here...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out <span style="color:#666">=</span> foo(<span style="color:#666">42.0</span>, <span style="color:#b44">&#34;---&#34;</span>, <span style="color:#b44">&#34;miau&#34;</span>)
+</span></span></code></pre></div><p>The function gets defined with three named args, but is called positionally. The
+compiler must do the work to determine which function signature is associated
+with the call expression, and then map those onto the variable scope, so that
+inside the function those variables are defined correctly.</p>
+<p>You might wonder if it&rsquo;s better off to require that function definitions use
+positional args in their bodies. Some languages like <code>bash</code> permit this with the
+use of <code>$1</code>, <code>$2</code>, and so on in their body. Alternatively, you might wonder if
+it&rsquo;s not better to have the caller specify each argument by name. Some languages
+like <code>python</code> do this by having the caller specify them each individually:
+<code>foo(a=42.0, b=&quot;---&quot;, cat=&quot;miau&quot;)</code>.</p>
+<p>Ultimately, choosing the common approach led to the simpler implementation for a
+few reasons:</p>
+<ol>
+<li>
+<p>Supporting hybrid variants where both approaches are allowed only adds
+unnecessary complexity.</p>
+</li>
+<li>
+<p>Therefore, internal function definitions would have to have memorable
+argument names so that their use wasn&rsquo;t more complicated. Nobody really wants to
+write more than <code>len(&quot;hello&quot;)</code> when retrieving a string length. Requiring a
+<code>len(whatever=&quot;hello&quot;)</code> would be burdensome. Using <code>$1</code> type args is not very
+readable for function authors either.</p>
+</li>
+<li>
+<p>The internal scope storage allows for a &ldquo;stack&rdquo; of called arguments, which
+can be shifted onto the running function, only when it is reached. What this
+means is that if you&rsquo;re passing an arg into one of two or more possible returned
+functions, each could have it&rsquo;s own differently named arguments and still be
+compatible. Without this, we&rsquo;d have to endlessly wrap functions in argument name
+signature changers to call foreign functions. An example shows this best:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$funcgen = func() {
+</span></span><span style="display:flex;"><span>	func($aaa) {
+</span></span><span style="display:flex;"><span>		&#34;hello&#34; + $aaa
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$some_bool = true # this might change over time
+</span></span><span style="display:flex;"><span>$fn = if $some_bool { # switches between one of two functions
+</span></span><span style="display:flex;"><span>	$funcgen() # returns a function
+</span></span><span style="display:flex;"><span>} else {
+</span></span><span style="display:flex;"><span>	func($bbb) { # anonymous function definition
+</span></span><span style="display:flex;"><span>		&#34;world&#34; + $bbb
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$out = $fn(&#34;world&#34;) # what would the argument name have to be?
+</span></span><span style="display:flex;"><span>print &#34;foo&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; $out,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>While this might be a bit tricky to unpack, if you look closely, you&rsquo;ll see that
+when we call the <code>$fn</code> function, it could correspond to one of two different
+implementations, which, in our <a href="https://en.wikipedia.org/wiki/Functional_reactive_programming">FRP</a>,
+could change over time. If we required specifying the argument name, then we&rsquo;d
+have to ensure the different function implementations had compatible input
+arguments, in addition to having the same signatures. As you can see, they have
+different argument names. The top-most variant names the first arg <code>$aaa</code>, while
+the second function names its input <code>$bbb</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Light Copies</span>:<br /><br />
+
+<p>When you call a function (via the <code>call</code> expression), it effectively copies the
+body and builds the correct expression in its place. You might think that this
+gets expensive quickly, but in fact it is quite efficient. Consider the
+following code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>big_data <span style="color:#666">=</span> <span style="color:#b44">&#34;Now this is a story, all about how, my code got...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> lyrics(<span style="color:#666">$</span>input) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>input <span style="color:#666">+</span> <span style="color:#b44">&#34;: &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>big_data
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;l1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> lyrics(<span style="color:#b44">&#34;fresh code&#34;</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;l2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> lyrics(<span style="color:#b44">&#34;fresh rhymes&#34;</span>),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here&rsquo;s a graph of the data flows that the function engine will run:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="graph.png"><img class="alignnone size-full" src="graph.png"  width="100%" /></a></td></tr><tr><td>The function engine data flows of the above code. Notice how the raw value of the $big_data string only appears once.</td></tr></table></br />
+
+<p>Even though the <code>$big_data</code> variable gets pulled into the <code>lyrics</code> function for
+each invocation, the initial copy is the only one that&rsquo;s used in the function
+graph. This is because we perform an intelligent &ldquo;light copy&rdquo; when running
+<code>call</code>, and anything that is a bound constant, remains that way. Enjoy the
+memory gains!</p>
+<p>(As a quick aside, a future compiler optimization will actually simplify this
+graph substantially. I haven&rsquo;t been blocked or constrained by the lack of this
+optimization yet, so it hasn&rsquo;t been prioritized, but there is lots of exciting
+work left to do in <code>mgmt</code>!)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Statement Ordering</span>:<br /><br />
+
+<p>As I mentioned in the <a href="/blog/2018/02/05/mgmt-configuration-language/">earlier language post</a>,
+code is actually a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">graph</a>
+and as a result can be written out-of-order. If you experiment with re-arranging
+the ordering of the statements, you&rsquo;ll find that everything still works
+correctly. This can be useful for situations when you might prefer to define the
+<code>function</code> before it is used, or for when you want to see your business logic
+that performs different <code>call</code>&rsquo;s at the top, and have the internals down at the
+bottom.</p>
+<p>In general, it is recommended that you avoid out-of-order code, but at the
+moment it is allowed. There is a compile-time constant that specifies whether it
+is allowed or not, and there is another one that specifies whether it should
+allow it, but generate a warning. Neither is fully implemented because we are
+missing one function in our graph library. If you can write a <a href="https://github.com/purpleidea/mgmt/blob/f53376cea1056649a147dfc7654381e46d4388a5/lang/structs.go#L3562">function</a>
+that returns whether a given ordering is a valid subset of one of the possible
+topological sorts for that graph, then <a href="/contact/">please let us know</a>!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Lambdas</span>:<br /><br />
+
+<p>One of the most exciting uses of functions is when we can pass them as arguments
+to other functions! Enabling this and the idea of functions as first-class
+values was the hardest compiler problem I ever encountered. It&rsquo;s no wonder that
+early compiler authors never implemented this. I guess I shouldn&rsquo;t feel so bad.</p>
+<p>Here&rsquo;s the canonical example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;golang&#34;
+</span></span><span style="display:flex;"><span>import &#34;iter&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$fn = func($x) { # notable because concrete type is fn(t1) t2, where t1 != t2
+</span></span><span style="display:flex;"><span>	len($x)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$in1 = [&#34;a&#34;, &#34;bb&#34;, &#34;ccc&#34;,]
+</span></span><span style="display:flex;"><span># NOTE: a future version of mgmt may rename iter.map to list.iter (list module)
+</span></span><span style="display:flex;"><span>$out1 = iter.map($in1, $fn)	# takes a lambda, and is implemented as a core lib!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;example&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;%v&#34;, $out1),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you see our function <em>value</em> gets passed into the iterator function. This one
+is a built-in, but of course you could supply your own function instead. Of note
+here, this is a healthy form of safe iteration in <code>mgmt</code>! If you haven&rsquo;t heard
+of <code>map</code> style iteration, <a href="https://en.wikipedia.org/wiki/Map_(higher-order_function)">have a quick read</a>.</p>
+<p>Keep in mind that everything can still vary over time, so if you want to see a
+real-time, contrived, complex example, have a look here:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;datetime&#34;
+</span></span><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>import &#34;iter&#34;
+</span></span><span style="display:flex;"><span>import &#34;math&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$mod = math.mod(datetime.now(), 2) == 0	# alternate every two seconds
+</span></span><span style="display:flex;"><span>$fn = func($x) { # notable because concrete type is fn(t1) t2, where t1 != t2
+</span></span><span style="display:flex;"><span>	len($x)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$in1 = if $mod { [&#34;a&#34;, &#34;bb&#34;, &#34;ccc&#34;,] } else { [&#34;zzzzzz&#34;, &#34;yyyyy&#34;, &#34;xxxx&#34;,] }
+</span></span><span style="display:flex;"><span># NOTE: a future version of mgmt may rename iter.map to list.iter (list module)
+</span></span><span style="display:flex;"><span>$out1 = iter.map($in1, $fn)	# takes a lambda, and is implemented as a core lib!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;example&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;%v&#34;, $out1),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>One last beautiful aspect of lambdas. In order to make this possible, it turns
+out that the function graph can&rsquo;t actually be static! This is because you might
+need a small subgraph to appear if you were processing a list of five values,
+where the size of the list might not be known until runtime. As a result, when
+necessary, we actually grow and shrink the function graph during runtime. This
+is one of the main reasons that getting lambdas working properly was so
+difficult. I have time-series snapshots of graph structures in graphviz <code>.dot</code>
+format. If you have a tool that can animate these nicely, I&rsquo;ll make some nerd
+beautiful videos of this happening. Here&rsquo;s a static snapshot of the expanded
+subgraph where it&rsquo;s processing the three values from the list.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="graph-map-red.png"><img class="alignnone size-full" src="graph-map-red.png"  width="100%" /></a></td></tr><tr><td>You can see the map function, and the subgraph with the three list elements.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Class Identifiers</span>:<br /><br />
+
+<p>I now need to briefly step away from functions and tell you about a new feature
+relating to classes. There&rsquo;s a <a href="/blog/2019/07/26/class-and-include-in-mgmt/">fairly extensive post about classes</a>
+in <code>mgmt</code> that&rsquo;s already available. if you&rsquo;re not familiar with that, please go
+refresh your knowledge first. The new information, is that when you <code>include</code> a
+class, you can give that individual instantiation a unique handle. Here&rsquo;s an
+example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> class1 {
+</span></span><span style="display:flex;"><span>	noop <span style="color:#b44">&#34;foo&#34;</span> {}	<span style="color:#080;font-style:italic"># this resource gets pulled out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#b44">&#34;hello&#34;</span>	<span style="color:#080;font-style:italic"># this value can be exported outside the class</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include class1 as identifier1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;hello&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>identifier1<span style="color:#666">.</span>foo),	<span style="color:#080;font-style:italic"># hello</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, when we <code>include class1</code>, we can give that instantiation a
+unique identifier, which we can refer to elsewhere in that scope! Since the
+class happened to have a <code>bind statement</code> that can be seen and used.</p>
+<p>Complex examples with nested classes and parameterized classes are also legal.
+See if you can digest what&rsquo;s happening here:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> outer {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">print</span> <span style="color:#b44">&#34;foo&#34;</span> {}	<span style="color:#080;font-style:italic"># this resource gets pulled out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>ret <span style="color:#666">=</span> <span style="color:#b44">&#34;hello&#34;</span>	<span style="color:#080;font-style:italic"># gets exported</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">class</span> inner {
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">print</span> <span style="color:#b44">&#34;bar&#34;</span> {}	<span style="color:#080;font-style:italic"># this resource gets pulled out</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#666">$</span>ret <span style="color:#666">=</span> <span style="color:#b44">&#34;goodbye&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include outer as ident_outer			<span style="color:#080;font-style:italic"># first include the outer class</span>
+</span></span><span style="display:flex;"><span>include ident_outer<span style="color:#666">.</span>inner as ident_inner	<span style="color:#080;font-style:italic"># now pull out the inner class!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;print0&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>ident_outer<span style="color:#666">.</span>ret),	<span style="color:#080;font-style:italic"># hello</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;print1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>ident_inner<span style="color:#666">.</span>ret),	<span style="color:#080;font-style:italic"># goodbye</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see we first <code>include</code> the outer class, and then with <em>that</em>
+identifier we can then pull out the inner class. The resources that are seen are
+now part of the resource graph! You can also capture the values as well.</p>
+<p>Here&rsquo;s one more:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> class1(<span style="color:#666">$</span>in1) {
+</span></span><span style="display:flex;"><span>	noop <span style="color:#b44">&#34;foo&#34;</span> {}	<span style="color:#080;font-style:italic"># this resource gets pulled out</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>result <span style="color:#666">=</span> <span style="color:#b44">&#34;hello &#34;</span> <span style="color:#666">+</span> <span style="color:#666">$</span>in1	<span style="color:#080;font-style:italic"># gets exported</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include class1(<span style="color:#b44">&#34;world&#34;</span>) as identifier1
+</span></span><span style="display:flex;"><span>include class1(<span style="color:#b44">&#34;james&#34;</span>) as identifier2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;msg1&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>identifier1<span style="color:#666">.</span>result),	<span style="color:#080;font-style:italic"># hello world</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;msg2&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>identifier2<span style="color:#666">.</span>result),	<span style="color:#080;font-style:italic"># hello james</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you noticed that the parameter was passed in and made part of the result,
+you&rsquo;d be correct. Different instantiations have different states of course. You
+can also see that a resource is defined in the class. When you <code>include</code> a class
+that contains a number of resources or edges, those get pulled out to be part of
+the resource graph.</p>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+If this was even possible with other tools, you&rsquo;d still get a
+<code>duplicate resource</code> style error, but <code>mgmt</code> allows duplicate identical or
+compatible resource definitions, so this isn&rsquo;t a bug!
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Multi-line Functions</span>:<br /><br />
+
+<p>At this point you may have realized that the body of a function can only contain
+a single (<code>expr</code>) expression. This may be inconvenient if you want to write more
+readable code or have a value in the composition be used in more than one place.</p>
+<p>As you may have now realized, you can use a <code>class</code> as a type of function call!
+For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>import &#34;golang/math&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class pythagorean_theorem($a, $b) {
+</span></span><span style="display:flex;"><span>	# c^2 = a^2 + b^2
+</span></span><span style="display:flex;"><span>	$a2 = $a * $a
+</span></span><span style="display:flex;"><span>	$b2 = $b * $b
+</span></span><span style="display:flex;"><span>	$sum = $a2 + $b2
+</span></span><span style="display:flex;"><span>	$c = math.sqrt($sum)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include pythagorean_theorem(3.0, 4.0) as out
+</span></span><span style="display:flex;"><span>print &#34;result&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;%f&#34;, $out.c), # we expect 5.0
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Of course we could write all those steps on a single line and use a regular
+function, this is just an example! I did consider adding some sort of syntactic
+sugar around this, to make it easier or as familiar as a regular function call,
+but at least for the short term I think it&rsquo;s great as is.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Multiple return values</span>:<br /><br />
+
+<p>What if we want to return more than one value? There are two main ways to do it.</p>
+<ol>
+<li><strong>Use a class and use more than one named value.</strong></li>
+</ol>
+<p>You may have already realized this solution. What&rsquo;s interesting here is that we
+can access any intermediate value that we want! For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>import &#34;golang/math&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># of the form: a*x^2 + b*x + c == 0
+</span></span><span style="display:flex;"><span>class quadratic_formula($a, $b, $c) {
+</span></span><span style="display:flex;"><span>	# x = (-b +/- sqrt(b^2 - 4ac)) / 2a
+</span></span><span style="display:flex;"><span>	panic($a == 0.0) # a can&#39;t be zero
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	$sqrt = math.sqrt(($b * $b) - (4.0 * $a * $c))
+</span></span><span style="display:flex;"><span>	$negb = -1.0 * $b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	$x1 = ($negb + $sqrt) / (2.0 * $a)
+</span></span><span style="display:flex;"><span>	$x2 = ($negb - $sqrt) / (2.0 * $a)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include quadratic_formula(1.0, 5.0, 6.0) as out
+</span></span><span style="display:flex;"><span>print &#34;result&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;x1 = %f and x2 = %f&#34;, $out.x1, $out.x2), # we expect -2 and -3
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You get two values out!</p>
+<ol start="2">
+<li><strong>Return a struct.</strong></li>
+</ol>
+<p>A function can return a struct with multiple keys. This is sometimes more useful
+if you are passing data around since you now only need one variable to hold it
+all. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>import <span style="color:#b44">&#34;golang/math&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># of the form: a*x^2 + b*x + c == 0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> quadratic_formula(<span style="color:#666">$</span>a, <span style="color:#666">$</span>b, <span style="color:#666">$</span>c) {
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># x = (-b +/- sqrt(b^2 - 4ac)) / 2a</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">#panic($a == 0.0) # a can&#39;t be zero</span>
+</span></span><span style="display:flex;"><span>	struct{
+</span></span><span style="display:flex;"><span>		x1 <span style="color:#666">=&gt;</span> ((<span style="color:#666">-</span><span style="color:#666">1.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>b) <span style="color:#666">+</span> math<span style="color:#666">.</span>sqrt((<span style="color:#666">$</span>b <span style="color:#666">*</span> <span style="color:#666">$</span>b) <span style="color:#666">-</span> (<span style="color:#666">4.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>a <span style="color:#666">*</span> <span style="color:#666">$</span>c))) <span style="color:#666">/</span> (<span style="color:#666">2.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>a),
+</span></span><span style="display:flex;"><span>		x2 <span style="color:#666">=&gt;</span> ((<span style="color:#666">-</span><span style="color:#666">1.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>b) <span style="color:#666">-</span> math<span style="color:#666">.</span>sqrt((<span style="color:#666">$</span>b <span style="color:#666">*</span> <span style="color:#666">$</span>b) <span style="color:#666">-</span> (<span style="color:#666">4.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>a <span style="color:#666">*</span> <span style="color:#666">$</span>c))) <span style="color:#666">/</span> (<span style="color:#666">2.0</span> <span style="color:#666">*</span> <span style="color:#666">$</span>a),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>out <span style="color:#666">=</span> quadratic_formula(<span style="color:#666">1.0</span>, <span style="color:#666">5.0</span>, <span style="color:#666">6.0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;result&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> fmt<span style="color:#666">.</span>printf(<span style="color:#b44">&#34;x1 = </span><span style="color:#b68;font-weight:bold">%f</span><span style="color:#b44"> and x2 = </span><span style="color:#b68;font-weight:bold">%f</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>out<span style="color:#666">-&gt;</span>x1, <span style="color:#666">$</span>out<span style="color:#666">-&gt;</span>x2), <span style="color:#080;font-style:italic"># we expect -2 and -3</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, this version is less readable and more repetitive. This may not
+be the case with other things that you want to implement. Over time you&rsquo;ll learn
+to use your judgement to decide the best way to write your code. If your
+function is getting quite large, part of it may even be a good candidate for
+inclusion into the <a href="https://mgmtconfig.com/docs/functions/">standard library</a>!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Internal function API&#39;s</span>:<br /><br />
+
+<p>With what you now know, I&rsquo;m sure you&rsquo;ll be ready to write tons of useful <code>mcl</code>
+code. If you really want to go further, here&rsquo;s how you can write a new internal
+<code>mcl</code> function in pure golang!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">package</span> coreexample
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;context&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;github.com/purpleidea/mgmt/lang/funcs/simple&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;github.com/purpleidea/mgmt/lang/types&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">init</span>() {
+</span></span><span style="display:flex;"><span>	simple.<span style="color:#00a000">ModuleRegister</span>(ModuleName, <span style="color:#b44">&#34;basic_plus&#34;</span>, <span style="color:#666">&amp;</span>simple.Scaffold{
+</span></span><span style="display:flex;"><span>		T: types.<span style="color:#00a000">NewType</span>(<span style="color:#b44">&#34;func(a int, b int) int&#34;</span>),
+</span></span><span style="display:flex;"><span>		F: BasicPlus,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// BasicPlus returns a + b.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">BasicPlus</span>(ctx context.Context, input []types.Value) (types.Value, <span style="color:#0b0;font-weight:bold">error</span>) {
+</span></span><span style="display:flex;"><span>	y, z <span style="color:#666">:=</span> input[<span style="color:#666">0</span>].<span style="color:#00a000">Int</span>(), input[<span style="color:#666">1</span>].<span style="color:#00a000">Int</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// Of course you may wish to do something more excited or complicated in
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#080;font-style:italic">// here!
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">&amp;</span>types.IntValue{
+</span></span><span style="display:flex;"><span>		V: y <span style="color:#666">+</span> z,
+</span></span><span style="display:flex;"><span>	}, <span style="color:#a2f;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you drop this file in the <a href="https://github.com/purpleidea/mgmt/tree/master/lang/core/example">core/example/</a>
+folder (for example) this function will become available in <code>mcl</code> as
+<code>example.basic_plus</code>. More complicated versions of the function API are possible
+if you want to do much more complicated things, but this should get you through
+most of what you&rsquo;ll want to do.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Function Documentation</span>:<br /><br />
+
+<p>We finally have a <a href="https://mgmtconfig.com/docs/functions/">documentation site</a>
+for all of our functions. You can help us improve the library and the
+documentation by sending a patch!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you love the language! Please help sponsor this project if you want to
+see more of it.</p>
+<p><a href="https://m9rx.com/">Enterprise support, training, and consulting are all available.</a></p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 22, 2024<br>
+				<small>4349 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dsl">dsl</a> <a class="label label-default" href="/tags/frp">frp</a> <a class="label label-default" href="/tags/functions">functions</a> <a class="label label-default" href="/tags/lambda">lambda</a> <a class="label label-default" href="/tags/mcl">mcl</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2024/11/22/functions-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2024/11/22/functions-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

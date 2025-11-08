@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to map the cancellation context into your golang tests...">
+	<meta name="author" content="James Shubin">
+
+	<title>Deadline context test cancellation in golang - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Deadline context test cancellation in golang</strong><br><small>How to map the cancellation context into your golang tests...</small></h3>
+					<hr>
+					<p>I decided to write a fancy test harness in golang today. The test wraps a big
+internal engine for <a href="https://github.com/purpleidea/mgmt/">mgmt</a> and at the
+top-level it takes a <a href="https://pkg.go.dev/context">context</a> for cancellation. If
+you don&rsquo;t know about the <code>context</code> package, then you should go understand that
+and then come back here&hellip; Don&rsquo;t feel bad, I had no idea what it was about at
+first either!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>I assumed there would be some way to follow a notification from the test runner
+down into my test to tell it when it was time to cleanup and exit early&hellip; I
+expected that making my own <code>^C</code> signal handler wouldn&rsquo;t be correct, and I
+(incorrectly) assumed that the interface I&rsquo;d be looking for would offer a golang
+<code>context</code> that I could pass into my code. I was wrong, but I was on the right
+track and it did help me find what I was looking for. Let me explain the subtlety&hellip;</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="tests-optimization.png"><img class="alignnone size-full" src="tests-optimization.png" alt="fast testing is good, but complete testing is better!" width="100%" /></a></td></tr></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Subtlety</span>:<br /><br />
+
+<p>Tests often run with a bounded duration. This can either be infinite, or it can
+be a fixed number of seconds. For example, you could run a single test with a 42
+second timeout by doing:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go <span style="color:#a2f">test</span> -timeout 42s github.com/purpleidea/mgmt/util/deadline -run TestSlowTest1
+</span></span></code></pre></div><p>or you might let an entire test package run for up to five minutes instead:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go <span style="color:#a2f">test</span> -timeout 5m github.com/purpleidea/mgmt/util/deadline -v
+</span></span></code></pre></div><p>When that timeout elapses, golang will force a panic and immediately shut it all
+down. You might think it would be useful to have it cancel a <code>context</code>, but
+there&rsquo;s no guarantee things would shutdown right away&ndash; we are testing after
+all, and deadlocks are a common issue that we look for. They&rsquo;re even often found
+in the cleanup path!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Simple Cleanup</span>:<br /><br />
+
+<p>For the situation where you only care about the <code>context</code> in terms of cleaning
+up your test when it&rsquo;s complete, it is quite simple to add to the top of each
+test:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">TestCleanup1</span>(t <span style="color:#666">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	wg <span style="color:#666">:=</span> <span style="color:#666">&amp;</span>sync.WaitGroup{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">defer</span> wg.<span style="color:#00a000">Wait</span>()
+</span></span><span style="display:flex;"><span>	ctx, cancel <span style="color:#666">:=</span> context.<span style="color:#00a000">WithCancel</span>(context.<span style="color:#00a000">Background</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">defer</span> <span style="color:#00a000">cancel</span>() <span style="color:#080;font-style:italic">// cleanup
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// use ctx and wg.Add/wg.Done down here...
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Deadline Approach</span>:<br /><br />
+
+<p>The testing package provides a <a href="https://pkg.go.dev/testing#T.Deadline">Deadline</a>
+method which when called, tells you what time the timeout will destroy your
+world. If you&rsquo;re in the mood to, you can have a look at this and shut things
+down early. Here&rsquo;s the API and documentation on the subject:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> (t <span style="color:#666">*</span>T) <span style="color:#00a000">Deadline</span>() (deadline time.Time, ok <span style="color:#0b0;font-weight:bold">bool</span>)
+</span></span></code></pre></div><p><em>Deadline reports the time at which the test binary will have exceeded the
+timeout specified by the -timeout flag. The ok result is false if the -timeout
+flag indicates “no timeout” (0).</em></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Boilerplate</span>:<br /><br />
+
+<p>How would I use this in practice? There wasn&rsquo;t an obvious example handy, so I
+cooked one up. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">TestDeadlineTimeout1</span>(t <span style="color:#666">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	min <span style="color:#666">:=</span> time.Second <span style="color:#666">*</span> <span style="color:#666">3</span> <span style="color:#080;font-style:italic">// approx min time needed for the test
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	ctx <span style="color:#666">:=</span> context.<span style="color:#00a000">Background</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> deadline, ok <span style="color:#666">:=</span> t.<span style="color:#00a000">Deadline</span>(); ok {
+</span></span><span style="display:flex;"><span>		d <span style="color:#666">:=</span> deadline.<span style="color:#00a000">Add</span>(<span style="color:#666">-</span>min)
+</span></span><span style="display:flex;"><span>		newCtx, cancel <span style="color:#666">:=</span> context.<span style="color:#00a000">WithDeadline</span>(ctx, d)
+</span></span><span style="display:flex;"><span>		ctx = newCtx
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">defer</span> <span style="color:#00a000">cancel</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		time.<span style="color:#00a000">Sleep</span>(min <span style="color:#666">-</span> (<span style="color:#666">1</span> <span style="color:#666">*</span> time.Second)) <span style="color:#080;font-style:italic">// one second less for safety
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this example, I define a minimum amount of time that I need for my test. I
+also start off with a top-level <code>context</code>. Next I get the actual deadline that
+golang has defined for me. Keep in mind that this value is likely shared across
+all of the tests, so don&rsquo;t be greedy! Then I subtract that minimum and setup a
+new <code>context</code>. The new <code>context</code> will get cancelled if you&rsquo;re within that many
+seconds from the final <code>panic()</code> timeout.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Examples</span>:<br /><br />
+
+<p>Let&rsquo;s run a few examples to make sure this works as we intended it to. The
+package contains a fixed-duration three second test, and the fancy test seen
+above, but with some added logging. The full code example can be seen below.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt$ go <span style="color:#a2f">test</span> -timeout 10s github.com/purpleidea/mgmt/util/deadline -v
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestSlowTest1
+</span></span><span style="display:flex;"><span>--- PASS: TestSlowTest1 <span style="color:#666">(</span>3.00s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestDeadlineTimeout1
+</span></span><span style="display:flex;"><span>    deadline_test.go:37:   now: 2023-02-24 22:01:21.57705789 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.002741019
+</span></span><span style="display:flex;"><span>    deadline_test.go:38:     d: 2023-02-24 22:01:25.57452127 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+7.000204332
+</span></span><span style="display:flex;"><span>    deadline_test.go:46:   ctx: 2023-02-24 22:01:25.577851787 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+7.003534903
+</span></span><span style="display:flex;"><span>    deadline_test.go:48: sleep: 2023-02-24 22:01:27.578795977 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+9.004479068
+</span></span><span style="display:flex;"><span>--- PASS: TestDeadlineTimeout1 <span style="color:#666">(</span>6.00s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>PASS
+</span></span><span style="display:flex;"><span>ok  	github.com/purpleidea/mgmt/util/deadline	9.006s
+</span></span></code></pre></div><p>Here we can see that given ten seconds, our fixed-duration test finished in
+three, and our &ldquo;smart&rdquo; (but greedy) test took an additional six. It left us with
+one second to spare before the panic!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt$ go <span style="color:#a2f">test</span> -timeout 6s github.com/purpleidea/mgmt/util/deadline -v
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestSlowTest1
+</span></span><span style="display:flex;"><span>--- PASS: TestSlowTest1 <span style="color:#666">(</span>3.00s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestDeadlineTimeout1
+</span></span><span style="display:flex;"><span>    deadline_test.go:37:   now: 2023-02-24 22:01:47.391144074 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.001178645
+</span></span><span style="display:flex;"><span>    deadline_test.go:38:     d: 2023-02-24 22:01:47.39014766 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.000182129
+</span></span><span style="display:flex;"><span>    deadline_test.go:46:   ctx: 2023-02-24 22:01:47.391900938 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.001935477
+</span></span><span style="display:flex;"><span>    deadline_test.go:48: sleep: 2023-02-24 22:01:49.392791585 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+5.002826154
+</span></span><span style="display:flex;"><span>--- PASS: TestDeadlineTimeout1 <span style="color:#666">(</span>2.00s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>PASS
+</span></span><span style="display:flex;"><span>ok  	github.com/purpleidea/mgmt/util/deadline	5.005s
+</span></span></code></pre></div><p>Here with much less time to spare, our fancy test only took two seconds to run.
+If you run this yourself, note when the <code>ctx</code> log message shows up; you&rsquo;ll see
+it appear instantly!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt$ go <span style="color:#a2f">test</span> -timeout 4s github.com/purpleidea/mgmt/util/deadline -v
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestSlowTest1
+</span></span><span style="display:flex;"><span>--- PASS: TestSlowTest1 <span style="color:#666">(</span>3.00s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">===</span> RUN   TestDeadlineTimeout1
+</span></span><span style="display:flex;"><span>    deadline_test.go:37:   now: 2023-02-24 22:02:01.411082723 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.001786858
+</span></span><span style="display:flex;"><span>    deadline_test.go:38:     d: 2023-02-24 22:01:59.409476114 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+1.000180191
+</span></span><span style="display:flex;"><span>    deadline_test.go:46:   ctx: 2023-02-24 22:02:01.411647744 -0500 EST <span style="color:#b8860b">m</span><span style="color:#666">=</span>+3.002351875
+</span></span><span style="display:flex;"><span>panic: <span style="color:#a2f">test</span> timed out after 4s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">18</span> <span style="color:#666">[</span>running<span style="color:#666">]</span>:
+</span></span><span style="display:flex;"><span>testing.<span style="color:#666">(</span>*M<span style="color:#666">)</span>.startAlarm.func1<span style="color:#666">()</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:2029 +0x8e
+</span></span><span style="display:flex;"><span>created by time.goFunc
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/time/sleep.go:176 +0x32
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">1</span> <span style="color:#666">[</span>chan receive<span style="color:#666">]</span>:
+</span></span><span style="display:flex;"><span>testing.<span style="color:#666">(</span>*T<span style="color:#666">)</span>.Run<span style="color:#666">(</span>0xc00012a1a0, <span style="color:#666">{</span>0x525b13?, 0x4b6b45?<span style="color:#666">}</span>, 0x52d2d0<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1487 +0x37a
+</span></span><span style="display:flex;"><span>testing.runTests.func1<span style="color:#666">(</span>0xc00007a390?<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1839 +0x6e
+</span></span><span style="display:flex;"><span>testing.tRunner<span style="color:#666">(</span>0xc00012a1a0, 0xc000104cd8<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1439 +0x102
+</span></span><span style="display:flex;"><span>testing.runTests<span style="color:#666">(</span>0xc0001141e0?, <span style="color:#666">{</span>0x5f9480, 0x2, 0x2<span style="color:#666">}</span>, <span style="color:#666">{</span>0x7f209a8eb108?, 0x40?, 0x601a40?<span style="color:#666">})</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1837 +0x457
+</span></span><span style="display:flex;"><span>testing.<span style="color:#666">(</span>*M<span style="color:#666">)</span>.Run<span style="color:#666">(</span>0xc0001141e0<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1719 +0x5d9
+</span></span><span style="display:flex;"><span>main.main<span style="color:#666">()</span>
+</span></span><span style="display:flex;"><span>	_testmain.go:49 +0x1aa
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#666">17</span> <span style="color:#666">[</span>sleep<span style="color:#666">]</span>:
+</span></span><span style="display:flex;"><span>time.Sleep<span style="color:#666">(</span>0x77359400<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/runtime/time.go:194 +0x12e
+</span></span><span style="display:flex;"><span>github.com/purpleidea/mgmt/util/deadline_test.TestDeadlineTimeout1<span style="color:#666">(</span>0xc000082340<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/home/james/code/mgmt/util/deadline/deadline_test.go:47 +0x2a6
+</span></span><span style="display:flex;"><span>testing.tRunner<span style="color:#666">(</span>0xc000082340, 0x52d2d0<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1439 +0x102
+</span></span><span style="display:flex;"><span>created by testing.<span style="color:#666">(</span>*T<span style="color:#666">)</span>.Run
+</span></span><span style="display:flex;"><span>	/usr/lib/golang/src/testing/testing.go:1486 +0x35f
+</span></span><span style="display:flex;"><span>FAIL	github.com/purpleidea/mgmt/util/deadline	4.005s
+</span></span><span style="display:flex;"><span>FAIL
+</span></span><span style="display:flex;"><span>james@computer:~/code/mgmt$ <span style="color:#a2f">echo</span> <span style="color:#b8860b">$?</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">1</span>
+</span></span></code></pre></div><p>Lastly, in this scenario, things could never finish in four seconds and the
+test runner caused everything to panic. It correctly propagated a failure exit
+code as well.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Code</span>:<br /><br />
+
+<p>Here&rsquo;s what the full code looks like. It&rsquo;s surprisingly short. Put this into
+a <code>deadline_test.go</code> somewhere, and have fun experimenting with it!</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#080;font-style:italic">// Package deadline_test has examples to test the testing deadline system.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">package</span> deadline_test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;context&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">TestSlowTest1</span>(t <span style="color:#666">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	time.<span style="color:#00a000">Sleep</span>(<span style="color:#666">3</span> <span style="color:#666">*</span> time.Second)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">TestDeadlineTimeout1</span>(t <span style="color:#666">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	now <span style="color:#666">:=</span> time.<span style="color:#00a000">Now</span>()
+</span></span><span style="display:flex;"><span>	min <span style="color:#666">:=</span> time.Second <span style="color:#666">*</span> <span style="color:#666">3</span> <span style="color:#080;font-style:italic">// approx min time needed for the test
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	ctx <span style="color:#666">:=</span> context.<span style="color:#00a000">Background</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> deadline, ok <span style="color:#666">:=</span> t.<span style="color:#00a000">Deadline</span>(); ok {
+</span></span><span style="display:flex;"><span>		d <span style="color:#666">:=</span> deadline.<span style="color:#00a000">Add</span>(<span style="color:#666">-</span>min)
+</span></span><span style="display:flex;"><span>		t.<span style="color:#00a000">Logf</span>(<span style="color:#b44">&#34;  now: %+v&#34;</span>, now)
+</span></span><span style="display:flex;"><span>		t.<span style="color:#00a000">Logf</span>(<span style="color:#b44">&#34;    d: %+v&#34;</span>, d)
+</span></span><span style="display:flex;"><span>		newCtx, cancel <span style="color:#666">:=</span> context.<span style="color:#00a000">WithDeadline</span>(ctx, d)
+</span></span><span style="display:flex;"><span>		ctx = newCtx
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">defer</span> <span style="color:#00a000">cancel</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():
+</span></span><span style="display:flex;"><span>		t.<span style="color:#00a000">Logf</span>(<span style="color:#b44">&#34;  ctx: %+v&#34;</span>, time.<span style="color:#00a000">Now</span>())
+</span></span><span style="display:flex;"><span>		time.<span style="color:#00a000">Sleep</span>(min <span style="color:#666">-</span> (<span style="color:#666">1</span> <span style="color:#666">*</span> time.Second)) <span style="color:#080;font-style:italic">// one second less for safety
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>		t.<span style="color:#00a000">Logf</span>(<span style="color:#b44">&#34;sleep: %+v&#34;</span>, time.<span style="color:#00a000">Now</span>())
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Improvements</span>:<br /><br />
+
+<p>I think it would be more elegant to be able to get a <code>context</code> from the
+<a href="https://pkg.go.dev/testing#T">testing.T</a> type, but it would only make sense
+under the guise of a &ldquo;approaching the test timeout limit&rdquo; and that would be a
+whole other parameter we&rsquo;d have to pass through, and of course it would maybe be
+something that we&rsquo;d want to be different with each test or subtest, and so the
+aforementioned mechanism makes this all doable, even if it&rsquo;s a bit more verbose.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">References</span>:<br /><br />
+
+<p>The best reference is here in <a href="https://github.com/golang/go/issues/28135">this issue for the deadline implementation</a>.
+You can see that they even had a tentative <code>Context</code> API added, but this was
+later removed. I didn&rsquo;t dig too deeply, but I found it funny that they didn&rsquo;t
+add a clear example on how to use <code>Deadline</code> in your tests. I&rsquo;d send a patch if
+doing so wasn&rsquo;t fraught with <a href="https://en.wikipedia.org/wiki/Contributor_License_Agreement">CLA&rsquo;s</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this. Please leave me a comment if this taught you something
+new!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>February 24, 2023<br>
+				<small>1317 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/sync">sync</a> <a class="label label-default" href="/tags/testing">testing</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2023/02/24/deadline-context-test-cancellation-in-golang">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2023/02/24/deadline-context-test-cancellation-in-golang.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

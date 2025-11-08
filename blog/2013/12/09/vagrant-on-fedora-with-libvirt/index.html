@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Vagrant on Fedora with libvirt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Vagrant on Fedora with libvirt</strong><br><small></small></h3>
+					<hr>
+					<p>Apparently lots of people are using <a href="https://www.vagrantup.com/">Vagrant</a> these days, so I figured I&rsquo;d try it out. I wanted to get it working on Fedora, and without Virtualbox. This is an intro article on Vagrant, and what I&rsquo;ve done. I did this on Fedora 19. Feel free to suggest improvements.</p>
+<p><span style="text-decoration:underline;">Intro</span>:</p>
+<p>Vagrant is a tool that easily provisions virtual machines, and then kicks off a configuration management deployment like <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a>. It&rsquo;s often used for development. I&rsquo;m planning on using it to test some <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> managed GlusterFS clusters.</p>
+<p><span style="text-decoration:underline;">Installation</span>:</p>
+<p>You should already have the base libvirt/QEMU packages already installed (if they&rsquo;re not already present) and be comfortable with basic virtual machine concepts. If not, come back when you&rsquo;re ready.</p>
+<p>Fedora 20 was <a href="https://fedoraproject.org/wiki/Changes/Vagrant">supposed to include Vagrant</a>, but I don&rsquo;t think this happened. In the meantime, I installed the latest x86_64 RPM from the Vagrant download page.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ mkdir ~/vagrant
+</span></span><span style="display:flex;"><span>$ wget http://files.vagrantup.com/packages/a40522f5fabccb9ddabad03d836e120ff5d14093/vagrant_1.3.5_x86_64.rpm
+</span></span><span style="display:flex;"><span>$ sudo yum install vagrant_1.3.5_x86_64.rpm
+</span></span></code></pre></div><p><em>EDIT</em>: Please use version 1.3.5 only! The 1.4 series breaks compatibility with a lot of the necessary plugins. You might have success with different versions, but I have not tested them yet.</p>
+<p>You&rsquo;ll probably need some dependencies for the next few steps. Ensure they&rsquo;re present:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ sudo yum install libvirt-devel libxslt-devel libxml2-devel
+</span></span></code></pre></div><p>The <a href="http://libvirt.org/virshcmdref.html"><em>virsh</em></a> and <a href="http://virt-manager.org/"><em>virt-manager</em></a> tools are especially helpful additions. Install those too.</p>
+<p><span style="text-decoration:underline;">Boxes</span>:</p>
+<p>Vagrant has a concept of default &ldquo;boxes&rdquo;. These are pre-built images that you download, and use as base images for the virtual machines that you&rsquo;ll be building. Unfortunately, they are hypervisor specific, and the most commonly available images have been built for Virtualbox. Yuck! To get around this limitation, there is an easy solution.</p>
+<p>First we&rsquo;ll need to install a special <a href="https://github.com/sciurus/vagrant-mutate">Vagrant plugin</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ sudo yum install qemu-img # depends on this
+</span></span><span style="display:flex;"><span>$ vagrant plugin install vagrant-mutate
+</span></span></code></pre></div><p><em>EDIT</em>: Note that there is a <a href="https://github.com/sciurus/vagrant-mutate/issues/37">bug</a> on Fedora 20 that breaks mutate! Feel free to skip over the mutate steps below on Fedora, and use <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-6/centos-6.box">this</a> image instead. You can install it with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant box add centos-6 https://dl.fedoraproject.org/pub/alt/purpleidea/vagrant/centos-6/centos-6.box --provider=libvirt
+</span></span></code></pre></div><p>You&rsquo;ll have to replace the <em>precise32</em> name in the below <em>Vagrantfile</em> with <em>centos-6</em>.</p>
+<p><em>END EDIT</em></p>
+<p>Now download an incompatible box. We&rsquo;ll use the well-known example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant box add precise32 http://files.vagrantup.com/precise32.box
+</span></span></code></pre></div><p>Finally, convert the box so that it&rsquo;s libvirt compatible:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant mutate precise32 libvirt
+</span></span></code></pre></div><p>This plugin can also convert to KVM friendly boxes.</p>
+<p>You&rsquo;ll need to make a working directory for Vagrant and initialize it:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ mkdir test1
+</span></span><span style="display:flex;"><span>$ cd test1
+</span></span><span style="display:flex;"><span>$ vagrant init precise32
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Hypervisor</span>:</p>
+<p>I initially tried getting this working with the <a href="https://github.com/adrahon/vagrant-kvm">vagrant-kvm</a> plugin that Fedora 20 will eventually include, but I did not succeed. Instead, I used the <a href="https://github.com/pradels/vagrant-libvirt">vagrant-libvirt</a> plugin:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vagrant plugin install vagrant-libvirt
+</span></span></code></pre></div><p><em>EDIT</em>: I forgot to mention that you&rsquo;ll need to specify the <code>&ndash;provider</code> argument when running vagrant commands. I wrote about how to do this in my <a href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">second article</a>. You can use <code>&ndash;provider=libvirt</code> for each command or include the:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">export</span> VAGRANT_DEFAULT_PROVIDER<span style="color:#666">=</span>libvirt
+</span></span></code></pre></div><p>line in your ~/.bashrc file.</p>
+<p><em>END EDIT</em></p>
+<p>I have found a number of issues with it, but I&rsquo;ll show you which magic knobs I&rsquo;ve used so that you can replicate my setup. Let me show you my <em>Vagrantfile</em>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># -*- mode: ruby -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># vi: set ft=ruby :</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#800">VAGRANTFILE_API_VERSION</span> <span style="color:#666">=</span> <span style="color:#b44">&#34;2&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># NOTE: vagrant-libvirt needs to run in series (not in parallel) to avoid</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># trying to create the network twice... eg: vagrant up --no-parallel</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># alternatively, you can just create the vm&#39;s one at a time manually...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#800">Vagrant</span><span style="color:#666">.</span>configure(<span style="color:#800">VAGRANTFILE_API_VERSION</span>) <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>config<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># Every Vagrant virtual environment requires a box to build from</span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>vm<span style="color:#666">.</span>box <span style="color:#666">=</span> <span style="color:#b44">&#34;precise32&#34;</span>			<span style="color:#080;font-style:italic"># choose your own!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># List each virtual machine</span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>vm<span style="color:#666">.</span>define <span style="color:#b8860b">:vm1</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>vm1<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>		vm1<span style="color:#666">.</span>vm<span style="color:#666">.</span>network <span style="color:#b8860b">:private_network</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">:ip</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;192.168.142.101&#34;</span>,	<span style="color:#080;font-style:italic"># choose your own!</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">:libvirt__network_name</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;default&#34;</span>	<span style="color:#080;font-style:italic"># leave it</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>vm<span style="color:#666">.</span>define <span style="color:#b8860b">:vm2</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>vm2<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>		vm2<span style="color:#666">.</span>vm<span style="color:#666">.</span>network <span style="color:#b8860b">:private_network</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">:ip</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;192.168.142.102&#34;</span>,	<span style="color:#080;font-style:italic"># choose your own!</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">:libvirt__network_name</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;default&#34;</span>	<span style="color:#080;font-style:italic"># leave it</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># Provider-specific configuration</span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>vm<span style="color:#666">.</span>provider <span style="color:#b8860b">:libvirt</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>libvirt<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>		libvirt<span style="color:#666">.</span>driver <span style="color:#666">=</span> <span style="color:#b44">&#34;qemu&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># leave out host to connect directly with qemu:///system</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#libvirt.host = &#34;localhost&#34;</span>
+</span></span><span style="display:flex;"><span>		libvirt<span style="color:#666">.</span>connect_via_ssh <span style="color:#666">=</span> <span style="color:#a2f">false</span>		<span style="color:#080;font-style:italic"># also needed</span>
+</span></span><span style="display:flex;"><span>		libvirt<span style="color:#666">.</span>username <span style="color:#666">=</span> <span style="color:#b44">&#34;root&#34;</span>
+</span></span><span style="display:flex;"><span>		libvirt<span style="color:#666">.</span>storage_pool_name <span style="color:#666">=</span> <span style="color:#b44">&#34;default&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># Enable provisioning with Puppet. You might want to use the agent!</span>
+</span></span><span style="display:flex;"><span>	config<span style="color:#666">.</span>vm<span style="color:#666">.</span>provision <span style="color:#b8860b">:puppet</span> <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>puppet<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>		puppet<span style="color:#666">.</span>module_path <span style="color:#666">=</span> <span style="color:#b44">&#34;modules&#34;</span>
+</span></span><span style="display:flex;"><span>		puppet<span style="color:#666">.</span>manifests_path <span style="color:#666">=</span> <span style="color:#b44">&#34;manifests&#34;</span>
+</span></span><span style="display:flex;"><span>		puppet<span style="color:#666">.</span>manifest_file <span style="color:#666">=</span> <span style="color:#b44">&#34;site.pp&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># custom fact</span>
+</span></span><span style="display:flex;"><span>		puppet<span style="color:#666">.</span>facter <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#b44">&#34;vagrant&#34;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;1&#34;</span>,
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span></span></span></code></pre></div>
+A few caveats:</p>
+<ul>
+	<li>The <code>:libvirt__network_name => "default"</code> needs to always be specified. If you don't specify it, or if you specify a different name, you'll get an error:
+```
+Call to virDomainCreateWithFlags failed: Network not found: no network with matching name 'default'
+```
+</li>
+	<li>With this <em>Vagrantfile</em>, you'll get an IP address from DHCP, and a static IP address from the <em>:ip</em> definition. If you attempt to disable DHCP with <code>:libvirt__dhcp_enabled => false</code> you'll see errors:
+```
+grep: /var/lib/libvirt/dnsmasq/*.leases: No such file or directory
+```
+As a result, each machine will have two IP addresses.</li>
+	<li>Running <em>vagrant up</em> caused some errors when more than one machine is defined. This was caused by duplicate attempts to create the same network. To work around this, you can either start each virtual machine manually, or use the --no-parallel option when the network is first created:
+```
+$ vagrant up --no-parallel
+<em>[...]</em>
+<<a href="https://www.youtube.com/watch?v=MnA4u9CaK7A&html5=1">magic awesome happens here</a>>
+```
+</li>
+</ul>
+<span style="text-decoration:underline;">Commands</span>:
+<p>The most common commands you&rsquo;ll need are:</p>
+<ul>
+	<li><code>vagrant init</code> – initialize a directory</li>
+	<li><code>vagrant up [machine]</code> – start/build/deploy a machine</li>
+	<li><code>vagrant ssh <machine></code> – connect to a machine</li>
+	<li><code>vagrant halt [machine]</code> – stop the machine</li>
+	<li><code>vagrant destroy [machine]</code> – remove/erase/purge the entire machine</li>
+</ul>
+I won't go into further details here, because this information is <a href="http://docs.vagrantup.com/v2/">well documented</a>.
+<p><span style="text-decoration:underline;">PolicyKit (polkit)</span>:</p>
+<p>At this point you&rsquo;re probably getting annoyed by having to repeatedly type your password to interact with your VM through libvirt. You&rsquo;re probably seeing a dialog like this:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="screenshot-authenticate.png"><img class="alignnone size-full wp-image-635" alt="Screenshot-Authenticate" src="screenshot-authenticate.png" width="100%" height="100%" /></a></td></tr></table></br />
+<p>This should look familiar if you&rsquo;ve used <em>virt-manager</em> before. When you open <em>virt-manager</em>, and it tries to connect to <code>qemu:///system</code>, PolicyKit does the <em>right thing</em> and ensures that you&rsquo;re allowed to get access to the resource first! The annoying part is that you get repeatedly prompted when you&rsquo;re using <em>Vagrant</em>, because it is constantly opening up and closing new connections. If you&rsquo;re comfortable allowing this permanently, you can add a policy file:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[Allow james libvirt management permissions]
+</span></span><span style="display:flex;"><span>Identity=unix-user:james
+</span></span><span style="display:flex;"><span>Action=org.libvirt.unix.manage
+</span></span><span style="display:flex;"><span>ResultAny=yes
+</span></span><span style="display:flex;"><span>ResultInactive=yes
+</span></span><span style="display:flex;"><span>ResultActive=yes
+</span></span></code></pre></div><p>Create this file (you&rsquo;ll need root) as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>/etc/polkit-1/localauthority/50-local.d/vagrant.pkla
+</span></span></code></pre></div><p>and then shouldn&rsquo;t experience any more prompts when you try to manage libvirt! You&rsquo;ll obviously want to replace the <em><strong>james</strong></em> string with whatever user account you&rsquo;re using. For more information on the format of this file, and to learn other ways to do this read the <a href="http://www.freedesktop.org/software/polkit/docs/0.105/pklocalauthority.8.html">pkla documentation</a>.</p>
+<p>If you want to avoid PolicyKit, you can connect to <em>libvirtd</em> over SSH, however I don&rsquo;t have <em>sshd</em> running on my laptop, and I wanted to connect directly. The default vagrant-libvirt example demonstrates this method.</p>
+<p><span style="text-decoration:underline;">Puppet</span>:</p>
+<p>Provisioning machines without configuration management wouldn&rsquo;t be very useful. Thankfully, <em>Vagrant</em> integrates nicely with Puppet. The documentation on this is fairly straightforward, so I won&rsquo;t cover this part. I show a simple Puppet deployment in my <em>Vagrantfile</em> above, but a more complex setup involving <code>puppet agent</code> and <em>puppetmasterd</em> is possible too.</p>
+<p><span style="text-decoration:underline;">Conclusion</span>:</p>
+<p>Hopefully this makes it easier for you to hack in GNU/Linux land. I look forward to seeing this supported natively in Fedora, but until then, hopefully I&rsquo;ve helped out with the heavy lifting.</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>December 9, 2013<br>
+				<small>1283 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/libvirt">libvirt</a> <a class="label label-default" href="/tags/pkla">pkla</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/policykit">policykit</a> <a class="label label-default" href="/tags/polkit">polkit</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/virsh">virsh</a> <a class="label label-default" href="/tags/virt-manager">virt-manager</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/12/09/vagrant-on-fedora-with-libvirt/"><small>https://ttboj.wordpress.com/2013/12/09/vagrant-on-fedora-with-libvirt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/12/09/vagrant-on-fedora-with-libvirt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/12/09/vagrant-on-fedora-with-libvirt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

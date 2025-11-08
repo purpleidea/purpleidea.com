@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Matching arbitrary URL&#39;s to custom Firefox profiles - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Matching arbitrary URL&#39;s to custom Firefox profiles</strong><br><small></small></h3>
+					<hr>
+					<p>We&rsquo;re constantly clicking on all sorts of different URL&rsquo;s throughout the day. These clickable links appear in webpages (including in &ldquo;<a href="https://www.gnu.org/philosophy/who-does-that-server-really-serve.html">web apps</a>&rdquo; like gmail) in mail clients like <a href="https://en.wikipedia.org/wiki/Evolution_%28software%29">Evolution</a>, in terminals such as <a href="https://wiki.gnome.org/Apps/Terminal">GNOME-terminal</a>, and any other <a href="https://en.wikipedia.org/wiki/GTK%2B">GTK+</a> app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along. I&rsquo;m doing all of this on <a href="https://getfedora.org/">Fedora 23</a>, but it should work on other GNU/Linux environments.</p>
+<p><strong><span style="text-decoration:underline;">Firefox profiles</span>:</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/Firefox">Firefox</a> supports multiple profiles in the same user session so that different users can share a session, or so that a single user can separate tasks into different environments. I&rsquo;m interested in the latter use case. To add a new profile it&rsquo;s recommended to close firefox completely, but I didn&rsquo;t find this to be necessary. When I do close firefox, I like to surprise it with a:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>killall -9 firefox
+</span></span></code></pre></div><p>which will also cause any unsaved data in your browser to be lost. To create a new profile, now run firefox with -P:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>firefox -P
+</span></span></code></pre></div><p>This will open up a friendly dialog where you can add a new profile. After you&rsquo;ve done this, my dialog now looks like:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-profiles.png"><img class="size-full wp-image-1150" src="firefox-profiles.png" alt="A view of my firefox profiles as shown by running: firefox -P" width="100%" height="100%" /></a></td></tr><tr><td> A view of my firefox profiles as shown by running: firefox -P</td></tr></table></br />
+<p>to test that it is working, run firefox from the command line:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ firefox https://purpleidea.com/
+</span></span><span style="display:flex;"><span>$ firefox -P ghttps https://github.com/purpleidea/
+</span></span><span style="display:flex;"><span>$ firefox https://twitter.com/#!/purpleidea
+</span></span><span style="display:flex;"><span>$ firefox -P ghttps https://www.gnu.org/philosophy/free-sw.html
+</span></span></code></pre></div><p>You should get two separate sessions, where the commands with <code>-P ghttps</code> should be in your new &ldquo;<em>ghttps</em>&rdquo; session (or whatever you named it). Internet searches seem to report that some users can&rsquo;t run two sessions at the same time without including the <code>&ndash;no-remote</code> option, but I didn&rsquo;t seem to need it. <a href="https://duckduckgo.com/?q=ymmv">YMMV</a>.</p>
+<p><strong><span style="text-decoration:underline;">Firefox launcher</span>:</strong></p>
+<p>When you run firefox, it usually runs <code>/usr/bin/firefox</code>. I want <a href="/blog/2013/03/22/running-your-file-manager-from-a-terminal/">a more clever launcher</a>, so I&rsquo;ve created a new bash script named <code>~/bin/firefox</code> which is part of my path. The contents of this file are:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#080"></span><span style="color:#080;font-style:italic"># run firefox from a terminal, without being attached to it; similar to nohup</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># thanks to @purpleidea from https://purpleidea.com/</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># TODO: a better argv parser and more flexible url matching semantics</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># NOTE: first close firefox and make a new profile with `firefox -P`, then set:</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">protocol</span><span style="color:#666">=</span><span style="color:#b44">&#39;ghttps&#39;</span> <span style="color:#080;font-style:italic"># name of fake protocol</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">profile</span><span style="color:#666">=</span><span style="color:#b44">&#39;ghttps&#39;</span> <span style="color:#080;font-style:italic"># name of your new firefox profile</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">prefix</span><span style="color:#666">=</span><span style="color:#b44">&#39;https://example.com/&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">argv</span><span style="color:#666">=(</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$@</span><span style="color:#b44">&#34;</span><span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">argc</span><span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">$((</span><span style="color:#b8860b">$#</span> <span style="color:#666">-</span> <span style="color:#666">1</span><span style="color:#a2f;font-weight:bold">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">url</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b8860b">$argc</span> -ge <span style="color:#666">0</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b8860b">url</span><span style="color:#666">=</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">argv</span>[<span style="color:#b8860b">$argc</span>]<span style="color:#b68;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># avoid recursion!</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$url</span><span style="color:#b44">&#34;</span> <span style="color:#666">==</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$protocol</span><span style="color:#b44">&#34;</span>* <span style="color:#666">]]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#b8860b">url</span><span style="color:#666">=</span><span style="color:#b44">&#34;https</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">url</span>:<span style="color:#b68;font-weight:bold">${#</span><span style="color:#b8860b">protocol</span><span style="color:#b68;font-weight:bold">}}</span><span style="color:#b44">&#34;</span> <span style="color:#080;font-style:italic"># s/ghttps/https/</span>
+</span></span><span style="display:flex;"><span>        argv<span style="color:#666">[</span><span style="color:#b8860b">$argc</span><span style="color:#666">]=</span><span style="color:#b8860b">$url</span> <span style="color:#080;font-style:italic"># store it</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#echo $url</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#echo &#34;`date` ${argv[*]}&#34; &gt;&gt; /tmp/firefox.log</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># use a separate profile for special links</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$url</span><span style="color:#b44">&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#34;&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$url</span><span style="color:#b44">&#34;</span> <span style="color:#666">==</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$prefix</span><span style="color:#b44">&#34;</span>* <span style="color:#666">]]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># firefox with profile</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">{</span> <span style="color:#b44">`</span>/usr/bin/firefox -P <span style="color:#b44">&#34;</span><span style="color:#b8860b">$profile</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">argv</span>[@]<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span> &amp;&gt; /dev/null<span style="color:#b44">`</span>; <span style="color:#666">}</span> &amp;
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># normal firefox</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#666">{</span> <span style="color:#b44">`</span>/usr/bin/firefox <span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">argv</span>[@]<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span> &amp;&gt; /dev/null<span style="color:#b44">`</span>; <span style="color:#666">}</span> &amp;
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">fi</span>
+</span></span></code></pre></div><p>Make sure the file is executable with <code>chmod u+x ~/bin/firefox</code> and in your $PATH. Now whenever you run the <code>firefox</code> program, it will automatically run firefox with a profile that corresponds to the pattern of URL that you matched. Feel free to improve this script with a more comprehensive pattern to profile correspondence mechanism.</p>
+<p><strong><span style="text-decoration:underline;">Default applications</span>:</strong></p>
+<p>Whenever any URL is clicked within GNOME, there is a central &ldquo;Default Applications&rdquo; setting which decides what application to run. My settings dialog for this control now looks like:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="gnome-default-applications.png"><img class="size-large wp-image-1152" src="gnome-default-applications.png" alt="What the GNOME Settings-&gt;Details-&gt;Default Applications dialog looks like after I made one small change." width="100%" height="100%" /></a></td></tr><tr><td> What the GNOME Settings-&gt;Details-&gt;Default Applications dialog looks like after I made the change.</td></tr></table></br />
+<p>I had to change the &ldquo;Web&rdquo; handler to be a &ldquo;MyFirefox&rdquo; instead of the previous default of &ldquo;Firefox&rdquo;. Those applications are listed in <code>.desktop</code> files which exist on your system. The system wide firefox desktop file is located at: <code>/usr/share/applications/firefox.desktop</code> and although the path to the executable in this file does not set a directory prefix, it unfortunately does not seem to obey my shell $PATH which includes <code><del>/bin/</code>. If you know how to set this so <code>.desktop</code> files include <code></del>/bin/</code> in their search, then I&rsquo;d really appreciate it if you left me a comment!</p>
+<p>To work around the $PATH issue, I copied the above file into <code>~/.local/share/applications/firefox.desktop</code> and edited it so that the three <code>Exec=</code> commands include a path prefix of <code>/home/james/bin/</code>. I also renamed the <code>Name=</code> entry so that it was visually obvious that a different <code>.desktop</code> file was in use. This will replace the firefox launcher throughout your desktop and as well in the &ldquo;Default Applications&rdquo; menu.</p>
+<p>An excerpt of my file showing only the changed sections now looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[Desktop Entry]
+</span></span><span style="display:flex;"><span>Name=MyFirefox
+</span></span><span style="display:flex;"><span>Comment=Browse the Web better
+</span></span><span style="display:flex;"><span>Exec=/home/james/bin/firefox %u
+</span></span><span style="display:flex;"><span>Actions=new-window;new-private-window;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Desktop Action new-window]
+</span></span><span style="display:flex;"><span>Name=Open a New Window
+</span></span><span style="display:flex;"><span>Exec=/home/james/bin/firefox %u
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[Desktop Action new-private-window]
+</span></span><span style="display:flex;"><span>Name=Open a New Private Window
+</span></span><span style="display:flex;"><span>Exec=/home/james/bin/firefox --private-window %u
+</span></span></code></pre></div><p>Changing the name is optional, but it might be instructional for you.</p>
+<p>It&rsquo;s important that you not rename the file, because only files which are listed in one of the GNOME mime list files will show up in the &ldquo;Default Applications&rdquo; chooser. Once you&rsquo;ve created the file, you can check in these settings to ensure it&rsquo;s set as the default.</p>
+<p>I forget if you need to close firefox, and logout and then back in to your GNOME session for this to work, so if things aren&rsquo;t working perfectly by now, ensure you&rsquo;ve done that once. You can test this by clicking on a link in your terminal and checking to see that it opens the correct firefox.</p>
+<p><strong><span style="text-decoration:underline;">Redirecting internal firefox links</span>:</strong></p>
+<p>Everything should now be working perfectly, until you click on a link <em>within</em> firefox which doesn&rsquo;t redirect to your shell firefox wrapper. We want this to be seamless, so we&rsquo;ll have to hack into the firefox API for that. Thankfully there&rsquo;s a plugin which already does this for us, so we can use it and avoid getting our hands too dirty! It&rsquo;s called &ldquo;<a href="https://addons.mozilla.org/en-US/firefox/addon/redirector/">Redirector</a>&rdquo;. Install it.</p>
+<p>Once installed, there is a settings dialog which can add some pattern matching for us. I set up a basic pattern that corresponds to what I wrote in my <code>~/bin/firefox</code> shell script. Here&rsquo;s a screenshot:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-redirector.png"><img class="size-large wp-image-1154" src="firefox-redirector.png" alt="A screenshot from the firefox Redirector plugin." width="100%" height="100%" /></a></td></tr><tr><td> A screenshot from the firefox Redirector plugin.</td></tr></table></br />
+<p>You can conveniently import and export your redirects from the plugin, and so I&rsquo;ve included the <a href="https://gist.github.com/purpleidea/385ba877f484d04c6974">corresponding <code>.json</code> equivalent</a> for your convenience.</p>
+<p>Does everything look correct? Take a second to have a closer look. You might think that I made a typo in the &ldquo;Redirect to:&rdquo; field&quot;. There&rsquo;s no such protocol as <em>ghttps</em> you say? That&rsquo;s good news, because its use was intentional.</p>
+<p><strong><span style="text-decoration:underline;">Custom protocol handlers</span>:</strong></p>
+<p>Running an external command in response to certain links is what allows them to open external programs such as mail clients, PDF viewers, and image viewers. While some of these functions have been pulled into the browser, the need is still there and this is what we&rsquo;ll use to trigger our firefox shell script. It&rsquo;s actually important that we make an external system call because otherwise there would no way for a link in the default browser profile to open in browser profile number two. Running any such command is only possible with a custom or unique protocol. You might be used to seeing <code>https://</code> for URL&rsquo;s, but since these are captured by the browser as native links, we need something different. This is what the <code>ghttps://</code> that we mentioned above is for.</p>
+<p>To add a custom protocol, you&rsquo;ll need to dive into your browsers internal settings. You can do this by typing <code><a href="config">about:config</a></code> in the URL bar. You&rsquo;ll then need to right-click and add four new settings. These are the settings I added:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>(string)  network.protocol-handler.app.ghttps; /home/james/bin/firefox
+</span></span><span style="display:flex;"><span>(boolean) network.protocol-handler.expose.ghttps; false
+</span></span><span style="display:flex;"><span>(boolean) network.protocol-handler.external.ghttps; true
+</span></span><span style="display:flex;"><span>(boolean) network.protocol-handler.warn-external.ghttps; true
+</span></span></code></pre></div><p>Please note that the leading values (in brackets) are the <em>types</em> that you&rsquo;ll need to use. Omit the semicolons, those separate the key and the corresponding value you should give it. You&rsquo;ll naturally want to use the correct path to your firefox script.</p>
+<p>For reasons unknown to me, it&rsquo;s required to set these variables, but the protocol handler still requires that you manually verify this once. To do this, I have provided a sample link to my blog using the fake <em>ghttps</em> protocol:</p>
+<p style="text-align:center;"><a href="ghttps://purpleidea.com/">ghttps://purpleidea.com/</a></p>
+When you click on it the first time, you should be prompted with a confirmation dialog that asks you to reconfirm that you're okay running this protocol, and the path to the executable. Browse to the <code>~/bin/firefox</code> and click "Remember my choice for ghttps links". The dialog looked like this:
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="firefox-protocol-handler-confirm.png"><img class="size-full wp-image-1159" src="firefox-protocol-handler-confirm.png" alt="You should only need to deal with this dialog once!" width="100%" height="100%" /></a></td></tr><tr><td> You should only need to deal with this dialog once!</td></tr></table></br />
+<p>If you&rsquo;re using a different protocol, can you make a simple HTML file and open it up in your browser:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;html&gt;
+</span></span><span style="display:flex;"><span>&lt;a href=&#34;ghttps://purpleidea.com/&#34;&gt;ghttps://purpleidea.com/&lt;/a&gt;
+</span></span><span style="display:flex;"><span>&lt;/html&gt;
+</span></span></code></pre></div><p>At this point you may need to restart firefox. Your new protocol handler is now installed! Enjoy automatically handling special URL&rsquo;s.</p>
+<p><strong><span style="text-decoration:underline;">Bugs</span>:</strong></p>
+<p>There is one small usability bug which you might experience. If the link that should pattern match out to the protocol exists with a <code>target=_blank</code> (open in new window attribute) then once you&rsquo;ve activated the link, there will be a leftover blank firefox window to close. This is a known issue in firefox which occurs with other handlers as well. If anyone can work on this issue and/or find me a link to the ticket number, I&rsquo;d appreciate it.</p>
+<p><strong><span style="text-decoration:underline;">Curiosity</span>:</strong></p>
+<p>The curious might wonder what my use-case is. I&rsquo;ve been forced to use the most unpleasant online google document system. I&rsquo;ve decided that I didn&rsquo;t want to share my regular browser profile with this software, but I wanted URL integration to feel seamless, since people like to send the unique document URL&rsquo;s around by email and chat. The document URL&rsquo;s usually follow a pattern of:</p>
+<p style="text-align:center;">https://docs.google.com/a/<strong>example.com</strong>/<em>some-garbage-goes-here...</em></p>
+where <code>example.com</code> is the domain your organization uses. By setting the above string as the bash firefox <code>$prefix</code> variable, and with a similar pattern in the redirector plugin, you can ensure that you'll always get documents opening up in browser sessions connected to the correct google account! This is useful if you have multiple google accounts which you wish to automatically segregate to avoid having to constantly switch between them!
+<p><strong><span style="text-decoration:underline;">Future work</span>:</strong></p>
+<p>It would be great to consolidate the patterns as expressed in the Redirector database and the firefox bash script. It would probably make sense to generate a json file that both tools can use. Additional work to extend my bash script would be necessary. Patches welcome!</p>
+<p>It would be convenient if there was an easy setup script to automate through the myriad of steps that I took you through to get this all working. If someone can provide a simple bash equivalent, I would love to have it.</p>
+<p><strong><span style="text-decoration:underline;">Conclusion</span>:</strong></p>
+<p>I hope you enjoyed this article and this set of techniques! Hopefully you can appreciate how stringing five different techniques together can produce something useful. A big thank you goes out to <a href="https://github.com/SlashLife">SlashLife</a> from the <a href="https://web.libera.chat/?channels=#firefox">#firefox</a> IRC channel. This user pointed me to the <a href="https://addons.mozilla.org/en-US/firefox/addon/redirector/">Redirector</a> plugin which was critical for intercepting arbitrary URL&rsquo;s in firefox.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p>PS: I&rsquo;d like to apologize for not posting anything in the last three months! I&rsquo;ve been busy hacking on something big, which I&rsquo;ll hope to announce soon. Stay tuned and thanks for reading this far!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 14, 2015<br>
+				<small>1941 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/aboutconfig">about:config</a> <a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/default-applications">default applications</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/evolution">evolution</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/firefox">firefox</a> <a class="label label-default" href="/tags/firefox-profiles">firefox-profiles</a> <a class="label label-default" href="/tags/firefox-redirector">firefox-redirector</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/google-docs">google docs</a> <a class="label label-default" href="/tags/gtk">gtk</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/protocol-handler">protocol-handler</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/"><small>https://ttboj.wordpress.com/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

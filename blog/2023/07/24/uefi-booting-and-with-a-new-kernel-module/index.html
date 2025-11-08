@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to get your dracut-built initramfs machine to boot with UEFI when you&#39;re missing a kernel module.">
+	<meta name="author" content="James Shubin">
+
+	<title>UEFI booting, and with a new kernel module - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>UEFI booting, and with a new kernel module</strong><br><small>How to get your dracut-built initramfs machine to boot with UEFI when you&#39;re missing a kernel module.</small></h3>
+					<hr>
+					<p>Picture this. You&rsquo;ve got a supermicro server. It&rsquo;s got eight hot-swappable 3.5&quot;
+HDD&rsquo;s. You want to use all of those for storage, so you buy a <a href="#addon">nifty add-on</a>
+that let&rsquo;s you add four additional 2.5&quot; SSD&rsquo;s. Those are great for your OS.
+That&rsquo;s a great way to keep your data separate. The motherboard only supports
+eight drives, so you&rsquo;ll need an <a href="https://en.wikipedia.org/wiki/Host_adapter">HBA</a>
+for the additional four&hellip; What are some catches and things you need to watch
+out for?</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What&#39;s an HBA?</span><br /><br />
+
+<p>An HBA is a card that talks to both your host computer (usually through a PCI
+express port) and to some number of harddrives. (In my case four.) It lets
+Linux see the four drives separately as <code>/dev/sda</code>, <code>/dev/sdb</code>, <code>/dev/sdc</code>, and
+<code>/dev/sdd</code>. This is exactly what you want because it lets you use Linux <code>mdadm</code>
+software RAID. If you use hardware RAID and the controller dies, then you&rsquo;re in
+trouble. With software RAID you merely re-attach the drives anyway you like and
+things will keep working like magic.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Booting...</span><br /><br />
+
+<p>If you&rsquo;re booting Linux, you definitely want to be using UEFI. It&rsquo;s mostly quite
+easy. You make sure you have magic EFI partitions in the right places, and your
+motherboard UEFI firmware (formerly what we&rsquo;d call the BIOS for old booting)
+will find all of those and let you pick one to boot.</p>
+<p>Unfortunately some cards don&rsquo;t let you boot from them. They need something
+called UEFI firmware. This might also be called an &ldquo;option ROM&rdquo;. Your
+motherboard also needs to be able to talk to this firmware over PCI-express, and
+if it finds something it likes there, it can offer up boot options from that
+device. The &ldquo;StarTech 4 Port PCIe SATA Expansion Card&rdquo; that I had did NOT boot
+from UEFI. Maybe changing the firmware on it could fix this, but I tossed it
+aside.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="startech.jpg"><img class="alignnone size-full" src="startech.jpg" alt="This is junk. Get something different." width="100%" /></a></td></tr></tr></table></br />
+
+<p>Secondly, you have to enable this feature in your BIOS. Usually it&rsquo;s on by
+default though.</p>
+<p>Lastly you have to make sure to actually boot from UEFI. Any legacy or CSM modes
+should be disabled. You want pure-UEFI, no legacy MBR booting here.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">New card</span>:<br /><br />
+
+<p>I got a different card. It was a <em>9212-4i</em>, a 4 port SAS/SATA card. They sell
+this in <em>IT</em> mode or <em>IR</em> mode. The <em>IR</em> mode is for using it as a hardware
+RAID card. The <em>IT</em> mode is for standard HBA stuff. You can flash the firmware
+from one version to the other. The hardware is usually the same. I accidentally
+seem to have ordered the <em>IR</em> version, but somehow it works transparently in
+what feels like <em>IT</em> mode. Who knows. The chip is a <strong>LSI SAS 2008</strong>. This is an
+old chip, but it generally works great. I plug everything in and turn on the
+machine&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">It boots, sort of...</span><br /><br />
+
+<p>Finally you see beautiful GRUB. Things look like they&rsquo;re going okay, before you
+fail to load the root filesystem and you end up in a useless maintenance shell.
+The only useful thing I was able to do there was to run <code>ls -l /dev/disk/by-path/</code>
+and see that my drives were not visible. What&rsquo;s wrong?</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Understanding the problem</span>:<br /><br />
+
+<p>When your computer boots, it starts off with a miniature <code>/root/</code> filesystem and
+a kernel image. The kernel image is a file that looks like <code>*vmlinuz*</code> and the
+filesystem is something called an <em>initramfs</em> or an <em>initrd</em>. Basically this is
+a small operating system that has the minimum amount of stuff inside of it to
+load the kernel and any kernel modules you might need to talk to your real root
+filesystem. In our situation, it did not contain the magic that we wanted, so it
+was unable to find our <em>real</em> root partition which was on the startech HBA! That
+magic was the driver (a kernel module) for this new HBA card.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Which kernel module though?</span><br /><br />
+
+<p>Pop-in a Fedora live USB key. I happened to use the Fedora 37 Workstation image.
+I boot off of this key, and to my pleasure, when the machine is up, I can see my
+harddrives! What this means is that the module exists as part of the Fedora
+kernel, but that it&rsquo;s not part of the initramfs.</p>
+<p>You can search around in <code>dmesg</code> and <code>lsmod</code> (pipe both of these to <code>grep -i</code>)
+and eventually you&rsquo;ll find that the kernel module you want is now called:
+<code>mpt3sas</code>. (Or <code>mpt3sas.ko</code>.) Google is your friend too. It&rsquo;s working, but I
+need to get it to be part of my boot process.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">My initrd</span>:<br /><br />
+
+<p>To see what&rsquo;s already in there, you&rsquo;re supposed to be able to run:
+<code>lsinitrd | grep mpt3sas.ko</code>, but when I did, I actually found this file! It
+seems I am misunderstanding something here because it definitely wasn&rsquo;t booting
+yet. I mention all of this so you don&rsquo;t fall for this trap.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Dracut</span>:<br /><br />
+
+<p>Dracut is a tool that runs a bunch of &ldquo;modules&rdquo; (not kernel modules) and each of
+those are used to somehow build what eventually becomes a GRUB and initramfs
+setup. I&rsquo;m really not a dracut expert, so assume that this description needs
+improving.</p>
+<p>In any case, we definitely need to tell it about our new kernel module! Add the
+following file: <code>/etc/dracut.conf.d/mpt3sas-drivers.conf</code>. You can name it
+something different as long as it&rsquo;s in that directory. I followed the standard
+convention. The contents of this file should be:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>add_drivers+=&#34; mpt3sas &#34;
+</span></span></code></pre></div><p>If you look carefully, you&rsquo;ll note that the <code>mpt3sas</code> string is surrounded by
+<em>spaces</em> and then quotes. The spaces are required. Secondly, while this is
+indeed the name of a <em>kernel module</em> that we&rsquo;re adding, dracut already has its
+own &ldquo;module&rdquo; system, so instead it calls these drivers.</p>
+<p>Finally run this command to regenerate everything:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># dracut --regenerate-all
+</span></span></code></pre></div><p>It needs to run as root of course. This took about three minutes to run, and in
+the end I had new initramfs images! If you don&rsquo;t want these changes to be
+permanent, you can pass the options in on the commandline instead of via the
+config directory. The <code>--help</code> flag explains it all very well.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">It works!</span>:<br /><br />
+
+<p>A quick reboot and things are now working perfectly! I&rsquo;m running software RAID1
+for my two OS disks, and the remaining eight drives form a big software RAID6
+pool. I suspect that kernel updates should proceed normally and keep building in
+the kernel module since it&rsquo;s in my permanent configs.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Initial install</span>:<br /><br />
+
+<p>In my situation, I ended up installed in a bit of a round-about way, but the
+most likely scenario that you&rsquo;ll experience is after you&rsquo;ve installed a new OS
+via anaconda, on first reboot you will hit the scenario I&rsquo;ve described above. If
+the live installer doesn&rsquo;t even see your drivers, then you&rsquo;ve got bigger
+problems, and you&rsquo;ll have to first install those. The anaconda installer does
+support adding a &ldquo;driver disk&rdquo;, but I&rsquo;ve luckily never had to go through with
+that. <a href="https://www.youtube.com/watch?v=4fOAuXiynYM">This video</a> (FYI: not my
+video) covers that process fairly clearly if you get stuck there.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">RAID 1 UEFI boot</span>:<br /><br />
+
+<p>One unfortunate feature I&rsquo;m missing: while I&rsquo;ve got a RAID1 root partition, I
+don&rsquo;t have a redundant set of <code>/boot/</code> and <code>/boot/efi/</code> partitions. (The two
+magic partitions required to boot UEFI.) I know I could manually copy things
+to a secondary one, but I&rsquo;d love for this sort of thing to be automatic in
+dracut and anaconda. I think we&rsquo;ll somehow eventually get there with UKI&rsquo;s, but
+I am really not the expert there.</p>
+<p><a name="addon" ></a>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The nifty add-on</span>:<br /><br />
+</p>
+<p>What&rsquo;s that nifty thing? It&rsquo;s <a href="https://www.supermicro.com/en/products/accessories/mobilerack/CSE-M14TQC.php">this</a>:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="CSE-M14_1.jpg"><img class="alignnone size-full" src="CSE-M14_1.jpg" alt="Cute little addition to any server chassis." width="100%" /></a></td></tr></tr></table></br />
+
+<p>The main downside is that you need an HBA that supports <a href="https://en.wikipedia.org/wiki/SGPIO">SGPIO</a>
+and the card that I have does not seem to. This is so you can &ldquo;locate&rdquo; the hard
+drives with the associated blinky LED&rsquo;s. Funny enough, this add-on has the
+standard eight-pin supermicro SGPIO header. SGPIO only needs four pins though.
+My card actually has a four pin &ldquo;hdd led&rdquo; header! I figured I could just connect
+the correct pins together, but unfortunately from this photo in the manually, it
+turns out the card only supports plain +3.3v activity LED&rsquo;s, and only one for
+each port on the card. (One port for each four HDD&rsquo;s, cards can have up to eight
+drives across two ports, so per-drive locate is not possible it seems.)</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="lsi-manual.png"><img class="alignnone size-full" src="lsi-manual.png" alt="It seems this is not SGPIO. Can I2C over PCI-Express do it somehow?" width="100%" /></a></td></tr></tr></table></br />
+
+<p>More on my SGPIO adventures another day!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this. Please leave me a comment if this taught you something
+new! I thought I&rsquo;d write this up, because I couldn&rsquo;t find anything similar
+online, and this felt common enough of a problem.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>July 24, 2023<br>
+				<small>1486 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dracut">dracut</a> <a class="label label-default" href="/tags/driver">driver</a> <a class="label label-default" href="/tags/efi">efi</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/initrd">initrd</a> <a class="label label-default" href="/tags/initramfs">initramfs</a> <a class="label label-default" href="/tags/kernel">kernel</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/lsi">lsi</a> <a class="label label-default" href="/tags/mdadm">mdadm</a> <a class="label label-default" href="/tags/mpt2sas">mpt2sas</a> <a class="label label-default" href="/tags/mpt3sas">mpt3sas</a> <a class="label label-default" href="/tags/mpt3sas.ko">mpt3sas.ko</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/raid">raid</a> <a class="label label-default" href="/tags/uefi">uefi</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Automatic grouping in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Automatic grouping in mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>In this post, I&rsquo;ll tell you about the recently released &ldquo;automatic grouping&rdquo; or &ldquo;AutoGroup&rdquo; feature in <em><a href="https://github.com/purpleidea/mgmt/">mgmt</a></em>, a next generation configuration management prototype. If you aren&rsquo;t already familiar with mgmt, I&rsquo;d recommend you start by reading the <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">introductory post</a>, and the <a href="/blog/2016/03/14/automatic-edges-in-mgmt/">second post</a>. There&rsquo;s also an <a href="https://www.youtube.com/watch?v=GVhpPF0j-iE&html5=1">introductory video</a>.</p>
+<p><span style="text-decoration:underline;">Resources in a graph</span></p>
+<p>Most configuration management systems use something called a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed acyclic graph, or DAG</a>. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges). The arrows must be connected to exactly two vertices, and you&rsquo;re only allowed to move along each arrow in one direction (directed). Lastly, if you start at any vertex in the graph, you must never be able to return to where you started by following the arrows (acyclic). If you can, the graph is not fit for our purpose.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="356px-Directed_acyclic_graph_3.svg.png" rel="attachment wp-att-1800"><img class="size-full wp-image-1800" src="356px-Directed_acyclic_graph_3.svg.png" alt="A DAG from Wikipedia" width="100%" height="100%" /></a></td></tr><tr><td> An example DAG from <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">Wikipedia</a></td></tr></table></br />
+<p>The graphs in configuration management systems usually represent the dependency relationships (edges) between the resources (vertices) which is important because you might want to declare that you want a certain package installed <em>before</em> you start a service. To represent the kind of work that you want to do, different kinds of resources exist which you can use to specify that work.</p>
+<p>Each of the vertices in a graph represents a unique resource, and each is backed by an individual software routine or &ldquo;program&rdquo; which can check the state of the resource, and apply the correct state if needed. This makes each resource <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>. If we have many individual programs, this might turn out to be a lot of work to do to get our graph into the desired state!</p>
+<p><span style="text-decoration:underline;">Resource grouping</span></p>
+<p>It turns out that some resources have a fixed overhead to starting up and running. If we can group resources together so that they share this fixed overhead, then our graph might converge faster. This is exactly what we do in mgmt!</p>
+<p>Take for example, a simple graph such as the following:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="grouping1.png" rel="attachment wp-att-1801"><img class="size-large wp-image-1801" src="grouping1.png" alt="Simple DAG showing three pkg, two file, and one svc resource" width="100%" height="100%" /></a></td></tr><tr><td> Simple DAG showing one svc, two file, and three pkg resources...</td></tr></table></br />
+<p>We can logically group the three pkg resources together and redraw the graph so that it now looks like this:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="grouping2.png" rel="attachment wp-att-1802"><img class="size-full wp-image-1802" src="grouping2.png" alt="DAG with the three pkg resources now grouped into one." width="100%" height="100%" /></a></td></tr><tr><td> DAG with the three pkg resources now grouped into one! Overlapping vertices mean that they act as if they're one vertex instead of three!</td></tr></table></br />
+<p>This all happens automatically of course! It is very important that the new graph is a faithful, logical representation of the original graph, so that the specified dependency relationships are preserved. What this represents, is that when multiple resources are grouped (shown by overlapping vertices in the graph) they run together as a single unit. This is the practical difference between running:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ dnf install -y powertop
+</span></span><span style="display:flex;"><span>$ dnf install -y sl
+</span></span><span style="display:flex;"><span>$ dnf install -y cowsay
+</span></span></code></pre></div><p>if not grouped, and:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ dnf install -y powertop sl cowsay
+</span></span></code></pre></div><p>when grouped. If you try this out you&rsquo;ll see that the second scenario is much faster, and on my laptop about <em>three</em> times faster! This is because of fixed overhead such as cache updates, and the dnf dep solver that each process runs.</p>
+<p>This grouping means mgmt uses this faster second scenario instead of the slower first scenario that all the current generation tools do. It&rsquo;s also important to note that different resources can implement the grouping feature to optimize for different things besides performance. More on that later&hellip;</p>
+<p><span style="text-decoration:underline;">The algorithm</span></p>
+<p>I&rsquo;m not an algorithmist by training, so it took me some fiddling to come up with an appropriate solution. I&rsquo;ve <a href="https://github.com/purpleidea/mgmt/commit/81c5ce40d4e235d1dfef9f353c4b6392ae1ec37e">implemented it</a> along with an extensive testing framework and a series of test cases, which it passes of course! If we ever find a graph that does not get grouped correctly, then we can iterate on the algorithm and add it as a new test case.</p>
+<p>The algorithm turns out to be relatively simple. I first noticed that vertices which had a relationship between them must not get grouped, because that would undermine the precedence ordering of the vertices! This property is called <a href="https://en.wikipedia.org/wiki/Reachability">reachability</a>. I then attempt to group every vertex to every other vertex that has no reachability or reverse reachability to it!</p>
+<p>The hard part turned out to be getting all the plumbing surrounding the algorithm correct, and in particular the actual vertex merging algorithm, so that &ldquo;discarded edges&rdquo; are reattached in the correct places. I also took a bit of extra time to implement the algorithm as a struct which satisfies an &ldquo;<a href="https://github.com/purpleidea/mgmt/commit/1b01f908e3ada686024ad144637ea0dd0ab64762#diff-b4bda758a2aef091432646c354b4dc59R307">AutoGrouper</a>&rdquo; interface. This way, if you&rsquo;d like to implement a different algorithm, it&rsquo;s easy to drop in your replacement. I&rsquo;m fairly certain that a more optimal version of my algorithm is possible for anyone wishing to do the analysis.</p>
+<p>A quick note on nomenclature: I&rsquo;ve actually decided to call this <em>grouping</em> and not <em>merging</em>, because we actually preserve the unique data of each resource so that they can be taken apart and mixed differently when (and if) there is a change in the compiled graph. This makes graph changeovers very cheap in mgmt, because we don&rsquo;t have to re-evaluate anything which remains constant between graphs. Merging would imply a permanent reduction and loss of unique identity.</p>
+<p><span style="text-decoration:underline;">Parallelism and user choice</span></p>
+<p>It&rsquo;s worth noting two important points:</p>
+<ol>
+    <li>Auto grouping of resources usually <em>decreases</em> the parallelism of a graph.</li>
+    <li>The user might <em>not</em> want a particular resource to get grouped!</li>
+</ol>
+<p>You might remember that one of the novel properties of mgmt, is that <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">it executes the graph in parallel</a> whenever possible. Although the grouping of resources actually removes some of this parallelism, certain resources such as the pkg resource already have an innate constraint on sequential behaviour, namely: the package manager lock. Since these tools can&rsquo;t operate in parallel, and since each execution has a fixed overhead, it&rsquo;s almost always beneficial to group pkg resources together.</p>
+<p>Grouping is also not mandatory, so while it is a sensible default, you can disable grouping per resource with a simple <a href="https://github.com/purpleidea/mgmt/blob/master/DOCUMENTATION.md#autogrouping">meta parameter</a>.</p>
+<p>Lastly, it&rsquo;s also worth mentioning that grouping doesn&rsquo;t &ldquo;magically&rdquo; happen without some effort. The underlying resource needs to know how to optimize, watch, check and apply multiple resources simultaneously for it to support the feature. At the moment, only the pkg resource can do any grouping, and even then, there could always be some <a href="https://github.com/purpleidea/mgmt/blob/81c5ce40d4e235d1dfef9f353c4b6392ae1ec37e/pkg.go#L496">room for improvement</a>. It&rsquo;s also not optimal (or even logical) to group certain types of resources, so those will never be able to do any grouping. We also don&rsquo;t group together resources of different <em>kinds</em>, although mgmt could support this if a valid use case is ever found.</p>
+<p><span style="text-decoration:underline;">File grouping</span></p>
+<p>As I mentioned, only the pkg resource supports grouping at this time. The file resource demonstrates a different use case for resource grouping. Suppose you want to monitor 10000 files in a particular directory, but they are specified individually. This would require far too many <a href="https://en.wikipedia.org/wiki/Inotify">inotify</a> watches than a normal system usually has, so the grouping algorithm could group them into a single resource, which then uses a recursive watcher such as <a href="https://lwn.net/Articles/339253/">fanotify</a> to reduce the watcher count by a factor of 10000. Unfortunately neither the file resource grouping, nor the <a href="https://github.com/fsnotify/fsnotify/issues/114">fanotify support</a> for this exist at the moment. If you&rsquo;d like to implement either of these, <a href="/contact/">please let me know</a>!</p>
+<p>If you can think of another resource kind that you&rsquo;d like to write, or in particular, if you know of one which would work well with resource grouping, <a href="/contact/">please contact me</a>!</p>
+<p><span style="text-decoration:underline;">Science!</span></p>
+<p>I wouldn&rsquo;t be a very good scientist (I&rsquo;m actually a <a href="https://en.wikipedia.org/wiki/Cardiology">Physiologist</a> by training) if I didn&rsquo;t include some data and a demonstration that this all actually works, and improves performance! What follows will be a good deal of information, so skim through the parts you don&rsquo;t care about.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="adamsavage-science.png" rel="attachment wp-att-1805"><img class="size-large wp-image-1805" src="adamsavage-science.png" alt="Science <3 data" width="100%" height="100%" /></a></td></tr><tr><td> Science <3 data</td></tr></table></br />
+<p>I decided to test the following four scenarios:</p>
+<ol>
+    <li>single package, package check, package already installed</li>
+    <li>single package, package install, package not installed</li>
+    <li>three packages, package check, packages already installed</li>
+    <li>three packages, package install, packages not installed</li>
+</ol>
+<p>These are the situations you&rsquo;d encounter when running your tool of choice to install one or more packages, and finding them either already present, or in need of installation. I timed each test, which ends when the tool tells us that our system has converged.</p>
+<p>Each test is performed multiple times, and the average is taken, but only after we&rsquo;ve run the tool at least twice so that the caches are warm.</p>
+<p>We chose small packages so that the fixed overhead delays due to bandwidth and latencies are minimal, and so that our data is more representative of the underlying tool.</p>
+<p>The single package tests use the <em>powertop</em> package, and the three package tests use <em>powertop</em>, <em>sl</em>, and <em>cowsay</em>. All tests were performed on an up-to-date Fedora 23 laptop, with an SSD. If you haven&rsquo;t tried <em>sl</em> and <em>cowsay</em>, do give them a go!</p>
+<p>The four tools tested were:</p>
+<ol>
+    <li>puppet</li>
+    <li>mgmt</li>
+    <li>pkcon</li>
+    <li>dnf</li>
+</ol>
+<p>The last two are package manager front ends so that it&rsquo;s more obvious how expensive something is expected to cost, and so that you can discern what amount of overhead is expected, and what puppet or mgmt is causing you. Here are a few representative runs:</p>
+<p>mgmt installation of <em>powertop</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> time sudo <span style="color:#666">./</span>mgmt run <span style="color:#666">--</span>file examples<span style="color:#666">/</span>pkg1<span style="color:#666">.</span>yaml <span style="color:#666">--</span>converged<span style="color:#666">-</span>timeout<span style="color:#666">=</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> main<span style="color:#666">.</span>go:<span style="color:#666">63</span>: This is: mgmt, version: <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">3</span><span style="color:#666">-</span><span style="color:#666">1</span><span style="color:#666">-</span>g6f3ac4b
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> main<span style="color:#666">.</span>go:<span style="color:#666">64</span>: Main: Start: <span style="color:#666">1459299858287120473</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> main<span style="color:#666">.</span>go:<span style="color:#666">190</span>: Main: Running<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> main<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Starting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> main<span style="color:#666">.</span>go:<span style="color:#666">117</span>: Main: Waiting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Watching<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Watching<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">18</span> configwatch<span style="color:#666">.</span>go:<span style="color:#666">54</span>: Watching: examples<span style="color:#666">/</span>pkg1<span style="color:#666">.</span>yaml
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> config<span style="color:#666">.</span>go:<span style="color:#666">272</span>: Compile: Adding AutoEdges<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> config<span style="color:#666">.</span>go:<span style="color:#666">533</span>: Compile: Grouping: Algorithm: nonReachabilityGrouper<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> main<span style="color:#666">.</span>go:<span style="color:#666">171</span>: Graph: Vertices(<span style="color:#666">1</span>), Edges(<span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> main<span style="color:#666">.</span>go:<span style="color:#666">174</span>: Graphviz: No filename given<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">764</span>: State: graphStateNil <span style="color:#666">-&gt;</span> graphStateStarting
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">825</span>: State: graphStateStarting <span style="color:#666">-&gt;</span> graphStateStarted
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> main<span style="color:#666">.</span>go:<span style="color:#666">117</span>: Main: Waiting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">245</span>: Pkg[powertop]: CheckApply(true)
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">303</span>: Pkg[powertop]: Apply
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">20</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">317</span>: Pkg[powertop]: Set: installed<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">25</span> packagekit<span style="color:#666">.</span>go:<span style="color:#666">399</span>: PackageKit: Woops: Signal<span style="color:#666">.</span>Path: <span style="color:#666">/</span><span style="color:#666">8442</span>_beabdaea
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">25</span> packagekit<span style="color:#666">.</span>go:<span style="color:#666">399</span>: PackageKit: Woops: Signal<span style="color:#666">.</span>Path: <span style="color:#666">/</span><span style="color:#666">8443</span>_acbadcbd
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">31</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">335</span>: Pkg[powertop]: Set: installed success<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">31</span> main<span style="color:#666">.</span>go:<span style="color:#666">79</span>: Converged <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">0</span> seconds, exiting<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">31</span> main<span style="color:#666">.</span>go:<span style="color:#666">55</span>: Interrupted by exit <span style="color:#a2f;font-weight:bold">signal</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">31</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">796</span>: Pkg[powertop]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">04</span>:<span style="color:#666">31</span> main<span style="color:#666">.</span>go:<span style="color:#666">203</span>: Goodbye<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m13<span style="color:#666">.</span><span style="color:#666">320</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">023</span>s
+</span></span><span style="display:flex;"><span>sys    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">021</span>s
+</span></span></code></pre></div><p>puppet installation of <em>powertop</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time sudo puppet apply pkg.pp 
+</span></span><span style="display:flex;"><span>Notice: Compiled catalog for computer.example.com in environment production in 0.69 seconds
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/Package[powertop]/ensure: created
+</span></span><span style="display:flex;"><span>Notice: Applied catalog in 10.13 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m18.254s
+</span></span><span style="display:flex;"><span>user    0m9.211s
+</span></span><span style="display:flex;"><span>sys    0m2.074s
+</span></span></code></pre></div><p>dnf installation of <em>powertop</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> time sudo dnf install <span style="color:#666">-</span>y powertop
+</span></span><span style="display:flex;"><span>Last metadata expiration check: <span style="color:#666">1</span>:<span style="color:#666">22</span>:<span style="color:#666">03</span> ago on Tue Mar <span style="color:#666">29</span> <span style="color:#666">20</span>:<span style="color:#666">04</span>:<span style="color:#666">29</span> <span style="color:#666">2016.</span>
+</span></span><span style="display:flex;"><span>Dependencies resolved<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">==========================================================================</span>
+</span></span><span style="display:flex;"><span> Package          Arch           Version            Repository       Size
+</span></span><span style="display:flex;"><span><span style="color:#666">==========================================================================</span>
+</span></span><span style="display:flex;"><span>Installing:
+</span></span><span style="display:flex;"><span> powertop         x86_64         <span style="color:#666">2.8</span><span style="color:#666">-</span><span style="color:#666">1.</span>fc23         updates         <span style="color:#666">228</span> k
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Transaction Summary
+</span></span><span style="display:flex;"><span><span style="color:#666">==========================================================================</span>
+</span></span><span style="display:flex;"><span>Install  <span style="color:#666">1</span> Package
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Total download size: <span style="color:#666">228</span> k
+</span></span><span style="display:flex;"><span>Installed size: <span style="color:#666">576</span> k
+</span></span><span style="display:flex;"><span>Downloading Packages:
+</span></span><span style="display:flex;"><span>powertop<span style="color:#666">-</span><span style="color:#666">2.8</span><span style="color:#666">-</span><span style="color:#666">1.</span>fc23<span style="color:#666">.</span>x86_64<span style="color:#666">.</span>rpm            <span style="color:#666">212</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span> <span style="color:#666">228</span> kB     <span style="color:#666">00</span>:<span style="color:#666">01</span>    
+</span></span><span style="display:flex;"><span><span style="color:#666">--------------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>Total                                     <span style="color:#666">125</span> kB<span style="color:#666">/</span>s <span style="color:#666">|</span> <span style="color:#666">228</span> kB     <span style="color:#666">00</span>:<span style="color:#666">01</span>     
+</span></span><span style="display:flex;"><span>Running transaction check
+</span></span><span style="display:flex;"><span>Transaction check succeeded<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Running transaction test
+</span></span><span style="display:flex;"><span>Transaction test succeeded<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Running transaction
+</span></span><span style="display:flex;"><span>  Installing  : powertop<span style="color:#666">-</span><span style="color:#666">2.8</span><span style="color:#666">-</span><span style="color:#666">1.</span>fc23<span style="color:#666">.</span>x86_64                            <span style="color:#666">1</span><span style="color:#666">/</span><span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>  Verifying   : powertop<span style="color:#666">-</span><span style="color:#666">2.8</span><span style="color:#666">-</span><span style="color:#666">1.</span>fc23<span style="color:#666">.</span>x86_64                            <span style="color:#666">1</span><span style="color:#666">/</span><span style="color:#666">1</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Installed:
+</span></span><span style="display:flex;"><span>  powertop<span style="color:#666">.</span>x86_64 <span style="color:#666">2.8</span><span style="color:#666">-</span><span style="color:#666">1.</span>fc23                                              
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Complete<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m10<span style="color:#666">.</span><span style="color:#666">406</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m4<span style="color:#666">.</span><span style="color:#666">954</span>s
+</span></span><span style="display:flex;"><span>sys    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">836</span>s
+</span></span></code></pre></div><p>puppet installation of <em>powertop</em>, <em>sl</em> and <em>cowsay</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time sudo puppet apply pkg3.pp 
+</span></span><span style="display:flex;"><span>Notice: Compiled catalog for computer.example.com in environment production in 0.68 seconds
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/Package[powertop]/ensure: created
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/Package[sl]/ensure: created
+</span></span><span style="display:flex;"><span>Notice: /Stage[main]/Main/Package[cowsay]/ensure: created
+</span></span><span style="display:flex;"><span>Notice: Applied catalog in 33.02 seconds
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m41.229s
+</span></span><span style="display:flex;"><span>user    0m19.085s
+</span></span><span style="display:flex;"><span>sys    0m4.046s
+</span></span></code></pre></div><p>pkcon installation of <em>powertop</em>, <em>sl</em> and <em>cowsay</em>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> time sudo pkcon install powertop sl cowsay
+</span></span><span style="display:flex;"><span>Resolving                     [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Starting                      [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Testing changes               [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Finished                      [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Installing                    [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Querying                      [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Downloading packages          [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Testing changes               [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Installing packages           [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>Finished                      [<span style="color:#666">=========================</span>]         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m14<span style="color:#666">.</span><span style="color:#666">755</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">060</span>s
+</span></span><span style="display:flex;"><span>sys    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">025</span>s
+</span></span></code></pre></div><p>and finally, mgmt installation of <em>powertop</em>, <em>sl</em> and <em>cowsay</em> with autogrouping:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> time sudo <span style="color:#666">./</span>mgmt run <span style="color:#666">--</span>file examples<span style="color:#666">/</span>autogroup2<span style="color:#666">.</span>yaml <span style="color:#666">--</span>converged<span style="color:#666">-</span>timeout<span style="color:#666">=</span><span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> main<span style="color:#666">.</span>go:<span style="color:#666">63</span>: This is: mgmt, version: <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">3</span><span style="color:#666">-</span><span style="color:#666">1</span><span style="color:#666">-</span>g6f3ac4b
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> main<span style="color:#666">.</span>go:<span style="color:#666">64</span>: Main: Start: <span style="color:#666">1459300560994114252</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> main<span style="color:#666">.</span>go:<span style="color:#666">190</span>: Main: Running<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> main<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Starting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> main<span style="color:#666">.</span>go:<span style="color:#666">117</span>: Main: Waiting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Watching<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> etcd<span style="color:#666">.</span>go:<span style="color:#666">113</span>: Etcd: Watching<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">00</span> configwatch<span style="color:#666">.</span>go:<span style="color:#666">54</span>: Watching: examples<span style="color:#666">/</span>autogroup2<span style="color:#666">.</span>yaml
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> config<span style="color:#666">.</span>go:<span style="color:#666">272</span>: Compile: Adding AutoEdges<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> config<span style="color:#666">.</span>go:<span style="color:#666">533</span>: Compile: Grouping: Algorithm: nonReachabilityGrouper<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> config<span style="color:#666">.</span>go:<span style="color:#666">533</span>: Compile: Grouping: Success <span style="color:#a2f;font-weight:bold">for</span>: Pkg[powertop] into Pkg[cowsay]
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> config<span style="color:#666">.</span>go:<span style="color:#666">533</span>: Compile: Grouping: Success <span style="color:#a2f;font-weight:bold">for</span>: Pkg[sl] into Pkg[cowsay]
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> main<span style="color:#666">.</span>go:<span style="color:#666">171</span>: Graph: Vertices(<span style="color:#666">1</span>), Edges(<span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> main<span style="color:#666">.</span>go:<span style="color:#666">174</span>: Graphviz: No filename given<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">764</span>: State: graphStateNil <span style="color:#666">-&gt;</span> graphStateStarting
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">825</span>: State: graphStateStarting <span style="color:#666">-&gt;</span> graphStateStarted
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> main<span style="color:#666">.</span>go:<span style="color:#666">117</span>: Main: Waiting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">245</span>: Pkg[autogroup:(cowsay,powertop,sl)]: CheckApply(true)
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">303</span>: Pkg[autogroup:(cowsay,powertop,sl)]: Apply
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">03</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">317</span>: Pkg[autogroup:(cowsay,powertop,sl)]: Set: installed<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">08</span> packagekit<span style="color:#666">.</span>go:<span style="color:#666">399</span>: PackageKit: Woops: Signal<span style="color:#666">.</span>Path: <span style="color:#666">/</span><span style="color:#666">8547</span>_cbeaddda
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">08</span> packagekit<span style="color:#666">.</span>go:<span style="color:#666">399</span>: PackageKit: Woops: Signal<span style="color:#666">.</span>Path: <span style="color:#666">/</span><span style="color:#666">8548</span>_bcaadbce
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">16</span> pkg<span style="color:#666">.</span>go:<span style="color:#666">335</span>: Pkg[autogroup:(cowsay,powertop,sl)]: Set: installed success<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">16</span> main<span style="color:#666">.</span>go:<span style="color:#666">79</span>: Converged <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">0</span> seconds, exiting<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">16</span> main<span style="color:#666">.</span>go:<span style="color:#666">55</span>: Interrupted by exit <span style="color:#a2f;font-weight:bold">signal</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">16</span> pgraph<span style="color:#666">.</span>go:<span style="color:#666">796</span>: Pkg[cowsay]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">21</span>:<span style="color:#666">16</span>:<span style="color:#666">16</span> main<span style="color:#666">.</span>go:<span style="color:#666">203</span>: Goodbye<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m15<span style="color:#666">.</span><span style="color:#666">621</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">040</span>s
+</span></span><span style="display:flex;"><span>sys    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">038</span>s
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Results and analysis</span></p>
+<p>My hard work seems to have paid off, because we do indeed see a noticeable improvement from grouping package resources. The data shows that even in the single package comparison cases, mgmt has very little overhead, which is demonstrated by seeing that the mgmt run times are very similar to the times it takes to run the package managers manually.</p>
+<p>In the three package scenario, performance is approximately <strong>2.39 times faster than puppet</strong> for installation. Checking was about <strong>12 times faster!</strong> These ratios are expected to grow with a larger number of resources.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="mgmt-grouping-analysis.png" rel="attachment wp-att-1812"><img class="size-large wp-image-1812" src="mgmt-grouping-analysis.png" alt="Sweet graph..." width="100%" height="100%" /></a></td></tr><tr><td> Bigger bars is worse... Puppet is in Red, mgmt is in blue.</td></tr></table></br />
+<p>The four groups at the bottom along the x axis correspond to the four scenarios I tested, 1, 2 and 3 corresponding to each run of that scenario, with the average of the three listed there too.</p>
+<p><span style="text-decoration:underline;">Versions</span></p>
+<p>The test wouldn&rsquo;t be complete if we didn&rsquo;t tell you which specific version of each tool that we used. Let&rsquo;s time those as well! ;)</p>
+<p>puppet:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time puppet --version 
+</span></span><span style="display:flex;"><span>4.2.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m0.659s
+</span></span><span style="display:flex;"><span>user    0m0.525s
+</span></span><span style="display:flex;"><span>sys    0m0.064s
+</span></span></code></pre></div><p>mgmt:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time ./mgmt --version
+</span></span><span style="display:flex;"><span>mgmt version 0.0.3-1-g6f3ac4b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m0.007s
+</span></span><span style="display:flex;"><span>user    0m0.006s
+</span></span><span style="display:flex;"><span>sys    0m0.002s
+</span></span></code></pre></div><p>pkcon:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time pkcon --version
+</span></span><span style="display:flex;"><span>1.0.11
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m0.013s
+</span></span><span style="display:flex;"><span>user    0m0.006s
+</span></span><span style="display:flex;"><span>sys    0m0.005s
+</span></span></code></pre></div><p>dnf:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ time dnf --version
+</span></span><span style="display:flex;"><span>1.1.7
+</span></span><span style="display:flex;"><span>  Installed: dnf-0:1.1.7-2.fc23.noarch at 2016-03-17 13:37
+</span></span><span style="display:flex;"><span>  Built    : Fedora Project at 2016-03-09 16:45
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Installed: rpm-0:4.13.0-0.rc1.12.fc23.x86_64 at 2016-03-03 09:39
+</span></span><span style="display:flex;"><span>  Built    : Fedora Project at 2016-02-29 09:53
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    0m0.438s
+</span></span><span style="display:flex;"><span>user    0m0.379s
+</span></span><span style="display:flex;"><span>sys    0m0.036s
+</span></span></code></pre></div><p>Yep, puppet even takes the longest to tell us what version it is. Now I&rsquo;m just teasing&hellip;</p>
+<p><span style="text-decoration:underline;">Methodology</span></p>
+<p>It might have been more useful to time the <em>removal</em> of packages instead so that we further reduce the variability of internet bandwidth and latency, although since most configuration management is used to <em>install</em> packages (rather than remove), we figured this would be more appropriate and easy to understand. You&rsquo;re welcome to conduct your own study and share the results!</p>
+<p>Additionally, for fun, I also looked at puppet runs where three individual resources were used instead of a single resource with the title being an array of all three packages, and found no significant difference in the results. Indeed puppet runs dnf three separate times in either scenario:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ ps auxww | grep dnf
+</span></span><span style="display:flex;"><span>root     12118 27.0  1.4 417060 110864 ?       Ds   21:57   0:03 /usr/bin/python3 /usr/bin/dnf -d 0 -e 0 -y install powertop
+</span></span><span style="display:flex;"><span>$ ps auxww | grep dnf
+</span></span><span style="display:flex;"><span>root     12713 32.7  2.0 475204 159840 ?       Rs   21:57   0:02 /usr/bin/python3 /usr/bin/dnf -d 0 -e 0 -y install sl
+</span></span><span style="display:flex;"><span>$ ps auxww | grep dnf
+</span></span><span style="display:flex;"><span>root     13126  0.0  0.7 275324 55608 ?        Rs   21:57   0:00 /usr/bin/python3 /usr/bin/dnf -d 0 -e 0 -y install cowsay
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Data</span></p>
+<p>If you&rsquo;d like to download the raw data as a text formatted table, and the terminal output from each type of run, I&rsquo;ve posted it <a href="https://gist.github.com/purpleidea/287e1e967b3fd8de04f9003abb35454a">here</a>.</p>
+<p><span style="text-decoration:underline;">Conclusion</span></p>
+<p>I hope that you enjoyed this feature and analysis, and that you&rsquo;ll help contribute to making it better. Come join our <a href="https://web.libera.chat/?channels=#mgmtconfig">IRC</a> channel and say hello! Thanks to those who reviewed my article and pointed out some good places for improvements!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 30, 2016<br>
+				<small>2650 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/autogrouping">autogrouping</a> <a class="label label-default" href="/tags/config-management">config management</a> <a class="label label-default" href="/tags/dag">dag</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dnf">dnf</a> <a class="label label-default" href="/tags/fanotify">fanotify</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/graph">graph</a> <a class="label label-default" href="/tags/grouping">grouping</a> <a class="label label-default" href="/tags/inotify">inotify</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/package">package</a> <a class="label label-default" href="/tags/packagekit">packagekit</a> <a class="label label-default" href="/tags/parallelism">parallelism</a> <a class="label label-default" href="/tags/pkcon">pkcon</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetfreeipa">planetfreeipa</a> <a class="label label-default" href="/tags/planetipa">planetipa</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/reachability">reachability</a> <a class="label label-default" href="/tags/science">science</a> <a class="label label-default" href="/tags/testing">testing</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/03/30/automatic-grouping-in-mgmt/"><small>https://ttboj.wordpress.com/2016/03/30/automatic-grouping-in-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/03/30/automatic-grouping-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/03/30/automatic-grouping-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

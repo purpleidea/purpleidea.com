@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on purpleidea.com</title>
+    <link>https://purpleidea.com/projects/</link>
+    <description>Recent content in Projects on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <atom:link href="https://purpleidea.com/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dinner</title>
+      <link>https://purpleidea.com/projects/dinner/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/projects/dinner/</guid>
+      <description>Every year on December 25th, a free meal is served to the community. We welcome poor, homeless, lonely, low income, or anyone otherwise in need of a free meal.&#xA;The date coincides with christmas day, but the event is non-religious, and is open to anyone of any faith, including agnostics and atheists.&#xA;The event is run entirely by volunteers using donated time, money and food. We typically serve a meal consisting of turkey, mashed potatoes, stuffing, cooked vegetables, cranberry sauce, gravy, and dessert.</description>
+    </item>
+    <item>
+      <title>Les Garderies K.I.D.S. Infrastructure</title>
+      <link>https://purpleidea.com/projects/les-garderies-kids/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/projects/les-garderies-kids/</guid>
+      <description>Les Garderies K.I.D.S. is a chain of daycares in the Montreal region. I completed a number of projects for this group. Below you can find a select list of projects, some associated photos, and testimonials.&#xA;Video Viewing Screens One of the video viewing screens. Daycare staff needed access to live video streams of different areas of the daycares so that they can keep watch of everything going on. For this I installed a number of PoE cameras alongside custom video viewing screens which were placed around the daycares.</description>
+    </item>
+    <item>
+      <title>Mentoring Program</title>
+      <link>https://purpleidea.com/projects/mentoring-program/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/projects/mentoring-program/</guid>
+      <description>Some time ago, I started a small mentoring program, to help interested learners improve their computer skills. I&amp;rsquo;ve taken on a small number of participants to keep quality high, and I think I&amp;rsquo;ve had some great results. Here are some of their testimonials.&#xA;Testimonials When I decided to get back into IT after more than half a decade away from the field, I was in dire need of some direction and James came to the rescue.</description>
+    </item>
+    <item>
+      <title>Mgmt Config</title>
+      <link>https://purpleidea.com/projects/mgmt-config/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/projects/mgmt-config/</guid>
+      <description>After having spent well over five years using and writing Puppet, I decided that I had some designs for a next generation automation tool. This eventually became what is now known as Mgmt Config or mgmt.&#xA;Mgmt runs as a distributed system. The project has a number of novel features, including an event-based execution engine, a reactive domain specific language (DSL) and the ability to execute in parallel. A cluster of mgmt agents can self-coordinate and run as a distributed system using the raft consensus algorithm.</description>
+    </item>
+    <item>
+      <title>yesiscan</title>
+      <link>https://purpleidea.com/projects/yesiscan/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://purpleidea.com/projects/yesiscan/</guid>
+      <description>yesiscan is a tool for performing automated license scanning. It takes many forms of user input, then runs a bunch of different analysis tools in parallel, and finally produces a customizable report which can easily be shared with your team. It has been designed to make license analysis simple for users, and easy to manage and configure for centralized legal teams.&#xA;yesiscan has a friendly web ui. It can be used via a CLI, web ui, http API, or even imported as a library and built into your existing software.</description>
+    </item>
+  </channel>
+</rss>

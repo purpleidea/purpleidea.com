@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Hacking out an Openshift app - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Hacking out an Openshift app</strong><br><small></small></h3>
+					<hr>
+					<p><a href="https://github.com/purpleidea/puppet-gluster/commit/a4bf5cad81ca66212f4c8e52edb2e816b8895690">I had an itch to scratch</a>, and I wanted to get a bit more familiar with <a href="https://www.openshift.com/">Openshift</a>. I had used it in the past, but it was time to have another go. The <a href="https://pdfdoc-purpleidea.rhcloud.com/">app</a> and the <a href="https://github.com/purpleidea/pdfdoc/">code</a> are now available. Feel free to check out:</p>
+<h2 style="text-align:center;"><a href="https://pdfdoc-purpleidea.rhcloud.com/">https://pdfdoc-purpleidea.rhcloud.com/</a></h2>
+This is a simple app that takes the URL of a markdown file on GitHub, and outputs a <a href="https://github.com/jgm/pandoc/"><em>pandoc</em></a> converted PDF. I wanted to use <em>pandoc</em> specifically, because it produces PDF's that were beautifully created with <a href="https://en.wikipedia.org/wiki/Latex">LaTeX</a>. To embed a link in your upstream documentation that points to a PDF, just append the file's URL to this app's url, under a <em>/pdf/</em> path. For example:
+<p><a href="https://pdfdoc-purpleidea.rhcloud.com/pdf/https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md"><a href="https://pdfdoc-purpleidea.rhcloud.com/pdf/">https://pdfdoc-purpleidea.rhcloud.com/pdf/</a><em><a href="https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md">https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md</a></em></a></p>
+<p>will send you to a PDF of the <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> documentation. This will make it easier to accept <a href="https://github.com/purpleidea/puppet-gluster/commit/f2c2c85c0a17f1694e6a4c6e53aca75357180bc3">questions as FAQ patches</a>, without needing to have the git embedded binary PDF be constantly updated.</p>
+<p>If you want to hear more about what I did, read on&hellip;</p>
+<p><span style="text-decoration:underline;">The setup</span>:</p>
+<p>Start by getting a free Openshift account. You&rsquo;ll also want to <a href="https://developers.openshift.com/en/getting-started-client-tools.html#fedora">install the client tools</a>. Nothing is worse than having to interact with your app via a web interface. Hackers use terminals. Lucky, the Openshift team knows this, and they&rsquo;ve created a great command line tool called <code>rhc</code> to make it all possible.</p>
+<p>I started by following their instructions:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ sudo yum install rubygem-rhc
+</span></span><span style="display:flex;"><span>$ sudo gem update rhc
+</span></span></code></pre></div><p>Unfortunately, this left with a problem:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rhc
+</span></span><span style="display:flex;"><span>/usr/share/rubygems/rubygems/dependency.rb:298:in `to_specs&#39;: Could not find &#39;rhc&#39; (&gt;= 0) among 37 total gem(s) (Gem::LoadError)
+</span></span><span style="display:flex;"><span>    from /usr/share/rubygems/rubygems/dependency.rb:309:in `to_spec&#39;
+</span></span><span style="display:flex;"><span>    from /usr/share/rubygems/rubygems/core_ext/kernel_gem.rb:47:in `gem&#39;
+</span></span><span style="display:flex;"><span>    from /usr/local/bin/rhc:22:in `&#39;
+</span></span></code></pre></div><p>I solved this by running:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ gem install rhc
+</span></span></code></pre></div><p>Which makes my user <code>rhc</code> to take precedence over the system one. Then run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rhc setup
+</span></span></code></pre></div><p>and the rhc client will take you through some setup steps such as uploading your public ssh key to the Openshift infrastructure. The beauty of this tool is that it will work with the Red Hat hosted infrastructure, or you can use it with your own infrastructure if you want to host your own Openshift servers. This alone means you&rsquo;ll never get locked in to a third-party providers terms or pricing.</p>
+<p><span style="text-decoration:underline;">Create a new app</span>:</p>
+<p>To get a fresh <em>python 3.3</em> app going, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rhc create-app &lt;em&gt;&lt;appname&gt;&lt;/em&gt; python-3.3
+</span></span></code></pre></div><p>From this point on, it&rsquo;s fairly straight forward, and you can now hack your way through the app in python. To push a new version of your app into production, it&rsquo;s just a git commit away:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ git add -p &amp;&amp; git commit -m &#39;Awesome new commit...&#39; &amp;&amp; git push &amp;&amp; rhc tail
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Creating a new app from existing code</span>:</p>
+<p>If you want to push a new app from an existing code base, it&rsquo;s as easy as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ rhc create-app awesomesauce python-3.3 --from-code https://github.com/purpleidea/pdfdoc
+</span></span><span style="display:flex;"><span>Application Options
+</span></span><span style="display:flex;"><span>-------------------
+</span></span><span style="display:flex;"><span>Domain:      purpleidea
+</span></span><span style="display:flex;"><span>Cartridges:  python-3.3
+</span></span><span style="display:flex;"><span>Source Code: https://github.com/purpleidea/pdfdoc
+</span></span><span style="display:flex;"><span>Gear Size:   default
+</span></span><span style="display:flex;"><span>Scaling:     no
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Creating application &#39;awesomesauce&#39; ... done
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Waiting for your DNS name to be available ... done
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Cloning into &#39;awesomesauce&#39;...
+</span></span><span style="display:flex;"><span>The authenticity of host &#39;awesomesauce-purpleidea.rhcloud.com (203.0.113.13)&#39; can&#39;t be established.
+</span></span><span style="display:flex;"><span>RSA key fingerprint is 00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff.
+</span></span><span style="display:flex;"><span>Are you sure you want to continue connecting (yes/no)? yes
+</span></span><span style="display:flex;"><span>Warning: Permanently added &#39;awesomesauce-purpleidea.rhcloud.com,203.0.113.13&#39; (RSA) to the list of known hosts.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Your application &#39;awesomesauce&#39; is now available.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  URL:        http://awesomesauce-purpleidea.rhcloud.com/
+</span></span><span style="display:flex;"><span>  SSH to:     00112233445566778899aabb@awesomesauce-purpleidea.rhcloud.com
+</span></span><span style="display:flex;"><span>  Git remote: ssh://00112233445566778899aabb@awesomesauce-purpleidea.rhcloud.com/~/git/awesomesauce.git/
+</span></span><span style="display:flex;"><span>  Cloned to:  /home/james/code/awesomesauce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Run &#39;rhc show-app awesomesauce&#39; for more details about your app.
+</span></span></code></pre></div><p>In my case, my app also needs some binaries installed. I haven&rsquo;t yet automated this process, but I think it can be done be creating a custom cartridge. Help to do this would be appreciated!</p>
+<p><span style="text-decoration:underline;">Updating your app</span>:</p>
+<p>In the case of an app that I already deployed with this method, updating it from the upstream source is quite easy. You just pull down and relevant commits, and then push them up to your app&rsquo;s git repo:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> git pull upstream master 
+</span></span><span style="display:flex;"><span>From https:<span style="color:#666">//</span>github<span style="color:#666">.</span>com<span style="color:#666">/</span>purpleidea<span style="color:#666">/</span>pdfdoc
+</span></span><span style="display:flex;"><span> <span style="color:#666">*</span> branch            master     <span style="color:#666">-&gt;</span> FETCH_HEAD
+</span></span><span style="display:flex;"><span>Updating <span style="color:#666">5</span>ac5577<span style="color:#666">..</span>bdf9601
+</span></span><span style="display:flex;"><span>Fast<span style="color:#666">-</span>forward
+</span></span><span style="display:flex;"><span> wsgi<span style="color:#666">.</span>py <span style="color:#666">|</span> <span style="color:#666">2</span> <span style="color:#666">--</span>
+</span></span><span style="display:flex;"><span> <span style="color:#666">1</span> file changed, <span style="color:#666">2</span> deletions(<span style="color:#666">-</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> git push origin master 
+</span></span><span style="display:flex;"><span>Counting objects: <span style="color:#666">7</span>, done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Delta compression using up to <span style="color:#666">4</span> threads<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Compressing objects: <span style="color:#666">100</span><span style="color:#666">%</span> (<span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span>), done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Writing objects: <span style="color:#666">100</span><span style="color:#666">%</span> (<span style="color:#666">3</span><span style="color:#666">/</span><span style="color:#666">3</span>), <span style="color:#666">312</span> bytes <span style="color:#666">|</span> <span style="color:#666">0</span> bytes<span style="color:#666">/</span>s, done<span style="color:#666">.</span>
+</span></span><span style="display:flex;"><span>Total <span style="color:#666">3</span> (delta <span style="color:#666">2</span>), reused <span style="color:#666">0</span> (delta <span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span>remote: Stopping Python <span style="color:#666">3.3</span> cartridge
+</span></span><span style="display:flex;"><span>remote: Waiting <span style="color:#a2f;font-weight:bold">for</span> stop to finish
+</span></span><span style="display:flex;"><span>remote: Waiting <span style="color:#a2f;font-weight:bold">for</span> stop to finish
+</span></span><span style="display:flex;"><span>remote: Building git ref <span style="color:#b44">&#39;master&#39;</span>, commit bdf9601
+</span></span><span style="display:flex;"><span>remote: Activating virtenv
+</span></span><span style="display:flex;"><span>remote: Checking <span style="color:#a2f;font-weight:bold">for</span> pip dependency listed <span style="color:#a2f;font-weight:bold">in</span> requirements<span style="color:#666">.</span>txt file<span style="color:#666">..</span>
+</span></span><span style="display:flex;"><span>remote: You must give at least one requirement to install (see <span style="color:#b44">&#34;pip help install&#34;</span>)
+</span></span><span style="display:flex;"><span>remote: Running setup<span style="color:#666">.</span>py script<span style="color:#666">..</span>
+</span></span><span style="display:flex;"><span>remote: running develop
+</span></span><span style="display:flex;"><span>remote: running egg_info
+</span></span><span style="display:flex;"><span>remote: creating pdfdoc<span style="color:#666">.</span>egg<span style="color:#666">-</span>info
+</span></span><span style="display:flex;"><span>remote: writing pdfdoc<span style="color:#666">.</span>egg<span style="color:#666">-</span>info<span style="color:#666">/</span>PKG<span style="color:#666">-</span>INFO
+</span></span><span style="display:flex;"><span>remote: writing dependency_links to pdfdoc<span style="color:#666">.</span>egg<span style="color:#666">-</span>info<span style="color:#666">/</span>dependency_links<span style="color:#666">.</span>txt
+</span></span><span style="display:flex;"><span>remote: writing top<span style="color:#666">-</span>level names to pdfdoc<span style="color:#666">.</span>egg<span style="color:#666">-</span>info<span style="color:#666">/</span>top_level<span style="color:#666">.</span>txt
+</span></span><span style="display:flex;"><span>remote: writing manifest file <span style="color:#b44">&#39;pdfdoc.egg-info/SOURCES.txt&#39;</span>
+</span></span><span style="display:flex;"><span>remote: reading manifest file <span style="color:#b44">&#39;pdfdoc.egg-info/SOURCES.txt&#39;</span>
+</span></span><span style="display:flex;"><span>remote: writing manifest file <span style="color:#b44">&#39;pdfdoc.egg-info/SOURCES.txt&#39;</span>
+</span></span><span style="display:flex;"><span>remote: running build_ext
+</span></span><span style="display:flex;"><span>remote: Creating <span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">var</span><span style="color:#666">/</span>lib<span style="color:#666">/</span>openshift<span style="color:#666">/</span><span style="color:#666">00112233445566778899</span>aabb<span style="color:#666">/</span>app<span style="color:#666">-</span>root<span style="color:#666">/</span>runtime<span style="color:#666">/</span>dependencies<span style="color:#666">/</span>python<span style="color:#666">/</span>virtenv<span style="color:#666">/</span>venv<span style="color:#666">/</span>lib<span style="color:#666">/</span>python3<span style="color:#666">.</span><span style="color:#666">3</span><span style="color:#666">/</span>site<span style="color:#666">-</span>packages<span style="color:#666">/</span>pdfdoc<span style="color:#666">.</span>egg<span style="color:#666">-</span>link (link to <span style="color:#666">.</span>)
+</span></span><span style="display:flex;"><span>remote: pdfdoc <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">1</span> is already the active version <span style="color:#a2f;font-weight:bold">in</span> easy<span style="color:#666">-</span>install<span style="color:#666">.</span>pth
+</span></span><span style="display:flex;"><span>remote: 
+</span></span><span style="display:flex;"><span>remote: Installed <span style="color:#666">/</span><span style="color:#a2f;font-weight:bold">var</span><span style="color:#666">/</span>lib<span style="color:#666">/</span>openshift<span style="color:#666">/</span><span style="color:#666">00112233445566778899</span>aabb<span style="color:#666">/</span>app<span style="color:#666">-</span>root<span style="color:#666">/</span>runtime<span style="color:#666">/</span>repo
+</span></span><span style="display:flex;"><span>remote: Processing dependencies <span style="color:#a2f;font-weight:bold">for</span> pdfdoc<span style="color:#666">==</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>remote: Finished processing dependencies <span style="color:#a2f;font-weight:bold">for</span> pdfdoc<span style="color:#666">==</span><span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>remote: Preparing build <span style="color:#a2f;font-weight:bold">for</span> deployment
+</span></span><span style="display:flex;"><span>remote: Deployment id is <span style="color:#666">9</span>c2ee03c
+</span></span><span style="display:flex;"><span>remote: Activating deployment
+</span></span><span style="display:flex;"><span>remote: Starting Python <span style="color:#666">3.3</span> cartridge (Apache<span style="color:#666">+</span>mod_wsgi)
+</span></span><span style="display:flex;"><span>remote: Application directory <span style="color:#b44">&#34;/&#34;</span> selected as DocumentRoot
+</span></span><span style="display:flex;"><span>remote: Application <span style="color:#b44">&#34;wsgi.py&#34;</span> selected as default WSGI entry point
+</span></span><span style="display:flex;"><span>remote: <span style="color:#666">-------------------------</span>
+</span></span><span style="display:flex;"><span>remote: Git Post<span style="color:#666">-</span>Receive Result: success
+</span></span><span style="display:flex;"><span>remote: Activation status: success
+</span></span><span style="display:flex;"><span>remote: Deployment completed with status: success
+</span></span><span style="display:flex;"><span>To ssh:<span style="color:#666">//</span><span style="color:#666">00112233445566778899</span>aabb<span style="">@</span>awesomesauce<span style="color:#666">-</span>purpleidea<span style="color:#666">.</span>rhcloud<span style="color:#666">.</span>com<span style="color:#666">/~/</span>git<span style="color:#666">/</span>awesomesauce<span style="color:#666">.</span>git<span style="color:#666">/</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#666">5</span>ac5577<span style="color:#666">..</span>bdf9601  master <span style="color:#666">-&gt;</span> master
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>
+</span></span></code></pre></div><p><span style="text-decoration:underline;">Final thoughts</span>:</p>
+<p>I hope this helped you getting going with Openshift. Feel free to send me patches!</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 18, 2014<br>
+				<small>969 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bootstrap">bootstrap</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/openshift">openshift</a> <a class="label label-default" href="/tags/pdf">pdf</a> <a class="label label-default" href="/tags/pdfdoc">pdfdoc</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/python">python</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/10/18/hacking-out-an-openshift-app/"><small>https://ttboj.wordpress.com/2014/10/18/hacking-out-an-openshift-app/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/10/18/hacking-out-an-openshift-app">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/10/18/hacking-out-an-openshift-app.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

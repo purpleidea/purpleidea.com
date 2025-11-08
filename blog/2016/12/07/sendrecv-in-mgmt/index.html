@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Send/Recv in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Send/Recv in mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>I previously published &ldquo;<a href="/blog/2016/11/30/a-revisionist-history-of-configuration-management/">A revisionist history of configuration management</a>&rdquo;. I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I <em>will</em> explain Send/Recv in this article, but first a few clarifications to the aforementioned article.</p>
+<p><span style="text-decoration:underline;">Clarifications</span></p>
+<p>I mentioned that my &ldquo;revisionist history&rdquo; was inaccurate, but I failed to mention that it was also not exhaustive! Many things were left out either because they were proprietary, niche, not well-known, of obscure design or simply for brevity. My apologies if you were involved with Bcfg2, Bosh, Heat, Military specifications, SaltStack, SmartFrog, or something else entirely. I&rsquo;d love it if someone else wrote an &ldquo;exhaustive history&rdquo;, but I don&rsquo;t think that&rsquo;s possible.</p>
+<p>It&rsquo;s also worth re-iterating that without the large variety of software and designs which came before me, I wouldn&rsquo;t have learned or have been able to build anything of value. <a href="https://en.wikipedia.org/wiki/Standing_on_the_shoulders_of_giants">Thank you giants!</a>  By discussing the problems and designs of other tools, then it makes it easier to contrast with and explaining what I&rsquo;m doing in <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">mgmt</a>.</p>
+<p><span style="text-decoration:underline;">Notifications</span></p>
+<p>If you&rsquo;re not familiar with the <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">directed acyclic graph model for configuration management, you should start by reviewing that material first</a>. It models a system of resources (workers) as the vertices in that DAG, and the edges as the dependencies. We&rsquo;re going to add some additional mechanics to this model.</p>
+<p>There is a concept in mgmt called notifications. Any time the state of a resource is successfully changed by the engine, a notification is emitted. These notifications are emitted along any graph edge (dependency) that has been asked to relay them. Edges with the <code>Notify</code> property will do so. These are usually called <code>refresh</code> notifications.</p>
+<p>Any time a resource receives a refresh notification, it can apply a special action which is resource specific. The <code>svc</code> resource reloads the service, the <code>password</code> resource generates a new password, the <code>timer</code> resource resets the timer, and the <code>noop</code> resource prints a notification message. In general, refresh notifications should be avoided if possible, but there are a number of legitimate use cases.</p>
+<p>In mgmt notifications are designed to be crash-proof, that is to say, undelivered notifications are re-queued when the engine restarts. While we don&rsquo;t expect mgmt to crash, this is also useful when a graph is stopped by the user before it has completed.</p>
+<p>You&rsquo;ll see these notifications in action momentarily.</p>
+<p><span style="text-decoration:underline;">Send/Recv</span></p>
+<p>I mentioned in the <a href="/blog/2016/11/30/a-revisionist-history-of-configuration-management/">revisionist history</a> that I felt that Chef opted for <em>raw code</em> as a solution to the lack of power in Puppet. Having resources in mgmt which are <a href="/blog/2016/01/18/next-generation-configuration-mgmt/">event-driven</a> is one example of increasing their power. Send/Recv is another mechanism to make the resource primitive more powerful.</p>
+<p>Simply put: Send/Recv is a mechanism where resources can transfer data along graph edges.</p>
+<p><span style="text-decoration:underline;">The status quo</span></p>
+<p>Consider the following pattern (expressed as Puppet code):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># create a directory</span>
+</span></span><span style="display:flex;"><span>file { <span style="color:#b44">&#39;/var/foo/&#39;</span>:
+</span></span><span style="display:flex;"><span>    ensure <span style="color:#666">=&gt;</span> directory,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># download a file into that directory</span>
+</span></span><span style="display:flex;"><span>exec { <span style="color:#b44">&#39;wget http://example.com/data -O - &gt; /var/foo/data&#39;</span>:
+</span></span><span style="display:flex;"><span>    creates <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;/var/foo/data&#39;</span>,
+</span></span><span style="display:flex;"><span>    require <span style="color:#666">=&gt;</span> <span style="color:#d2413a;font-weight:bold">File</span>[<span style="color:#b44">&#39;/var/foo/&#39;</span>],
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># set some property of the file</span>
+</span></span><span style="display:flex;"><span>file { <span style="color:#b44">&#39;/var/foo/data&#39;</span>:
+</span></span><span style="display:flex;"><span>    mode <span style="color:#666">=&gt;</span> <span style="color:#666">0644</span>,
+</span></span><span style="display:flex;"><span>    require <span style="color:#666">=&gt;</span> <span style="color:#d2413a;font-weight:bold">File</span>[<span style="color:#b44">&#39;/var/foo/data&#39;</span>],
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>First a disclaimer. Puppet now actually supports an <a href="https://docs.puppet.com/puppet/latest/type.html#file-attribute-source">http url as a source</a>. Nevertheless, this was a common pattern for many years and that solution only improves a narrow use case. Here are some of the past and current problems:</p>
+<ul>
+    <li>File can't take output from an exec (or other) resource</li>
+    <li>File can't pull from an unsupported protocol (sftp, tftp, imap, etc...)</li>
+    <li>File can get created with zero-length data</li>
+    <li>Exec won't update if http endpoint changes the data</li>
+    <li>Requires knowledge of bash and shell glue</li>
+    <li>Potentially error-prone if a typo is made</li>
+</ul>
+<p>There&rsquo;s also a layering violation if you believe that network code (http downloading) shouldn&rsquo;t be in a file resource. I think it adds unnecessary complexity to the file resource.</p>
+<p><span style="text-decoration:underline;">The solution</span></p>
+<p>What the file resource actually needs, is to be able to accept (<em>Recv</em>) data of the same type as any of its input arguments. We also need resources which can produce (<em>Send</em>) data that is useful to consumers. This occurs along a graph (dependency) edge, since the sending resource would need to produce it before the receiver could act!</p>
+<p>This also opens up a range of possibilities for new resource kinds that are clever about sending or receiving data. an <em>http</em> resource could contain all the necessary network code, and replace our use of the <code>exec { &lsquo;wget &hellip;&rsquo;: }</code> pattern.</p>
+<p><span style="text-decoration:underline;">Diagram</span></p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="linkage.png"><img class="size-full wp-image-1964" src="linkage.png" alt="in this graph, a password resource generates a random string and stores it in a file" width="100%" height="100%" /></a></td></tr><tr><td> in this graph, a password resource generates a random string and stores it in a file; more clever linkages are planned</td></tr></table></br />
+<p><span style="text-decoration:underline;">Example</span></p>
+<p>As a proof of concept for the idea, I implemented a <code>Password</code> resource. This is a prototype resource that generates a random string of characters. To use the output, it has to be linked via Send/Recv to something that can accept a string. The file resource is one such possibility. Here&rsquo;s an excerpt of some example output <a href="https://github.com/purpleidea/mgmt/blob/597ed6eaa0b5b3a3da8681b79ab5b0d39d9ed450/examples/lib/libmgmt3.go#L53">from a simple graph</a>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>password.go:<span style="color:#666">295</span>:<span style="color:#bbb"> </span>Password[password1]:<span style="color:#bbb"> </span>Generating<span style="color:#bbb"> </span>new<span style="color:#bbb"> </span>password...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>password.go:<span style="color:#666">312</span>:<span style="color:#bbb"> </span>Password[password1]:<span style="color:#bbb"> </span>Writing<span style="color:#bbb"> </span>password<span style="color:#bbb"> </span>token...<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>sendrecv.go:<span style="color:#666">184</span>:<span style="color:#bbb"> </span>SendRecv:<span style="color:#bbb"> </span>Password[password1].Password<span style="color:#bbb"> </span><span style="color:#666">-&gt;</span><span style="color:#bbb"> </span>File[file1].Content<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>file.go:<span style="color:#666">651</span>:<span style="color:#bbb"> </span>contentCheckApply:<span style="color:#bbb"> </span>Invalidating<span style="color:#bbb"> </span>sha256sum<span style="color:#bbb"> </span>of<span style="color:#bbb"> </span><span style="color:#666">`</span>Content<span style="color:#666">`</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>file.go:<span style="color:#666">579</span>:<span style="color:#bbb"> </span>File[file1]:<span style="color:#bbb"> </span><span style="color:#00a000">contentCheckApply</span>(<span style="color:#800">true</span>)<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#666">03</span>:<span style="color:#666">06</span>:<span style="color:#666">13</span><span style="color:#bbb"> </span>noop.go:<span style="color:#666">115</span>:<span style="color:#bbb"> </span>Noop[noop1]:<span style="color:#bbb"> </span>Received<span style="color:#bbb"> </span>a<span style="color:#bbb"> </span>notification<span style="color:#666">!</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>What you can see is that initially, a random password is generated. Next Send/Recv transfers the generated <code>Password</code> to the file&rsquo;s <code>Content</code>. The <code>file</code> resource invalidates the cached <code>Content</code> checksum (a performance feature of the file resource), and then stores that value in the file. (This would normally be a security problem, but this is for example purposes!) Lastly, the file sends out a refresh notification to a <code>Noop</code> resource for demonstration purposes. It responds by printing a log message to that effect.</p>
+<p><span style="text-decoration:underline;">Libmgmt</span></p>
+<p>Ultimately, mgmt will have a <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a> to express the different graphs of configuration. In the meantime, you can use <a href="https://github.com/ffrank/puppet-mgmtgraph">Puppet code</a>, or a raw <a href="https://github.com/purpleidea/mgmt/tree/master/examples">YAML file</a>. The latter is primarily meant for testing purposes until we have the language built.</p>
+<p>Lastly, you can also embed mgmt and use it like a library! This lets you write raw golang code to build your resource graphs. I decided to write the above example that way! <a href="https://github.com/purpleidea/mgmt/blob/597ed6eaa0b5b3a3da8681b79ab5b0d39d9ed450/examples/lib/libmgmt3.go">Have a look at the code! </a>This can be used to embed mgmt into your existing software! <a href="https://github.com/purpleidea/mgmt/tree/master/examples/lib">There are a few more examples available here.</a></p>
+<p><span style="text-decoration:underline;">Resource internals</span></p>
+<p>When a resource receives new values via Send/Recv, it&rsquo;s likely that the resource will have work to do. As a result, the engine will automatically mark the resource state as <code>dirty</code> and then poke it from the sending node. When the receiver resource runs, it can lookup the list of keys that have been sent. This is useful if it wants to perform a cache invalidation for example. In the resource, the code is quite simple:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&lt;span class=&#34;pl-k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;pl-smi&#34;&gt;val&lt;/span&gt;, &lt;span class=&#34;pl-smi&#34;&gt;exists&lt;/span&gt; &lt;span class=&#34;pl-k&#34;&gt;:=&lt;/span&gt; obj.&lt;span class=&#34;pl-smi&#34;&gt;Recv&lt;/span&gt;[&lt;span class=&#34;pl-s&#34;&gt;&lt;span class=&#34;pl-pds&#34;&gt;&#34;&lt;/span&gt;Content&lt;span class=&#34;pl-pds&#34;&gt;&#34;&lt;/span&gt;&lt;/span&gt;]; exists &amp;&amp; val.&lt;span class=&#34;pl-smi&#34;&gt;Changed&lt;/span&gt; {
+</span></span><span style="display:flex;"><span>    // the &#34;Content&#34; input has changed
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://github.com/purpleidea/mgmt/blob/597ed6eaa0b5b3a3da8681b79ab5b0d39d9ed450/resources/file.go#L643">Here is a good example of that mechanism in action.</a></p>
+<p><span style="text-decoration:underline;">Future work</span></p>
+<p>This is only powerful if there are interesting resources to link together. Please contribute some ideas, and help build these resources! I&rsquo;ve got a number of ideas already, but I&rsquo;d love to hear yours first so that I don&rsquo;t influence or stifle your creativity. Leave me a message in the comments below!</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>December 7, 2016<br>
+				<small>1289 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/notifications">notifications</a> <a class="label label-default" href="/tags/notify">notify</a> <a class="label label-default" href="/tags/password">password</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/refresh">refresh</a> <a class="label label-default" href="/tags/send/recv">send/recv</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/12/07/sendrecv-in-mgmt/"><small>https://ttboj.wordpress.com/2016/12/07/sendrecv-in-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/12/07/sendrecv-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/12/07/sendrecv-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Next generation configuration mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Next generation configuration mgmt</strong><br><small></small></h3>
+					<hr>
+					<p>It&rsquo;s no secret to the readers of this blog that I&rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&rsquo;ve learned while working with <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a> and from other hackers working in and around various other communities.</p>
+<p><a href="/blog/2013/11/17/iteration-in-puppet">I&rsquo;ve published</a>, <a href="/blog/2013/02/20/automatic-hiera-lookups-in-puppet-3-x">a number</a>, <a href="/blog/2012/11/07/preventing-duplicate-parameter-values-in-puppet-types">of articles</a>, <a href="/blog/2013/05/14/overriding-attributes-of-collected-exported-resources">in an</a>, <a href="/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet">attempt</a>, <a href="/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet">to push</a>, <a href="/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet">the field</a>, <a href="/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet">forwards</a>, <a href="/blog/2014/03/24/introducing-puppet-execagain">and to</a>, <a href="/blog/2012/11/14/setting-timed-events-in-puppet">share the</a>, <a href="/blog/2013/06/04/collecting-duplicate-resources-in-puppet">knowledge</a>, <a href="/blog/2013/09/28/finite-state-machines-in-puppet">that I&rsquo;ve</a>, <a href="/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason">learned</a>, <a href="/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet">with others</a>. I&rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</p>
+<p>To that end, I&rsquo;d like to formally present my idea (and code) for a next generation configuration management prototype. I&rsquo;m calling my tool <em>mgmt</em>.</p>
+<p><strong><span style="text-decoration:underline;">Design triad</span></strong></p>
+<p><em>Mgmt</em> has three unique design elements which differentiate it from other tools. I&rsquo;ll try to cover these three points, and explain why they&rsquo;re important. The summary:</p>
+<ol>
+	<li><strong>Parallel execution</strong>, to run all the resources concurrently (where possible)</li>
+	<li><strong>Event driven</strong>, to monitor and react dynamically only to changes (when needed)</li>
+	<li><strong>Distributed topology</strong>, so that scale and centralization problems are replaced with a robust distributed system</li>
+</ol>
+The <a href="https://github.com/purpleidea/mgmt/">code</a> is available, but you may prefer to read on as I dive deeper into each of these elements first.
+<p><strong>1) <span style="text-decoration:underline;">Parallel execution</span></strong></p>
+<p>Fundamentally, all configuration management systems represent the dependency relationships between their resources in a <a href="https://en.wikipedia.org/wiki/Graph_%28abstract_data_type%29">graph</a>, typically one that is <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">directed and acyclic</a>.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph1.png" rel="attachment wp-att-1322"><img class="size-full wp-image-1322" src="graph1.png" alt="directed acyclic graph g1, showing the dependency relationships with black arrows, and the linearized dependency sort order with red arrows." width="100%" height="100%" /></a></td></tr><tr><td> Directed acyclic graph g1, showing the dependency relationships with black arrows, and the linearized dependency sort order (a topological sort) with red arrows.</td></tr></table></br />
+<p>Unfortunately, the execution of this graph typically has a single worker that runs through a linearized, <a href="https://en.wikipedia.org/wiki/Topological_sorting">topologically sorted</a> version of it. There is no reason that a graph with a number of <a href="https://en.wikipedia.org/wiki/Connectivity_%28graph_theory%29">disconnected parts</a> cannot run each separate section in parallel with each other.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph2.png" rel="attachment wp-att-1323"><img class="size-full wp-image-1323" src="graph2.png" alt="g2" width="100%" height="100%" /></a></td></tr><tr><td> Graph g2 with the red arrows again showing the execution order of the graph. Please note that this graph is composed of two disconnected parts: one diamond on the left and one triplet on the right, both of which can run in parallel. Additionally, nodes 2a and 2b can run in parallel only after 1a has run, and node 3a requires the entire left diamond to have succeeded before it can execute.</td></tr></table></br />
+<p>Typically, some nodes will have a common dependency, which once met will allow its children to all execute simultaneously.</p>
+<p>This is the first major design improvement that the <em>mgmt</em> tool implements. It has obvious improvements for performance, in that a long running process in one part of the graph (eg: a package installation) will cause no delay on a separate disconnected part of the graph which is in the process of converging unrelated code. It also has other benefits which we will discuss below.</p>
+<p>In practice this is particularly powerful since most servers under configuration management typically combine different modules, many of which have no inter-dependencies.</p>
+<p>An example is the best way to show off this feature. Here we have a set of four long (10 second) running processes or <em>exec</em> resources. Three of them form a linear dependency chain, while the fourth has no dependencies or prerequisites. I&rsquo;ve asked the system to exit after it has been converged for five seconds. As you can see in the example, it is finished five seconds after the limiting resource should be completed, which is the longest running delay to complete in the whole process. That limiting chain took 30 seconds, which we can see in the log as being from three 10 second executions. The logical total of about 35 seconds as expected is shown at the end:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> time <span style="color:#666">./</span>mgmt run <span style="color:#666">--</span>file graph8<span style="color:#666">.</span>yaml <span style="color:#666">--</span>converged<span style="color:#666">-</span>timeout<span style="color:#666">=</span><span style="color:#666">5</span> <span style="color:#666">--</span>graphviz<span style="color:#666">=</span>example1<span style="color:#666">.</span>dot
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> This is: mgmt, version: <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">1</span><span style="color:#666">-</span><span style="color:#666">29</span><span style="color:#666">-</span>gebc1c60
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Main: Start: <span style="color:#666">1452398104100455639</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Main: Running<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Graph: Vertices(<span style="color:#666">4</span>), Edges(<span style="color:#666">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Graphviz: Successfully generated graph<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> State: graphStarting
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> State: graphStarted
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Exec[exec4]: Apply <span style="color:#666">//</span>exec4 start
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">04</span> Exec[exec1]: Apply <span style="color:#666">//</span>exec1 start
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">14</span> Exec[exec4]: Command output is empty<span style="color:#666">!</span> <span style="color:#666">//</span>exec4 end
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">14</span> Exec[exec1]: Command output is empty<span style="color:#666">!</span> <span style="color:#666">//</span>exec1 end
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">14</span> Exec[exec2]: Apply <span style="color:#666">//</span>exec2 start
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">24</span> Exec[exec2]: Command output is empty<span style="color:#666">!</span> <span style="color:#666">//</span>exec2 end
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">24</span> Exec[exec3]: Apply <span style="color:#666">//</span>exec3 start
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">34</span> Exec[exec3]: Command output is empty<span style="color:#666">!</span> <span style="color:#666">//</span>exec3 end
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Converged <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">5</span> seconds, exiting<span style="color:#666">!</span> <span style="color:#666">//</span>converged <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">5</span>s
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Interrupted by exit <span style="color:#a2f;font-weight:bold">signal</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Exec[exec4]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Exec[exec1]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Exec[exec2]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Exec[exec3]: Exited
+</span></span><span style="display:flex;"><span><span style="color:#666">22</span>:<span style="color:#666">55</span>:<span style="color:#666">39</span> Goodbye<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m35<span style="color:#666">.</span><span style="color:#666">009</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">008</span>s
+</span></span><span style="display:flex;"><span>sys     <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">008</span>s
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>
+</span></span></code></pre></div><p>Note that I&rsquo;ve edited the example slightly to remove some unnecessary log entries for readability sake, and I have also added some comments and emphasis, but aside from that, this is actual output! The tool also generated <a href="https://en.wikipedia.org/wiki/Graphviz">graphviz</a> output which may help you better understand the problem:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="example1-dot.png" rel="attachment wp-att-1338"><img class="aligncenter size-full wp-image-1338" src="example1-dot.png" alt="example1.dot" width="100%" height="100%" /></a></td></tr><tr><td> This example is obviously contrived, but is designed to illustrate the capability of the <em>mgmt</em> tool.</td></tr></table></br />
+<p>Hopefully you&rsquo;ll be able to come up with more practical examples.</p>
+<p><strong>2) <span style="text-decoration:underline;">Event driven</span></strong></p>
+<p>All configuration management systems have some notion of <a href="https://en.wikipedia.org/wiki/Idempotence">idempotence</a>. Put simply, an idempotent operation is one which can be applied multiple times without causing the result to <a href="https://en.wikipedia.org/wiki/Convergence_(mathematics)">diverge</a> from the desired state. In practice, each individual resource will typically check the state of the element, and if different than what was requested, it will then apply the necessary transformation so that the element is brought to the desired state.</p>
+<p>The current generation of configuration management tools, typically checks the state of <em>each</em> element once every 30 minutes. Some do it more or less often, and some do it only when manually requested. In all cases, this can be an expensive operation due to the size of the graph, and the cost of each <em>check</em> operation. This problem is compounded by the fact that the graph doesn&rsquo;t run in parallel.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph3.png" rel="attachment wp-att-1325"><img class="size-full wp-image-1325" src="graph3.png" alt="g3" width="100%" height="100%" /></a></td></tr><tr><td> In this time / state sequence diagram g3, time progresses from left to right. Each of the three elements (from top to bottom) want to converge on states a, b and c respectively. Initially the first two are in states x and y, where as the third is already converged. At t1 the system runs and converges the graph, which entails a state change of the first and second elements. At some time t2, the elements are changed by some external force, and the system is no longer converged. We won't notice till later! At this time t3 when we run for the second time, we notice that the second and third elements are no longer converged and we apply the necessary operations to fix this. An unknown amount of time passed where our cluster was in a diverged or unhealthy state. Traditionally this is on the order of 30 minutes.</td></tr></table></br />
+<p>More importantly, if something diverges from the requested state you might wait 30 minutes before it is noticed and repaired by the system!</p>
+<p>The <em>mgmt</em> system is unique, because I realized that an event based system could fulfill the same desired behaviour, and in fact it offers a more general and powerful solution. This is the second major design improvement that the <em>mgmt</em> tool implements.</p>
+<p>These events that we&rsquo;re talking about are <a href="https://en.wikipedia.org/wiki/Inotify">inotify</a> events for file changes, <a href="https://en.wikipedia.org/wiki/Systemd">systemd</a> events (from <a href="https://en.wikipedia.org/wiki/D-Bus">dbus</a>) for service changes, <a href="https://en.wikipedia.org/wiki/PackageKit">packagekit</a> events (from dbus again) for package change events, and events from <a href="https://github.com/purpleidea/mgmt/blob/master/exec.go#L18">exec</a> calls, timers, network operations and more! In the inotify example, on first run of the <em>mgmt</em> system, an inotify watch is taken on the file we want to manage, the state is checked and it is converged if need be. We don&rsquo;t ever need to check the state again unless inotify tells us that something happened!</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph4.png" rel="attachment wp-att-1327"><img class="size-full wp-image-1327" src="graph4.png" alt="g4" width="100%" height="100%" /></a></td></tr><tr><td> In this time / state sequence diagram g4, time progresses from left to right. After the initial run, since all the elements are being continuously monitored, the instant something changes, <em>mgmt</em> reacts and fixes it almost instantly.</td></tr></table></br />
+<p>Astute config mgmt hackers might end up realizing three interesting consequences:</p>
+<ol>
+	<li>If we don't want the <em>mgmt</em> program to continuously monitor events, it can be told to exit after the graph converges, and run again 30 minutes later. This can be done with my system by running it from cron with the <a href="https://github.com/purpleidea/mgmt/blob/master/DOCUMENTATION.md#--converged-timeout-seconds"><code>--converged-timeout=1</code></a>, flag. This effectively offers the same behaviour that current generation systems do for the administrators who do not want to experiment with a newer model. Thus, the current systems are a special, simplified model of <em>mgmt</em>!</li>
+	<li>It is possible that some resources don't offer an event watching mechanism. In those instances, a fallback to polling is possible for that specific resource. Although there currently aren't any missing event APIs that your narrator knows about at this time.</li>
+	<li>A monitoring system (read: nagios and friends) could probably be built with this architecture, thus demonstrating that my world view of configuration management is actually a generalized version of system monitoring! They're the same discipline!</li>
+</ol>
+Here is a small real-world example to demonstrate this feature. I have started the agent, and I have told it to create three files (f1, f2, f3) with the contents seen below, and also, to ensure that file f4 is not present. As you can see the <em>mgmt</em> system responds quite quickly:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:/tmp/mgmt$ ls
+</span></span><span style="display:flex;"><span>f1  f2  f3
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$ cat *
+</span></span><span style="display:flex;"><span>i am f1
+</span></span><span style="display:flex;"><span>i am f2
+</span></span><span style="display:flex;"><span>i am f3
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$ rm -f f2 &amp;&amp; cat f2
+</span></span><span style="display:flex;"><span>i am f2
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$ echo blah blah &gt; f2 &amp;&amp; cat f2
+</span></span><span style="display:flex;"><span>i am f2
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$ touch f4 &amp;&amp; file f4
+</span></span><span style="display:flex;"><span>f4: cannot open `f4&#39; (No such file or directory)
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$ ls
+</span></span><span style="display:flex;"><span>f1  f2  f3
+</span></span><span style="display:flex;"><span>james@computer:/tmp/mgmt$
+</span></span></code></pre></div><p>That&rsquo;s fast!</p>
+<p><strong>3) <span style="text-decoration:underline;">Distributed topology</span></strong></p>
+<p>All software typically runs with some sort of topology. Puppet and <a href="https://en.wikipedia.org/wiki/Chef_%28software%29">Chef</a> normally run in a <a href="https://en.wikipedia.org/wiki/Client%E2%80%93server_model">client server topology</a>, where you typically have one server with many clients, each running an agent. They also both offer a standalone mode, but in general this is not more interesting than running a fancy bash script. In this context, I define interesting as &ldquo;relating to clustered, multiple machine architectures&rdquo;.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph5.png" rel="attachment wp-att-1329"><img class="size-full wp-image-1329" src="graph5.png" alt="g5" width="100%" height="100%" /></a></td></tr><tr><td> Here in graph g5 you can see one server which has three clients initiating requests to it.</td></tr></table></br />
+<p>This traditional model of computing is well-known, and fairly easy to reason about. You typically put all of your code in one place (on the server) and the clients or agents need very little personalized configuration to get working. However, it can suffer from performance and scalability issues, and it can also be a single point of failure for your infrastructure. Make no mistake: if you manage your infrastructure properly, then when your configuration management infrastructure is down, you will be unable to bring up new machines or modify existing ones! This can be a disastrous type of failure, and is one which is seldom planned for in disaster recovery scenarios!</p>
+<p>Other systems such as <a href="https://en.wikipedia.org/wiki/Ansible_%28software%29">Ansible</a> are actually <a href="https://en.wikipedia.org/wiki/Orchestration_%28computing%29">orchestrators</a>, and are not technically configuration management in my opinion. That doesn&rsquo;t mean they don&rsquo;t share much of the same problem space, and in fact they are usually idempotent and share many of the same properties of traditional configuration management systems. They are useful and important tools!</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph6.png" rel="attachment wp-att-1330"><img class="aligncenter size-full wp-image-1330" src="graph6.png" alt="graph6" width="100%" height="100%" /></a></td></tr></table></br />
+<p>The key difference about an orchestrator, is that it typically operates with a push model, where the server (or the sysadmin laptop) initiates a connection to the machines that it wants to manage. One advantage is that this is sometimes very easy to reason about for multi machine architectures, however it shares the usual downsides around having a single point of failure. Additionally there are some very real performance considerations when running large clusters of machines. In practice these clusters are typically segmented or divided in some logical manner so as to lessen the impact of this, which unfortunately detracts from the aforementioned simplicity of the solution.</p>
+<p>Unfortunately with either of these two topologies, we can&rsquo;t immediately detect when an issue has occurred and respond immediately without sufficiently advanced third party <a href="https://en.wikipedia.org/wiki/System_monitoring">monitoring</a>. By itself, a machine that is being managed by orchestration, cannot detect an issue and communicate back to its operator, or tell the cluster of servers it peers with to react accordingly.</p>
+<p>The good news about current and future generation topologies is that algorithms such as the <a href="https://en.wikipedia.org/wiki/Paxos_%28computer_science%29">Paxos family</a> and <a href="https://en.wikipedia.org/wiki/Raft_%28computer_science%29">Raft</a> are now gaining wider acceptance and good implementations now exist as Free Software. <em>Mgmt</em> depends on these algorithms to create a mesh of agents. There are no clients and servers, only peers! Each peer can choose to both <em>export</em> and <em>collect</em> data from a distributed data store which lives as part of the cluster of peers. The software that currently implements this data store is a marvellous piece of engineering called <a href="https://en.wikipedia.org/wiki/Etcd">etcd</a>.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph7.png" rel="attachment wp-att-1331"><img class="wp-image-1331 size-full" src="graph7.png" alt="graph7" width="100%" height="100%" /></a></td></tr><tr><td> In graph g7, you can see what a fully interconnected graph topology might look like. It should be clear that the numbed of connections (or edges) is quite large. Try and work out the number of edges required for a fully connected graph with 128 nodes. Hint, it's large!</td></tr></table></br />
+<p>In practice the number of connections required for each peer to connect to each other peer would be too great, so instead the cluster first achieves <a href="https://en.wikipedia.org/wiki/Consensus_%28computer_science%29">distributed consensus</a>, and then the elected leader picks a certain number of machines to run etcd masters. All other agents then connect through one of these masters. The distributed data store can easily handle failures, and agents can reconnect seamlessly to a different temporary master should they need to. If there is a lack or an abundance of transient masters, then the cluster promotes or demotes an agent automatically by asking it to start or stop an etcd process on its host.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="graph8.png" rel="attachment wp-att-1332"><img class="size-full wp-image-1332" src="graph8.png" alt="g8" width="100%" height="100%" /></a></td></tr><tr><td> In graph g8, you can see a tightly interconnected centre of nodes running both their configuration management tasks, but also etcd masters. Each additional peer picks any of them to connect to. As the number of nodes scale, it is far easier to scale such a cluster. Future algorithm designs and optimizations should help this system scale to unprecedented host counts. It should go without saying that it would be wise to ensure that the nodes running etcd masters are in different failure domains.</td></tr></table></br />
+<p>By allowing hosts to export and collect data from the distributed store, we actually end up with a mechanism that is quite similar to what Puppet calls <a href="https://docs.puppetlabs.com/puppet/latest/reference/lang_exported.html">exported resources</a>. In my opinion, the mechanism and data interchange is actually a brilliant idea, but with some obvious shortcomings in its implementation. This is because for a cluster of N nodes, each wishing to exchange data with one another, puppet must run N times (once on each node) and then N-1 times for the entire cluster to see all of the exchanged data. Each of these runs requires an entire sequential run through every resource, and an expensive check of each resource, each time.</p>
+<p>In contrast, with <em>mgmt</em>, the graph is redrawn only when an etcd event notifies us of a change in the data store, and when the new graph is applied, only members who are affected either by a change in definition or dependency need to be re-run. In practice this means that a small cluster where the resources themselves have a negligible apply time, can converge a complete connected exchange of data in less than one second.</p>
+<p>An example demonstrates this best.</p>
+<ul>
+	<li>I have three nodes in the system: A, B, C.</li>
+	<li>Each creates four files, two of which it will export.</li>
+	<li>On host A, the two files are: /tmp/mgmt<strong>A</strong>/f1<strong>a</strong> and /tmp/mgmt<strong>A</strong>/f2<strong>a</strong>.</li>
+	<li>On host A, it exports: /tmp/mgmt<strong>A</strong>/f3<strong>a</strong> and /tmp/mgmt<strong>A</strong>/f4<strong>a</strong>.</li>
+	<li>On host A, it collects all available (exported) files into: /tmp/mgmt<strong>A</strong>/</li>
+	<li>It is done similarly with B and C, except with the letters B and C substituted in to the <strong>emphasized</strong> locations above.</li>
+	<li>For demonstration purposes, I startup the <em>mgmt</em> engine first on A, then B, and finally C, all the while running various terminal commands to keep you up-to-date.</li>
+</ul>
+As before, I've trimmed the logs and annotated the output for clarity:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> rm <span style="color:#666">-</span>rf <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt<span style="color:#666">*</span> <span style="color:#080;font-style:italic"># clean out everything</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> mkdir <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt{A<span style="color:#666">..</span>C} <span style="color:#080;font-style:italic"># make the example dirs</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> tree <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt<span style="color:#666">*</span> <span style="color:#080;font-style:italic"># they&#39;re indeed empty</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtA
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtB
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> directories, <span style="color:#666">0</span> files
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> <span style="color:#080;font-style:italic"># run node A, it converges almost instantly</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> tree <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt<span style="color:#666">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtA
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4a
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtB
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> directories, <span style="color:#666">4</span> files
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> <span style="color:#080;font-style:italic"># run node B, it converges almost instantly</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> tree <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt<span style="color:#666">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtA
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4a
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4b
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtB
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4a
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4b
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtC
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> directories, <span style="color:#666">12</span> files
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> <span style="color:#080;font-style:italic"># run node C, exit 5 sec after converged, output:</span>
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> time <span style="color:#666">./</span>mgmt run <span style="color:#666">--</span>file examples<span style="color:#666">/</span>graph3c<span style="color:#666">.</span>yaml <span style="color:#666">--</span>hostname c <span style="color:#666">--</span>converged<span style="color:#666">-</span>timeout<span style="color:#666">=</span><span style="color:#666">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> main<span style="color:#666">.</span>go:<span style="color:#666">65</span>: This is: mgmt, version: <span style="color:#666">0.0</span><span style="color:#666">.</span><span style="color:#666">1</span><span style="color:#666">-</span><span style="color:#666">29</span><span style="color:#666">-</span>gebc1c60
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> main<span style="color:#666">.</span>go:<span style="color:#666">66</span>: Main: Start: <span style="color:#666">1452408753004161269</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> main<span style="color:#666">.</span>go:<span style="color:#666">203</span>: Main: Running<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> main<span style="color:#666">.</span>go:<span style="color:#666">103</span>: Etcd: Starting<span style="color:#666">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> config<span style="color:#666">.</span>go:<span style="color:#666">175</span>: Collect: file; Pattern: <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtC<span style="color:#666">/</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">33</span> main<span style="color:#666">.</span>go:<span style="color:#666">148</span>: Graph: Vertices(<span style="color:#666">8</span>), Edges(<span style="color:#666">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">38</span> main<span style="color:#666">.</span>go:<span style="color:#666">192</span>: Converged <span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">5</span> seconds, exiting<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">38</span> main<span style="color:#666">.</span>go:<span style="color:#666">56</span>: Interrupted by exit <span style="color:#a2f;font-weight:bold">signal</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">01</span>:<span style="color:#666">52</span>:<span style="color:#666">38</span> main<span style="color:#666">.</span>go:<span style="color:#666">219</span>: Goodbye<span style="color:#666">!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>real    <span style="color:#666">0</span>m5<span style="color:#666">.</span><span style="color:#666">084</span>s
+</span></span><span style="display:flex;"><span>user    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">034</span>s
+</span></span><span style="display:flex;"><span>sys    <span style="color:#666">0</span>m0<span style="color:#666">.</span><span style="color:#666">031</span>s
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span> tree <span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmt<span style="color:#666">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtA
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3c
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4b
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4c
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtB
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3c
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4b
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4c
+</span></span><span style="display:flex;"><span><span style="color:#666">/</span>tmp<span style="color:#666">/</span>mgmtC
+</span></span><span style="display:flex;"><span><span style="">├──</span> f1c
+</span></span><span style="display:flex;"><span><span style="">├──</span> f2c
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3b
+</span></span><span style="display:flex;"><span><span style="">├──</span> f3c
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4a
+</span></span><span style="display:flex;"><span><span style="">├──</span> f4b
+</span></span><span style="display:flex;"><span><span style="">└──</span> f4c
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> directories, <span style="color:#666">24</span> files
+</span></span><span style="display:flex;"><span>james<span style="">@</span>computer:<span style="color:#666">/</span>tmp<span style="color:#666">$</span>
+</span></span></code></pre></div><p>Amazingly, the cluster converges in <em>less</em> than one second. Admittedly it didn&rsquo;t have large amounts of <a href="https://en.wikipedia.org/wiki/Input/output">IO</a> to do, but since those are fixed constants, it still shows how fast this approach should be. Feel free to do your own tests to verify.</p>
+<p><strong><span style="text-decoration:underline;">Code</span></strong></p>
+<p><a href="https://github.com/purpleidea/mgmt/">The code is publicly available and has been for some time.</a> I wanted to release it early, but I didn&rsquo;t want to blog about it until I felt I had the initial design triad completed. It is written entirely in <a href="https://en.wikipedia.org/wiki/Golang">golang</a>, which I felt was a good match for the design requirements that I had. It is my first major public golang project, so I&rsquo;m certain there are many things I could be doing better. As a result, I welcome your criticism and patches, just please try and keep them constructive and respectful! The project is entirely <a href="https://www.gnu.org/philosophy/free-sw.html">Free Software</a>, and I plan to keep it that way. <a href="https://www.redhat.com/en/about/blog/open-source-or-open-core-why-should-you-care">As long as Red Hat is involved, I&rsquo;m pretty sure you won&rsquo;t have to deal with any open core compromises!</a></p>
+<p><strong><span style="text-decoration:underline;">Community</span></strong></p>
+<p>There&rsquo;s an IRC channel going. It&rsquo;s <a href="https://web.libera.chat/?channels=#mgmtconfig">#mgmtconfig on Libera.chat</a>. Please come hangout! If we get bigger, we&rsquo;ll add a mailing list.</p>
+<p><strong><span style="text-decoration:underline;">Caveats</span></strong></p>
+<p>There are a few caveats that I&rsquo;d like to mention. Please try to keep these in mind.</p>
+<ul>
+	<li>This is still an early prototype, and as a result isn't ready for production use, or as a replacement for existing config management software. If you like the design, please contribute so that together we can turn this into a mature system faster.</li>
+	<li>There are some portions of the code which are notably absent. In particular, there is no lexer or parser, nor is there a design for what the graph building language (DSL) would look like. This is because I am not a specialist in these areas, and as a result, while I have some ideas for the design, I don't have any useful code yet. For testing the engine, there is a (quickly designed) YAML <a href="https://github.com/purpleidea/mgmt/tree/master/examples">graph definition</a> parser available in the code today.</li>
+	<li>The etcd master election/promotion portion of the code is not yet available. Please stay tuned!</li>
+	<li>There is no design document, roadmap or useful documentation currently available. I'll be working to remedy this, but I first wanted to announce the project, gauge interest and get some intial feedback. Hopefully others can contribute to the docs, and I'll try to write about my future design ideas as soon as possible.</li>
+	<li>The name <em>mgmt</em> was the best that I could come up with. If you can propose a better alternative, I'm open to the possibility.</li>
+	<li>I work for <a href="https://redhat.com/">Red Hat</a>, and at first it might seem confusing to announce this work alongside our existing well-known <a href="https://access.redhat.com/products/red-hat-satellite">Puppet</a> and <a href="https://www.redhat.com/en/about/press-releases/red-hat-acquire-it-automation-and-devops-leader-ansible">Ansible</a> teams. To clarify, this is a prototype of some work and designs that I started before I was employed at Red Hat. I'm grateful that they've been letting me work on interesting projects, and I'm very pleased that my managers have had the vision to invest in future technologies and projects that (I hope) might one day become the de facto standard.</li>
+</ul>
+<strong><span style="text-decoration:underline;">Presentations</span></strong>
+<p>It is with great honour, that my first public talk about this project will be at <a href="http://cfgmgmtcamp.eu/">Config Management Camp 2016</a>. I am thrilled to be <a href="http://cfgmgmtcamp.eu/schedule/speakers/JamesShubin.html">speaking</a> at such an excellent conference, where I am sure the subject matter will be a great fit for all the respected domain experts who will be present. <a href="http://cfgmgmtcamp.eu/schedule/speakers/JamesShubin.html">Find me on the schedule, and please come to my session.</a></p>
+<p>I&rsquo;m also fortunate enough to be <a href="https://devconfcz2016.sched.org/event/5m14/next-generation-config-mgmt">speaking about the same topic, just four days later</a> in <a href="https://en.wikipedia.org/wiki/Brno">Brno</a>, at <a href="http://devconf.cz/">DevConf.CZ</a>. It&rsquo;s a free conference, in an excellent city, and you&rsquo;ll be sure to find many excellent technical sessions and hackers!</p>
+<p>I hope to see you at one of these events or at a future conference. If you&rsquo;d like to have me speak at your conference or event, please <a href="/contact/">contact me</a>!</p>
+<p><strong><span style="text-decoration:underline;">Conclusion</span></strong></p>
+<p>Thank you for reading this far! I hope you appreciate my work, and I promise to tell you more about some of the novel designs and properties that I have planned for the future of <em>mgmt</em>. Please leave me your comments, even if they&rsquo;re just +1&rsquo;s.</p>
+<p>Happy hacking!</p>
+<p><a href="https://twitter.com/#!/purpleidea">James</a></p>
+<br />
+<p><strong><span style="text-decoration:underline;">Post scriptum</span></strong></p>
+<p>There seems to be a new trend about calling certain types of management systems or designs &ldquo;choreography&rdquo;. Since this term is sufficiently overloaded and without a clear definition, I choose to avoid it, however it&rsquo;s worth mentioning that some of the ideas from some of the definitions of this word as pertaining to the configuration management field match what I&rsquo;m trying to do with this design. Instead of using the term &ldquo;choreography&rdquo;, I prefer to refer to what I&rsquo;m doing as &ldquo;configuration management&rdquo;.</p>
+<p>Some early peer reviews suggested this might be a &ldquo;puppet-killer&rdquo;. In fact, I actually see it as an opportunity to engage with the puppet community and to share my design and engine, which I hope some will see as a more novel solution. Existing puppet code could be fed through a cross compiler to output a graph that actually runs on my engine. While I plan to offer an easier to use and more powerful <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL language</a>, <a href="https://en.wikipedia.org/wiki/Pareto_principle">the 80%</a> of existing puppet code isn&rsquo;t more than plumbing, package installation, and simple templating, so a gradual migration would be possible, where the multi-system configuration management parts are implemented using my new patterns instead of with slowly converging puppet. The same things could probably also be done with other languages like Chef. Anyone from Puppet Labs, Chef Software Inc., or the greater hacker community is welcome to contact me personally if they&rsquo;d like to work on this.</p>
+<p>Lastly, but most importantly, thanks to everyone who has discussed these ideas with me, reviewed this article, and contributed in so many ways. You&rsquo;re awesome!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 18, 2016<br>
+				<small>3884 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/ansible">ansible</a> <a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/chef">chef</a> <a class="label label-default" href="/tags/config-management">config management</a> <a class="label label-default" href="/tags/dag">dag</a> <a class="label label-default" href="/tags/dbus">dbus</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/distributed">distributed</a> <a class="label label-default" href="/tags/etcd">etcd</a> <a class="label label-default" href="/tags/events">events</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/graph">graph</a> <a class="label label-default" href="/tags/graphviz">graphviz</a> <a class="label label-default" href="/tags/idempotent">idempotent</a> <a class="label label-default" href="/tags/inotify">inotify</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/monitoring">monitoring</a> <a class="label label-default" href="/tags/ng">ng</a> <a class="label label-default" href="/tags/orchestrator">orchestrator</a> <a class="label label-default" href="/tags/packagekit">packagekit</a> <a class="label label-default" href="/tags/parallel">parallel</a> <a class="label label-default" href="/tags/paxos">paxos</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetipa">planetipa</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/prototype">prototype</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/raft">raft</a> <a class="label label-default" href="/tags/systemd">systemd</a> <a class="label label-default" href="/tags/toposort">toposort</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/01/18/next-generation-configuration-mgmt/"><small>https://ttboj.wordpress.com/2016/01/18/next-generation-configuration-mgmt/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/01/18/next-generation-configuration-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/01/18/next-generation-configuration-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>finding your software install $prefix from inside python - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>finding your software install $prefix from inside python</strong><br><small></small></h3>
+					<hr>
+					<p>Good python software developers tend to use <a href="http://docs.python.org/library/distutils.html">distutils</a> and include a setup.py with their code. The problem I often encounter is finding out which prefix your software has been installed in from within the python code. This might be necessary if you want to interact with some data that you&rsquo;ve installed into: $prefix/share/projectname/ Here are the various steps:</p>
+<p><strong>1) <span style="text-decoration:underline;">Distutils</span>:</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>NAME<span style="color:#666">=</span><span style="color:#b44">&#39;someproject&#39;</span>
+</span></span><span style="display:flex;"><span>distutils<span style="color:#666">.</span>core<span style="color:#666">.</span>setup(
+</span></span><span style="display:flex;"><span>    name<span style="color:#666">=</span>NAME,
+</span></span><span style="display:flex;"><span>    version<span style="color:#666">=</span><span style="color:#b44">&#39;0.1&#39;</span>,
+</span></span><span style="display:flex;"><span>    author<span style="color:#666">=</span><span style="color:#b44">&#39;James Shubin&#39;</span>,
+</span></span><span style="display:flex;"><span>    author_email<span style="color:#666">=</span><span style="color:#b44">&#39;secret@purpleidea.com&#39;</span>,
+</span></span><span style="display:flex;"><span>    url<span style="color:#666">=</span><span style="color:#b44">&#39;https://purpleidea.com/&#39;</span>,
+</span></span><span style="display:flex;"><span>    description<span style="color:#666">=</span><span style="color:#b44">&#39;This is an example project&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># http://pypi.python.org/pypi?%3Aaction=list_classifiers</span>
+</span></span><span style="display:flex;"><span>    classifiers<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;Environment :: Console&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;Intended Audience :: System Administrators&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;License :: OSI Approved :: GNU Affero General Public License v3&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;Operating System :: POSIX :: Linux&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;Programming Language :: Python&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;Topic :: Utilities&#39;</span>,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    packages<span style="color:#666">=</span>[NAME],
+</span></span><span style="display:flex;"><span>    package_dir<span style="color:#666">=</span>{NAME: <span style="color:#b44">&#39;src&#39;</span>},
+</span></span><span style="display:flex;"><span>    data_files<span style="color:#666">=</span>[
+</span></span><span style="display:flex;"><span>        (<span style="color:#b44">&#39;share/</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#39;</span> <span style="color:#666">%</span> NAME, [<span style="color:#b44">&#39;README&#39;</span>]),
+</span></span><span style="display:flex;"><span>        (<span style="color:#b44">&#39;share/</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#39;</span> <span style="color:#666">%</span> NAME, [<span style="color:#b44">&#39;images/something.png&#39;</span>]),
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    scripts<span style="color:#666">=</span>[<span style="color:#b44">&#39;somebin&#39;</span>],
+</span></span><span style="display:flex;"><span>)</span></span></code></pre></div></p>
+<p><strong>2) <span style="text-decoration:underline;">Install</span>:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>python setup.py install --prefix=~/testprefix/
+</span></span></code></pre></div><p><em>Note: If you don&rsquo;t specify a prefix, then this will get installed into your system prefix.</em></p>
+<p><strong>3) <span style="text-decoration:underline;">Run</span>:</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>cd ~/testprefix/ # the prefix you chose above
+</span></span><span style="display:flex;"><span>PYTHONPATH=lib/python2.7/site-packages/ ./bin/somebin
+</span></span></code></pre></div><p><em>Note: If you didn&rsquo;t specify a prefix above, then you don&rsquo;t need to set the PYTHONPATH variable, and also, the executable will already be in your default $PATH</em></p>
+<p><strong>4) <span style="text-decoration:underline;">Prefix</span>:</strong></p>
+<p>I have written a small python module which I include in all of my python software. It will returns the projects installed prefix when run. I usually use it like so:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>print &#39;something.png is located at: %s&#39; % os.path.join(prefix.prefix(), &#39;share&#39;, NAME, &#39;images&#39;, &#39;something.png&#39;)
+</span></span></code></pre></div><p><strong>5) <span style="text-decoration:underline;">Code</span>:</strong></p>
+<p>Here is the code for <em>prefix.py</em>. I put this file under my <em>projectname/src/</em> directory.</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#080;font-style:italic">#!/usr/bin/python</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#b44">&#34;&#34;&#34;Find the prefix of the current installation, and other useful variables.
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">Finding the prefix that your program has been installed in can be non-trivial.
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">This simplifies the process by allowing you to import &lt;packagename&gt;.prefix and
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">get instant access to the path prefix by calling the function named: prefix().
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">If you&#39;d like to join this prefix onto a given path, pass it as the first arg.
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">Example: if [ `./prefix.py` ]; then echo yes; else echo no; fi
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">Example: x=`./prefix.py`; echo &#39;prefix: &#39;$x
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># Copyright (C) 2010-2012  James Shubin</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># This program is free software: you can redistribute it and/or modify</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># it under the terms of the GNU Affero General Public License as published by</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># the Free Software Foundation, either version 3 of the License, or</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># (at your option) any later version.</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># This program is distributed in the hope that it will be useful,</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># GNU Affero General Public License for more details.</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># You should have received a copy of the GNU Affero General Public License</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>__all__ <span style="color:#666">=</span> (<span style="color:#b44">&#39;prefix&#39;</span>, <span style="color:#b44">&#39;name&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">#DEBUG = False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">os</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">sys</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">prefix</span>(join<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#34;&#34;&#34;Returns the prefix that this code was installed into.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># constants for this execution</span>
+</span></span><span style="display:flex;"><span>    path <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>abspath(__file__)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#if DEBUG: print &#39;path: %s&#39; % path</span>
+</span></span><span style="display:flex;"><span>    name <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>basename(os<span style="color:#666">.</span>path<span style="color:#666">.</span>dirname(path))
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#if DEBUG: print &#39;name: %s&#39; % name</span>
+</span></span><span style="display:flex;"><span>    this <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>basename(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#if DEBUG: print &#39;this: %s&#39; % this</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># rule set</span>
+</span></span><span style="display:flex;"><span>    rules <span style="color:#666">=</span> [
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># to match: /usr/lib/python2.5/site-packages/project/prefix.py</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># or: /usr/local/lib/python2.6/dist-packages/project/prefix.py</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">lambda</span> x: x <span style="color:#666">==</span> <span style="color:#b44">&#39;lib&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">lambda</span> x: x <span style="color:#666">==</span> (<span style="color:#b44">&#39;python</span><span style="color:#b68;font-weight:bold">%s</span><span style="color:#b44">&#39;</span> <span style="color:#666">%</span> sys<span style="color:#666">.</span>version[:<span style="color:#666">3</span>]),
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">lambda</span> x: x <span style="color:#a2f;font-weight:bold">in</span> [<span style="color:#b44">&#39;site-packages&#39;</span>, <span style="color:#b44">&#39;dist-packages&#39;</span>],
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">lambda</span> x: x <span style="color:#666">==</span> name,    <span style="color:#080;font-style:italic"># &#39;project&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">lambda</span> x: x <span style="color:#666">==</span> this,    <span style="color:#080;font-style:italic"># &#39;prefix.py&#39;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># matching engine</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">len</span>(rules) <span style="color:#666">&gt;</span> <span style="color:#666">0</span>:
+</span></span><span style="display:flex;"><span>        (path, token) <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>split(path)
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic">#if DEBUG: print &#39;path: %s, token: %s&#39; % (path, token)</span>
+</span></span><span style="display:flex;"><span>        rule <span style="color:#666">=</span> rules<span style="color:#666">.</span>pop()
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> rule(token):
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic">#if DEBUG: print &#39;rule failed&#39;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f;font-weight:bold">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># usually returns: /usr/ or /usr/local/ (but without slash postfix)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> join <span style="color:#a2f;font-weight:bold">is</span> <span style="color:#a2f;font-weight:bold">None</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> path
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>join(path, join)    <span style="color:#080;font-style:italic"># add on join if it exists!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">name</span>(pop<span style="color:#666">=</span>[], suffix<span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">None</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#34;&#34;&#34;Returns the name of this particular project. If pop is a list
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">    containing more than one element, name() will remove those items
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">    from the path tail before deciding on the project name. If there
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">    is an element which does not exist in the path tail, then raise.
+</span></span></span><span style="display:flex;"><span><span style="color:#b44">    If a suffix is specified, then it is removed if found at end.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    path <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>dirname(os<span style="color:#666">.</span>path<span style="color:#666">.</span>abspath(__file__))
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">isinstance</span>(pop, <span style="color:#a2f">str</span>): pop <span style="color:#666">=</span> [pop]    <span style="color:#080;font-style:italic"># force single strings to list</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">len</span>(pop) <span style="color:#666">&gt;</span> <span style="color:#666">0</span>:
+</span></span><span style="display:flex;"><span>        (path, tail) <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>split(path)
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> pop<span style="color:#666">.</span>pop() <span style="color:#666">!=</span> tail:
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic">#if DEBUG: print &#39;tail: %s&#39; % tail</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">raise</span> <span style="color:#d2413a;font-weight:bold">ValueError</span>(<span style="color:#b44">&#39;Element doesnʼt match path tail.&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    path <span style="color:#666">=</span> os<span style="color:#666">.</span>path<span style="color:#666">.</span>basename(path)
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> suffix <span style="color:#a2f;font-weight:bold">is</span> <span style="color:#a2f;font-weight:bold">not</span> <span style="color:#a2f;font-weight:bold">None</span> <span style="color:#a2f;font-weight:bold">and</span> path<span style="color:#666">.</span>endswith(suffix):
+</span></span><span style="display:flex;"><span>        path <span style="color:#666">=</span> path[<span style="color:#666">0</span>:<span style="color:#666">-</span><span style="color:#a2f">len</span>(suffix)]
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">return</span> path
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    join <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">len</span>(sys<span style="color:#666">.</span>argv) <span style="color:#666">&gt;</span> <span style="color:#666">1</span>:
+</span></span><span style="display:flex;"><span>        join <span style="color:#666">=</span> <span style="color:#b44">&#39; &#39;</span><span style="color:#666">.</span>join(sys<span style="color:#666">.</span>argv[<span style="color:#666">1</span>:])
+</span></span><span style="display:flex;"><span>    result <span style="color:#666">=</span> prefix(join)
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> result:
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f">print</span> result
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">else</span>:
+</span></span><span style="display:flex;"><span>        sys<span style="color:#666">.</span>exit(<span style="color:#666">1</span>)</span></span></code></pre></div>
+Why this sort of thing isn&rsquo;t built into python boggles my mind, so if for some reason you have a better solution, please let me know. Also, don&rsquo;t be fooled by the red herring that is: sys.prefix</p>
+<p>Happy hacking,
+James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>September 20, 2012<br>
+				<small>873 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/agpl3">agpl3</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/distutils">distutils</a> <a class="label label-default" href="/tags/prefix">prefix</a> <a class="label label-default" href="/tags/python">python</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2012/09/20/finding-your-software-install-prefix-from-inside-python/"><small>https://ttboj.wordpress.com/2012/09/20/finding-your-software-install-prefix-from-inside-python/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2012/09/20/finding-your-software-install-prefix-from-inside-python">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2012/09/20/finding-your-software-install-prefix-from-inside-python.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

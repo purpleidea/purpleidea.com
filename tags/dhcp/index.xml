@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dhcp on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/dhcp/</link>
+    <description>Recent content in Dhcp on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Mar 2024 16:58:57 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/dhcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A new provisioning tool built with mgmt</title>
+      <link>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</link>
+      <pubDate>Wed, 27 Mar 2024 16:58:57 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</guid>
+      <description>Today I&amp;rsquo;m announcing a new type of provisioning tool. This is both the culmination of a long road, and the start of a new era. Please read on for all of the details. Feel free to skip to the relevant sections you&amp;rsquo;re interested in if you don&amp;rsquo;t want all of the background.&#xA;Ten years:&#xA;The vision for this specific tool started around ten years ago. Previously, as a sysadmin, I spent a lot of my time using a configuration management tool called puppet.</description>
+    </item>
+  </channel>
+</rss>

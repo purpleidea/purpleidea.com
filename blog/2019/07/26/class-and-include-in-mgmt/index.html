@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Class and Include statements in the Mgmt Configuration Language">
+	<meta name="author" content="James Shubin">
+
+	<title>Mgmt Configuration Language: Class and Include - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Mgmt Configuration Language: Class and Include</strong><br><small>Class and Include statements in the Mgmt Configuration Language</small></h3>
+					<hr>
+					<p>It&rsquo;s been a little over a year since I introduced the
+<a href="/blog/2018/02/05/mgmt-configuration-language/">Mgmt Configuration Language</a>. A
+lot has happened since then, and I&rsquo;d like to introduce some of the missing
+features that weren&rsquo;t available when the language was first introduced. If you
+haven&rsquo;t already read that <a href="/blog/2018/02/05/mgmt-configuration-language/">post</a>,
+please start there and come back when you&rsquo;re finished. In this article we&rsquo;ll
+learn about classes.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Classes</span>:<br /><br />
+
+<p>You might remember that the <a href="https://github.com/purpleidea/mgmt/"><em>mgmt</em></a>
+language called <code>mcl</code> has both <code>statements</code>, and <code>expressions</code>. Statements
+ultimately produce the <code>resources</code> and <code>edges</code> that make up our output graph,
+and expressions produce the values (strings, integers, lists, etc) that make up
+the inputs to those statements.</p>
+<p>As it turns out, it&rsquo;s useful to have a grouping construct for statements to make
+them composable. That grouping construct is called the class statement. It looks
+like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># define a class named foo
+</span></span><span style="display:flex;"><span>class foo {
+</span></span><span style="display:flex;"><span>	pkg &#34;cowsay&#34; {
+</span></span><span style="display:flex;"><span>		state =&gt; &#34;installed&#34;,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	# you can add any number of statements in here...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To use a class statement, you reference a defined class by using the <code>include</code>
+statement. This causes the scoped contents of the class definition to
+&ldquo;empty out&rdquo; into the scope of the <code>include</code>. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># it&#39;s now as if the resources and edges in the class were typed here
+</span></span><span style="display:flex;"><span>include foo
+</span></span></code></pre></div><p>I think this is pretty straightforward.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Class Scope Capture</span>:<br /><br />
+
+<p>One interesting thing about classes is that they can capture scope. Examine the
+following:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>x1 <span style="color:#666">=</span> <span style="color:#b44">&#34;t1&#34;</span> <span style="color:#080;font-style:italic"># this variable gets captured by bar</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> bar {
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">print</span> <span style="color:#666">$</span>x1 {} <span style="color:#080;font-style:italic"># captures variable in the parent scope</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include bar
+</span></span></code></pre></div><p>In this scenario, when the class is defined, you&rsquo;ll see that it &ldquo;captures&rdquo; the
+<code>$x1</code> variable from the parent scope. Later on when the class is <code>include</code>-ed,
+it builds the <code>print</code> resource with the original <code>$x1</code> variable.</p>
+<p>You might assume that we&rsquo;re lazy and we actually just use the <code>$x1</code> variable
+that exists in the same scope, but if you experiment, you&rsquo;ll find that we
+actually &ldquo;do the right thing&rdquo;. As an example, assume the following two files:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># whatever.mcl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x1 = &#34;t1&#34;
+</span></span><span style="display:flex;"><span>class baz {
+</span></span><span style="display:flex;"><span>	print $x1 {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># main.mcl
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;whatever.mcl&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$x1 = &#34;bad1&#34; # this isn&#39;t consumed anywhere
+</span></span><span style="display:flex;"><span>include whatever.baz
+</span></span></code></pre></div><p>If we run <code>main.mcl</code>, you&rsquo;ll see that it uses an imported class that was defined
+in a different scope, and in fact, it retains the <code>$x1</code> from that original scope
+where it was created. Don&rsquo;t worry that you haven&rsquo;t seen <code>import</code> yet, we&rsquo;ll get
+to that shortly.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Parameterized Classes</span>:<br /><br />
+
+<p>It would be unfortunate if class definitions were only &ldquo;single-use&rdquo;, and it
+would also be unfortunate if you couldn&rsquo;t mix the local scope into a class when
+you <code>include</code> it. As a result, classes can be &ldquo;parameterized&rdquo;. They look like
+this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class fruit($colour, $shape) {
+</span></span><span style="display:flex;"><span>	print $x1 {}
+</span></span><span style="display:flex;"><span>	if $colour == &#34;red&#34; &amp;&amp; $shape == &#34;round&#34; {
+</span></span><span style="display:flex;"><span>		print &#34;i am a tomato&#34; {}
+</span></span><span style="display:flex;"><span>	} else {
+</span></span><span style="display:flex;"><span>		$n1 = &#34;i am a &#34; + $shape + &#34; shaped fruit that&#39;s &#34; + $colour
+</span></span><span style="display:flex;"><span>		print $n1 {}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include fruit(&#34;red&#34;, &#34;round&#34;)
+</span></span><span style="display:flex;"><span>include fruit(&#34;red&#34;, &#34;round&#34;) # de-duplication happens at the resource level
+</span></span><span style="display:flex;"><span>include fruit(&#34;blue&#34;, &#34;round&#34;)
+</span></span></code></pre></div><p>As you can see, we can <code>include</code> the class multiple times, and produce multiple
+resources. If for some reason we end up producing identical (or more
+specifically, compatible) resources, then they are de-duplicated by the resource
+engine, and are not compile errors. This solves a well-known issue (I say bug)
+with the <em>Puppet</em> tool. (This works correctly in <em>mgmt</em> and avoids the headaches
+with two different modules requiring the same package dependency.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Typed Parameterized Classes</span>:<br /><br />
+
+<p>When you define a class, you may also specify some type restrictions on the
+parameters. By default when you do not specify the type of a value, it is
+determined automatically by the type unification engine. This is the recommended
+way to use <em>mgmt</em>. You may add an additional type rule to the class parameters
+if you&rsquo;d like. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># specifying a fixed type for $b is a compile error, because it&#39;s sometimes str!
+</span></span><span style="display:flex;"><span>class c1($a, $b []str) { # note that we specified the type of $b
+</span></span><span style="display:flex;"><span>	print $a {
+</span></span><span style="display:flex;"><span>		msg =&gt; fmt.printf(&#34;len is: %d&#34;, len($b)),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># note that the class can have two separate types for $b
+</span></span><span style="display:flex;"><span>include c1(&#34;t1&#34;, [13, 42, 0, -37,]) # len of second arg is 4
+</span></span><span style="display:flex;"><span>include c1(&#34;t2&#34;, &#34;hello&#34;) # len of second arg is 5
+</span></span></code></pre></div><p>In this case you can see that while the code <em>could</em> allow more than one
+different type for the <code>$b</code> parameter, it was restricted to only allow <code>[]str</code>
+(a list of strings) and as a result, the above code won&rsquo;t compile. It&rsquo;s good to
+know that these kinds of issues are always found at <em>compile</em> time, and not at
+<em>runtime</em>. Once the program has compiled successfully, it always runs safely.</p>
+<p>To get this to compile, you can either remove the type specification, or you can
+remove the last line. If you remove the type specification, compile it, and look
+at the internals, you might notice that the <code>c1</code> class is actually polymorphic
+before compile time, but afterwards at runtime every single variable and value
+has a single static type.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Shadowed Variables</span>:<br /><br />
+
+<p>The <em>mgmt</em> language is designed to be very safe. This is important because when
+using a powerful, higher-level tool, you don&rsquo;t want a simple programming error
+to cause you to destroy an entire data-center, or triple your <code>aws:ec2</code> bill.
+As a result many common bugs are prevented at compile-time. Consider the
+following:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$x1 = &#34;hello&#34;
+</span></span><span style="display:flex;"><span>$x1 = &#34;world&#34; # compile-time error
+</span></span><span style="display:flex;"><span>print $x1 {}
+</span></span></code></pre></div><p>As you can see in the above example, variable re-assignment is not permitted,
+and as a result, that code will not compile. Variable shadowing however, <em>is</em>
+permitted, because it has many useful implications. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$msg = &#34;nobody&#34; # won&#39;t get used
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class shadowme($x1, $msg) {
+</span></span><span style="display:flex;"><span>	print &#34;message&#34; {
+</span></span><span style="display:flex;"><span>		msg =&gt; $x1 + $msg,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include shadowme(&#34;hello&#34;, &#34;world&#34;)
+</span></span></code></pre></div><p>It&rsquo;s important that the class author be able to define their own variables, and
+as a result, they&rsquo;re in charge of their own scope. The class parameter <code>$msg</code>
+shadows the global var, and is what is actually used. As a quick quiz, consider
+this example. What message will be printed?</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$msg = &#34;a&#34;
+</span></span><span style="display:flex;"><span>class shadowme($msg) {
+</span></span><span style="display:flex;"><span>	$msg = &#34;d&#34;
+</span></span><span style="display:flex;"><span>	if true {
+</span></span><span style="display:flex;"><span>		$msg = &#34;c&#34;
+</span></span><span style="display:flex;"><span>		print &#34;shadowed&#34; {
+</span></span><span style="display:flex;"><span>			msg =&gt; $msg,
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include shadowme(&#34;b&#34;)
+</span></span></code></pre></div><p>If you think you&rsquo;ve got it all figured out, what do you think this will print?
+Getting the answer is easy, telling me why is more important.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$msg = &#34;a&#34;
+</span></span><span style="display:flex;"><span>class shadowme($msg) {
+</span></span><span style="display:flex;"><span>	$msg = &#34;c&#34;
+</span></span><span style="display:flex;"><span>	if true {
+</span></span><span style="display:flex;"><span>		$msg = &#34;d&#34;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	print &#34;shadowed&#34; {
+</span></span><span style="display:flex;"><span>		msg =&gt; $msg,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include shadowme(&#34;b&#34;)
+</span></span></code></pre></div><p>While it is possible to write the above code, it&rsquo;s probably not considered good
+practice. Avoid using shadowing wherever possible, to avoid confusing the user.
+The answer for the above two problems was &ldquo;c&rdquo;.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Nested Classes</span>:<br /><br />
+
+<p>In case it&rsquo;s not implied, you should know that classes can be nested. The
+following is perfectly valid code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class outside {
+</span></span><span style="display:flex;"><span>	class inside {
+</span></span><span style="display:flex;"><span>		print &#34;hello&#34; {}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	include inside
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include outside
+</span></span></code></pre></div><p>It&rsquo;s also worth mentioning that the following code will <em>not</em> compile:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class outside {
+</span></span><span style="display:flex;"><span>	class inside {
+</span></span><span style="display:flex;"><span>		print &#34;hello&#34; {}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include outside
+</span></span><span style="display:flex;"><span>include inside # the inside class is not in scope here, so this fails
+</span></span></code></pre></div><p>We can&rsquo;t generate new classes to appear in scope from the <code>include</code> of a parent
+class. As an example, the following is also invalid, and won&rsquo;t compile:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class outside($b) {
+</span></span><span style="display:flex;"><span>	if $b {
+</span></span><span style="display:flex;"><span>		class inside {
+</span></span><span style="display:flex;"><span>			print &#34;hello&#34; {}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include outside(true)
+</span></span><span style="display:flex;"><span>include inside # the inside class is not in scope here, so this fails
+</span></span></code></pre></div><p>While this might seem unfortunate, it&rsquo;s actually an important consequence of
+understanding the statement scope in general. The statement scope includes the
+classes and variables that exist at that time, and at compile time, they&rsquo;re
+bindings (data flow mappings) are static. Consider the following code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#b44">&#34;a&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> weird(<span style="color:#666">$</span>cond) {
+</span></span><span style="display:flex;"><span>	<span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#b44">&#34;b&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>cond {
+</span></span><span style="display:flex;"><span>		<span style="color:#666">$</span>foo <span style="color:#666">=</span> <span style="color:#b44">&#34;c&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">print</span> <span style="color:#b44">&#34;hello&#34;</span> {}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include weird(true) <span style="color:#080;font-style:italic"># instead of a constant, this value could change over time</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">print</span> <span style="color:#b44">&#34;world&#34;</span> {
+</span></span><span style="display:flex;"><span>	msg <span style="color:#666">=&gt;</span> <span style="color:#666">$</span>foo,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What does this print? While this code is valid and compiles, it must print &ldquo;a&rdquo;.
+If it didn&rsquo;t, it would mean the variable binding could change over time, which
+would be very complex, and error prone. For a declarative DSL, this isn&rsquo;t a net
+positive in my opinion. To do so would require a &ldquo;higher-order&rdquo; FRP.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Recursive Classes</span>:<br /><br />
+
+<p>For similar reasons to what was just mentioned, classes can&rsquo;t be recursive. You
+can <code>include</code> other classes inside your class, but the chain must terminate
+statically. The following code is valid:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class c1($m) {
+</span></span><span style="display:flex;"><span>	print $m {}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class c2 {
+</span></span><span style="display:flex;"><span>	include c1(&#34;hello&#34;)
+</span></span><span style="display:flex;"><span>	print &#34;world&#34; {}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include c1(&#34;this is a test...&#34;)
+</span></span><span style="display:flex;"><span>include c2
+</span></span></code></pre></div><p>The following code is <em>not</em> valid:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class c1($cond) {
+</span></span><span style="display:flex;"><span>	print &#34;nope&#34; {}
+</span></span><span style="display:flex;"><span>	if $cond {
+</span></span><span style="display:flex;"><span>		include c1(false)
+</span></span><span style="display:flex;"><span>	} else {
+</span></span><span style="display:flex;"><span>		print &#34;done&#34; {}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>include c1(true)
+</span></span></code></pre></div><p>While it appears that it would terminate and be a &ldquo;safe&rdquo; program, for the
+reasons I mentioned above, the compiler will catch this and forbid it at compile
+time. Also not allowed:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>class c1 {
+</span></span><span style="display:flex;"><span>	include c2
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>class c2 {
+</span></span><span style="display:flex;"><span>	include c1
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This all helps prevent a common cause of bugs in programs: non-terminating
+programs that infinitely recurse. Iteration is not always your friend. But our
+compiler will be.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Light Copies</span>:<br /><br />
+
+<p>When you <code>include</code> a class, it effectively copies the contents and dumps them
+out in the requested location. You might think that this gets expensive quickly,
+but in fact it is quite efficient. Consider the following code:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$big_data = &#34;Now this is a story, all about how, my code got...&#34;
+</span></span><span style="display:flex;"><span>class lyrics($in) {
+</span></span><span style="display:flex;"><span>	print &#34;${in}&#34; {
+</span></span><span style="display:flex;"><span>		msg =&gt; &#34;lyrics: &#34; + $big_data,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include lyrics(&#34;fresh code&#34;)
+</span></span><span style="display:flex;"><span>include lyrics(&#34;fresh rhymes&#34;)
+</span></span></code></pre></div><p>Here&rsquo;s a graph of the data flows that the function engine will run:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="graph1.png"><img class="alignnone size-full" src="graph1.png"  width="100%" /></a></td></tr><tr><td>The function engine data flows of the above code. Notice how the raw value of the $big_data string only appears once.</td></tr></table></br />
+
+<p>Even though the <code>$big_data</code> variable gets pulled into the <code>lyrics</code> class for
+each invocation, the initial copy is the only one that&rsquo;s used in the function
+graph. This is because we perform an intelligent &ldquo;light copy&rdquo; when running
+<code>include</code>, and anything that is a bound constant, remains that way. Enjoy the
+memory gains!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Statement Ordering</span>:<br /><br />
+
+<p>As I mentioned in the <a href="/blog/2018/02/05/mgmt-configuration-language/">earlier language post</a>,
+code is actually a <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">graph</a>
+and as a result can be written out-of-order. If you experiment with re-arranging
+the ordering of the statements, you&rsquo;ll find that everything still works
+correctly. This can be useful for situations when you might prefer to define the
+<code>class</code> before it is used, or for when you want to see your business logic that
+combines different <code>include</code>s at the top, and have the internals down at the
+bottom.</p>
+<p>In general, it is recommended that you avoid out-of-order code, but at the
+moment it is allowed. There is a compile-time constant that specifies whether it
+is allowed or not, and there is another one that specifies whether it should
+allow it, but generate a warning. Neither is fully implemented because we are
+missing one function in our graph library. If you can write a <a href="https://github.com/purpleidea/mgmt/blob/f53376cea1056649a147dfc7654381e46d4388a5/lang/structs.go#L3562">function</a>
+that returns whether a given ordering is a valid subset of one of the possible
+topological sorts for that graph, then <a href="/contact/">please let us know</a>!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you try out the language! More documentation is available in the
+<a href="https://github.com/purpleidea/mgmt/blob/master/docs/language-guide.md#class">language guide</a>.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>July 26, 2019<br>
+				<small>2005 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/class">class</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dsl">dsl</a> <a class="label label-default" href="/tags/frp">frp</a> <a class="label label-default" href="/tags/include">include</a> <a class="label label-default" href="/tags/mcl">mcl</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2019/07/26/class-and-include-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2019/07/26/class-and-include-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

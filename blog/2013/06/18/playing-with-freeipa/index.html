@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Playing with FreeIPA and puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Playing with FreeIPA and puppet</strong><br><small></small></h3>
+					<hr>
+					<p>So I just rolled a new vm to hack around with <a href="http://www.freeipa.org/">FreeIPA</a>. Here are some things that I&rsquo;ve come across so far. I was planning on configuring LDAP, and Kerberos manually, but the included webui looks like a lovely tool to have for the data entry, user administrator type who likes to click on things. Let&rsquo;s explore&hellip;</p>
+<p><span style="text-decoration:underline;"><strong>/etc/hosts</strong></span>:</p>
+<p>FreeIPA is choosy about how your <em>/etc/hosts</em> is formatted. It requires an entry that has a particular order, that is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>192.168.123.7    ipa.example.com    ipa
+</span></span></code></pre></div><p>Obviously replace with your own values. This presents itself as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>The host name ipa.example.com does not match the primary host name ipa. Please check /etc/hosts or DNS name resolution
+</span></span></code></pre></div><p>I had to dive into the source to figure this one out!</p>
+<p><span style="text-decoration:underline;"><strong>webui</strong></span>:</p>
+<p>I&rsquo;m in hack mode, and my laptop (hack station) is not participating in the domain that I&rsquo;m pretending to manage. In addition, I&rsquo;m not directly connected to the vm where I&rsquo;m testing out FreeIPA. As usual, I port forward:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ ssh root@ipa -L 1443:localhost:443
+</span></span></code></pre></div><p>but when attempting to try the webui:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ firefox https://localhost:1443/ipa/ui/
+</span></span></code></pre></div><p>I get redirected to the official <em>fqdn</em>, and at port 443. After searching around, it turns out there is a: <em>&ndash;no-ui-redirect</em> option that you can pass to the <em>ipa-server-install</em> program, but it only comments out one line of the <em>/etc/httpd/conf.d/ipa-rewrite.conf</em> and doesn&rsquo;t let me do exactly what I want. I&rsquo;m sure someone with pro apache skills could hack this up properly, but I haven&rsquo;t the patience.</p>
+<p>As user <em>ab</em> in <strong>#</strong><em>freeipa</em> kindly pointed out:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>01:21 &lt; ab&gt; primary authentication method of web ui is Kerberos. 
+</span></span><span style="display:flex;"><span>            Your browser, when configured, will need to obtain a kerberos 
+</span></span><span style="display:flex;"><span>            ticket against web ui&#39;s server, that&#39;s why you&#39;re forced to connect 
+</span></span><span style="display:flex;"><span>            to fully qualified hostname
+</span></span><span style="display:flex;"><span>01:22 &lt; ab&gt; otherwise a browser would attempt to obtain ticket to 
+</span></span><span style="display:flex;"><span>            HTTP/localhost@REALM which does not exist
+</span></span><span style="display:flex;"><span>01:22 &lt; ab&gt; and wouldn&#39;t be what web server web ui is running on is using
+</span></span></code></pre></div><p>which is a good point. For hacking purposes, I&rsquo;m happy to forgo kerberos logins and type in a password manually, but since my use case is particularly small, I&rsquo;ll just hack around this for now, and maybe a future <em>FreeIPA</em> will get this option. <a href="https://access.redhat.com/site/documentation//en-US/Red_Hat_Enterprise_Linux/6/html/Identity_Management_Guide/using-the-ui.html#ui-and-proxies">At the moment, it&rsquo;s not supported.</a></p>
+<p>A bad hacker <em>could</em> modify their <em>/etc/hosts</em> to include:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>127.0.0.1    ipa.example.com ipa localhost.localdomain localhost
+</span></span></code></pre></div><p>and run <em>ssh</em> as root (<em>very bad</em>!):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ sudo ssh root@ipa -L 443:localhost:443 -L 80:localhost:80
+</span></span></code></pre></div><p>to get easily get access locally. But don&rsquo;t do this. It&rsquo;s evil.</p>
+<p><span style="text-decoration:underline;"><strong>inactivity timeouts</strong></span>:</p>
+<p>The web ui times out after 20 minutes. To increase this add:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>session_auth_duration=42 minutes
+</span></span></code></pre></div><p>to your <em>/etc/ipa/default.conf</em>, and restart httpd. <a href="https://git.fedorahosted.org/cgit/freeipa.git/tree/ipalib/util.py#n423">You can have a look at the parser for an idea of what kind of values are acceptable.</a></p>
+<p><span style="text-decoration:underline;"><strong>puppet?</strong></span>:</p>
+<p>As you might agree, it&rsquo;s nice to have puppet modules to get you up and running. FreeIPA was easy to install, and my puppet module now makes it automatic. I&rsquo;ve written a lot of fancy puppet code to manage your IPA resources. It&rsquo;s not quite finished, and more resource types are on the way, but you can follow along at:</p>
+<p><a href="https://github.com/purpleidea/puppet-ipa"><a href="https://github.com/purpleidea/puppet-ipa">https://github.com/purpleidea/puppet-ipa</a></a></p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 18, 2013<br>
+				<small>586 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/freeipa">freeipa</a> <a class="label label-default" href="/tags/idm">idm</a> <a class="label label-default" href="/tags/ipa">ipa</a> <a class="label label-default" href="/tags/kerberos">kerberos</a> <a class="label label-default" href="/tags/krb5">krb5</a> <a class="label label-default" href="/tags/ldap">ldap</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-module">puppet module</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/06/18/playing-with-freeipa/"><small>https://ttboj.wordpress.com/2013/06/18/playing-with-freeipa/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/06/18/playing-with-freeipa">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/06/18/playing-with-freeipa.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

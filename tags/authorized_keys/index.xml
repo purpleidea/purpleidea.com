@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authorized_keys on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/authorized_keys/</link>
+    <description>Recent content in Authorized_keys on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 14 May 2025 19:45:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/authorized_keys/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Running etcd over SSH</title>
+      <link>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</link>
+      <pubDate>Wed, 14 May 2025 19:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</guid>
+      <description>Want to tunnel etcd traffic over SSH? Here&amp;rsquo;s a pitfall I ran into.&#xA;The problem:&#xA;Mgmt supports tunnelling the etcd traffic over SSH. This is quite useful, because it means that for it to connect to etcd, it doesn&amp;rsquo;t need to open up any new ports other than 22.&#xA;You can run the agent like so:&#xA;mgmt run --ssh-url=etcd@etcdserver:22 --seeds=http://127.0.0.1:2379 --no-server --no-magic empty and it just works!&#xA;Lockdown:&#xA;It&amp;rsquo;s no fun giving out more access than is really necessary, so I added this line to the etcd user account in their ~/.</description>
+    </item>
+  </channel>
+</rss>

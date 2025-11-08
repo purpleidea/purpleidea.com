@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Mothers day hacks - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Mothers day hacks</strong><br><small></small></h3>
+					<hr>
+					<p>Firstly Happy Mother&rsquo;s day to my mother.</p>
+<p>Google is, as usual, busily releasing <a href="http://www.google.com/doodles/">doodles</a>. Today, the doodle takes you through a <a href="https://en.wikipedia.org/wiki/Rube_Goldberg">Rube Goldberg</a> -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>3 * 3 * 3 * 3 = 81
+</span></span></code></pre></div><p>different permutations. At the end of the process, you can print your image. I got directed to:</p>
+<p><a href="https://www.google.ca/logos/2013/mom/print/3311.html"><a href="https://www.google.ca/logos/2013/mom/print/3311.html">https://www.google.ca/logos/2013/mom/print/3311.html</a></a></p>
+<p>which suspiciously has a four digit filename composed of three&rsquo;s and ones. Inspecting the file in firefox shows that the main image url is:</p>
+<p><a href="https://www.google.ca/logos/2013/mom/hdcards/3311.jpg"><a href="https://www.google.ca/logos/2013/mom/hdcards/3311.jpg">https://www.google.ca/logos/2013/mom/hdcards/3311.jpg</a></a></p>
+<p>with a similarly suspicious &ldquo;<em>3311</em>&rdquo;. I decided that I wanted to see all the permutations without having to refresh google&rsquo;s page. Jumping to a terminal, and using some bash expansion magic:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span> cd <span style="color:#666">/</span>tmp
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> mkdir hack1
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> cd hack1<span style="color:#666">/</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span> wget https:<span style="color:#666">//</span>www<span style="color:#666">.</span>google<span style="color:#666">.</span>ca<span style="color:#666">/</span>logos<span style="color:#666">/</span><span style="color:#666">2013</span><span style="color:#666">/</span>mom<span style="color:#666">/</span>hdcards<span style="color:#666">/</span>{<span style="color:#666">1.</span><span style="color:#666">.</span><span style="color:#666">3</span>}{<span style="color:#666">1.</span><span style="color:#666">.</span><span style="color:#666">3</span>}{<span style="color:#666">1.</span><span style="color:#666">.</span><span style="color:#666">3</span>}{<span style="color:#666">1.</span><span style="color:#666">.</span><span style="color:#666">3</span>}<span style="color:#666">.</span>jpg
+</span></span><span style="display:flex;"><span>[snip]
+</span></span><span style="display:flex;"><span>FINISHED <span style="color:#666">--</span><span style="color:#666">2013</span><span style="color:#666">-</span><span style="color:#666">05</span><span style="color:#666">-</span><span style="color:#666">12</span> <span style="color:#666">07</span>:<span style="color:#666">07</span>:<span style="color:#666">22</span><span style="color:#666">--</span>
+</span></span><span style="display:flex;"><span>Total wall clock time: <span style="color:#666">1</span>m <span style="color:#666">23</span>s
+</span></span><span style="display:flex;"><span>Downloaded: <span style="color:#666">81</span> files, <span style="color:#666">138</span>M <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#666">1</span>m <span style="color:#666">19</span>s (<span style="color:#666">1.75</span> MB<span style="color:#666">/</span>s)
+</span></span></code></pre></div><p>I am pleased to see that 81 files have downloaded, and that they&rsquo;re all unique:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ md5sum * | sort | uniq | wc -l
+</span></span><span style="display:flex;"><span>81
+</span></span></code></pre></div><p>and all png&rsquo;s:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ file * | awk &#39;{print $2}&#39; | sort | uniq | wc -l
+</span></span><span style="display:flex;"><span>1
+</span></span><span style="display:flex;"><span>$ file * | head -1
+</span></span><span style="display:flex;"><span>1111.jpg: JPEG image data, EXIF standard
+</span></span></code></pre></div><p>Now I can very easily browse through the images with eog, and select my favourite.</p>
+<p>Hope this has been instructive,</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>May 12, 2013<br>
+				<small>317 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/google-doodle">google doodle</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/mothers-day">mothers day</a> <a class="label label-default" href="/tags/pgo">pgo</a> <a class="label label-default" href="/tags/rube-goldberg">rube goldberg</a> <a class="label label-default" href="/tags/shell">shell</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/05/12/mothers-day-hacks/"><small>https://ttboj.wordpress.com/2013/05/12/mothers-day-hacks/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/05/12/mothers-day-hacks">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/05/12/mothers-day-hacks.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Forcing firefox to remember passwords - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Forcing firefox to remember passwords</strong><br><small></small></h3>
+					<hr>
+					<p>There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to <em>off</em>.</p>
+<p>Since we already agree that <a href="https://github.com/tomerfiliba/rpyc/tree/master/demos/web8">HTML and the web are a terrible idea</a>, hopefully we can find a way to hack around this. It turns out that I didn&rsquo;t have to, because many others have solved this hack before me. The cleanest version I found is here: <a href="http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/"><a href="http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/">http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/</a></a></p>
+<p>It&rsquo;s not that complicated actually, a little bookmarklet (javascript code, stored in a bookmark, and activated when you open it) is saved in your browser, and on activation, it loops through all the page&rsquo;s forms and turns <em>on</em> the autocomplete <em>off</em>&rsquo;s.</p>
+<p>I&rsquo;ve copied the code here, in the interests of archiving this very useful hack. Here you go:</p>
+<p><strong><span style="text-decoration:underline;">Shortened form</span>:</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>javascript<span style="color:#666">:</span>(<span style="color:#a2f;font-weight:bold">function</span>(){<span style="color:#a2f;font-weight:bold">var</span><span style="color:#666">%</span><span style="color:#666">20</span>ac,c,f,fa,fe,fea,x,y,z;ac<span style="color:#666">=</span><span style="color:#b44">&#34;autocomplete&#34;</span>;c<span style="color:#666">=</span><span style="color:#666">0</span>;f<span style="color:#666">=</span><span style="color:#a2f">document</span>.forms;<span style="color:#a2f;font-weight:bold">for</span>(x<span style="color:#666">=</span><span style="color:#666">0</span>;x<span style="color:#666">&lt;</span>f.length;x<span style="color:#666">++</span>){fa<span style="color:#666">=</span>f[x].attributes;<span style="color:#a2f;font-weight:bold">for</span>(y<span style="color:#666">=</span><span style="color:#666">0</span>;y<span style="color:#666">&lt;</span>fa.length;y<span style="color:#666">++</span>){<span style="color:#a2f;font-weight:bold">if</span>(fa[y].name.toLowerCase()<span style="color:#666">==</span>ac){fa[y].value<span style="color:#666">=</span><span style="color:#b44">&#34;on&#34;</span>;c<span style="color:#666">++</span>;}}fe<span style="color:#666">=</span>f[x].elements;<span style="color:#a2f;font-weight:bold">for</span>(y<span style="color:#666">=</span><span style="color:#666">0</span>;y<span style="color:#666">&lt;</span>fe.length;y<span style="color:#666">++</span>){fea<span style="color:#666">=</span>fe[y].attributes;<span style="color:#a2f;font-weight:bold">for</span>(z<span style="color:#666">=</span><span style="color:#666">0</span>;z<span style="color:#666">&lt;</span>fea.length;z<span style="color:#666">++</span>){<span style="color:#a2f;font-weight:bold">if</span>(fea[z].name.toLowerCase()<span style="color:#666">==</span>ac){fea[z].value<span style="color:#666">=</span><span style="color:#b44">&#34;on&#34;</span>;c<span style="color:#666">++</span>;}}}}alert(<span style="color:#b44">&#34;Enabled%20&#39;&#34;</span><span style="color:#666">+</span>ac<span style="color:#666">+</span><span style="color:#b44">&#34;&#39;%20on%20&#34;</span><span style="color:#666">+</span>c<span style="color:#666">+</span><span style="color:#b44">&#34;%20objects.&#34;</span>);})();</span></span></code></pre></div>
+<strong><span style="text-decoration:underline;">Long form</span>:</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span>() {
+</span></span><span style="display:flex;"><span>   <span style="color:#a2f;font-weight:bold">var</span> ac, c, f, fa, fe, fea, x, y, z;
+</span></span><span style="display:flex;"><span>   <span style="color:#080;font-style:italic">//ac = autocomplete constant (attribute to search for)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//c = count of the number of times the autocomplete constant was found
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//f = all forms on the current page
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//fa = attibutes in the current form
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//fe = elements in the current form
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//fea = attibutes in the current form element
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#080;font-style:italic">//x,y,z = loop variables
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>   ac <span style="color:#666">=</span> <span style="color:#b44">&#34;autocomplete&#34;</span>;
+</span></span><span style="display:flex;"><span>   c <span style="color:#666">=</span> <span style="color:#666">0</span>;
+</span></span><span style="display:flex;"><span>   f <span style="color:#666">=</span> <span style="color:#a2f">document</span>.forms;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#080;font-style:italic">//cycle through each form
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>   <span style="color:#a2f;font-weight:bold">for</span>(x <span style="color:#666">=</span> <span style="color:#666">0</span>; x <span style="color:#666">&lt;</span> f.length; x<span style="color:#666">++</span>) {
+</span></span><span style="display:flex;"><span>      fa <span style="color:#666">=</span> f[x].attributes;
+</span></span><span style="display:flex;"><span>      <span style="color:#080;font-style:italic">//cycle through each attribute in the form
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>      <span style="color:#a2f;font-weight:bold">for</span>(y <span style="color:#666">=</span> <span style="color:#666">0</span>; y <span style="color:#666">&lt;</span> fa.length; y<span style="color:#666">++</span>) {
+</span></span><span style="display:flex;"><span>         <span style="color:#080;font-style:italic">//check for autocomplete in the form attribute
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>         <span style="color:#a2f;font-weight:bold">if</span>(fa[y].name.toLowerCase() <span style="color:#666">==</span> ac) {
+</span></span><span style="display:flex;"><span>            fa[y].value <span style="color:#666">=</span> <span style="color:#b44">&#34;on&#34;</span>;
+</span></span><span style="display:flex;"><span>            c<span style="color:#666">++</span>;
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      fe <span style="color:#666">=</span> f[x].elements;
+</span></span><span style="display:flex;"><span>      <span style="color:#080;font-style:italic">//cycle through each element in the form
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>      <span style="color:#a2f;font-weight:bold">for</span>(y <span style="color:#666">=</span> <span style="color:#666">0</span>; y <span style="color:#666">&lt;</span> fe.length; y<span style="color:#666">++</span>) {
+</span></span><span style="display:flex;"><span>         fea <span style="color:#666">=</span> fe[y].attributes;
+</span></span><span style="display:flex;"><span>         <span style="color:#080;font-style:italic">//cycle through each attribute in the element
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>         <span style="color:#a2f;font-weight:bold">for</span>(z <span style="color:#666">=</span> <span style="color:#666">0</span>; z <span style="color:#666">&lt;</span> fea.length; z<span style="color:#666">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic">//check for autocomplete in the element attribute
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>            <span style="color:#a2f;font-weight:bold">if</span>(fea[z].name.toLowerCase() <span style="color:#666">==</span> ac) {
+</span></span><span style="display:flex;"><span>               fea[z].value <span style="color:#666">=</span> <span style="color:#b44">&#34;on&#34;</span>;
+</span></span><span style="display:flex;"><span>               c<span style="color:#666">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   alert(<span style="color:#b44">&#34;Enabled &#39;&#34;</span> <span style="color:#666">+</span> ac <span style="color:#666">+</span> <span style="color:#b44">&#34;&#39; on &#34;</span> <span style="color:#666">+</span> c <span style="color:#666">+</span> <span style="color:#b44">&#34; objects.&#34;</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+Happy hacking,</p>
+<p>James</p>
+<p>PS: Best friends forever if you can get firefox to natively integrate with the gnome-keyring. No I don&rsquo;t want to force it to myself, get this code merged upstream please!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>May 17, 2013<br>
+				<small>443 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/autocomplete">autocomplete</a> <a class="label label-default" href="/tags/bookmarklet">bookmarklet</a> <a class="label label-default" href="/tags/dangerous">dangerous</a> <a class="label label-default" href="/tags/firefox">firefox</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/pgo">pgo</a> <a class="label label-default" href="/tags/save-passwords">save passwords</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/05/17/forcing-firefox-to-remember-passwords/"><small>https://ttboj.wordpress.com/2013/05/17/forcing-firefox-to-remember-passwords/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/05/17/forcing-firefox-to-remember-passwords">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/05/17/forcing-firefox-to-remember-passwords.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

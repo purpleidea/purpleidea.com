@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bash/</link>
+    <description>Recent content in Bash on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 17 Nov 2024 15:52:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Better dmesg in five minutes</title>
+      <link>https://purpleidea.com/blog/2024/11/17/better-dmesg/</link>
+      <pubDate>Sun, 17 Nov 2024 15:52:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/17/better-dmesg/</guid>
+      <description>I last wrote about dmesg in 2016. It has mostly not changed since then, but I&amp;rsquo;ve changed my setup slightly. Here&amp;rsquo;s a short article about what I did so that you can do it too, and so that I can remember for the next time.&#xA;Previously:&#xA;Previous I had a bash alias which looked like this:&#xA;alias dmesg=&amp;#39;dmesg --follow || dmesg&amp;#39; since some machines didn&amp;rsquo;t yet support the --follow flag.</description>
+    </item>
+    <item>
+      <title>Bash $PATH filtering</title>
+      <link>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</link>
+      <pubDate>Sat, 02 Mar 2024 19:54:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/02/bash-path-filtering/</guid>
+      <description>As most modern GNU+Linux distro users already know, you get a lot of tools included for free! Many of these may clutter up your $PATH and make bash tab completion more difficult than it has to be. Here&amp;rsquo;s a way to improve this!&#xA;A mess:&#xA;Here&amp;rsquo;s what I see when I tab-complete cd&amp;lt;TAB&amp;gt;:&#xA;james@computer:~$ cd cd cddb_query cd-info cd-read cd-convert cd-drive cd-it8 cdrecord cd-create-profile cd-fix-profile cdmkdir cdtmpmkdir cdda-player cd-iccdump cd-paranoia I genuinely only use three of those commands.</description>
+    </item>
+    <item>
+      <title>Git branch filtering</title>
+      <link>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</link>
+      <pubDate>Sun, 28 Jan 2024 17:04:30 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/01/28/git-branch-filtering/</guid>
+      <description>If you have more than one git branch up in the air at the same time, having a system to track them and filter them is essential. Here are the stages I went through with git branch.&#xA;xkcd reminds us that we&amp;#39;re insane Prefixes:&#xA;My first tip involves using a memorable prefix. For new features I name my branches with feat/. For example feat/my-new-feature. Yes the slash and the dashes are treated like any regular character.</description>
+    </item>
+    <item>
+      <title>Hyperlinks in GNOME terminal</title>
+      <link>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</link>
+      <pubDate>Fri, 29 Jun 2018 21:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</guid>
+      <description>Over the years I&amp;rsquo;ve learned about many of the advantages of using a modern terminal and shell. I&amp;rsquo;m talking about using bash with GNOME terminal on a modern GNU/Linux distribution.&#xA;I particularly like switching between the terminal and GUI applications. It&amp;rsquo;s now even better.&#xA;Automatic Hyperlinks:&#xA;Occasionally, some program running in your shell might output what looked like a link:&#xA;gnome terminal and vte will automatically add links to text that looks like a web hyperlink or an email address They can be seen when you hover over them, and a right-click will display a useful context menu:</description>
+    </item>
+    <item>
+      <title>Running `make` from anywhere</title>
+      <link>https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/</link>
+      <pubDate>Sat, 10 Mar 2018 02:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/03/10/running-make-from-anywhere/</guid>
+      <description>Sometimes while I&amp;rsquo;m deep inside mgmt&amp;rsquo;s project directory, I want to run an operation from the Makefile which lives in the root! Unfortunately, if you do so while nested, you&amp;rsquo;ll just get:&#xA;james@computer:~/code/mgmt/resources$ make build make: *** No rule to make target &amp;#39;build&amp;#39;. Stop. The Ten Minute Solution:&#xA;I figured I&amp;rsquo;d hack out a quick solution. What I came up with looks like this:&#xA;#!/bin/bash # James Shubin, 2018 # run `make` in the first directory (or its parent recursively) that it works in MF=&amp;#39;Makefile&amp;#39;&#x9;# looks for this file, could look for others, but that&amp;#39;s silly CWD=$(pwd)&#x9;# starting here while true; do if [ -e &amp;#34;$MF&amp;#34; ]; then make $@&#x9;# run make!</description>
+    </item>
+    <item>
+      <title>Ten minute hacks: Process pause &amp; resume</title>
+      <link>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</link>
+      <pubDate>Fri, 06 Jan 2017 05:57:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</guid>
+      <description>I&amp;rsquo;m old school and still rocking an old X220 laptop because I didn&amp;rsquo;t like the new ones. My battery life isn&amp;rsquo;t as great as I&amp;rsquo;d like it to be, but it gets worse when some &amp;ldquo;webapp&amp;rdquo; (which I&amp;rsquo;d much rather have as a native GTK+ app) causes Firefox to rev my CPU with their websocket (hi gmail!) poller.&#xA;This seems to happen most often on planes or when I&amp;rsquo;m disconnected from the internet.</description>
+    </item>
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>I&amp;rsquo;ve got a brand new core feature in mgmt called send/recv which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.&#xA;History&#xA;This is my historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.&#xA;Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, CFEngine burst onto the scene with the first real solution to this problem.</description>
+    </item>
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>I have a GNU/Linux server which I mount a few LUKS encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to encrypt it all, if only to add noise into the system and for solidarity with those who harbour much more sensitive data.</description>
+    </item>
+    <item>
+      <title>Introducing: git tpush</title>
+      <link>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</link>
+      <pubDate>Tue, 16 Feb 2016 12:15:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</guid>
+      <description>On today&amp;rsquo;s issue of &amp;ldquo;one hour hacks&amp;rdquo;, I&amp;rsquo;ll show you how you can stop your git drive-by&amp;rsquo;s to git master from breaking your CI tests&amp;hellip; Let&amp;rsquo;s continue!&#xA;The problem:&#xA;Sometimes I&amp;rsquo;ve got a shitty one-line patch that I want to push to git master. I&amp;rsquo;m usually right, and everything tests out fine, but usually isn&amp;rsquo;t always, and then I look silly while I frantically try to fix git master on a project that I maintain.</description>
+    </item>
+    <item>
+      <title>Next generation configuration mgmt</title>
+      <link>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</link>
+      <pubDate>Mon, 18 Jan 2016 00:52:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/</guid>
+      <description>It&amp;rsquo;s no secret to the readers of this blog that I&amp;rsquo;ve been active in the configuration management space for some time. I owe most of my knowledge to what I&amp;rsquo;ve learned while working with Puppet and from other hackers working in and around various other communities.&#xA;I&amp;rsquo;ve published, a number, of articles, in an, attempt, to push, the field, forwards, and to, share the, knowledge, that I&amp;rsquo;ve, learned, with others. I&amp;rsquo;ve spent many nights thinking about these problems, but it is not without some chagrin that I realized that the current state-of-the-art in configuration management cannot easily (or elegantly) solve all the problems for which I wish to write solutions.</description>
+    </item>
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>Daniel P. Berrangé wrote about trying out a single node ceph cluster. I decided to take his article and turn it into an Oh-My-Vagrant omv.yaml file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.&#xA;If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the omv.yaml file that I&amp;rsquo;ve just published and run omv up.</description>
+    </item>
+    <item>
+      <title>Matching arbitrary URL&#39;s to custom Firefox profiles</title>
+      <link>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</link>
+      <pubDate>Sat, 14 Nov 2015 06:50:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</guid>
+      <description>We&amp;rsquo;re constantly clicking on all sorts of different URL&amp;rsquo;s throughout the day. These clickable links appear in webpages (including in &amp;ldquo;web apps&amp;rdquo; like gmail) in mail clients like Evolution, in terminals such as GNOME-terminal, and any other GTK+ app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&amp;rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along.</description>
+    </item>
+    <item>
+      <title>Git archive with submodules and tar magic</title>
+      <link>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</link>
+      <pubDate>Thu, 23 Jul 2015 20:32:27 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/23/git-archive-with-submodules-and-tar-magic/</guid>
+      <description>Git submodules are actually a very beautiful thing. You might prefer the word powerful or elegant, but that&amp;rsquo;s not the point. The downside is that they are sometimes misused, so as always, use with care. I&amp;rsquo;ve used them in projects like puppet-gluster, oh-my-vagrant, and others. If you&amp;rsquo;re not familiar with them, do a bit of reading and come back later, I&amp;rsquo;ll wait.&#xA;I recently did some work packaging Oh-My-Vagrant as RPM&amp;rsquo;s.</description>
+    </item>
+    <item>
+      <title>Fancy git aliases and git cherryfetch</title>
+      <link>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</link>
+      <pubDate>Mon, 16 Mar 2015 05:36:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</guid>
+      <description>Here are two quick git tricks that I&amp;rsquo;ve added to my toolbox lately&amp;hellip;&#xA;I wanted to create a git alias that takes in argv from the command, but in the middle of the command. Here&amp;rsquo;s the hack that I came up with for the [alias] section of my ~/.gitconfig:&#xA;[alias] # cherryfetch fetches a repo ($1) / branch ($2) and applies it rebased! # the &amp;amp;&amp;amp; true at the end eats up the appended args cherryfetch = !</description>
+    </item>
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns. In addition, there are some excellent libre (and hosted) services such as WordPress, Wikipedia and OpenShift which don&amp;rsquo;t have the above problems. Thirdly, there are every day Free Software tools such as Fedora GNU/Linux, Libreoffice, and git-annex-assistant which make my computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools.</description>
+    </item>
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>If you&amp;rsquo;re a reader of my code or of this blog, it&amp;rsquo;s no secret that I hack on a lot of puppet and vagrant. Recently I&amp;rsquo;ve fooled around with a bit of docker, too. I realized that the vagrant, environments I built for puppet-gluster and puppet-ipa needed to be generalized, and they needed new features too. Therefore&amp;hellip;&#xA;Introducing: Oh My Vagrant!&#xA;Oh My Vagrant is an attempt to provide an easy to use development environment so that you can be up and hacking quickly, and focusing on the real devops problems.</description>
+    </item>
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>(Note: this hybrid management technique is being demonstrated in the puppet-ipa module for FreeIPA, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)&#xA;The error message that puppet hackers are probably most familiar is:&#xA;Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; cannot redeclare at /tmp/baz.pp:4 on node computer.example.com Typically this means that there is either a bug in your code, or someone has defined something more than once.</description>
+    </item>
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>Master SDN hacker Flavio sent me some tunes. They were sitting on my desktop in a folder:&#xA;$ ls ~/Desktop/ uncopyrighted_tunes_from_flavio/ I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the nautilus file browser to select which folder to play, and the totem music/video player to do the playing.&#xA;Drop a file named totem into:&#xA;~/.local/share/nautilus/scripts/ with the contents:&#xA;#!/bin/bash # o hai from purpleidea exec totem -- &amp;#34;$@&amp;#34; and make it executable with:</description>
+    </item>
+    <item>
+      <title>Restarting GNOME shell via SSH</title>
+      <link>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</link>
+      <pubDate>Thu, 29 May 2014 02:18:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/05/29/restarting-gnome-shell-via-ssh/</guid>
+      <description>When GNOME shell breaks, you get to keep both pieces. The nice thing about shell failures in GNOME 3, is that if you&amp;rsquo;re able to do a restart, the active windows are mostly not disturbed. The common way to do this is to type ALT-F2, r, &amp;laquo;em&amp;gt;ENTER&amp;gt;.&#xA;Unfortunately, you can&amp;rsquo;t always type that in if your shell is very borked. If you are lucky enough to have SSH access, and another machine, you can log in remotely and run this script:</description>
+    </item>
+    <item>
+      <title>Keeping git submodules in sync with your branches</title>
+      <link>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</link>
+      <pubDate>Tue, 06 May 2014 19:34:13 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/05/06/keeping-git-submodules-in-sync-with-your-branches/</guid>
+      <description>This is a quick trick for making working with git submodules more magic.&#xA;One day you might find that using git submodules is needed for your project. It&amp;rsquo;s probably not necessary for everyday hacking, but if you&amp;rsquo;re glue-ing things together, it can be quite useful. Puppet-Gluster uses this technique to easily include all the dependencies needed for a Puppet-Gluster+Vagrant automatic deployment.&#xA;If you&amp;rsquo;re a good hacker, you develop things in separate feature branches.</description>
+    </item>
+    <item>
+      <title>Preserving your working directory in gnome-terminal</title>
+      <link>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</link>
+      <pubDate>Thu, 20 Mar 2014 18:01:24 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/20/preserving-your-working-directory-in-gnome-terminal/</guid>
+      <description>I use gnome-terminal for most of my hacking. In fact, I use it so much, that I&amp;rsquo;ll often have multiple tabs open for a particular project. Here&amp;rsquo;s my workflow:&#xA;Control+Alt+t (My shortcut to open a new gnome-terminal window.) cd ~/code/some_cool_hack/ # directory of some cool hack Control-Shift-t (Shortcut to open a new gnome-terminal tab.) Hack, hack, hack... The problem is that the new tab that I&#39;ve created will have a $PWD of ~, instead of keeping the $PWD of ~/code/some_cool_hack/, which is the project I&#39;m working on!</description>
+    </item>
+    <item>
+      <title>Show the exit status in your $PS1</title>
+      <link>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</link>
+      <pubDate>Wed, 29 Jan 2014 19:43:44 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/29/show-the-exit-status-in-your-ps1/</guid>
+      <description>As an update to my earlier article, a friend gave me an idea of how to make my $PS1 even better&amp;hellip; First, the relevant part of my ~/.bashrc:&#xA;ps1_prompt() { local ps1_exit=$? if [ $ps1_exit -eq 0 ]; then #ps1_status=`echo -e &amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[32m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\]&amp;#34;` ps1_status=&amp;#39;\$&amp;#39; else ps1_status=`echo -e &amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[1;31m\]&amp;#34;&amp;#39;\$&amp;#39;&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\]&amp;#34;` fi ps1_git=&amp;#39;&amp;#39; if [ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;&amp;#39; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#39;master&amp;#39; ]; then ps1_git=&amp;#34; (\[&amp;amp;#092;&amp;amp;#048;33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[&amp;amp;#092;&amp;amp;#048;33[0m\])&amp;#34; fi PS1=&amp;#34;${debian_chroot:+($debian_chroot)}\u@\h:\[&amp;amp;#092;&amp;amp;#048;33[01;34m\]\w\[&amp;amp;#092;&amp;amp;#048;33[00m\]${ps1_git}${ps1_status} &amp;#34; } # preserve earlier PROMPT_COMMAND entries.</description>
+    </item>
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>I needed a base image &amp;ldquo;box&amp;rdquo; for my Puppet-Gluster+Vagrant work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! I&amp;rsquo;ve published all of my code, so that you can use these techniques and tools too!&#xA;Status quo:&#xA;Having an NIH problem is bad for your vision, and it&amp;rsquo;s best to benefit from existing tools before creating your own.</description>
+    </item>
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (cssh) and screen with vagrant. I decided to expand on my vsftp script. First read:&#xA;Vagrant on Fedora with libvirt&#xA;and Vagrant vsftp and other tricks&#xA;to get up to speed on the background information. Vagrant screen:&#xA;First, a simple screen hack&amp;hellip; I often use my vssh alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with sudo-ing to root and then running screen each time.</description>
+    </item>
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt, and have even been submitting, patches and issues! (This &amp;ldquo;closed&amp;rdquo; issue needs solving!) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.&#xA;Default provider:&#xA;I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using vagrant-libvirt.</description>
+    </item>
+    <item>
+      <title>Easier strace of scripts with pidof -x</title>
+      <link>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</link>
+      <pubDate>Sat, 26 Oct 2013 16:02:12 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/26/easier-strace-of-scripts-with-pidof-x/</guid>
+      <description>Here&amp;rsquo;s a one minute read, about a trick which I discovered today:&#xA;When running an strace, it&amp;rsquo;s common to do something like:&#xA;strace -p&amp;lt;pid&amp;gt; Smarter hackers know that they can use some bash magic and do:&#xA;strace -p`pidof &amp;lt;process name&amp;gt;` However, if you&amp;rsquo;re tracing a script named foo.py, this won&amp;rsquo;t work because the real process is the script&amp;rsquo;s interpreter, and pidof python, might return other unrelated python scripts.&#xA;strace -p`pidof foo.</description>
+    </item>
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>I&amp;rsquo;m usually on IRC, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;&#xA;The Setup&#xA;Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run irssi in a screen session on an SSH server that I manage, and I use gnome-terminal on my laptop.</description>
+    </item>
+    <item>
+      <title>Show current git branch in PS1 when branch is not master</title>
+      <link>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</link>
+      <pubDate>Thu, 10 Oct 2013 22:16:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</guid>
+      <description>Short post, long command&amp;hellip;&#xA;I&amp;rsquo;ve decided to start showing the current git branch in my PS1. However, since I don&amp;rsquo;t want to know when I&amp;rsquo;m on master, I had to write a new PS1 that I haven&amp;rsquo;t yet seen anywhere. Add the following to your .bashrc: PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &amp;#39; if [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then . /usr/share/git-core/contrib/completion/git-prompt.sh PS1=&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w$([ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;&amp;#34; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;master&amp;#34; ] &amp;amp;&amp;amp; (echo -e &amp;#34; (\[33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[33[0m\])&amp;#34;) || echo &amp;#34;&amp;#34;)\$ &amp;#39; fi</description>
+    </item>
+    <item>
+      <title>Mothers day hacks</title>
+      <link>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</link>
+      <pubDate>Sun, 12 May 2013 07:32:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</guid>
+      <description>Firstly Happy Mother&amp;rsquo;s day to my mother.&#xA;Google is, as usual, busily releasing doodles. Today, the doodle takes you through a Rube Goldberg -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:&#xA;3 * 3 * 3 * 3 = 81 different permutations. At the end of the process, you can print your image.</description>
+    </item>
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support releasing early and often, for some value of $early and $often. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;&#xA;I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many.</description>
+    </item>
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:&#xA;james@computer:~/some/awesome/directory$ nautilus . Initializing nautilus-open-terminal extension Shutting down nautilus-open-terminal extension james@computer:~/some/awesome/directory$ This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it.</description>
+    </item>
+    <item>
+      <title>scary cool bash scripting inside a Makefile</title>
+      <link>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</link>
+      <pubDate>Wed, 31 Mar 2010 10:05:21 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</guid>
+      <description>Makefiles are both scary and wonderful. When both these adjectives are involved, it often makes for interesting hacking. This is likely the reason I use bash.&#xA;In any case, I digress, back to real work. I use Makefiles as a general purpose tool to launch any of a number of shell scripts which I use to maintain my code, and instead of actually having external shell scripts, I just build any necessary bash right into the Makefile.</description>
+    </item>
+    <item>
+      <title>piping data through ssh</title>
+      <link>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</link>
+      <pubDate>Wed, 09 Dec 2009 22:36:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/12/09/piping-data-through-ssh/</guid>
+      <description>not that what i&amp;rsquo;m about to tell you is brilliant, new or revolutionary, however i thought i&amp;rsquo;d mention it in case you&amp;rsquo;re not doing it. also feel free to let me know if there is a better way.&#xA;problem: i have some stdout which comes from a command and i want it in a file on another machine.&#xA;i could first send it to a temp file, scp that over, and then remove the temp file; but instead, i&amp;rsquo;ll just:</description>
+    </item>
+  </channel>
+</rss>

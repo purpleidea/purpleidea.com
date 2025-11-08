@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="How to get rid of the annoying a/ and b/ prefixes.">
+	<meta name="author" content="James Shubin">
+
+	<title>Improving git diff output in 5 min - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Improving git diff output in 5 min</strong><br><small>How to get rid of the annoying a/ and b/ prefixes.</small></h3>
+					<hr>
+					<p>Everyone uses <code>git diff</code>. But there&rsquo;s that odd annoyance that you&rsquo;ve probably
+seen before but are so used to that you&rsquo;ve forgotten about it. The <code>a/</code> and <code>b/</code>
+prefixes&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Example</span>:<br /><br />
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt <span style="color:#666">(</span>feat/cool-feature<span style="color:#666">)</span>$ git diff
+</span></span><span style="display:flex;"><span>diff --git a/lang/funcs/core/os/readfile_func.go b/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>index 206ba798d..48ac29dc7 <span style="color:#666">100644</span>
+</span></span><span style="display:flex;"><span>--- a/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>+++ b/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>@@ -228,6 +228,8 @@ func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Stream<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> // Close runs some shutdown code <span style="color:#a2f;font-weight:bold">for</span> this <span style="color:#a2f;font-weight:bold">function</span> and turns off the stream.
+</span></span><span style="display:flex;"><span> func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Close<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>+       // TODO: Port to the new ctx-in-Stream close API.
+</span></span><span style="display:flex;"><span>+       // Hello blog readers!
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.closeChan<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>        obj.wg.Wait<span style="color:#666">()</span>     // block so we don<span style="">&#39;</span>t <span style="color:#a2f">exit</span> by the closure of obj.events
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.events<span style="color:#666">)</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What are they for?</span><br /><br />
+
+<p>The <code>git diff</code> command shows these to help you differentiate between the source
+and the destination files. In most cases you are in the midst of looking at and
+writing code, so you&rsquo;ll probably instinctively know whether you or something
+just added or deleted those lines. (Because if you flipped <code>a</code> and <code>b</code> you&rsquo;d
+have the opposite diff.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The fix</span>:<br /><br />
+
+<p>You can customize these with <code>--src-prefix=&lt;prefix&gt;</code> and  <code>--dst-prefix=&lt;prefix&gt;</code>.
+Even better, I just turn them off with <code>--no-prefix</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What about my .gitconfig ?</span><br /><br />
+
+<p>Just run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ git config --global diff.noprefix <span style="color:#a2f">true</span>
+</span></span></code></pre></div><p>Alternatively you can add to your <code>~/.gitconfig</code> directly with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># turn off the stupid a/ b/ prefixes in `git diff`</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>diff<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">noprefix</span> <span style="color:#666">=</span> <span style="color:#a2f">true</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">New output</span>:<br /><br />
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt <span style="color:#666">(</span>feat/cool-feature<span style="color:#666">)</span>$ git diff
+</span></span><span style="display:flex;"><span>diff --git lang/funcs/core/os/readfile_func.go lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>index 206ba798d..a8c82293e <span style="color:#666">100644</span>
+</span></span><span style="display:flex;"><span>--- lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>+++ lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>@@ -228,6 +228,8 @@ func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Stream<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> // Close runs some shutdown code <span style="color:#a2f;font-weight:bold">for</span> this <span style="color:#a2f;font-weight:bold">function</span> and turns off the stream.
+</span></span><span style="display:flex;"><span> func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Close<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>+       // TODO: Port to the new ctx-in-Stream close API.
+</span></span><span style="display:flex;"><span>+       // Please send me some cool patches or donations!
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.closeChan<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>        obj.wg.Wait<span style="color:#666">()</span>     // block so we don<span style="">&#39;</span>t <span style="color:#a2f">exit</span> by the closure of obj.events
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.events<span style="color:#666">)</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Why this is annoying?</span><br /><br />
+
+<p>If you&rsquo;re copy+pasting from the terminal, you&rsquo;d have to manually select the
+string without the prefix, as by default word barriers select the whole thing.
+Note the difference:</p>
+<p>Before:
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="git-diff-before.png"><img class="alignnone size-full" src="git-diff-before.png" alt="Definitely a small detail, but it&#39;s so easy to optimize!" width="100%" /></a></td></tr></tr></table></br />
+</p>
+<p>After:
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="git-diff-after.png"><img class="alignnone size-full" src="git-diff-after.png" alt="So much better and cleaner!" width="100%" /></a></td></tr></tr></table></br />
+</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Future work</span>:<br /><br />
+
+<p>Unfortunately the diff output in <code>git add -p</code> does not obey the same setting. I
+briefly looked at writing a patch for this, but my C skills and knowledge of the
+git codebase itself aren&rsquo;t good enough at the moment. If you could make this
+happen or open an issue with the git team, please do!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope you enjoyed this. Please leave me a comment if this taught you something
+new!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Postscript</span>:<br /><br />
+
+<p>It probably took me more time to write this blog post than what I&rsquo;ll save in
+copy+paste time cumulatively over the next year, but here we are.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 1, 2023<br>
+				<small>513 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/diff">diff</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2023/06/01/improving-git-diff-output-in-5-min">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2023/06/01/improving-git-diff-output-in-5-min.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

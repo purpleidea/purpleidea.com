@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="how to benefit from fancy hyperlinks in your terminal...">
+	<meta name="author" content="James Shubin">
+
+	<title>Hyperlinks in GNOME terminal - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Hyperlinks in GNOME terminal</strong><br><small>how to benefit from fancy hyperlinks in your terminal...</small></h3>
+					<hr>
+					<p>Over the years I&rsquo;ve learned about many of the advantages of using a modern
+terminal and shell. I&rsquo;m talking about using <a href="https://www.gnu.org/software/bash/"><code>bash</code></a>
+with <a href="https://en.wikipedia.org/wiki/GNOME_Terminal">GNOME terminal</a> on a modern
+<a href="https://getfedora.org/">GNU/Linux</a> distribution.</p>
+<p><a href="https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/">I particularly like switching between the terminal and GUI applications.</a>
+It&rsquo;s now even better.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Automatic Hyperlinks</span>:<br /><br />
+
+<p>Occasionally, some program running in your shell might output what looked like a
+link:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-terminal-link.png"><img class="alignnone size-full" src="gnome-terminal-link.png"  width="100%" /></a></td></tr><tr><td>gnome terminal and vte will automatically add links to text that looks like a web hyperlink or an email address</td></tr></table></br />
+
+<p>They can be seen when you hover over them, and a right-click will display a
+useful context menu:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-terminal-link-dialog.png"><img class="alignnone size-full" src="gnome-terminal-link-dialog.png"  width="100%" /></a></td></tr><tr><td>the terminal detected this text sequence as an email address, and the dialog makes it easy to open your MUA</td></tr></table></br />
+
+<p>This was always useful, but detection was always a heuristic. In many situations
+it might show a hyperlink unnecessarily or omit one that would have been useful.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Integrating Hyperlinks</span>:<br /><br />
+
+<p>With recent versions of <a href="https://github.com/GNOME/vte">VTE</a> this is
+<a href="https://github.com/GNOME/vte/commit/c9e7cbabfe2fd682a80dd8938c317e7aed1195f4">now done properly, without needing a heuristic!</a></p>
+<p>Here&rsquo;s what it might look like:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-terminal-hyperlink.png"><img class="alignnone size-full" src="gnome-terminal-hyperlink.png"  width="100%" /></a></td></tr><tr><td>the ls program can automatically add relevant links</td></tr></table></br />
+
+<p>All this magic works because programs can include magic <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">&ldquo;escape codes&rdquo;</a>
+which tell the shell to do special things. They have been traditionally used to
+add colours or underlining to shell output. In this case they&rsquo;re been used to
+send a special message telling the shell that it might want to hyperlink
+something.</p>
+<p>The venerable <code>ls</code> program was updated to include a <code>--hyperlink</code> option, which,
+when active produces the above output. If you look closely, it puts a fine line
+of dots over any such link.</p>
+<p>I chose to make this automatic, so I&rsquo;ve added an alias that includes this by
+default, and other options:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#a2f">alias</span> ls
+</span></span><span style="display:flex;"><span><span style="color:#a2f">alias</span> <span style="color:#b8860b">ls</span><span style="color:#666">=</span><span style="color:#b44">&#39;ls -FGh --color=auto --hyperlink=auto&#39;</span>
+</span></span></code></pre></div><p>When you right click on one of the above links, it now shows a helpful menu:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-terminal-hyperlink-dialog.png"><img class="alignnone size-full" src="gnome-terminal-hyperlink-dialog.png"  width="100%" /></a></td></tr><tr><td>this is some magic that opens things in the right program</td></tr></table></br />
+
+<p>I suspect that it uses <code>xdg-open</code> to run the correct program. In my case it
+causes folders to open in <code>nautilus</code>, images in <code>eog</code>, and pdf&rsquo;s in <code>evince</code>.</p>
+<p>This isn&rsquo;t limited to <code>ls</code>. A bunch of other programs have started to add this
+feature in various ways. A recent release of <code>systemd</code> has even added support
+for this in the <a href="https://lists.freedesktop.org/archives/systemd-devel/2018-June/040879.html"><code>systemctl status</code> output</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Future Work</span>:<br /><br />
+
+<p>It&rsquo;s now time to add useful contextual information to more of the terminal apps
+out there. Imagine having a <code>git log</code> with clickable <code>sha1</code> hashes, or pasted
+<code>irssi</code> links which shorten and ellipsize, but which are still clickable? All of
+these things are possible, so start getting those patches upstream!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Advanced Use Cases</span>:<br /><br />
+
+<p>I started to think about if some fancier use cases were possible. Imagine if
+running an <code>ls</code> command over <code>ssh</code> could have the hyperlink information modified
+by the local shell so that it knew it was a remote URL. In that case, the
+terminal might consider converting it to a <a href="https://en.wikipedia.org/wiki/GVfs"><code>gvfs</code></a>
+link instead, giving you easy access to remote files.</p>
+<p>It might be fun thinking about if adding hyperlinks to <code>vim</code> could offer links
+to full screen help dialogs. An even fancier idea might be to include a link to
+a trusted execution agent which could open up a GTK+ dialog, and send the
+response back to some socket that the program is listening on. The <code>emacs</code> and
+<code>mutt</code> users could have an easier way to view graphical email attachments.</p>
+<p>As we blur the lines between working in graphical environments and the terminal,
+power users who aren&rsquo;t afraid of the shell only get more proficient.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Fancy $PS1</span>:<br /><br />
+
+<p>Some of you might remember my <a href="/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/">earlier</a>,
+<code>$PS1</code>, <a href="/blog/2014/01/29/show-the-exit-status-in-your-ps1/">hacks</a>. I&rsquo;ve
+decided to add a little more magic on to it.</p>
+<p>In my <code>~/.bashrc</code>, in my <code>ps1_prompt</code> function, that runs and sets the <code>$PS1</code> as
+part of my <code>PROMPT_COMMAND</code>, I added a little snippet:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># get the url encoded version of URI on each PS1 display</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">local</span> <span style="color:#b8860b">encoded</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#a2f;font-weight:bold">$(</span>urlencode <span style="color:#b44">&#39;file://&#39;</span><span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">\h</span><span style="color:#a2f;font-weight:bold">$(</span>urlencode <span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span><span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">local</span> <span style="color:#b8860b">W</span><span style="color:#666">=</span><span style="color:#b44">&#39;\[\033]8;;&#39;</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">encoded</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span><span style="color:#b44">&#39;\a\]&#39;&#39;\w&#39;&#39;\[\033]8;;\a\]&#39;</span> <span style="color:#080;font-style:italic"># thanks purpleidea!</span>
+</span></span></code></pre></div><p>This builds a special hyperlink for the displayed path. I had to use the <code>pwd</code>
+hack to get the working directory, because the <code>\w</code> and <code>\W</code> variants both
+ellipsize the path, and include the tilde (<code>~</code>), which would disrupt the
+expected path format. The URI needs to be safely encoded, and the <code>urlencode</code>
+function that I used is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># urlencode &lt;string&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># TODO: suggestions and improved versions are welcome!</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span> urlencode<span style="color:#666">()</span> <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">local</span> <span style="color:#b8860b">length</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${#</span><span style="color:#b8860b">1</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">for</span> <span style="color:#666">((</span> <span style="color:#b8860b">i</span> <span style="color:#666">=</span> 0; i &lt; length; i++ <span style="color:#666">))</span>; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">local</span> <span style="color:#b8860b">c</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">1</span>:<span style="color:#b8860b">i</span>:<span style="color:#b8860b">1</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">case</span> <span style="color:#b8860b">$c</span> in
+</span></span><span style="display:flex;"><span>		<span style="color:#666">[</span>a-zA-Z0-9.~_-<span style="color:#666">])</span> <span style="color:#a2f">printf</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$c</span><span style="color:#b44">&#34;</span> ;;
+</span></span><span style="display:flex;"><span>		*<span style="color:#666">)</span> <span style="color:#a2f">printf</span> <span style="color:#b44">&#39;%s&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$c</span><span style="color:#b44">&#34;</span> | xxd -p -c1 | <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">read</span> c; <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#a2f">printf</span> <span style="color:#b44">&#39;%%%s&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$c</span><span style="color:#b44">&#34;</span>; <span style="color:#a2f;font-weight:bold">done</span> ;;
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">esac</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span>
+</span></span></code></pre></div><p>My full <code>$PS1</code> now looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># all on a single line w/o newline (this might wrap due to the space at the very end)</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">PS1</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">debian_chroot</span>:+(<span style="color:#b8860b">$debian_chroot</span>)<span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">\u@\h:\[\033[01;34m\]</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">W</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">\[\033[00m\]</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">ps1_git</span><span style="color:#b68;font-weight:bold">}${</span><span style="color:#b8860b">ps1_status</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44"> &#34;</span>
+</span></span></code></pre></div><p>(Please note that some portions of this are not included here. See my earlier
+<a href="/tags/ps1/">PS1</a> blog posts for more information.)</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="gnome-terminal-ps1.png"><img class="alignnone size-full" src="gnome-terminal-ps1.png"  width="100%" /></a></td></tr><tr><td>here&#39;s a screenshot of what this looks like showing a tooltip on mouseover (the mouse pointer is hidden in this screenshot)</td></tr></table></br />
+
+<p>Now I can click to cause the path to open in <code>nautilus</code>. I previously used the
+<a href="/blog/2013/03/22/running-your-file-manager-from-a-terminal/"><code>nautilus .</code></a>
+command to cause this to happen, and while I probably still will to avoid the
+context switch-over to the mouse, it&rsquo;s a nice little addition which I think is
+pretty neat. It also gives me some extra material for this article.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Understanding The Escape Sequences</span>:<br /><br />
+
+<p>If you&rsquo;d like to understand why there are additional <code>\[</code> and <code>\]</code> sequences in
+the above <code>local W=</code>, that&rsquo;s because bash needs to know how to wrap the text in
+the shell output. It&rsquo;s not smart enough to know which characters are visible
+(and that should take up space) and which ones aren&rsquo;t, so in order to tell it,
+you must wrap the <a href="https://www.gnu.org/software/bash/manual/bashref.html#Controlling-the-Prompt">&ldquo;non-printing&rdquo;</a>
+(invisible) characters with those special open and close sequences so that all
+the math works out as intended. If you don&rsquo;t, you&rsquo;ll see a weird mess of
+characters when you resize your terminal or use tab completion. Remove them and
+see for yourself!</p>
+<p>Inside each of those sequences of characters, you&rsquo;ll first see a: <code>\033]8;;</code>
+followed by the encoded URL, and then a closing <code>\a</code> in quotes. That&rsquo;s because
+<code>\033</code> is the magic way to write <code>ESC</code>, and the start code is <code>ESC ]</code>. It all
+ends with a <code>BELL</code> character which is an <code>\a</code>. Inside of that we have the magic
+number <code>8</code>, which means that we want to use the hyperlink feature, and it
+includes a custom pattern which is that <code>;;</code> part. This can include a <code>URI</code> to
+begin the location of a hyperlink, and omit it inside another magic <code>8</code> sequence
+to close it. Inside the <code>;;</code> you can include some special params if needed. For
+more information on this, you can review the
+<a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape codes</a>. Information
+about which other applications are tracking this feature is
+<a href="https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda">available here.</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>Hope you enjoyed this. Hopefully you can add some hyperlink integrations to your
+application today! Can you think of any other types of magic escape codes we
+should add?</p>
+<p>Thanks to <a href="http://xmb.ovh/">xmby</a> in #bash for helping me understand some of the
+shell escape code nuances.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 29, 2018<br>
+				<small>1266 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/ansi-escape-codes">ANSI escape codes</a> <a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/hyperlink">hyperlink</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/ps1">ps1</a> <a class="label label-default" href="/tags/terminal">terminal</a> <a class="label label-default" href="/tags/vte">vte</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/06/29/hyperlinks-in-gnome-terminal">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/06/29/hyperlinks-in-gnome-terminal.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

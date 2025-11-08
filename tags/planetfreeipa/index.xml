@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Planetfreeipa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/planetfreeipa/</link>
+    <description>Recent content in Planetfreeipa on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 17 Oct 2017 21:22:05 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/planetfreeipa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Copyleft is Dead. Long live Copyleft!</title>
+      <link>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</link>
+      <pubDate>Tue, 17 Oct 2017 21:22:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/10/17/copyleft-is-dead-long-live-copyleft/</guid>
+      <description>As you may have noticed, we recently re-licensed mgmt from the AGPL (Affero General Public License) to the regular GPL. This is a post explaining the decision and which hopefully includes some insights at the intersection of technology and legal issues.&#xA;Disclaimer:&#xA;I am not a lawyer, and these are not necessarily the opinions of my employer. I think I&amp;rsquo;m knowledgeable in this area, but I&amp;rsquo;m happy to be corrected in the comments.</description>
+    </item>
+    <item>
+      <title>Remote execution in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</link>
+      <pubDate>Fri, 07 Oct 2016 15:33:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/10/07/remote-execution-in-mgmt/</guid>
+      <description>Bootstrapping a cluster from your laptop, or managing machines without needing to first setup a separate config management infrastructure are both very reasonable and fundamental asks. I was particularly inspired by Ansible&amp;rsquo;s agent-less remote execution model, but never wanted to build a centralized orchestrator. I soon realized that I could have my ice cream and eat it too.&#xA;Prior knowledge&#xA;If you haven&amp;rsquo;t read the earlier articles about mgmt, then I recommend you start with those, and then come back here.</description>
+    </item>
+    <item>
+      <title>mgmt has a logo</title>
+      <link>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</link>
+      <pubDate>Fri, 30 Sep 2016 08:41:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/09/30/mgmt-has-a-logo/</guid>
+      <description>The mgmt config project got a logo! The full commit is here. Thanks to Sarah Jane Cox for creating it.&#xA;Happy Hacking,&#xA;James&#xA;PS: I might have a few stickers to give out too! Ask me next time you see me if you&amp;rsquo;d like one! Alternatively, use the artwork to make your own and share with your friends!&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts.</description>
+    </item>
+    <item>
+      <title>Live dmesg following</title>
+      <link>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</link>
+      <pubDate>Mon, 29 Aug 2016 09:00:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</guid>
+      <description>All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.&#xA;Around the time I wrote that article, I remember wanting to stream dmesg output too! The functionality wasn&amp;rsquo;t available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!&#xA;Most GNU/Linux distros are probably running a new enough version by now, and you can now dmesg &amp;ndash;follow (or dmesg -w):</description>
+    </item>
+    <item>
+      <title>Seen in downtown Montreal...</title>
+      <link>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</link>
+      <pubDate>Wed, 03 Aug 2016 01:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/08/03/seen-in-downtown-montreal/</guid>
+      <description>The Technical Blog of James was seen on an outdoor electronic display in downtown Montreal! Thanks to one of my readers for sending this in.&#xA;I guess the smart phone revolution is over, and people are taking to reading my articles on bigger screens! The &#34;poutine&#34; is decent proof that this is probably Montreal. If you&amp;rsquo;ve got access to a large electronic display, put up the blog, snap a photo, and send it my way!</description>
+    </item>
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:&#xA;Someone should consider probing this USB port. The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.</description>
+    </item>
+    <item>
+      <title>Automatic grouping in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</link>
+      <pubDate>Wed, 30 Mar 2016 06:03:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</guid>
+      <description>In this post, I&amp;rsquo;ll tell you about the recently released &amp;ldquo;automatic grouping&amp;rdquo; or &amp;ldquo;AutoGroup&amp;rdquo; feature in mgmt, a next generation configuration management prototype. If you aren&amp;rsquo;t already familiar with mgmt, I&amp;rsquo;d recommend you start by reading the introductory post, and the second post. There&amp;rsquo;s also an introductory video.&#xA;Resources in a graph&#xA;Most configuration management systems use something called a directed acyclic graph, or DAG. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges).</description>
+    </item>
+    <item>
+      <title>Introducing: git tpush</title>
+      <link>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</link>
+      <pubDate>Tue, 16 Feb 2016 12:15:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/02/16/introducing-git-tpush/</guid>
+      <description>On today&amp;rsquo;s issue of &amp;ldquo;one hour hacks&amp;rdquo;, I&amp;rsquo;ll show you how you can stop your git drive-by&amp;rsquo;s to git master from breaking your CI tests&amp;hellip; Let&amp;rsquo;s continue!&#xA;The problem:&#xA;Sometimes I&amp;rsquo;ve got a shitty one-line patch that I want to push to git master. I&amp;rsquo;m usually right, and everything tests out fine, but usually isn&amp;rsquo;t always, and then I look silly while I frantically try to fix git master on a project that I maintain.</description>
+    </item>
+    <item>
+      <title>Upcoming speaking</title>
+      <link>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</link>
+      <pubDate>Mon, 18 Jan 2016 00:32:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/01/18/upcoming-speaking/</guid>
+      <description>I&amp;rsquo;ve got a few upcoming speaking engagements. If you&amp;rsquo;ll be attending one of these events, come see me or any of the other excellent speakers!&#xA;Please remember to check the official schedules in case there are any changes!&#xA;I&amp;rsquo;ll be speaking at the Brussels CentOS Dojo:&#xA;Automated Infrastructure Testing with Oh-My-Vagrant ...and the CentOS CI Time/date unconfirmed: I&#39;ll be showing some CI tricks, and showing you how the CentOS CI is the perfect CI for multi-machine test environments.</description>
+    </item>
+    <item>
+      <title>Making an empty RPM</title>
+      <link>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</link>
+      <pubDate>Tue, 11 Aug 2015 13:25:58 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/08/11/making-an-empty-rpm/</guid>
+      <description>I am definitely not an RPM expert, in fact, I&amp;rsquo;m afraid of it, but with recent tools such as COPR, and my glorious Makefile, some aspects of it have become palatable. This post will be about a recent journey I had building the most useless RPM ever.&#xA;A video of my journey building this RPM. Because of reasons, I wanted to satisfy an RPM dependency for a package that I wanted to install without rebuilding that RPM.</description>
+    </item>
+  </channel>
+</rss>

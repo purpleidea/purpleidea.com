@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A modern, easy and powerful provisioning tool">
+	<meta name="author" content="James Shubin">
+
+	<title>A new provisioning tool built with mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>A new provisioning tool built with mgmt</strong><br><small>A modern, easy and powerful provisioning tool</small></h3>
+					<hr>
+					<p>Today I&rsquo;m announcing a new type of provisioning tool. This is both the
+culmination of a long road, and the start of a new era. Please read on for all
+of the details. Feel free to skip to the relevant sections you&rsquo;re interested in
+if you don&rsquo;t want all of the background.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Ten years</span>:<br /><br />
+
+<p>The vision for this specific tool started around ten years ago. Previously, as a
+sysadmin, I spent a lot of my time using a configuration management tool called
+<code>puppet</code>. I eventually realized and accepted the shortcomings of the tool after
+a failed attempt to combine <code>puppet</code> and some python scripts into a provisioning
+and clustering tool that I was trying to build for greenfield environments. The
+idea is that it would bootstrap a whole suite of infrastructure services for a
+new data centre.</p>
+<p>I then realized that I needed to build a new kind of tool, which <em>itself</em> could
+be used to build the new kinds of tools and automations that I wanted. That base
+tool that I designed, is a brand new kind of automation engine and language
+called <a href="https://github.com/purpleidea/mgmt/"><code>mgmt</code></a>.</p>
+<p>This provisioning tool is the first such standalone tool that I&rsquo;m building in
+<code>mgmt</code>. It&rsquo;s so versatile and powerful, that the entire implementation is under
+~1,000 lines of code.</p>
+<p>Head down below to the <em>internals</em> section in <strong>Part 2</strong> if you want the hacker
+stuff. Keep reading here in <strong>Part 1</strong> to learn about the provisioning tool
+itself.</p>
+<br />
+<hr />
+<h2><b>Part 1</b></h2>
+<hr />
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What is provisioning?</span><br /><br />
+
+<p>When setting up a new laptop, server, virtual machine, or even a container, the
+first step usually involves powering on and deploying an initial operating
+system to that entity.</p>
+<p>After the base operating system has been deployed, the next step is to kick off
+the initial run of the configuration management tool of your choice, which will
+then configure the machine and set up all the various applications and services
+that you want. This typically begins on either the first boot of the newly
+installed machine, or right before the reboot to that first boot happens.</p>
+<p>Everything from power on to the first run of the configuration management tool
+is generally called &ldquo;<em>provisioning</em>&rdquo;. Provisioning can refer to bare-metal
+provisioning, or to virtual machine provisioning. If you &ldquo;ask&rdquo; your cloud
+provider for a new machine, this step is also called provisioning. If you
+download a GNU+Linux distribution installer onto a USB key, and then use that
+key to boot the installer, and then install the OS onto a machine, that is also
+provisioning.</p>
+<p>Some provisioning operations might also be simultaneously performed alongside
+tasks which are typically considered to be configuration management. The lines
+can sometimes be blurry.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Don&#39;t we already have provisioning tools?</span><br /><br />
+
+<p>Provisioning tools have existed for a long time. They are all generally pretty
+clunky to setup and not very ergonomic to use. Most tools can easily require at
+least a day of setup, and dedicated hardware to run on. Lots of fine-tuning can
+be required to get things working exactly how you want them to.</p>
+<p>I wanted something better. A new, inexperienced user should be able to get
+things running perfectly in <em>five</em> minutes. Don&rsquo;t believe me that it&rsquo;s possible?
+Read on&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">How does provisioning work?</span><br /><br />
+
+<p>Most provisioning works by first setting up a <a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol">TFTP</a>
+server, <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP</a>
+server, and <a href="https://en.wikipedia.org/wiki/HTTP">HTTP</a> server. You should
+ideally setup a new package repository mirror beforehand, particularly if you
+want to do the operation more than once. Running <a href="https://en.wikipedia.org/wiki/Rsync">rsync</a>
+or some kind of caching HTTP proxy is highly recommended.</p>
+<p>Once you get the configuration and all the path mangling correct, you then ask
+your target device to get an IP address over DHCP, and <a href="https://en.wikipedia.org/wiki/Preboot_Execution_Environment">PXE boot</a>
+to the initial TFTP server, which loads some files to the machine, and then over
+HTTP performs a <a href="https://anaconda-installer.readthedocs.io/en/latest/kickstart.html">Kickstart</a>
+which is a fancy installer script that is downloaded and run, which in turn then
+downloads and installs some OS packages and a boot loader.</p>
+<p>After some final light configuration steps, the machine reboots into your newly
+installed operating system. That&rsquo;s a lot to setup and get right. Here&rsquo;s how we
+automate that&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Introducing the mgmt provisioner!</span>:<br /><br />
+
+<p>Today I&rsquo;m introducing a new provisioning tool, called the <code>mgmt provisioner</code>. It
+is distributed as a single binary. That&rsquo;s all you need! It contains all of the
+aforementioned pieces all glued together correctly, and all inside of that
+single binary.</p>
+<p>Nominally you&rsquo;ll want to run it from a laptop which is connected to wifi. The
+laptop should have a spare ethernet port that you will connect to any machine
+that you want to provision.</p>
+<p>Here&rsquo;s how you use the tool:</p>
+<ol>
+<li>
+<p>Download the latest binary from <a href="https://github.com/purpleidea/mgmt/releases/">here</a>.</p>
+</li>
+<li>
+<p>In a terminal make it executable.</p>
+</li>
+<li>
+<p>Run it as root. I&rsquo;ll explain why later.</p>
+</li>
+</ol>
+<p>Those terminal commands:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># get the latest version automatically:</span>
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">version</span><span style="color:#666">=</span><span style="color:#a2f;font-weight:bold">$(</span>wget -q https://api.github.com/repos/purpleidea/mgmt/releases/latest -O - | grep <span style="color:#b44">&#39;&#34;tag_name&#34;: &#39;</span> | cut -d <span style="color:#b44">&#39;&#34;&#39;</span> -f 4,4<span style="color:#a2f;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># download</span>
+</span></span><span style="display:flex;"><span>wget https://github.com/purpleidea/mgmt/releases/download/<span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">version</span><span style="color:#b68;font-weight:bold">}</span>/mgmt-linux-amd64-<span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">version</span><span style="color:#b68;font-weight:bold">}</span> -O mgmt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># make executable</span>
+</span></span><span style="display:flex;"><span>chmod u+x mgmt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># run it!</span>
+</span></span><span style="display:flex;"><span>sudo ./mgmt provisioner
+</span></span></code></pre></div><p>Your provisioner is now running! By default, the tool will attempt to provision
+a <a href="https://getfedora.org/">Fedora</a> workstation for the <code>x86_64</code> architecture.
+(You can change these defaults, see below.)</p>
+<p>Initially, the tool will display some default settings that it pre-selected, and
+prompt you for a password. This password is the password that you want to use
+for the newly provisioned machine. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo ./mgmt provisioner
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>sudo<span style="color:#666">]</span> password <span style="color:#a2f;font-weight:bold">for</span> james:
+</span></span><span style="display:flex;"><span>provisioner: interface: eth0
+</span></span><span style="display:flex;"><span>provisioner: cache prefix: /root/.cache/mgmt/provisioner/
+</span></span><span style="display:flex;"><span>provisioner: distro uid: fedora39-x86_64
+</span></span><span style="display:flex;"><span>provisioner: flavour: Workstation
+</span></span><span style="display:flex;"><span>provisioner: mirror: https://mirror.csclub.uwaterloo.ca/fedora/linux/
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>provisioner<span style="color:#666">]</span> password: &lt;<span style="color:#a2f">type</span> the password you want <span style="color:#a2f;font-weight:bold">for</span> the newly provisioned machine&gt;
+</span></span></code></pre></div><p>If any of these settings are not what you want, then press <code>^C</code> to cancel the
+provisioner at this stage. Of note, you might want to verify that the
+<code>interface</code> field matches the name of the ethernet device in your laptop, and
+that the distro is what you want for your target machine. Type the password you
+want to use for the new machine and press enter.</p>
+<p>At this point the tool will startup and then download some initial files to use
+for provisioning. After a short while (~2 min) depending on the speed of your
+computer and internet connection, a bunch of things will scroll past your screen
+and you will eventually see some text like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>12:34:56 engine: print[ready]: Msg: ready to provision!
+</span></span></code></pre></div><p>At this point all you have to do is directly connect your laptops ethernet port
+to the ethernet port of the target computer.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="direct-connection.jpg"><img class="alignnone size-full" src="direct-connection.jpg"  width="100%" /></a></td></tr><tr><td>The two laptops are directly connected over ethernet.</td></tr></table></br />
+
+<p>Then ask the target laptop to PXE boot from the network. You might need to press
+a special key on the laptop when it first boots. On my target machine this is
+<code>F12</code>. Some laptops have a &ldquo;boot menu&rdquo; that will bring up a list of options to
+choose from. Sometimes that&rsquo;s hidden behind the <code>F9</code> key. You may even need to
+first enable some of these buttons from your system BIOS. To enter the BIOS, you
+might need to press <code>&lt;DEL&gt;</code> or <code>F2</code>. If I&rsquo;m not familiar with the particular
+machine, I usually mash a bunch of these various keys until I get lucky. You
+should consult the documentation for your laptop to know for sure.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="f12-network-boot.jpg"><img class="alignnone size-full" src="f12-network-boot.jpg"  width="100%" /></a></td></tr><tr><td>This particular machine acknowledges that I&#39;m pressing F12.</td></tr></table></br />
+
+<p>At this point the machine will start provisioning. It&rsquo;s entirely automated, and
+you won&rsquo;t need to do a single thing other than wait. If you have a very fast
+internet connection, this whole process should take about ten to fifteen
+minutes. When it&rsquo;s done, the target laptop will reboot, you can disconnect it
+from the provisioner laptop, and enjoy your new workstation!</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="small-bunny-running.gif"><img class="alignnone size-full" src="small-bunny-running.gif"  width="25%" /></a></td></tr><tr><td>Fake timelapse of the fast provisioning process.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Caching</span>:<br /><br />
+
+<p>The provisioning tool will cache copies of any files it needs to download from
+the internet to complete the install. This will make future provisioning much
+faster. Feel free to delete the cache at anytime. It&rsquo;s found in the <code>cache prefix</code> directory which is shown when the tool first starts up.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Customizing</span>:<br /><br />
+
+<p>If you&rsquo;d like a different Fedora version and flavour, start up the provisioning
+tool with the <code>--version=</code> and <code>--flavour=</code> arguments. Such as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ./mgmt provisioner --version<span style="color:#666">=</span><span style="color:#666">38</span> --flavour<span style="color:#666">=</span>Server
+</span></span><span style="display:flex;"><span><span style="color:#666">[</span>sudo<span style="color:#666">]</span> password <span style="color:#a2f;font-weight:bold">for</span> james: 
+</span></span><span style="display:flex;"><span>provisioner: interface: enp0s31f6
+</span></span><span style="display:flex;"><span>provisioner: cache prefix: /root/.cache/mgmt/provisioner/
+</span></span><span style="display:flex;"><span>provisioner: distro uid: fedora38-x86_64
+</span></span><span style="display:flex;"><span>provisioner: flavour: Server
+</span></span></code></pre></div><p>There are additional options available as well. Consult the below options list.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Debian? Arch?</span><br /><br />
+
+<p>I&rsquo;m a big fan of Debian and other GNU+Linux distros. I had to start somewhere,
+and at the moment this only supports Fedora. It should be fairly easy to add
+support for other operating systems. Please consider sending a patch, or
+<a href="/contact/">contact</a> me to sponsor this work.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The matrix of various features...</span><br /><br />
+
+<p>I don&rsquo;t have a lot of hardware or time to test all of the many permutations this
+can do. I&rsquo;ve only tested recent <code>x86_64</code> Fedora, with UEFI hardware. If you&rsquo;ve
+got <code>aarch64</code>, <code>riscv</code>, or are interested in other configurations, please let me
+know. I&rsquo;ve also not tested <code>luks</code> setups yet, or anything involving <code>LVM</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Don&#39;t have an ethernet port?</span><br /><br />
+
+<p>If your host laptop doesn&rsquo;t have an ethernet port, you can buy a USB &ldquo;dongle&rdquo;
+and use that instead. I have the <a href="usb-ethernet-adapter.png">&ldquo;Plugable USBC-E2500&rdquo;</a>
+which seems to work well on Linux. If the target machine doesn&rsquo;t have an
+ethernet device, this might be more difficult. See <a href="https://kb.plugable.com/questions/696090">this</a>
+article for more information.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Is provisioning still relevant in a cloud world?</span><br /><br />
+
+<p>I think so, yes. For a few reasons. Firstly, someone always has to do the
+provisioning. Almost every company out there with physical or virtual machines
+is running some sort of provisioning setup. This tool can be adapted to large
+enterprise environments as well. Now that it exists, I&rsquo;m curious to see who ends
+up using it the most.</p>
+<p>Secondly, it would be silly to depend on third-parties to run all of our
+provisioning for us. One of the main reasons we have, is because it has been too
+much work to do it ourselves. This tool makes provisioning trivially easy.</p>
+<p>Provisioning is a foundational piece of any infrastructure. Good provisioning is
+needed if we want to build more ambitious infrastructures. When someone gives me
+an API to purchase servers, and a robot to rack them, this tool is where it will
+all get integrated. Society isn&rsquo;t there yet, but I&rsquo;ve got some other fun ideas
+planned in the meantime.</p>
+<p>Some people believe that immutable, image-based operating systems are the way of
+the future. If that becomes the case, then this can be adapted to work with
+those too.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Is this secure?</span><br /><br />
+
+<p>The process is as secure as the Fedora project allows. If you don&rsquo;t manually
+pick a mirror, then one will be chosen from the Fedora <a href="https://admin.fedoraproject.org/mirrormanager/">mirror manager</a>
+automatically. All of the packages and initial bootstrapping files are then
+downloaded from that mirror over <code>https</code>. The initial bootstrapping files, which
+are present in the Fedora repositories consist of <code>vmlinuz</code>, <code>initrd.img</code>,
+<code>install.img</code>, and a few metadata files. <a href="https://mastodon.social/@mattdm@hachyderm.io/112108529444997394">Unfortunately</a>
+none of these files are signed cryptographically by the Fedora project. I
+recommend you reach out to the team and (politely) request this feature. Once
+it&rsquo;s in place, we will be able to validate them before they are consumed by the
+provisioning tool. No other provisioning tools can check this either!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">I want to pull the new OS config from a file.</span><br /><br />
+
+<p>This will be possible in the future. I plan to do this through the CLI library
+that I&rsquo;m using. The rough sketch is <a href="https://github.com/alexflint/go-arg/issues/225#issuecomment-1979669583">here</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Want a webui?</span><br /><br />
+
+<p>If you&rsquo;d love a web ui to manage your provisioning, please <a href="/contact/">contact</a>
+me for a quote! Imagine running this somewhere in your datacentre, and being
+able to login to a webui to manage and kick off provisioning!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Is the --help broken?</span><br /><br />
+
+<p>If you run the tool with <code>--help</code>, you will see a plethora of unrelated options.
+This is a consequence of a new CLI library that I am using, and the way in which
+I am using it. You can consider this as a bug that I plan to patch in the
+future. For now, please ignore the superfluous options. Most of them are
+legitimate, but you are erroneously seeing some related to the parent <code>mgmt</code>
+tool which are not relevant when in <code>provisioning</code> mode.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What&#39;s all the terminal output?</span><br /><br />
+
+<p>This new provisioning tool has been built in the <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+language and engine. The output you&rsquo;re seeing are the internals of that
+mechanism working. What&rsquo;s going on is outside the scope of this article, but
+interested users may read about some of the internals of the <code>mgmt</code> project to
+learn more. A future version of this tool will be able to optionally hide the
+unnecessary output from the user.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Improvements?</span><br /><br />
+
+<p>I&rsquo;ve got quite a lot planned to improve upon this. Today is the beginning of
+what I considered minimally viable. There are big upcoming changes both in the
+<code>mgmt</code> tool, and in this provisioning project. Among the first is that we want
+to implement a faster type unification algorithm. It can take upwards of ~1.5
+min in some cases, and this delay should drastically decrease once I spend some
+time to implement a better algorithm if it hasn&rsquo;t already landed.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Are there any bugs?</span><br /><br />
+
+<p>It&rsquo;s possible. Please <a href="https://github.com/purpleidea/mgmt/">report</a> things if
+you run into them. I am releasing this early because I think it already provides
+a lot of value. It has worked impeccably for me, but I encourage you to help me
+fix any issues that you might find.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Recordings?</span><br /><br />
+
+<p>I recently gave two talks: one at CfgMgmtCamp 2024, and one at FOSDEM in the
+golang room. Both are available online and demonstrated an earlier version of
+the provisioning tool which is fully available today. The talks can be found
+here: <a href="https://purpleidea.com/talks/">https://purpleidea.com/talks/</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Options list</span>:<br /><br />
+
+<p>These are some of the currently available options. Consult the online
+documentation as these may change in the future:</p>
+<p><code>--interface</code> local ethernet interface to provision from, eg: eth0</p>
+<p><code>--prefix</code> local XDG_CACHE_HOME path</p>
+<p><code>--version</code> distribution version</p>
+<p><code>--arch</code> architecture to use</p>
+<p><code>--flavour</code> flavour of distribution (currently &ldquo;Workstation&rdquo; or &ldquo;Server&rdquo;)</p>
+<p><code>--mirror</code> https mirror for distro packages</p>
+<p><code>--mac</code> mac address to provision</p>
+<p><code>--password</code> the &lsquo;openssl passwd -6&rsquo; salted password</p>
+<p><code>--part</code> partitioning scheme (currently <code>btrfs</code> or <code>plain</code>)</p>
+<p><code>--packages</code> list of additional distro packages to install (comma separated)</p>
+<br />
+<hr />
+<h2><b>Part 2</b></h2>
+<hr />
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Internals</span>:<br /><br />
+
+<p>Why is this interesting, how does it work, and why is this blog post so long?</p>
+<p>It&rsquo;s interesting because this is a proof of concept of a new way to build
+software. People thought that configuration management was dying, but in fact,
+it was just badly defined and under-innovated. I&rsquo;m attempting to redefine what
+it should mean.</p>
+<p>With the <a href="https://github.com/purpleidea/mgmt/">mgmt</a> engine we have idempotent
+units that do work, which we call resources. They are unique in that each one
+can be a continuously running process containing a traditional <a href="https://en.wikipedia.org/wiki/Event_loop">&ldquo;main loop&rdquo;</a>.</p>
+<p>These resources can be glued together very efficiently by our novel,
+domain-specific-language (DSL) called <code>mcl</code>. It&rsquo;s unique in that it runs
+concurrently, is incredibly safe, and models event-driven systems as a core
+proficiency.</p>
+<p>It&rsquo;s so well suited for the task, that this particular tool was built in under
+~1,000 lines of <code>mcl</code>. In contrast, other well-known provisioning tools such as
+<code>cobbler</code> and <code>foreman</code> each consist of around ~50,000 and ~235,000 <a href="https://en.wikipedia.org/wiki/Source_lines_of_code">LOC</a>
+respectively!</p>
+<p>Those are both much more mature and featureful tools, and my lower line count
+doesn&rsquo;t factor in the size of the <code>mgmt</code> core, but it&rsquo;s still an important
+comparison. The common LOC in my core can be used for hundreds of different
+projects, rather than committing an entire code base to a single task. This is a
+more efficient way to build software.</p>
+<p>Furthermore, <code>mcl</code> shows how easy it is to glue together a custom tool that does
+exactly what you want. You could build a slightly different flavour of this tool
+in almost no time.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Building it</span>:<br /><br />
+
+<p>The <code>mgmt</code> software can be used as a standalone project to run your <code>mcl</code> code
+base, or <code>mcl</code> can be embedded inside of it to produce a purpose-built binary.
+For this second case, you have to define a directory containing the CLI parsing
+that you&rsquo;d like your new tool to undergo, and an entry point into the <code>mcl</code>
+code. For this we use an internal API called <code>entry</code>. It provides a few useful
+methods to name and register your function. An edited excerpt looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#080;font-style:italic">//go:build embedded_provisioner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">package</span> coreprovisioner
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;embed&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;github.com/purpleidea/mgmt/entry&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b44">&#34;github.com/purpleidea/mgmt/lang/embedded&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">const</span> (
+</span></span><span style="display:flex;"><span>	ModuleName = <span style="color:#b44">&#34;provisioner&#34;</span> <span style="color:#080;font-style:italic">// name of this module (program)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Version = <span style="color:#b44">&#34;v0.0.1&#34;</span>         <span style="color:#080;font-style:italic">// version number of this module
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Frontend = <span style="color:#b44">&#34;lang&#34;</span>          <span style="color:#080;font-style:italic">// name of the GAPI (graph API) to run
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// List of files that make up the module of your program.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">//go:embed metadata.yaml main.mcl files/*
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">var</span> fs embed.FS
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// Entry point into the actual program starts here.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">//go:embed top.mcl
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">var</span> top []<span style="color:#0b0;font-weight:bold">byte</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// localArgs is our struct which is used to modify the CLI parser. The
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// definition of this struct automatically builds the CLI interface for your
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// custom tool! This version was highly edited and some values have been elided
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// to simplify this example and make it more readable for the blog post.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">type</span> localArgs <span style="color:#a2f;font-weight:bold">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// local ethernet interface to provision from, eg: enp0s31f6 or eth0
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Interface <span style="color:#666">*</span><span style="color:#0b0;font-weight:bold">string</span> <span style="color:#b44">`arg:&#34;--interface&#34; help:&#34;...&#34; func:&#34;cli_interface&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// eg: 192.168.42.0/24
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Network <span style="color:#666">*</span><span style="color:#0b0;font-weight:bold">string</span> <span style="color:#b44">`arg:&#34;--network&#34; help:&#34;network with cidr to use&#34; func:&#34;cli_network&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// should we open firewalld on our provisioner?
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Firewalld <span style="color:#0b0;font-weight:bold">bool</span> <span style="color:#b44">`arg:&#34;--firewalld&#34; default:&#34;true&#34; help:&#34;...&#34; func:&#34;cli_firewalld&#34;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// eg: &#34;Workstation&#34; or &#34;Server&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	Flavour <span style="color:#666">*</span><span style="color:#0b0;font-weight:bold">string</span> <span style="color:#b44">`arg:&#34;--flavour&#34; help:&#34;flavour of distribution&#34; func:&#34;cli_flavour&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// provisioner is our cli parser translator and general frontend object.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">type</span> provisioner <span style="color:#a2f;font-weight:bold">struct</span> {
+</span></span><span style="display:flex;"><span>	localArgs <span style="color:#666">*</span>localArgs
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// Customize implements the Customizable interface which lets us manipulate the
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// CLI.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#a2f;font-weight:bold">func</span> (obj <span style="color:#666">*</span>provisioner) <span style="color:#00a000">Customize</span>(a <span style="color:#a2f;font-weight:bold">interface</span>{}) (<span style="color:#666">*</span>cli.RunArgs, <span style="color:#0b0;font-weight:bold">error</span>) {
+</span></span><span style="display:flex;"><span>	runArgs, ok <span style="color:#666">:=</span> a.(<span style="color:#666">*</span>cli.RunArgs)
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> !ok {
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f;font-weight:bold">nil</span>, fmt.<span style="color:#00a000">Errorf</span>(<span style="color:#b44">&#34;received invalid struct of type: %T&#34;</span>, a)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// Pick a default if this arg wasn&#39;t specified.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">if</span> s <span style="color:#666">:=</span> obj.localArgs.Interface; s <span style="color:#666">==</span> <span style="color:#a2f;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>		devices, err <span style="color:#666">:=</span> util.<span style="color:#00a000">GetPhysicalEthernetDevices</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#a2f;font-weight:bold">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f;font-weight:bold">nil</span>, err
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> i <span style="color:#666">:=</span> <span style="color:#a2f">len</span>(devices); i <span style="color:#666">==</span> <span style="color:#666">0</span> <span style="color:#666">||</span> i &gt; <span style="color:#666">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f;font-weight:bold">nil</span>, fmt.<span style="color:#00a000">Errorf</span>(<span style="color:#b44">&#34;couldn&#39;t guess ethernet device, got %d&#34;</span>, i)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		dev <span style="color:#666">:=</span> devices[<span style="color:#666">0</span>]
+</span></span><span style="display:flex;"><span>		obj.localArgs.Interface = <span style="color:#666">&amp;</span>dev
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	obj.init.<span style="color:#00a000">Logf</span>(<span style="color:#b44">&#34;interface: %+v&#34;</span>, <span style="color:#666">*</span>obj.localArgs.Interface)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// Make any changes here that we want to...
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	runArgs.RunLang.SkipUnify = <span style="color:#a2f;font-weight:bold">true</span> <span style="color:#080;font-style:italic">// speed things up for known good code
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	libConfig.TmpPrefix = <span style="color:#a2f;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	runArgs.Config = libConfig <span style="color:#080;font-style:italic">// store any changes we made
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	<span style="color:#a2f;font-weight:bold">return</span> runArgs, <span style="color:#a2f;font-weight:bold">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">init</span>() {
+</span></span><span style="display:flex;"><span>	fullModuleName <span style="color:#666">:=</span> embedded.<span style="color:#00a000">FullModuleName</span>(ModuleName)
+</span></span><span style="display:flex;"><span>	embedded.<span style="color:#00a000">ModuleRegister</span>(fullModuleName, fs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">var</span> a <span style="color:#a2f;font-weight:bold">interface</span>{} = <span style="color:#666">&amp;</span>localArgs{} <span style="color:#080;font-style:italic">// used for the CLI API
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	custom <span style="color:#666">:=</span> <span style="color:#666">&amp;</span>provisioner{          <span style="color:#080;font-style:italic">// implements the necessary API to work
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>		localArgs: a.(<span style="color:#666">*</span>localArgs),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">// Tell the `entry` API that we exist.
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>	entry.<span style="color:#00a000">Register</span>(<span style="color:#666">&amp;</span>entry.Data{
+</span></span><span style="display:flex;"><span>		Program: ModuleName,
+</span></span><span style="display:flex;"><span>		Version: Version,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		Args:   a,
+</span></span><span style="display:flex;"><span>		Custom: custom,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		Frontend: Frontend,
+</span></span><span style="display:flex;"><span>		Top:      top,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The full code can be seen in <a href="https://github.com/purpleidea/mgmt/commit/4d9c78003ae8130c40b7f3d82c46191a95670880">this git commit</a>.</p>
+<p>When you&rsquo;re happy with your program, you run a special build with the build tag
+that you defined at the top.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#b8860b">GOTAGS</span><span style="color:#666">=</span><span style="color:#b44">&#39;embedded_provisioner&#39;</span> make
+</span></span></code></pre></div><p>You&rsquo;re now ready to enjoy your new software!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Magic mcl glue</span>:<br /><br />
+
+<p>Curious to see a few snippets from the core <code>mcl</code> logic? Here&rsquo;s an edited
+excerpt of how the DHCP server is built:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>dhcp:server &#34;:67&#34; {
+</span></span><span style="display:flex;"><span>	interface =&gt; $interface, # defined earlier
+</span></span><span style="display:flex;"><span>	leasetime =&gt; &#34;60s&#34;,
+</span></span><span style="display:flex;"><span>	routers =&gt; [$router_ip,],
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># If we&#39;re provisioning a known mac address, we only offer an IP to that one.
+</span></span><span style="display:flex;"><span>if $mac != &#34;&#34; {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	dhcp:host &#34;${name}&#34; {	# the hostname
+</span></span><span style="display:flex;"><span>		mac =&gt; $mac,
+</span></span><span style="display:flex;"><span>		ip =&gt; $ip,	# cidr notation is required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		nbp =&gt; $provision ?: if $bios {
+</span></span><span style="display:flex;"><span>			$nbp_bios
+</span></span><span style="display:flex;"><span>		} else {
+</span></span><span style="display:flex;"><span>			$nbp_uefi
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		nbp_path =&gt; $provision ?: $nbp_path,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		Depend =&gt; Tftp:Server[&#34;:69&#34;], # tftp server defined elsewhere!
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} else {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	# Handle ANY mac address since we don&#39;t have one specified!
+</span></span><span style="display:flex;"><span>	dhcp:range &#34;${name}&#34; {
+</span></span><span style="display:flex;"><span>		network =&gt; &#34;${network}&#34;, # eg: 192.168.42.0/24
+</span></span><span style="display:flex;"><span>		skip =&gt; [$router,],      # eg: 192.168.42.1/24
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		nbp =&gt; $provision ?: if $bios {
+</span></span><span style="display:flex;"><span>			$nbp_bios
+</span></span><span style="display:flex;"><span>		} else {
+</span></span><span style="display:flex;"><span>			$nbp_uefi
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		nbp_path =&gt; $provision ?: $nbp_path,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		Depend =&gt; Tftp:Server[&#34;:69&#34;],
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The automatic caching and proxy to the upstream mirrors adds-in an additional
+<code>http</code> resource component. It looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>http:proxy &#34;/fedora/releases/${version}/Everything/${arch}/os/&#34; {
+</span></span><span style="display:flex;"><span>	sub =&gt; &#34;/fedora/&#34;, # we remove this from the name!
+</span></span><span style="display:flex;"><span>	head =&gt; $mirror,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	cache =&gt; $distroarch_release_http_prefix, # eg: $prefix/http/fedora39-x86_64/release/
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>vmlinuz</code> file which is needed to boot the provisioning agent, gets
+pulled-in like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>exec &#34;vmlinuz-${uid}&#34; {
+</span></span><span style="display:flex;"><span>	cmd =&gt; &#34;/usr/bin/wget&#34;,
+</span></span><span style="display:flex;"><span>	args =&gt; [
+</span></span><span style="display:flex;"><span>		&#34;--no-verbose&#34;,
+</span></span><span style="display:flex;"><span>		&#34;${repo_url}images/pxeboot/vmlinuz&#34;,
+</span></span><span style="display:flex;"><span>		&#34;-O&#34;,
+</span></span><span style="display:flex;"><span>		$vmlinuz_file,
+</span></span><span style="display:flex;"><span>	],
+</span></span><span style="display:flex;"><span>	creates =&gt; $vmlinuz_file,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	Depend =&gt; File[$distroarch_tftp_prefix],
+</span></span><span style="display:flex;"><span>	Depend =&gt; Http:Server[&#34;:${http_port_str}&#34;],
+</span></span><span style="display:flex;"><span>	Before =&gt; Print[&#34;ready&#34;],
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As previously mentioned, the full code can be seen in
+<a href="https://github.com/purpleidea/mgmt/commit/4d9c78003ae8130c40b7f3d82c46191a95670880">this git commit</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Why Root?</span><br /><br />
+
+<p>Nothing in <code>mgmt</code> actually requires root access. Some of the tasks you want to
+perform might. In this case, we want to bind to low numbered ports, so we use
+our root permissions to get access there. Alternatively, I&rsquo;ve had reasonably
+good success with Linux capabilities. I&rsquo;m not an expert here, but I think you
+can use:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setcap <span style="color:#b8860b">CAP_NET_BIND_SERVICE</span><span style="color:#666">=</span>+eip mgmt
+</span></span></code></pre></div><p>on the freshly-minted binary, instead of running it with sudo. If you&rsquo;re an
+expert in Linux capabilities, please ping me if you have any recommendations to
+improve the above command.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Events in mcl</span>:<br /><br />
+
+<p>The most interesting thing about this particular provisioner code base, is that
+it doesn&rsquo;t even depend on the most powerful feature of the <code>mcl</code> language: its
+event based nature. It just so happens, that this particular code base is
+currently almost entirely static. I can&rsquo;t wait to show you the agility that we
+will possess with future dynamically changing programs. Many of my public talks
+demonstrate this in different problem spaces.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Programmatic logic</span>:<br /><br />
+
+<p>In future iterations, we&rsquo;ll add a little bit more code to let you
+programmatically decide your next steps. In general, think about a code base
+that first provisions a machine, waits for that step to complete, then
+configures it, and finally provisions the next stage, and so on&hellip; All in
+real-time. You may also wish to build unique optimizations and perhaps only
+provision new machines at night when the electricity usage is cheaper, or on
+Fridays. That&rsquo;s easy:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;datetime&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$is_friday = datetime.weekday(datetime.now()) == &#34;friday&#34; # changes in real-time!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include base.host(&#34;example1&#34;, struct{
+</span></span><span style="display:flex;"><span>	repo =&gt; &#34;fedora39-x86_64&#34;,
+</span></span><span style="display:flex;"><span>	flavour =&gt; &#34;server&#34;,
+</span></span><span style="display:flex;"><span>	mac =&gt; &#34;01:23:45:67:89:ab&#34;,
+</span></span><span style="display:flex;"><span>	ip =&gt; &#34;192.168.42.13/24&#34;,
+</span></span><span style="display:flex;"><span>	part =&gt; &#34;btrfs&#34;,
+</span></span><span style="display:flex;"><span>	packages =&gt; [&#34;vim-enhanced&#34;, &#34;cowsay&#34;, &#34;sl&#34;, &#34;bash-completion&#34;,],
+</span></span><span style="display:flex;"><span>	provision =&gt; $is_friday, # only provision on friday!
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>The way it&rsquo;s glued together lets you programmatically build your infra as code,
+with real-time events (day of the week, load, error scenarios, etc) that are
+part of the language.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Hand off</span>:<br /><br />
+
+<p>The next exciting step considers how we elegantly <em>hand off</em> to the newly
+provisioned machine so that it either runs <code>mgmt</code> to configure itself, or it
+becomes a new <code>mgmt</code> locus to take over and provision future machines. Stay
+tuned.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Future steps</span>:<br /><br />
+
+<p>If we had a <a href="https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface"><code>ipmi</code></a>,
+<a href="https://en.wikipedia.org/wiki/OpenBMC"><code>OpenBMC</code></a>, or <a href="https://en.wikipedia.org/wiki/Redfish_(specification)"><code>Redfish</code></a>
+resource in <code>mgmt</code>, we&rsquo;d be able to also automatically power-on new hardware for
+you and monitor its lifecycle. I don&rsquo;t have access to such hardware, but if you
+do, and want this, please <a href="/contact/">get in touch</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Where have you been?</span><br /><br />
+
+<p>My last blog post about mgmt, was <a href="/blog/2019/07/26/class-and-include-in-mgmt/">too long ago</a>,
+what&rsquo;s been taking so long? To be quite honest, I was mostly distracted by <a href="/blog/2020/12/28/working-at-amazon/">having to pay the rent</a>.
+I&rsquo;ve been publicly looking for funding and sponsorship for years, but the total
+amount I&rsquo;ve ever received has not been significant. If you want to see progress
+here, you have to be part of the funding solution. Otherwise, there&rsquo;s nothing to
+stop <a href="https://www.gnu.org/philosophy/free-sw.html">Libre Software</a> from becoming
+<a href="https://en.wikipedia.org/wiki/List_of_formerly_open-source_or_free_software">proprietary</a>.</p>
+<p><a href="/contact/">Donations and sponsorship</a> are encouraged!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Partner program</span>:<br /><br />
+
+<p>I have a new program to help develop partners to be successful <code>mgmt</code> users,
+consultants, developers, and so on.</p>
+<p>If you <a href="https://bit.ly/mgmt-partner-program">sign-up to the partner program</a>,
+you&rsquo;ll get early access to blog posts, release notes, and other news and
+offerings around <code>mgmt</code>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I hope this lengthy blog post inspired you to try this new tool, and to invest
+your time and money into both this, and the larger <a href="https://github.com/purpleidea/mgmt/"><code>mgmt</code></a>
+project.</p>
+<p>Now that my ten-year project is finally bearing fruit, I hope that you&rsquo;ll help
+it blossom into a world-changing endeavour.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><a href="https://mgmtconfig.com/">https://mgmtconfig.com/</a></p>
+<p><a href="https://github.com/purpleidea/mgmt/">https://github.com/purpleidea/mgmt/</a></p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 27, 2024<br>
+				<small>4067 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bootstrapping">bootstrapping</a> <a class="label label-default" href="/tags/dhcp">dhcp</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gnu">gnu</a> <a class="label label-default" href="/tags/http">http</a> <a class="label label-default" href="/tags/ipmi">ipmi</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/mcl">mcl</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/openbmc">openbmc</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/provisioning">provisioning</a> <a class="label label-default" href="/tags/pxe">pxe</a> <a class="label label-default" href="/tags/redfish">redfish</a> <a class="label label-default" href="/tags/sysadmin">sysadmin</a> <a class="label label-default" href="/tags/tftp">tftp</a> <a class="label label-default" href="/tags/uefi">uefi</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2024/03/27/a-new-provisioning-tool">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2024/03/27/a-new-provisioning-tool.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

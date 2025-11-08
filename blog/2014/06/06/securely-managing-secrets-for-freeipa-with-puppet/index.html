@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Securely managing secrets for FreeIPA with Puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Securely managing secrets for FreeIPA with Puppet</strong><br><small></small></h3>
+					<hr>
+					<p>Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.</p>
+<p>In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer. (This isn&rsquo;t always possible without modifying the software you&rsquo;re managing.)</p>
+<p>On better days, these strings are kept separate from the code in unencrypted yaml files, and if the admin is smart enough to store their configurations in <a href="https://en.wikipedia.org/wiki/Git_%28software%29">git</a>, they hopefully separated out the secrets into a separate repository. Of course none of these solutions are very convincing to someone who puts security at the forefront.</p>
+<p>This article describes how I use puppet to <em>correctly</em> and <em>securely</em> setup <a href="http://www.freeipa.org/">FreeIPA</a>.</p>
+<p><span style="text-decoration:underline;">Background</span>:</p>
+<p>FreeIPA is an excellent piece of software that combines <a href="http://directory.fedoraproject.org/">LDAP</a> and <a href="http://web.mit.edu/kerberos/">Kerberos</a> with an elegant web ui and command line interface. It can also glue in additional features like <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol">NTP</a>. It is essential for any infrastructure that wants single sign on, and unified identity management and security. It is a key piece of infrastructure since you can use it as a cornerstone, and build out your infrastructures from that centrepiece. (I hope to make the <a href="https://github.com/purpleidea/puppet-ipa">puppet-ipa</a> module <a href="http://jordancards.com/blog/why-did-michael-jordan-choose-the-number-23/">at least half as good as</a> what the authors have done with FreeIPA core.)</p>
+<p><span style="text-decoration:underline;">Mechanism</span>:</p>
+<p>Passing a secret into the FreeIPA server for installation is simply not possible without it touching puppet. The way I work around this limitation is by generating the <em>dm_password</em> on the FreeIPA server at install time! This typically looks like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">/</span>usr<span style="color:#666">/</span>sbin<span style="color:#666">/</span>ipa<span style="color:#666">-</span>server<span style="color:#666">-</span>install <span style="color:#666">--</span>hostname<span style="color:#666">=</span><span style="color:#b44">&#39;ipa.example.com&#39;</span> <span style="color:#666">--</span>domain<span style="color:#666">=</span><span style="color:#b44">&#39;example.com&#39;</span> <span style="color:#666">--</span>realm<span style="color:#666">=</span><span style="color:#b44">&#39;EXAMPLE.COM&#39;</span> <span style="color:#666">--</span>ds<span style="color:#666">-</span>password<span style="color:#666">=</span><span style="">`</span><span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>pwgen <span style="color:#666">16</span> <span style="color:#666">1</span> <span style="color:#666">|</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>tee <span style="color:#666">&gt;</span>( <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>gpg <span style="color:#666">--</span>homedir <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/&#39;</span> <span style="color:#666">--</span>encrypt <span style="color:#666">--</span>trust<span style="color:#666">-</span>model always <span style="color:#666">--</span>recipient <span style="color:#b44">&#39;24090D66&#39;</span> <span style="color:#666">&gt;</span> <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/dm_password.gpg&#39;</span> ) <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat<span style="">`</span> <span style="color:#666">--</span>admin<span style="color:#666">-</span>password<span style="color:#666">=</span><span style="">`</span><span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>pwgen <span style="color:#666">16</span> <span style="color:#666">1</span> <span style="color:#666">|</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>tee <span style="color:#666">&gt;</span>( <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>gpg <span style="color:#666">--</span>homedir <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/&#39;</span> <span style="color:#666">--</span>encrypt <span style="color:#666">--</span>trust<span style="color:#666">-</span>model always <span style="color:#666">--</span>recipient <span style="color:#b44">&#39;24090D66&#39;</span> <span style="color:#666">&gt;</span> <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/admin_password.gpg&#39;</span> ) <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat<span style="">`</span> <span style="color:#666">--</span>idstart<span style="color:#666">=</span><span style="color:#666">16777216</span> <span style="color:#666">--</span>no<span style="color:#666">-</span>ntp <span style="color:#666">--</span>selfsign <span style="color:#666">--</span>unattended
+</span></span></code></pre></div><p>This command is approximately what puppet generates. The interesting part is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">--</span>ds<span style="color:#666">-</span>password<span style="color:#666">=</span><span style="">`</span><span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>pwgen <span style="color:#666">16</span> <span style="color:#666">1</span> <span style="color:#666">|</span> <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>tee <span style="color:#666">&gt;</span>( <span style="color:#666">/</span>usr<span style="color:#666">/</span>bin<span style="color:#666">/</span>gpg <span style="color:#666">--</span>homedir <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/&#39;</span> <span style="color:#666">--</span>encrypt <span style="color:#666">--</span>trust<span style="color:#666">-</span>model always <span style="color:#666">--</span>recipient <span style="color:#b44">&#39;24090D66&#39;</span> <span style="color:#666">&gt;</span> <span style="color:#b44">&#39;/var/lib/puppet/tmp/ipa/gpg/dm_password.gpg&#39;</span> ) <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat <span style="color:#666">|</span> <span style="color:#666">/</span>bin<span style="color:#666">/</span>cat<span style="">`</span>
+</span></span></code></pre></div><p>If this is hard to follow, here is the synopsis:</p>
+<ol>
+	<li>The <code>pwgen</code> command is used generate a password.</li>
+	<li>The password is used for installation.</li>
+	<li>The password is encrypted with the users GPG key and saved to a file for retrieval.</li>
+	<li>The encrypted password is (optionally) sent out via email to the admin.</li>
+</ol>
+Note that the email portion wasn't shown since it makes the command longer.
+<p><span style="text-decoration:underline;">Where did my GPG key come from</span>?</p>
+<p>Any respectable FreeIPA admin should already have their own GPG key. If they don&rsquo;t, they probably shouldn&rsquo;t be managing a security appliance. You can either pass the public key to <code>gpg_publickey</code> or specify a keyserver with <code>gpg_keyserver</code>. In either case you must supply a valid recipient (-r) string to <code>gpg_recipient</code>. In my case, I use my keyid of <a href="http://keys.gnupg.net/pks/lookup?op=get&search=0xA0E8F3C024090D66"><code>24090D66</code></a>, which can be used to find my key on the public keyservers. In either case, puppet knows how to import it and use it correctly. A security audit is welcome!</p>
+<p>You&rsquo;ll be pleased to know that I deliberately included the options to use your own keyserver, or to specify your public key manually if you don&rsquo;t want it stored on any key servers.</p>
+<p><span style="text-decoration:underline;">But, I want a different password</span>!</p>
+<p>It&rsquo;s recommended that you use the secure password that has been generated for you. There are a few options if you don&rsquo;t like this approach:</p>
+<ul>
+	<li>The puppet module allows you to specify the password as a string. This isn't recommended, but it is useful for testing and compatibility with legacy puppet environments that don't care about security.</li>
+	<li>You can use the secure password initially to authenticate with your FreeIPA server, and then change the password to the one you desire. Doing this is outside the scope of this article, and you should consult the <a href="http://www.freeipa.org/page/Documentation">FreeIPA documentation</a>.</li>
+	<li>You can use puppet to regenerate a new password for you. This hasn't been implemented yet, but will be coming eventually.</li>
+	<li>You can use the interactive password helper. This takes the place of the <code>pwgen</code> command. This will be implemented if there is enough demand. During installation, the admin will be able to connect to a secure console to specify the password.</li>
+</ul>
+Other suggestions will be considered.
+<p><span style="text-decoration:underline;">What about the admin password</span>?</p>
+<p>The <code>admin_password</code> is generated following the same process that was used for the <code>dm_password</code>. The chance that the two passwords match is probably about:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>1/((((26*2)+10)^16)^2) = ~&lt;span id=&#34;cwos&#34; class=&#34;cwcot&#34;&gt;4.4&lt;/span&gt;e-58
+</span></span></code></pre></div><p>In other words, very unlikely.</p>
+<p><span style="text-decoration:underline;">Testing this easily</span>:</p>
+<p>Testing this out is quite straightforward. This process has been integrated with vagrant for easy testing. Start by setting up vagrant if you haven&rsquo;t already:</p>
+<p style="padding-left:30px;"><a href="/blog/2014/05/13/vagrant-on-fedora-with-libvirt-reprise/">Vagrant on Fedora with libvirt (reprise)</a></p>
+Once you are comfortable with vagrant, follow these steps for using Puppet-IPA:
+```
+git clone --recursive https://github.com/purpleidea/puppet-ipa
+cd vagrant/
+vagrant status
+# edit the puppet-ipa.yaml file to add your keyid in the recipient field
+# if you do not add a keyid, then a password of 'password' will be used
+# this default is only used in the vagrant development environment
+vagrant up puppet
+vagrant up ipa
+```
+You should now have a working FreeIPA server. Login as root with:
+```
+vscreen root@ipa
+```
+yay!
+<p>Hope you enjoyed this.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 6, 2014<br>
+				<small>971 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/freeipa">freeipa</a> <a class="label label-default" href="/tags/ipa">ipa</a> <a class="label label-default" href="/tags/password">password</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-ipa">puppet-ipa</a> <a class="label label-default" href="/tags/secrets">secrets</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/"><small>https://ttboj.wordpress.com/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>GNOME Montreal Summit - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>GNOME Montreal Summit</strong><br><small></small></h3>
+					<hr>
+					<p>This October 12th to 14th Montreal hosted the <a href="https://www.gnome.org/">GNOME</a> <del>boston</del> summit. Many thanks to <a href="http://www.canonical.com/">Canonical</a> for sponsoring breakfast, <a href="http://www.savoirfairelinux.com/en/">Savoir Faire Linux</a> for hosting a great <em><a href="https://en.wikipedia.org/wiki/Cinq_%C3%A0_sept">6 à 10</a></em> with fancy snacks, and <a href="http://www.redhat.com/">RedHat</a> for sponsoring a <a href="https://en.wikipedia.org/wiki/Pool_%28cue_sports%29">pool</a> night. What follows is some technical commentary about stuff that went on.</p>
+<p><span style="text-decoration:underline;">JHBuild</span></p>
+<p><a href="https://wiki.gnome.org/Jhbuild">JHBuild</a> is a tool to make it easy to download/clone (from git) and compile all the GNOME modules and applications. It was easy to get going. I (mostly) followed the steps listed on the <a href="https://wiki.gnome.org/HowDoI/Jhbuild">JHBuild HowDoI wiki page</a>. I kept my <em>.jhbuildrc</em> in my home directory instead of <em>~/.config/</em>. On my Fedora 19 machine, I found certain unlisted dependencies were missing to build everything. You can figure these out yourself when your builds fail, or just run the following command to install them beforehand:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install /usr/bin/{g++,a2x,gnome-doc-prepare} python-rdflib lua-devel
+</span></span></code></pre></div><p>The abridged list of commands that I ran includes:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="">$</span><span style="color:#bbb"> </span>git<span style="color:#bbb"> </span>clone<span style="color:#bbb"> </span>git:<span style="color:#666">//</span>git.gnome.org<span style="color:#666">/</span>jhbuild<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>.<span style="color:#666">/</span>autogen.sh<span style="color:#bbb"> </span><span style="color:#666">--</span>simple<span style="color:#666">-</span>install<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>make<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>make<span style="color:#bbb"> </span>install<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>ln<span style="color:#bbb"> </span><span style="color:#666">-</span>s<span style="color:#bbb"> </span><span style="color:#666">~/</span>.local<span style="color:#666">/</span>bin<span style="color:#666">/</span>jhbuild<span style="color:#bbb"> </span><span style="color:#666">~/</span>bin<span style="color:#666">/</span>jhbuild<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span>sysdeps<span style="color:#bbb"> </span><span style="color:#666">--</span>install<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span>buildone<span style="color:#bbb"> </span>gnome<span style="color:#666">-</span>themes<span style="color:#666">-</span>standard<span style="color:#bbb">    </span><span style="color:#080;font-style:italic"># i was impatient to get this early
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">update</span><span style="color:#bbb">                            </span><span style="color:#080;font-style:italic"># at home on fast network
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span>build<span style="color:#bbb"> </span><span style="color:#666">--</span>no<span style="color:#666">-</span>network<span style="color:#bbb">                </span><span style="color:#080;font-style:italic"># can be run offline if you like
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span>run<span style="color:#bbb"> </span>gedit<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="">$</span><span style="color:#bbb"> </span>jhbuild<span style="color:#bbb"> </span>shell<span style="color:#bbb">                             </span><span style="color:#080;font-style:italic"># then run `env` inside the shell
+</span></span></span></code></pre></div><p>You want to properly understand the context and working directory for each of these, but it should help get you to understand the process more quickly. One thing to realize is that the <em>jhbuild run </em> actually just runs a command from your $PATH, but from within the jhbuild environment, with modified <em>$PATH</em> and prefix variables. Run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ jhbuild run env
+</span></span></code></pre></div><p>to get a better understanding of what changes. When patching, I recommend you <em>clone</em> locally from the mirrored git clones into your personal <em>~/code/</em> hacking directory. This way JHBuild can continue to do its thing, and keep the checkouts at master without your changes breaking the process.</p>
+<p><span style="text-decoration:underline;">Boxes</span></p>
+<p>Boxes is a simple <a href="http://virt-manager.org/">virtual machine manager</a> for the GNOME desktop.</p>
+<p><a href="http://zee-nix.blogspot.ca/">Zeeshan</a> talked about some of the work he&rsquo;s been doing in <a href="https://en.wikipedia.org/wiki/Boxes_%28software%29">boxes</a>. <a href="http://blogs.gnome.org/mccann/">William Jon McCann</a> reviewed some of the UI bugs, and I proposed the idea of integrating puppet modules so that a user could pick a module, and have a test environment running in minutes. This could be a way for users to try <a href="https://github.com/purpleidea/puppet-gluster">GlusterFS</a> or <a href="https://github.com/purpleidea/puppet-ipa">FreeIPA</a>.</p>
+<p><span style="text-decoration:underline;">GNOME Continuous</span></p>
+<p><a href="https://wiki.gnome.org/GnomeContinuous">GNOME continuous</a> (formerly known as GNOME-OSTree) is a project by <a href="http://blog.verbum.org/">Colin Walters</a>. It is amazing for two reasons in particular:</p>
+<ol>
+	<li>It does <a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> testing on a running OS image built from GNOME git master. This has enabled Colin to catch when commits break apps. It even takes <a href="http://build.gnome.org/ostree/buildmaster/builds/">screenshots</a> so that you see what the running apps look like.</li>
+	<li>It provides bootable GNOME images that you can run locally in a vm. The images are built from GNOME git master. While there are no security updates, and this is not recommended for normal use, it is a great way to test out the bleeding edge of GNOME and report bugs early. It comes with an atomic upgrade method to keep your image up to date with the latest commits.</li>
+</ol>
+My goal is to try to run the bootable image for an hour every month. This way, I'll be able to catch GNOME bugs early before they trickle down into Fedora and other GNOME releases.
+<p><span style="text-decoration:underline;">Abiword 3.0</span></p>
+<p><a href="http://www.figuiere.net/hub/blog/">Hubert Figuière</a> released <a href="http://abisource.com/mailinglists/abisource-announce/2013/Oct/0000.html">AbiWord 3.0</a> which supports GTK+ 3. Cool.</p>
+<p><span style="text-decoration:underline;">A11y</span></p>
+<p>Some of the <a href="https://wiki.gnome.org/Accessibility">A11y</a> team was present and hacking away. I learned more about how the accessibility tools are used. This is an important technology even if you aren&rsquo;t using them at the moment. With age, and accident, the current A11y technologies might one day be useful to you!</p>
+<p><span style="text-decoration:underline;">Hacking Hearts</span></p>
+<p><a href="http://blogs.gnome.org/gnomg/">Karen Sandler</a> was kind enough to tell me about her heart condition and the proprietary software inside of her <a href="https://en.wikipedia.org/wiki/Implantable_cardioverter-defibrillator">pacemaker defibrillator</a>. Hopefully hackers can convince manufacturers that <a href="http://www.gnu.org/philosophy/free-sw.html">we need to have access to the source</a>.</p>
+<p><span style="text-decoration:underline;">Yorba and Geary</span></p>
+<p><a href="http://blog.yorba.org/author/jim">Jim Nelson</a> is a captivating conversationalist, and it was kind of him to tell me about his work on <a href="http://www.yorba.org/projects/geary/">Geary</a> and <a href="https://en.wikipedia.org/wiki/Vala_%28programming_language%29">Vala</a>, and to listen to my ideas about GPG support in email clients. I look forward to seeing Geary&rsquo;s future. I also <a href="https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol#Disadvantages">learned a bit more about IMAP</a>.</p>
+<p><span style="text-decoration:underline;">Future?</span></p>
+<p>I had a great time at the summit, and it was a pleasure to meet and hangout with the GNOME hackers. You&rsquo;re always welcome in Montreal, and I hope you come back soon.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 15, 2013<br>
+				<small>818 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/abiword">abiword</a> <a class="label label-default" href="/tags/accessibility">accessibility</a> <a class="label label-default" href="/tags/aicd">aicd</a> <a class="label label-default" href="/tags/geary">geary</a> <a class="label label-default" href="/tags/gnome">gnome</a> <a class="label label-default" href="/tags/gnome-boxes">gnome boxes</a> <a class="label label-default" href="/tags/gnome-continuous">gnome continuous</a> <a class="label label-default" href="/tags/gnome-summit">gnome summit</a> <a class="label label-default" href="/tags/gtk">gtk</a> <a class="label label-default" href="/tags/hacking-hearts">hacking hearts</a> <a class="label label-default" href="/tags/jhbuild">jhbuild</a> <a class="label label-default" href="/tags/montreal">montreal</a> <a class="label label-default" href="/tags/pgo">pgo</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/summit">summit</a> <a class="label label-default" href="/tags/yorba">yorba</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/10/15/gnome-montreal-summit/"><small>https://ttboj.wordpress.com/2013/10/15/gnome-montreal-summit/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/10/15/gnome-montreal-summit">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/10/15/gnome-montreal-summit.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

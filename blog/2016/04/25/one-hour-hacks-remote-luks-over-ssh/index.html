@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>One hour hacks: Remote LUKS over SSH - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>One hour hacks: Remote LUKS over SSH</strong><br><small></small></h3>
+					<hr>
+					<p>I have a <a href="https://gnu.org/">GNU/Linux</a> server which I mount a few <a href="https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup">LUKS</a> encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&rsquo;t have anything especially sensitive on the drives, but I think it&rsquo;s a good security practice to <a href="http://www.theguardian.com/commentisfree/2013/jul/15/crux-nsa-collect-it-all">encrypt it all</a>, if only to add noise into the system and for solidarity with <a href="https://en.wikipedia.org/wiki/Whistleblower">those</a> who harbour much more sensitive data.</p>
+<p>This means that every time the server reboots or whenever I want to mount the drives, I have to log in and go through the series of luksOpen and mount commands before I can access the data. This turned out to be a bit laborious, so I wrote a quick script to automate it! I also made sure that it was <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>.</p>
+<p>I decided to share it because I couldn&rsquo;t find anything similar, and I was annoyed that I had to write this in the first place. Hopefully it saves you some anguish. It also contains a clever little bash hack that I am proud to have in my script.</p>
+<p><a href="https://gist.github.com/purpleidea/7a145a4f58114efcc0d642fea3757e8a">Here&rsquo;s the script.</a> You&rsquo;ll need to fill in the map of mount folder names to drive UUID&rsquo;s, and you&rsquo;ll want to set your server hostname and FQDN to match your environment of course. It will prompt you for your root password to mount, and the LUKS password when needed.</p>
+<p>Example of mounting:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~$ rluks.sh 
+</span></span><span style="display:flex;"><span>Running on: myserver...
+</span></span><span style="display:flex;"><span>[sudo] password for james: 
+</span></span><span style="display:flex;"><span>Mount/Unmount [m/u] ? m
+</span></span><span style="display:flex;"><span>Mounting...
+</span></span><span style="display:flex;"><span>music: mkdir ✓
+</span></span><span style="display:flex;"><span>LUKS Password: 
+</span></span><span style="display:flex;"><span>music: luksOpen ✓
+</span></span><span style="display:flex;"><span>music: mount ✓
+</span></span><span style="display:flex;"><span>files: mkdir ✓
+</span></span><span style="display:flex;"><span>files: luksOpen ✓
+</span></span><span style="display:flex;"><span>files: mount ✓
+</span></span><span style="display:flex;"><span>photos: mkdir ✓
+</span></span><span style="display:flex;"><span>photos: luksOpen ✓
+</span></span><span style="display:flex;"><span>photos: mount ✓
+</span></span><span style="display:flex;"><span>Done!
+</span></span><span style="display:flex;"><span>Connection to server.example.com closed.
+</span></span></code></pre></div><p>Example of unmounting:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>james@computer:~$ rluks.sh 
+</span></span><span style="display:flex;"><span>Running on: myserver...
+</span></span><span style="display:flex;"><span>[sudo] password for james: 
+</span></span><span style="display:flex;"><span>Sorry, try again.
+</span></span><span style="display:flex;"><span>[sudo] password for james: 
+</span></span><span style="display:flex;"><span>Mount/Unmount [m/u] ? u
+</span></span><span style="display:flex;"><span>Unmounting...
+</span></span><span style="display:flex;"><span>music: umount ✓
+</span></span><span style="display:flex;"><span>music: luksClose ✓
+</span></span><span style="display:flex;"><span>music: rmdir ✓
+</span></span><span style="display:flex;"><span>files: umount ✓
+</span></span><span style="display:flex;"><span>files: luksClose ✓
+</span></span><span style="display:flex;"><span>files: rmdir ✓
+</span></span><span style="display:flex;"><span>photos: umount ✓
+</span></span><span style="display:flex;"><span>photos: luksClose ✓
+</span></span><span style="display:flex;"><span>photos: rmdir ✓
+</span></span><span style="display:flex;"><span>Done!
+</span></span><span style="display:flex;"><span>Connection to server.example.com closed.
+</span></span><span style="display:flex;"><span>james@computer:~$
+</span></span></code></pre></div><p>It&rsquo;s worth mentioning that there are many improvements that could be made to this script. If you&rsquo;ve got patches, send them my way. After all, this is only a: one hour hack.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p>PS: One day this sort of thing might be possible in <a href="https://github.com/purpleidea/mgmt/">mgmt</a>. <a href="/contact/">Let me know</a> if you want to help work on it!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>April 25, 2016<br>
+				<small>471 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/gnu">GNU</a> <a class="label label-default" href="/tags/luks">LUKS</a> <a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/hacks">hacks</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/mount">mount</a> <a class="label label-default" href="/tags/one-hour-hack">one hour hack</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/ssh">ssh</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2016/04/25/one-hour-hacks-remote-luks-over-ssh/"><small>https://ttboj.wordpress.com/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

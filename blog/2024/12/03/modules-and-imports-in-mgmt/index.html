@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Understanding mgmt modules, imports, and entry points">
+	<meta name="author" content="James Shubin">
+
+	<title>Modules and imports in mgmt - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Modules and imports in mgmt</strong><br><small>Understanding mgmt modules, imports, and entry points</small></h3>
+					<hr>
+					<p><a href="https://github.com/purpleidea/mgmt/">Mgmt</a> modules are used for structuring
+your code across multiple files. This keeps things readable and allows for code
+reusability. For example, it should be easy to write a single module which can
+be effectively used by many different parties. To me, it never felt like code
+reuse was a core design objective with other tools. In mgmt it has been since
+the very beginning. I&rsquo;m very proud of our module system, so let me introduce you
+to it properly.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Historical problems</span>:<br /><br />
+
+<p>Anyone who used <a href="https://en.wikipedia.org/wiki/Puppet_(software)">Puppet</a> knows
+there were typically multiple different modules for each task or service. I even
+contributed to this problem by writing my own <a href="https://purpleidea.com/tags/puppet/">puppet modules</a>
+as well!</p>
+<p>It was necessary to reinvent the wheel continually for two main reasons:</p>
+<ol>
+<li>The strangeness of the &ldquo;programming language&rdquo; design limited how you could
+build things. As a result, there was a lot of pre-planning needed for the
+specific use case that you were aiming for, and so code reuse was challenging.</li>
+</ol>
+<p>A simple example: in <code>puppet</code> you only had &ldquo;facts&rdquo; which ran on the server, and
+you had to have a list of everything you&rsquo;d want to run in advance. The idea that
+you might not want to run every single fact, or that you might want to pass in
+arguments to a particular fact, somehow was not considered.</p>
+<p>Requiring back-and-forth communication between the client and the server was an
+architectural mess. You should only communicate what you really need to if you
+care about distributed-systems hygiene and scaling.</p>
+<p>As a result, <code>mgmt</code> has a different operating model, which is compatible with a
+modern distributed-systems mentality, and of course, it supports real
+<a href="/blog/2024/11/22/functions-in-mgmt/">functions</a>!</p>
+<ol start="2">
+<li>The incompleteness of the &ldquo;programming language&rdquo; didn&rsquo;t consider modelling of
+time and what a future unified world of automation should look like.</li>
+</ol>
+<p>A simple example: If you wanted to autoscale, you&rsquo;d really be using that tool to
+configure another tool to do that job for you, and so on. You&rsquo;d have these
+unsafe boundary layers (passing data from one format and type to another)
+between tools, which made it very difficult to model complete systems properly.</p>
+<p>The tools were not powerful enough to accomplish the entire goal, so you&rsquo;d have
+to be clever with how you built things. Expressing a more complex interface that
+could be happily used by more than one consumer was challenging.</p>
+<p>A more powerful language was the solution, however I didn&rsquo;t want to sacrifice
+safety, which is why <code>mcl</code> is an <a href="https://en.wikipedia.org/wiki/Functional_reactive_programming">FRP</a>.</p>
+<p>We can now model time safely, and express things that would have previously
+required multiple different classes of tools, and many different classes of
+bugs.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="alice-rabbit-time.png"><img class="alignnone size-full" src="alice-rabbit-time.png"  width="100%" /></a></td></tr><tr><td>We knew about time, but choose to ignore it.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Imports</span>:<br /><br />
+
+<p>Let&rsquo;s start with the <code>import</code> statement. There are many useful system modules
+which you may wish to import and use. A <em>system</em> module is one which begins and
+ends with a normal alphanumeric character, such as <code>fmt</code> or <code>golang/strings</code>. It
+may not contain a (<code>.</code>) period.</p>
+<p>A complete list of available modules and their contained functions
+<a href="https://mgmtconfig.com/docs/functions/">is available here</a>.</p>
+<p>Imported modules can also contain classes and variables, but those are not
+generally seen in system modules.</p>
+<p>You do not need to &ldquo;import&rdquo; <a href="https://mgmtconfig.com/docs/resources/">resources</a>.
+All resources are available to the user automatically.</p>
+<p>Once you import a module, the last token in its name is used as the handle for
+referencing the contents. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>import &#34;golang/strings&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$words = [
+</span></span><span style="display:flex;"><span>	&#34;hello&#34;,
+</span></span><span style="display:flex;"><span>	&#34;crazy&#34;,
+</span></span><span style="display:flex;"><span>	&#34;world&#34;,
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>$sentence = strings.join($words, &#34; &#34;)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;sentence&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;sentence: %s&#34;, $sentence),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see <code>fmt</code> and <code>strings</code> are the handles used for the two functions
+that we use in this example.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Import as</span>:<br /><br />
+
+<p>You can choose a different handle name if you want. For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;fmt&#34; as blah
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;sentence&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; blah.printf(&#34;hello world&#34;), # blah is the handle here
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You can also <code>import &lt;module&gt; as *</code>, which splats the contents of the module all
+over the current namespace, although I generally don&rsquo;t recommend it when
+importing system modules. It&rsquo;s much better to be explicit.</p>
+<p>Import can also be used to import local subdirectories as well as modules from
+<code>git</code>, but let&rsquo;s first look at the structure of a module.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Structure</span>:<br /><br />
+
+<p>Let&rsquo;s dive into the basic structure of a module. As an example, I&rsquo;ll use the
+<a href="https://github.com/purpleidea/mgmt/tree/master/modules/shorewall/">shorewall</a>
+module which I&rsquo;ve added to the core collection of useful <code>mcl</code> modules in
+<code>mgmt</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ tree shorewall/
+</span></span><span style="display:flex;"><span>shorewall/
+</span></span><span style="display:flex;"><span>├── files
+</span></span><span style="display:flex;"><span>│   ├── interfaces
+</span></span><span style="display:flex;"><span>│   ├── interfaces.frag.tmpl
+</span></span><span style="display:flex;"><span>│   ├── policy
+</span></span><span style="display:flex;"><span>│   ├── policy.frag.tmpl
+</span></span><span style="display:flex;"><span>│   ├── rules
+</span></span><span style="display:flex;"><span>│   ├── rules.frag.tmpl
+</span></span><span style="display:flex;"><span>│   ├── shorewall.conf.tmpl
+</span></span><span style="display:flex;"><span>│   ├── snat
+</span></span><span style="display:flex;"><span>│   ├── snat.frag.tmpl
+</span></span><span style="display:flex;"><span>│   ├── stoppedrule.frag.tmpl
+</span></span><span style="display:flex;"><span>│   ├── stoppedrules
+</span></span><span style="display:flex;"><span>│   ├── zones
+</span></span><span style="display:flex;"><span>│   └── zones.frag.tmpl
+</span></span><span style="display:flex;"><span>├── main.mcl
+</span></span><span style="display:flex;"><span>└── metadata.yaml
+</span></span></code></pre></div><p>In the root directory you only need there to be one file for it to be considered
+a module. That file is named <code>metadata.yaml</code>, which can even be empty! This file
+tells <code>mgmt</code> where it should search for the initial code entry point and it also
+gives it a static list of files to include in part of the &ldquo;deploy&rdquo;.</p>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-blue d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Blue:"><use xlink:href="#info-blue"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+A &ldquo;deploy&rdquo; is the bundle of code that makes up everything that is used when
+running <code>mgmt</code>. We&rsquo;ll learn more about deploys in a future article.
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Metadata</span>:<br /><br />
+
+<p>By default (if the <code>metadata.yaml</code> file is empty) the code entry point is
+<code>main.mcl</code> and any files can be found in the <code>files/</code> directory. Both of those
+locations can be overridden in the <code>yaml</code> file, but they are sensible defaults
+which you should probably not change.</p>
+<p>If you did want to override one of these locations, or if you wanted to add some
+additional metadata to your module, you can add it in the <code>metadata.yaml</code> file.
+For example, it might instead look like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>main: &#34;james/hello.mcl&#34;	# This is not the default, the default is &#34;main.mcl&#34;.
+</span></span><span style="display:flex;"><span>files: &#34;myfiles/&#34;	# This is a different location for the files/ folder.
+</span></span><span style="display:flex;"><span>path: &#34;path/&#34;		# You can change the module path, but try not to here.
+</span></span></code></pre></div><p>As with all things in <code>mgmt</code>, remember that directories end with a slash!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Explicit path following</span>:<br /><br />
+
+<p>In some tools, you need to place their &ldquo;classes&rdquo; and &ldquo;roles&rdquo; and &ldquo;templates&rdquo; in
+various <em>magic directories</em> for things to work. I always found this confusing
+and user-hostile. Maybe I want the structure to follow my more logical pattern?</p>
+<p>Keep in mind, that in some ways we want our concepts to be more similar to those
+found in general-purpose programming languages. Can you imagine if <code>golang</code>
+forced a certain folder structure on its users? Just because you&rsquo;re a <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a>,
+doesn&rsquo;t mean you should throw away that practice! And just because you have the
+freedom to choose your own directory structure, doesn&rsquo;t mean there are no good
+conventions to follow!</p>
+<p>One advantage of explicit path following, is that the compiler can
+deterministically build a list of every single item which is being used, and that
+can be used to create a packaged &ldquo;deploy&rdquo;.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Files</span>:<br /><br />
+
+<p>Previously, we mentioned a <code>files/</code> directory corresponding to the <code>files</code> key
+in the <code>metadata.yaml</code> file. The <code>files/</code> path (or whatever you choose to name
+it) is special because it is the location which is used to find files in if
+asked by the <a href="https://mgmtconfig.com/docs/functions/#deploy.readfile"><code>deploy.readfile</code></a>
+function.</p>
+<p>For example, given the above directory structure, you may wish to use the
+<code>shorewall.conf.tmpl</code> as a template, and store the output of running that
+template in <code>/etc/shorewall/shorewall.conf</code> which would look like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span>import <span style="color:#b44">&#34;deploy&#34;</span> <span style="color:#080;font-style:italic"># access stuff relating to the bundle of modules</span>
+</span></span><span style="display:flex;"><span>import <span style="color:#b44">&#34;golang&#34;</span> <span style="color:#080;font-style:italic"># contains a golang-style template(...) function</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># pull out the contents of this file, note the leading slash</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>tmpl <span style="color:#666">=</span> deploy<span style="color:#666">.</span>readfile(<span style="color:#b44">&#34;/files/shorewall.conf.tmpl&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>values <span style="color:#666">=</span> struct{
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># some values to pass into the template could go in here...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file <span style="color:#b44">&#34;/etc/shorewall/shorewall.conf&#34;</span> {
+</span></span><span style="display:flex;"><span>	state <span style="color:#666">=&gt;</span> <span style="color:#666">$</span><span style="color:#a2f;font-weight:bold">const</span><span style="color:#666">.</span>res<span style="color:#666">.</span>file<span style="color:#666">.</span>state<span style="color:#666">.</span>exists, <span style="color:#080;font-style:italic"># a magic var of value &#34;exists&#34;</span>
+</span></span><span style="display:flex;"><span>	content <span style="color:#666">=&gt;</span> golang<span style="color:#666">.</span>template(<span style="color:#666">$</span>tmpl, <span style="color:#666">$</span>values), <span style="color:#080;font-style:italic"># run the template</span>
+</span></span><span style="display:flex;"><span>	owner <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;root&#34;</span>,
+</span></span><span style="display:flex;"><span>	group <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;root&#34;</span>,
+</span></span><span style="display:flex;"><span>	mode <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;u=rw,go=&#34;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You can see that the <code>deploy.readfile</code> function returns the file contents, which
+are passed to the <code>golang.template</code> function, which passes them to the file
+resource. Of course if we don&rsquo;t want to run the templating engine, we could pass
+the file content into the resource from <code>deploy.readfile</code> directly.</p>
+<p>You might also notice that <code>deploy.readfile</code> takes an absolute path which is
+rooted in the directory root of the module that it&rsquo;s in. In other words,
+relative to the directory the <code>main.mcl</code> is in, the file is at
+<code>/files/shorewall.conf.tmpl</code>. The <code>/files/</code> prefix is not a &ldquo;magic word&rdquo;, it&rsquo;s
+the actual directory! We need that prefix because how else would we access the
+other files? For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;deploy&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;print&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; deploy.readfile(&#34;/main.mcl&#34;), # this refers to itself!
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This program reads its own contents and prints them, which makes this roughly a
+<a href="https://en.wikipedia.org/wiki/Quine_(computing)">quine</a>!</p>
+<p>If you&rsquo;ve used tools like <code>puppet</code>, you&rsquo;ll remember that the <code>template()</code>
+function only read files from the <code>templates/</code> directory, which was different
+from their <code>files/</code> directory. All of this sillyness is gone, and things can now
+work sensibly. Why not let a template and static file co-exist in the same
+folder, so that the developer doesn&rsquo;t need to <code>cd</code> around as much!</p>
+<p>So what makes the <code>files/</code> directory special if we&rsquo;re explicitly specifying its
+path in <code>deploy.readfile</code> anyways? What&rsquo;s special is that this directory is
+included in the deployed &ldquo;bundle&rdquo; of code when <code>mgmt</code> runs. If you don&rsquo;t include
+the file in that directory, then it won&rsquo;t be found when <code>mgmt</code> runs.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Importing files and directories</span>:<br /><br />
+
+<p>Your module might like to split code into multiple files and directories. To
+import a file, just include the relative path to that file. For example, assume
+that your directory now looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ tree project1/
+</span></span><span style="display:flex;"><span>project1/
+</span></span><span style="display:flex;"><span>├── internal
+</span></span><span style="display:flex;"><span>│   ├── data
+</span></span><span style="display:flex;"><span>│   │   ├── main.mcl
+</span></span><span style="display:flex;"><span>│   │   └── metadata.yaml
+</span></span><span style="display:flex;"><span>│   ├── james
+</span></span><span style="display:flex;"><span>│   │   └── main.mcl
+</span></span><span style="display:flex;"><span>│   └── timemachine
+</span></span><span style="display:flex;"><span>│       ├── files
+</span></span><span style="display:flex;"><span>│       │   ├── flux_capacitor.FCStd
+</span></span><span style="display:flex;"><span>│       │   └── math.tmpl.sh
+</span></span><span style="display:flex;"><span>│       ├── main.mcl
+</span></span><span style="display:flex;"><span>│       └── metadata.yaml
+</span></span><span style="display:flex;"><span>├── main.mcl
+</span></span><span style="display:flex;"><span>├── metadata.yaml
+</span></span><span style="display:flex;"><span>├── profiles.mcl
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>├── roles.mcl
+</span></span><span style="display:flex;"><span>└── test.sh
+</span></span></code></pre></div><p>In the root, we have an empty <code>metadata.yaml</code> entry point. This then starts
+things off at <code>main.mcl</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;regexp&#34;				# a system import
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;roles.mcl&#34; as role		# a relative file import
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;internal/data/&#34;			# a relative dir/module import
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># This is a regular &#34;if&#34; statement, no custom &#34;node&#34; keyword even exists!
+</span></span><span style="display:flex;"><span>if $hostname == &#34;delorian&#34; {		# some mgmt code
+</span></span><span style="display:flex;"><span>	include role.timemachine
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span># Match on any hostname of the pattern app1, app2, appN...
+</span></span><span style="display:flex;"><span>if regexp.match(&#34;^app\\d+$&#34;, $hostname) {
+</span></span><span style="display:flex;"><span>	include role.application
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;hello&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; $data.owner,	# use some data
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Our <code>roles.mcl</code> file, might then contain:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;profiles.mcl&#34; as profile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class timemachine() {
+</span></span><span style="display:flex;"><span>	include profile.base
+</span></span><span style="display:flex;"><span>	include profile.ssh_server
+</span></span><span style="display:flex;"><span>	include profile.delorean
+</span></span><span style="display:flex;"><span>	# more included classes...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class application() {
+</span></span><span style="display:flex;"><span>	include profile.base
+</span></span><span style="display:flex;"><span>	include profile.ssh_server
+</span></span><span style="display:flex;"><span>	# more included classes...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And lastly in our <code>profiles.mcl</code> file, it might contain:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;internal/data/&#34;		# organizational data
+</span></span><span style="display:flex;"><span>import &#34;internal/james/&#34;	# my personal module
+</span></span><span style="display:flex;"><span>import &#34;internal/timemachine/&#34;	# for managing the delorean
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;https://github.com/purpleidea/mgmt/modules/misc/&#34; as misc	# a git import!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class base() {
+</span></span><span style="display:flex;"><span>	# Things that should be on *every* machine go here.
+</span></span><span style="display:flex;"><span>	include james.base
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	# Every machine should have it&#39;s own ssh keypair.
+</span></span><span style="display:flex;"><span>	include misc.ssh_keygen(&#34;root&#34;)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>class delorean() {
+</span></span><span style="display:flex;"><span>	include timemachine.speed(&#34;bttf-2015&#34;, struct{
+</span></span><span style="display:flex;"><span>		kmh =&gt; 142,
+</span></span><span style="display:flex;"><span>		mr_fusion =&gt; true,
+</span></span><span style="display:flex;"><span>		colour =&gt; $data.favourite_colour, # probably blue
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Take some time to read through these carefully. It&rsquo;s easy to follow the single
+file imports like <code>import &quot;roles.mcl&quot; as role</code> and the <code>import &quot;internal/data/&quot;</code>
+style. If you don&rsquo;t use the <code>as</code> syntax, then in the aforementioned two cases,
+an automatic handle of <code>roles</code> and <code>data</code> will be used.</p>
+<p>You may also wish to make note that there is no <code>metadata.yaml</code> file in the
+<code>james/</code> folder. We&rsquo;ll talk about that below.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Importing parent modules</span>:<br /><br />
+
+<p>Yes you can include <code>../</code> in your imports when you specify a relative path.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;../internal/data/&#34;		# valid relative import
+</span></span></code></pre></div><p>This is valid, but it is hopefully unnecessary for most modules. As long as your
+import graph is a DAG (no cycles) then it&rsquo;s legal. If you&rsquo;re using a lot of
+these, then it might be a good idea to rethink how you&rsquo;re structuring your code.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Importing git modules</span>:<br /><br />
+
+<p>You&rsquo;ll notice there is one long-form module import there beginning with
+<code>https://</code>. This does what you probably expect, and it&rsquo;s similar to what the
+<code>golang</code> community has come to expect. Simply put some code in a git repo, and
+it can be downloaded from that remote path! The actual schema specified is used,
+so you probably want <code>git://</code> for normal git repositories, and <code>https://</code> for
+many of the current hosting services which serve git over https.</p>
+<p>At the moment, identifiers are all lowercase and don&rsquo;t allow dashes, so if you
+import a package with: <code>git://example.com/purpleidea/Module-Name&quot;</code>, this will
+get transformed into <code>module_name</code>.</p>
+<p>If you happen to name the final directory something of the form: <code>mgmt-foo/</code>,
+then the module will automatically get given a handle of <code>foo</code> if you don&rsquo;t use
+the <code>as</code> syntax.</p>
+<p>For example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>import &#34;https://example.com/whatever/modules/mgmt-magic/&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;hello&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; $magic.abracadabra(), # runs the function from that module
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Downloading the code...</span><br /><br />
+
+<p>To cause a download to occur, you&rsquo;ll need to include the <code>--download</code> or
+<code>--only-download</code> flags as part of your <code>mgmt run lang</code> or <code>mgmt deploy lang</code>
+commands. You can also use <code>--update</code> to ensure you get the latest versions.</p>
+<p>For example, you may run:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mgmt run --tmp-prefix lang --download --update foo.mcl
+</span></span></code></pre></div><p>to make sure you have the latest versions of everything, but where does that
+code get downloaded to?</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">MGMT_MODULE_PATH</span>:<br /><br />
+
+<p>Anytime you run <code>mgmt</code>, you&rsquo;ll need a &ldquo;module path&rdquo; specified, which tells it
+where to look for and store any modules. You can specify this in three ways:</p>
+<ol>
+<li>
+<p>With the <code>--module-path [PATH]</code> command line argument.</p>
+</li>
+<li>
+<p>In the <code>MGMT_MODULE_PATH</code> environment variable.</p>
+</li>
+<li>
+<p>In the <code>path</code> key of the <code>metadata.yaml</code> file.</p>
+</li>
+</ol>
+<p>The above precedence order applies. Make sure that the directory itself exists,
+since <code>mgmt</code> will not create it for you. This prevents unexpected module
+directories from appearing on your system when you didn&rsquo;t expect them to.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Running mgmt</span>:<br /><br />
+
+<p>Combining everything we&rsquo;ve learned so far, you could now run <code>mgmt</code> with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mgmt run --tmp-prefix lang --module-path<span style="color:#666">=</span>mypath/ --download --update foo.mcl
+</span></span></code></pre></div><p>or:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mgmt run --tmp-prefix lang --download --update ./metadata.yaml
+</span></span></code></pre></div><p>and so on&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Entry points</span>:<br /><br />
+
+<p>Whenever you run <code>mgmt</code>, create a &ldquo;deploy&rdquo;, or import a module, <code>mgmt</code> has a
+concept of &ldquo;entry points&rdquo; which it uses to determine how to &ldquo;find that code&rdquo;. It
+is a simple search sequence which it follows to turn your requested input into a
+runnable scenario. Let&rsquo;s list the precedence rules first:</p>
+<ol>
+<li>empty</li>
+<li>stdin</li>
+<li>metadata.yaml</li>
+<li>file.mcl</li>
+<li>dir/</li>
+<li>code</li>
+<li>error</li>
+</ol>
+<p>Let&rsquo;s go over each one:</p>
+<ol>
+<li>
+<p>We have no input, nothing happens. (We may consider adding a default action
+to look in <code>/etc/mgmt/</code> for code by default if there&rsquo;s enough of a demand for
+that.)</p>
+</li>
+<li>
+<p>We have a <code>-</code> (dash) so we look at <code>stdin</code>. Type or pipe in some code and it
+will run.</p>
+</li>
+<li>
+<p>We have the path to a <code>metadata.yaml</code> file. That&rsquo;s our entry point, we follow
+it to the first <code>main.mcl</code> file (or whatever it specifies) and we also take any
+other information defined there into account.</p>
+</li>
+<li>
+<p>We&rsquo;re given a path to a single <code>whatever.mcl</code> file. We start running from
+there.</p>
+</li>
+<li>
+<p>We&rsquo;re given a directory. We look inside that directory first for
+<code>metadata.yaml</code>, and if so we follow that. Otherwise we look for <code>main.mcl</code>
+which is the built-in default.</p>
+</li>
+<li>
+<p>We assume our input is a string of some actual <code>mcl</code> code. We try to run it.</p>
+</li>
+<li>
+<p>We error. You&rsquo;ve failed to specify a valid entry point for <code>mgmt</code>.</p>
+</li>
+</ol>
+<p>Note that for #5, this is why the above <code>james/</code> folder with only a single
+<code>main.mcl</code> file in it, is a valid import. When the system sees that folder, it
+automatically looks for <code>metadata.yaml</code>, which it doesn&rsquo;t find, and then falls
+back to <code>main.mcl</code> which it does. Remember that if a <code>files/</code> dir was present,
+<a href="https://github.com/purpleidea/mgmt/blob/master/docs/language-guide.md#why-am-i-getting-a-deployreadfile-error-when-the-file-actually-exists">it will not be included in a deploy</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Running in production</span>:<br /><br />
+
+<p>If you want to run <code>mgmt</code> in production, there are a few ways to go about it.
+We&rsquo;ll talk more about this in a future article about &ldquo;deploys&rdquo;, but as a sneak
+peak, you may find it valuable to store your main code repo in <code>/etc/mgmt/</code>.
+Inside that directory there are two possible scenarios:</p>
+<ol>
+<li>Nested modules</li>
+</ol>
+<p>In this first scenario, you may wish to put your code into <code>/etc/mgmt/</code> or even
+<code>/etc/mgmt/main/</code> and your <code>metadata.yaml</code> file inside that directory. Alongside
+it, there should be a directory named <code>modules/</code> which contains the module tree.
+That path can be specified either in the <code>metadata.yaml</code> file, or with the
+<code>--module-path</code> argument. This latter variant is preferred.</p>
+<p>This &ldquo;nested modules directory&rdquo; variant is preferred for users who are
+comfortable with git submodules, and wish to store everything in a giant mono
+repo. This is a very excellent way to develop and manage your code.</p>
+<ol start="2">
+<li>Modules abreast</li>
+</ol>
+<p>In this scenario, you&rsquo;ll want to have your code in <code>/etc/mgmt/main/</code> and a
+<code>modules/</code> directory in <code>/etc/mgmt/modules/</code>. Your &ldquo;module path&rdquo; will get
+specified by command line arg when you run <code>mgmt</code>.</p>
+<p>This more classical scenario is easier for users who want to simplify their git
+experience, or who are developing <code>mgmt</code>. This is because it makes it easy to
+<code>rsync</code> up a module path from your development environment and run it directly.</p>
+<p>Whatever way you choose to run <code>mgmt</code> is up to you. If you think there&rsquo;s a
+better way, please let me know!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Side effects from import</span>:<br /><br />
+
+<p>Suppose you had the following two files:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># nested/main.mcl
+</span></span><span style="display:flex;"><span>$answer = 42
+</span></span><span style="display:flex;"><span>print &#34;hello&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; &#34;this is in the nested module&#34;,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>and:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># main.mcl
+</span></span><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;nested/&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;answer&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;the answer is: %d&#34;, $nested.answer)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What do you expect to happen if you ran this? The answer is that this code will
+error at compile time. This is because &ldquo;the action of an import should not cause
+a side effect&rdquo;. In the top-level scope of the <code>nested/</code> module, there is a bare
+resource! Importing it would effectively make it part of the main scope, which
+is not allowed implicitly.</p>
+<p>Instead, write your modules so they instead look like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># nested/main.mcl
+</span></span><span style="display:flex;"><span>$answer = 42
+</span></span><span style="display:flex;"><span>class run() {
+</span></span><span style="display:flex;"><span>	print &#34;hello&#34; {
+</span></span><span style="display:flex;"><span>		msg =&gt; &#34;this is in the nested module&#34;,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>and:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># main.mcl
+</span></span><span style="display:flex;"><span>import &#34;fmt&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>import &#34;nested/&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include nested.run()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print &#34;answer&#34; {
+</span></span><span style="display:flex;"><span>	msg =&gt; fmt.printf(&#34;the answer is: %d&#34;, $nested.answer)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This way effectors need to be explicitly pulled in. Nothing happens
+accidentally. You&rsquo;ll encounter similar safeguards if you try and import a module
+which has an <code>include</code> statement in its top-level scope.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Git at the core</span>:<br /><br />
+
+<p>You&rsquo;ll have noticed by now, that the use of <code>git</code> is fully baked into the <code>mgmt</code>
+system. This keeps things simple and standardized. The lesson was learned from
+<code>golang</code>: By supporting more than one dvcs in the core, they were forced to make
+many design compromises, whilst also adding code complexity. We think one dvcs
+is the best way forward. This will become more apparent when you use the
+&ldquo;deploy&rdquo; system. If there is a good reason to re-evaluate this decision, we
+will.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Pinning versions</span>:<br /><br />
+
+<p>Users invariably want to &ldquo;pin&rdquo; dependency versions. I generally think this is
+not a good practice, as it&rsquo;s much more beneficial to have a <code>git master</code> (or
+<code>git main</code>) which is always both the best and the most stable. This makes
+development easier for many reasons, but it is not the common place situation.</p>
+<p>As a result, if you <em>do</em> want to pin a specific version, I recommend you use
+&ldquo;git submodules&rdquo;. They actually do work great, but if you have tunnel-vision
+about them, then I&rsquo;m more than willing to accept a patch that does &ldquo;go.mod&rdquo;
+style versioning, but under the hood is just running the <code>git</code> commands for you.</p>
+<p>If you&rsquo;re not convinced about submodules, then first book a
+<a href="https://m9rx.com/services/">training session</a> and we&rsquo;ll make sure you feel like
+a pro!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Modules vs. packages</span>:<br /><br />
+
+<p>A note on naming. In discussing modules, I often use the word &ldquo;package&rdquo;
+interchangeably. I might have even done it in the source code or in other blog
+posts. This is generally a mistake, but I think the word (at least at this time)
+is roughly synonymous. If you notice the error in writing, feel free to point it
+out, and if I say &ldquo;package&rdquo; assume I&rsquo;m really talking about &ldquo;modules&rdquo;.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Organizing code</span>:<br /><br />
+
+<p>Lastly, a note on organizing the structure of your projects. I&rsquo;m not sure that
+there is an authoritative answer here. The historical, pre-<code>mgmt</code> solution was
+called <a href="https://web.archive.org/web/20230904100629/https://www.craigdunn.org/2012-puppet-roles-and-profiles/">&ldquo;roles and profiles&rdquo;</a>
+and it served us fairly well. I&rsquo;d love to see an updated version of that for
+<code>mgmt</code>.</p>
+<p>There are some important differences that may make the situation unique. In
+<code>mgmt</code>, we do not have a <code>node</code> statement, and the equivalent of &ldquo;node
+classification&rdquo; (as it was called in <code>puppet</code> land) can happen anywhere in the
+code base, and it doesn&rsquo;t need to be at the top-level!</p>
+<p>As a result, we should revisit the old decisions and analysis, but the old work
+is a good starting point, and I&rsquo;ve been using that pattern for now.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I know this is a long article, and I&rsquo;m sorry I didn&rsquo;t write it sooner, but I
+hope it serves as a good reference for you to put <code>mgmt</code> in production!</p>
+<p><a href="https://m9rx.com/">Enterprise support, training, and consulting are all available.</a></p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>December 3, 2024<br>
+				<small>3602 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/entrypoints">entrypoints</a> <a class="label label-default" href="/tags/git">git</a> <a class="label label-default" href="/tags/imports">imports</a> <a class="label label-default" href="/tags/mcl">mcl</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/modules">modules</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2024/12/03/modules-and-imports-in-mgmt">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2024/12/03/modules-and-imports-in-mgmt.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

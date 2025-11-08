@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hello World on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hello-world/</link>
+    <description>Recent content in Hello World on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 13 Nov 2017 09:18:15 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/hello-world/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World!</title>
+      <link>https://purpleidea.com/blog/hello-world/</link>
+      <pubDate>Mon, 13 Nov 2017 09:18:15 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/hello-world/</guid>
+      <description>Hello! This is a new version of my website and blog. If you experience any issues, please let me know!&#xA;Happy Hacking, James&#xA;You can hire James and his team at m9rx corporation. You can follow James on Mastodon for more frequent updates and other random thoughts. You can follow James on Twitter for more frequent updates and other random thoughts. You can support James on GitHub if you&#39;d like to help sustain this kind of content.</description>
+    </item>
+  </channel>
+</rss>

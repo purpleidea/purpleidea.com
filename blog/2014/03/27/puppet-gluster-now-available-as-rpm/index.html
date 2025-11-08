@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Puppet-Gluster now available as RPM - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Puppet-Gluster now available as RPM</strong><br><small></small></h3>
+					<hr>
+					<p>I&rsquo;ve been afraid of <a href="https://en.wikipedia.org/wiki/RPM_Package_Manager">RPM</a> and package maintaining [1] for years, but thanks to <a href="http://www.keithley.org/kaleb/kaleb.html">Kaleb Keithley</a>, I have finally made some RPM&rsquo;s that weren&rsquo;t generated from a <a href="http://docs.python.org/3/distutils/builtdist.html">high level tool</a>. Now that I have the <a href="https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155">boilerplate</a> done, it&rsquo;s a relatively painless process!</p>
+<p>In case you don&rsquo;t know <a href="https://twitter.com/kalebkuechle">kkeithley</a>, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a <a href="https://en.wikipedia.org/wiki/Beer"><em>$BEVERAGE</em></a>. &lt;/plug&gt;</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="wizard_penguin.png"><img class="size-large wp-image-799" src="wizard_penguin.png" alt="A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin." width="100%" height="100%" /></a></td></tr><tr><td> A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.</td></tr></table></br />
+<p><a href="https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155">The full source of my changes is available in git.</a></p>
+<p>If you want to make the RPM&rsquo;s yourself, simply clone the <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">puppet-gluster</a> source, and run: <code>make rpm</code>. If you&rsquo;d rather download pre-built RPM&rsquo;s, SRPM&rsquo;S, or source tarballs, they are all being graciously hosted on <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/puppet-gluster/">download.gluster.org</a>, thanks to <a href="https://twitter.com/johnmark">John Mark Walker</a> and the <a href="http://www.gluster.org/">gluster.org</a> community.</p>
+<p>These RPM&rsquo;s will install their contents into <code>/usr/share/puppet/modules/</code>. They should work on <a href="https://fedoraproject.org/">Fedora</a> or <a href="https://www.centos.org/">CentOS</a>, but they do require a <code>puppet</code> package to be installed. I hope to offer them in the future as part of a repository for easier consumption.</p>
+<p>There are also <a href="https://dl.fedoraproject.org/pub/alt/purpleidea/">RPM&rsquo;s available</a> for <a title="Screencasts of Puppet-Gluster + Vagrant" href="https://github.com/purpleidea/puppet-common">puppet-common</a>, <a href="https://github.com/purpleidea/puppet-keepalived">puppet-keepalived</a>, <a href="https://github.com/purpleidea/puppet-puppet">puppet-puppet</a>, <a href="https://github.com/purpleidea/puppet-shorewall">puppet-shorewall</a>, <a href="https://github.com/purpleidea/puppet-yum">puppet-yum</a>, and even <a href="https://github.com/purpleidea/puppetlabs-stdlib">puppetlabs-stdlib</a>. These are the dependencies required to install the <a title="Screencasts of Puppet-Gluster + Vagrant" href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a> module.</p>
+<p>Please let me know if you find any issues with any of the packages, or if you have any recommendations for improvement! I&rsquo;m new to packaging, so I probably made some mistakes.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><strong>[1]</strong> package maintainer, aka: &ldquo;paintainer&rdquo; - according to <a href="https://github.com/semiosis">semiosis</a>, who is right!</p>
+<p><strong>[2]</strong> wizard as in an <a href="http://www.catb.org/jargon/html/W/wizard.html">awesome, talented, hacker</a>.</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>March 27, 2014<br>
+				<small>331 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/centos">centos</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-common">puppet-common</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/puppet-keepalived">puppet-keepalived</a> <a class="label label-default" href="/tags/puppet-puppet">puppet-puppet</a> <a class="label label-default" href="/tags/puppet-shorewall">puppet-shorewall</a> <a class="label label-default" href="/tags/puppet-yum">puppet-yum</a> <a class="label label-default" href="/tags/puppetlabs-stdlib">puppetlabs-stdlib</a> <a class="label label-default" href="/tags/rpm">rpm</a> <a class="label label-default" href="/tags/wizard">wizard</a> <a class="label label-default" href="/tags/yum">yum</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/03/27/puppet-gluster-now-available-as-rpm/"><small>https://ttboj.wordpress.com/2014/03/27/puppet-gluster-now-available-as-rpm/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/03/27/puppet-gluster-now-available-as-rpm">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/03/27/puppet-gluster-now-available-as-rpm.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

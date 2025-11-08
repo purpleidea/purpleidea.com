@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Iteration in Puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Iteration in Puppet</strong><br><small></small></h3>
+					<hr>
+					<p>People often ask how to do <a href="https://en.wikipedia.org/wiki/Iteration">iteration</a> in <a href="https://en.wikipedia.org/wiki/Puppet_%28software%29">Puppet</a>. Most Puppet users have a background in <a href="https://en.wikipedia.org/wiki/Imperative_programming">imperative programming</a>, and are already very familiar with <a href="https://en.wikipedia.org/wiki/For_loop"><em>for</em></a> loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a <a href="https://en.wikipedia.org/wiki/Declarative_programming">declarative</a>, <a href="https://en.wikipedia.org/wiki/Domain-specific_language">domain-specific language</a>. In general, DSL&rsquo;s aren&rsquo;t always <a href="https://en.wikipedia.org/wiki/Turing_completeness">Turing complete</a>, nor do they need to support <a href="https://en.wikipedia.org/wiki/While_loop">loops</a>, but this doesn&rsquo;t mean you can&rsquo;t iterate.</p>
+<p><a href="http://docs.puppetlabs.com/puppet/3/reference/lang_experimental_3_2.html"> Until recently</a>, Puppet didn&rsquo;t have an explicit looping construct, and it is quite possible to build <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">complex</a> <a href="https://github.com/purpleidea/puppet-ipa">modules</a> without using this new construct. There are even some who believe that the language shouldn&rsquo;t even contain this feature. I&rsquo;ll abstain from that debate for now, but instead, I would like to show you some iteration techniques that you can use to get your desired result.</p>
+<p><span style="text-decoration:underline;">Recursion</span></p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="puppets-all-the-way-down.jpg"><img class="size-full wp-image-591 aligncenter" alt="puppets-all-the-way-down" src="puppets-all-the-way-down.jpg" width="100%" height="100%" /></a></td></tr></table></br />
+<p>Many people forget that recursion is a form of iteration. Even more don&rsquo;t realize that you can do <a title="recursion in puppet (for no particular reason)" href="/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/">recursion in Puppet</a>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic">#!/usr/bin/puppet apply</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>define recursion(
+</span></span><span style="display:flex;"><span>    $count
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># do something here...</span>
+</span></span><span style="display:flex;"><span>    notify { <span style="color:#b44">&#34;count-${count}&#34;</span>:
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    $minus1 <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;%= count.to_i - 1 %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#b44">&#34;${minus1}&#34;</span> <span style="color:#666">==</span> <span style="color:#b44">&#39;0&#39;</span> {
+</span></span><span style="display:flex;"><span>        notify { <span style="color:#b44">&#39;done counting!&#39;</span>:
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># recurse</span>
+</span></span><span style="display:flex;"><span>        recursion { <span style="color:#b44">&#34;count-${minus1}&#34;</span>:
+</span></span><span style="display:flex;"><span>            count <span style="color:#666">=&gt;</span> $minus1,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># kick it off...</span>
+</span></span><span style="display:flex;"><span>recursion { <span style="color:#b44">&#39;start&#39;</span>:
+</span></span><span style="display:flex;"><span>    count <span style="color:#666">=&gt;</span> <span style="color:#666">4</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+If you really want to <a title="Pushing Puppet at Puppet Camp DC, LISA 2013" href="/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/">Push Puppet</a>, even more <a href="https://github.com/purpleidea/puppet-pushing/blob/master/standalone/fibonacci.pp">advanced</a> <a href="https://github.com/purpleidea/puppet-pushing/blob/master/manifests/fibonacci.pp">recursion</a> is possible. In general, I haven&rsquo;t found this technique very useful for module design, but it&rsquo;s worth mentioning as a form of iteration. If you do find a legitimate use of this technique, <a title="contact" href="/contact/">please let me know</a>!</p>
+<p><span style="text-decoration:underline;">Type iteration</span></p>
+<p>We&rsquo;re used to seeing simple type declarations such as:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>user { <span style="color:#b44">&#39;james&#39;</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>    comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;james is awesome!&#39;</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+In fact, the <em>namevar</em> can actually accept a list:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>$users <span style="color:#666">=</span> <span style="color:#666">[</span><span style="color:#b44">&#39;kermit&#39;</span>, <span style="color:#b44">&#39;beaker&#39;</span>, <span style="color:#b44">&#39;statler&#39;</span>, <span style="color:#b44">&#39;waldorf&#39;</span>, <span style="color:#b44">&#39;tom&#39;</span><span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>user { $users:
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>    comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;who gave these muppets user accounts?&#39;</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<a href="https://www.youtube.com/watch?v=TxwI61FrK_w&NR=1&html5=1">(tom)</a><br /></p>
+<p>Which will cause Puppet to effectively iterate across the elements in <em>$users</em>. This is the most important type of iteration in Puppet. Please get familiar with it.</p>
+<p>This technique can be used with any <em>type</em>. It can even be used to express a many-to-one dependency relationship:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># where $bricks is a list of gluster::brick names</span>
+</span></span><span style="display:flex;"><span><span style="color:#800">Gluster</span><span style="color:#666">::</span><span style="color:#800">Brick</span><span style="color:#666">[</span>$bricks<span style="color:#666">]</span> <span style="color:#666">-&gt;</span> <span style="color:#800">Gluster</span><span style="color:#666">::</span><span style="color:#800">Volume</span><span style="color:#666">[</span>$name<span style="color:#666">]</span>    <span style="color:#080;font-style:italic"># volume requires bricks</span></span></span></code></pre></div>
+Suppose you&rsquo;d like to use type iteration, but you&rsquo;d also like to know the index of each element. This can be useful to avoid duplicate sub-types, or to provide a unique index:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>define some_module<span style="color:#666">::</span>process_array(
+</span></span><span style="display:flex;"><span>    $foo,
+</span></span><span style="display:flex;"><span>    $array    <span style="color:#080;font-style:italic"># pass in the original $name</span>
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">#notice(inline_template(&#39;NAME: &lt;%= name.inspect %&gt;&#39;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># do something here...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># build a unique name...</span>
+</span></span><span style="display:flex;"><span>    $length <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;%= array.length %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    $ulength <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;%= array.uniq.length %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> ( <span style="color:#b44">&#34;${length}&#34;</span> <span style="color:#666">!=</span> <span style="color:#b44">&#39;0&#39;</span> ) <span style="color:#a2f;font-weight:bold">and</span> ( <span style="color:#b44">&#34;${length}&#34;</span> <span style="color:#666">!=</span> <span style="color:#b44">&#34;${ulength}&#34;</span> ) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f">fail</span>(<span style="color:#b44">&#39;Array must not have duplicates.&#39;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># if array had duplicates, this wouldn&#39;t be a unique index</span>
+</span></span><span style="display:flex;"><span>    $index <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;%= array.index(name) %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic"># iterate, knowing your index</span>
+</span></span><span style="display:flex;"><span>    some<span style="color:#666">::</span>type { <span style="color:#b44">&#34;${foo}:${index}&#34;</span>:
+</span></span><span style="display:flex;"><span>        foo <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;hello&#39;</span>,
+</span></span><span style="display:flex;"><span>        index <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${index}&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># a list</span>
+</span></span><span style="display:flex;"><span>$some_array <span style="color:#666">=</span> <span style="color:#666">[</span><span style="color:#b44">&#39;a&#39;</span>, <span style="color:#b44">&#39;b&#39;</span>, <span style="color:#b44">&#39;c&#39;</span><span style="color:#666">]</span>    <span style="color:#080;font-style:italic"># must not have duplicates</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># using the type requires that you pass in $some_array twice!</span>
+</span></span><span style="display:flex;"><span>some_module<span style="color:#666">::</span>process_array { $some_array:    <span style="color:#080;font-style:italic"># array</span>
+</span></span><span style="display:flex;"><span>    foo <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;bar&#39;</span>,
+</span></span><span style="display:flex;"><span>    array <span style="color:#666">=&gt;</span> $some_array,    <span style="color:#080;font-style:italic"># same array as above</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+While this example might seem contrived, it is actually a modified excerpt from a module that I wrote.</p>
+<p><span style="text-decoration:underline;">create_resources</span></p>
+<p>This is a similar technique for when you want to specify different arguments for each type:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>$defaults <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">ensure</span> <span style="color:#666">=&gt;</span> present,
+</span></span><span style="display:flex;"><span>    comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;a muppet&#39;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$data <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;kermit&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;the frog&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;beaker&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;keep him away from your glassware&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;fozzie&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        home <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;/home/fozzie&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;tom&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        comment <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;the swedish chef&#39;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>create_resources(<span style="color:#b44">&#39;user&#39;</span>, $data, $defaults)</span></span></code></pre></div>
+This creates each <em>user</em> resource with its own arguments. If an argument isn&rsquo;t given in the $<em>data</em>, it is taken from the <em>$defaults</em> hash. A similar example, and the official documentation is found <a href="http://docs.puppetlabs.com/references/latest/function.html#createresources">here</a>.</p>
+<p><span style="text-decoration:underline;">Template iteration</span></p>
+<p>You might want to iterate to perform a simple computation, or to modify an array in some way. For static value computations, you can often use a template. Remember that the template will get executed at compile time on the Puppet Master, so code accordingly. Here are a few contrived examples:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># filter out all the integers less than zero</span>
+</span></span><span style="display:flex;"><span>$array_in <span style="color:#666">=</span> <span style="color:#666">[-</span><span style="color:#666">4</span>,<span style="color:#666">3</span>,<span style="color:#666">-</span><span style="color:#666">8</span>,<span style="color:#666">-</span><span style="color:#666">2</span>,<span style="color:#666">1</span>,<span style="color:#666">4</span>,<span style="color:#666">-</span><span style="color:#666">2</span>,<span style="color:#666">1</span>,<span style="color:#666">5</span>,<span style="color:#666">-</span><span style="color:#666">1</span>,<span style="color:#666">-</span><span style="color:#666">7</span>,<span style="color:#666">9</span>,<span style="color:#666">-</span><span style="color:#666">3</span>,<span style="color:#666">2</span>,<span style="color:#666">6</span>,<span style="color:#666">-</span><span style="color:#666">8</span>,<span style="color:#666">5</span>,<span style="color:#666">3</span>,<span style="color:#666">5</span>,<span style="color:#666">-</span><span style="color:#666">6</span>,<span style="color:#666">8</span>,<span style="color:#666">9</span>,<span style="color:#666">7</span>,<span style="color:#666">-</span><span style="color:#666">5</span>,<span style="color:#666">9</span>,<span style="color:#666">3</span>,<span style="color:#666">-</span><span style="color:#666">3</span><span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>$array_out <span style="color:#666">=</span> <span style="color:#a2f">split</span>(inline_template(<span style="color:#b44">&#39;&lt;%= array_in.delete_if {|x| x &lt; 0 }.join(&#34;,&#34;) %&gt;&#39;</span>), <span style="color:#b44">&#39;,&#39;</span>)
+</span></span><span style="display:flex;"><span>notice($array_out)</span></span></code></pre></div>
+We can also use the ruby <em>map</em>:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># build out a greeting string</span>
+</span></span><span style="display:flex;"><span>$names <span style="color:#666">=</span> <span style="color:#666">[</span><span style="color:#b44">&#39;animal&#39;</span>, <span style="color:#b44">&#39;gonzo&#39;</span>, <span style="color:#b44">&#39;rowlf&#39;</span><span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># NOTE: you can also use a regular multi-line template for readability</span>
+</span></span><span style="display:flex;"><span>$message <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;% if names == [] %&gt;Hello... Anyone there?&lt;% else %&gt;&lt;%= names.map {|x| &#34;Hello &#34;+x.capitalize}.join(&#34;, &#34;) %&gt;.&lt;% end %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>notice($message)</span></span></code></pre></div>
+Use your imagination! Remember that you can also write a <a href="http://docs.puppetlabs.com/guides/custom_functions.html">custom function</a> if necessary, but first check that there isn&rsquo;t already a <a href="http://docs.puppetlabs.com/references/latest/function.html">built-in function</a>, or a <a href="https://github.com/puppetlabs/puppetlabs-stdlib#functions">stdlib function</a> that suits your needs.</p>
+<p><span style="text-decoration:underline;">Advanced template iteration</span></p>
+<p>When you really need to get fancy, it&rsquo;s often time to call in a custom function. Custom functions require that you split them off into separate files, and away from the module logic, instead of keeping the functions inline and accessible as lambdas. The downside to using these &ldquo;inline_template&rdquo; lambdas instead, is that they can quickly turn into parlous one-liners.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># transform the $data hash</span>
+</span></span><span style="display:flex;"><span>$data <span style="color:#666">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;waldorf&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;heckles&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;absolutely&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;comment&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;a critic&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">&#39;statler&#39;</span> <span style="color:#666">=&gt;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;heckles&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;all the time&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;comment&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;another critic!&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># rename and filter on the &#39;heckles&#39; key</span>
+</span></span><span style="display:flex;"><span>$yaml <span style="color:#666">=</span> inline_template(<span style="color:#b44">&#39;&lt;%= data.inject({}) {|h, (x,y)| h[x] = {&#34;applauds&#34; =&gt; y.fetch(&#34;heckles&#34;, &#34;yes&#34;)}; h}.to_yaml %&gt;&#39;</span>)
+</span></span><span style="display:flex;"><span>$output <span style="color:#666">=</span> parseyaml($yaml) <span style="color:#080;font-style:italic"># parseyaml is in the puppetlabs-stdlib</span>
+</span></span><span style="display:flex;"><span>notice($output)</span></span></code></pre></div>
+As with simple template iteration, the key problem is transferring the data in and out of the template. In the simple case, arrays can be joined and split as long as there is a reserved character that won&rsquo;t be used in the data. For the advanced template iteration, we rely on the <a href="https://en.wikipedia.org/wiki/YAML">YAML</a> transformation functions.</p>
+<p><span style="text-decoration:underline;">Some reminders</span></p>
+<p>If you properly understand the functionality that your module is trying to model/manage, you can usually break it up into separate classes and defined types, such that re-use via type iteration can fulfill your needs. Usually you&rsquo;ll end up with a more properly designed module.</p>
+<p>Test using the same version of Ruby that will run your module. Newer versions of Ruby have some incompatible changes, and new features, with respect to older versions of Ruby.</p>
+<p>Remember that templates and functions run on the Puppet Master, but facts and types run on the client (agent).</p>
+<p>The Puppet language is mostly <a href="https://en.wikipedia.org/wiki/Declarative_programming">declarative</a>. Because this might be an unfamiliar paradigm, try not to look for all the imperative features that you&rsquo;re used to. Having a programming background can help, because there&rsquo;s certainly programming mixed in, whether you&rsquo;re writing custom functions, or <a href="https://en.wikipedia.org/wiki/ERuby"><em>erb</em></a> templates.</p>
+<p><span style="text-decoration:underline;">Future parser</span></p>
+<p>For completeness, I should mention that the future parser now supports native iteration. If you need it, it probably means that you&rsquo;re writing a fairly advanced module, and you&rsquo;re comfortable <a href="http://docs.puppetlabs.com/puppet/3/reference/lang_experimental_3_2.html">manual diving</a>. If you have a legitimate use case that isn&rsquo;t possible with the existing constructs, and isn&rsquo;t <em>only</em> a readability improvement, please <a title="contact" href="/contact/">let me know</a>.</p>
+<p><span style="text-decoration:underline;">Conclusion</span></p>
+<p>I hope you enjoyed this article. The next time someone asks you how to iterate in Puppet, feel free to link them this way.</p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>November 17, 2013<br>
+				<small>1295 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/dsl">DSL</a> <a class="label label-default" href="/tags/create_resources">create_resources</a> <a class="label label-default" href="/tags/declarative-programming">declarative programming</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/domain-specific-language">domain-specific language</a> <a class="label label-default" href="/tags/erb">erb</a> <a class="label label-default" href="/tags/for-loop">for loop</a> <a class="label label-default" href="/tags/future-parser">future parser</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/imperative-programming">imperative programming</a> <a class="label label-default" href="/tags/iteration">iteration</a> <a class="label label-default" href="/tags/module-design">module design</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/recursion">recursion</a> <a class="label label-default" href="/tags/templates">templates</a> <a class="label label-default" href="/tags/turing-completeness">turing completeness</a> <a class="label label-default" href="/tags/while-loop">while loop</a> <a class="label label-default" href="/tags/yaml">yaml</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/11/17/iteration-in-puppet/"><small>https://ttboj.wordpress.com/2013/11/17/iteration-in-puppet/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/11/17/iteration-in-puppet">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/11/17/iteration-in-puppet.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

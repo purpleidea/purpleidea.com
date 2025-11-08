@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slack on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/slack/</link>
+    <description>Recent content in Slack on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 22 Jun 2018 13:50:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/slack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Breaking out of the Slack walled garden</title>
+      <link>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</link>
+      <pubDate>Fri, 22 Jun 2018 13:50:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</guid>
+      <description>I&amp;rsquo;m old school cool. Real hackers chat on open, distributed platforms. Most technical discussion can be found on the Libera.chat IRC network. It&amp;rsquo;s not perfect, but the advantages clearly outweigh the drawbacks.&#xA;Recently, I needed to join an existing large &amp;ldquo;community&amp;rdquo; on the centralized, proprietary walled garden that is the Slack network.&#xA;The Problem:&#xA;Connecting to the the Slack server requires that you use either the proprietary client or their proprietary web app.</description>
+    </item>
+  </channel>
+</rss>

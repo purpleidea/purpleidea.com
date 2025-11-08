@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Vagrant clustered SSH and ‘screen’ - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Vagrant clustered SSH and ‘screen’</strong><br><small></small></h3>
+					<hr>
+					<p>Some fun updates for vagrant hackers&hellip; I wanted to use the venerable clustered SSH (<code>cssh</code>) and <code>screen</code> with vagrant. I decided to expand on my <a href="https://gist.github.com/purpleidea/8071962#file-bashrc_vagrant-sh-L17"><code>vsftp</code></a> script. First read:</p>
+<blockquote>
+<p style="text-align:center;"><strong><a title="Vagrant on Fedora with libvirt" href="/blog/2013/12/09/vagrant-on-fedora-with-libvirt/">Vagrant on Fedora with libvirt</a></strong></p>
+</blockquote>
+and
+<blockquote>
+<p style="text-align:center;"><strong><a title="Vagrant vsftp and other tricks" href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">Vagrant vsftp and other tricks</a></strong></p>
+</blockquote>
+to get up to speed on the background information.
+<p><strong><span style="text-decoration:underline;">Vagrant screen</span>:</strong></p>
+<p>First, a simple <code>screen</code> hack&hellip; I often use my <code>vssh</code> alias to quickly ssh into a machine, but I don&rsquo;t want to have to waste time with <code>sudo</code>-ing to <em>root</em> and then running <code>screen</code> each time. Enter <code>vscreen</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># vagrant screen</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span> vscreen <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$2</span><span style="color:#b44">&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f">echo</span> <span style="color:#b44">&#34;Usage: vscreen &lt;vm-name&gt; - vagrant screen&#34;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">wd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>		<span style="color:#080;font-style:italic"># save wd, then find the Vagrant project</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">while</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;`pwd`&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;/&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;`pwd`/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;`pwd`/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#echo &#34;pwd is `pwd`&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">cd</span> ..
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">pwd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">cd</span> <span style="color:#b8860b">$wd</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">echo</span> <span style="color:#b44">&#39;Vagrant project not found!&#39;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">d</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.ssh&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">f</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">/</span><span style="color:#b8860b">$1</span><span style="color:#b44">.config&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">h</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># hostname extraction from user@host pattern</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">p</span><span style="color:#666">=</span><span style="color:#b44">`</span>expr index <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#39;@&#39;</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b8860b">$p</span> -gt <span style="color:#666">0</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">let</span> <span style="color:#b44">&#34;l = </span><span style="color:#b68;font-weight:bold">${#</span><span style="color:#b8860b">h</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44"> - </span><span style="color:#b8860b">$p</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">h</span><span style="color:#666">=</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">h</span>:<span style="color:#b8860b">$p</span>:<span style="color:#b8860b">$l</span><span style="color:#b68;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># if mtime of $f is &gt; than 5 minutes (5 * 60 seconds), re-generate...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">`</span>date -d <span style="color:#b44">&#34;now - </span><span style="color:#a2f;font-weight:bold">$(</span>stat -c <span style="color:#b44">&#39;%Y&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> 2&gt; /dev/null<span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44"> seconds&#34;</span> +%s<span style="color:#b44">`</span> -gt <span style="color:#666">300</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		mkdir -p <span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># we cache the lookup because this command is slow...</span>
+</span></span><span style="display:flex;"><span>		vagrant ssh-config <span style="color:#b44">&#34;</span><span style="color:#b8860b">$h</span><span style="color:#b44">&#34;</span> &gt; <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">||</span> rm <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> ssh -t -F <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#39;screen -xRR&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span></span></span></code></pre></div>
+I usually run it this way:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vscreen root@machine
+</span></span></code></pre></div><p>which logs in as <em>root</em>, to <em>machine</em> and gets me (back) into <code>screen</code>. This is almost identical to the <em>vsftp</em> script <a title="Vagrant vsftp and other tricks" href="/blog/2013/12/21/vagrant-vsftp-and-other-tricks/">which I explained in an earlier blog post</a>.</p>
+<p><strong><span style="text-decoration:underline;">Vagrant cssh</span>:</strong></p>
+<p>First you&rsquo;ll need to install <code>cssh</code>. On my Fedora machine it&rsquo;s as easy as:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># yum install -y clusterssh
+</span></span></code></pre></div><p>I&rsquo;ve been hacking a lot on <a title="puppet-gluster" href="https://github.com/purpleidea/puppet-gluster/">Puppet-Gluster</a> lately, and occasionally multi-machine hacking demands multi-machine key punching. Enter <code>vcssh</code>:</p>
+<p><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># vagrant cssh</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">function</span> vcssh <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f">echo</span> <span style="color:#b44">&#34;Usage: vcssh [options] [user@]&lt;vm1&gt;[ [user@]vm2[ [user@]vmN...]] - vagrant cssh&#34;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">wd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>		<span style="color:#080;font-style:italic"># save wd, then find the Vagrant project</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">while</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;`pwd`&#34;</span> !<span style="color:#666">=</span> <span style="color:#b44">&#39;/&#39;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;`pwd`/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;`pwd`/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#echo &#34;pwd is `pwd`&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">cd</span> ..
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">pwd</span><span style="color:#666">=</span><span style="color:#b44">`</span><span style="color:#a2f">pwd</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">cd</span> <span style="color:#b8860b">$wd</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> ! -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/Vagrantfile&#34;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#666">[</span> ! -d <span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.vagrant/&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f">echo</span> <span style="color:#b44">&#39;Vagrant project not found!&#39;</span> 1&gt;&amp;<span style="color:#666">2</span> <span style="color:#666">&amp;&amp;</span> <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">d</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$pwd</span><span style="color:#b44">/.ssh&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">cssh</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">/cssh&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">cat</span><span style="color:#666">=</span><span style="color:#b44">&#39;cat &#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">screen</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">options</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">multi</span><span style="color:#666">=</span><span style="color:#b44">&#39;f&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">special</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">for</span> i in <span style="color:#b44">&#34;</span><span style="color:#b8860b">$@</span><span style="color:#b44">&#34;</span>; <span style="color:#a2f;font-weight:bold">do</span>	<span style="color:#080;font-style:italic"># loop through the list of hosts and arguments!</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic">#echo $i</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$special</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;debug&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>	<span style="color:#080;font-style:italic"># optional arg value...</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">special</span><span style="color:#666">=</span><span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> -ge <span style="color:#666">0</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$1</span><span style="color:#b44">&#34;</span> -le <span style="color:#666">4</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$multi</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;y&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>	<span style="color:#080;font-style:italic"># get the value of the argument</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">multi</span><span style="color:#666">=</span><span style="color:#b44">&#39;n&#39;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> &#39;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">i</span>:<span style="color:#b8860b">0</span>:<span style="color:#b8860b">1</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>	<span style="color:#080;font-style:italic"># does argument start with: - ?</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic"># build a --screen option</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--screen&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">screen</span><span style="color:#666">=</span><span style="color:#b44">&#39; -o RequestTTY=yes&#39;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> --action &#39;screen -xRR&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--debug&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">special</span><span style="color:#666">=</span><span style="color:#b44">&#39;debug&#39;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--options&#39;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">options</span><span style="color:#666">=</span><span style="color:#b44">&#34; </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic"># NOTE: commented-out options are probably not useful...</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic"># match for key =&gt; value argument pairs</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--action&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-a&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>			<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--autoclose&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-A&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--cluster-file&#39; -o &#34;$i&#34; = &#39;-c&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--config-file&#39; -o &#34;$i&#34; = &#39;-C&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--evaluate&#39; -o &#34;$i&#34; = &#39;-e&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--font&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-f&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--master&#39; -o &#34;$i&#34; = &#39;-M&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--port&#39; -o &#34;$i&#34; = &#39;-p&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic">#[ &#34;$i&#34; = &#39;--tag-file&#39; -o &#34;$i&#34; = &#39;-c&#39; ] || \</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--term-args&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-t&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>			<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--title&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-T&#39;</span> <span style="color:#666">]</span> <span style="color:#666">||</span> <span style="color:#b62;font-weight:bold">\
+</span></span></span><span style="display:flex;"><span><span style="color:#b62;font-weight:bold"></span>			<span style="color:#666">[</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;--username&#39;</span> -o <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#666">=</span> <span style="color:#b44">&#39;-l&#39;</span> <span style="color:#666">]</span> ; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">multi</span><span style="color:#666">=</span><span style="color:#b44">&#39;y&#39;</span>	<span style="color:#080;font-style:italic"># loop around to get second part</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">else</span>			<span style="color:#080;font-style:italic"># match single argument flags...</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a2f;font-weight:bold">continue</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">f</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">/</span><span style="color:#b8860b">$i</span><span style="color:#b44">.config&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">h</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># hostname extraction from user@host pattern</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#b8860b">p</span><span style="color:#666">=</span><span style="color:#b44">`</span>expr index <span style="color:#b44">&#34;</span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span> <span style="color:#b44">&#39;@&#39;</span><span style="color:#b44">`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b8860b">$p</span> -gt <span style="color:#666">0</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a2f">let</span> <span style="color:#b44">&#34;l = </span><span style="color:#b68;font-weight:bold">${#</span><span style="color:#b8860b">h</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b44"> - </span><span style="color:#b8860b">$p</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">h</span><span style="color:#666">=</span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">h</span>:<span style="color:#b8860b">$p</span>:<span style="color:#b8860b">$l</span><span style="color:#b68;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#080;font-style:italic"># if mtime of $f is &gt; than 5 minutes (5 * 60 seconds), re-generate...</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> <span style="color:#b44">`</span>date -d <span style="color:#b44">&#34;now - </span><span style="color:#a2f;font-weight:bold">$(</span>stat -c <span style="color:#b44">&#39;%Y&#39;</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> 2&gt; /dev/null<span style="color:#a2f;font-weight:bold">)</span><span style="color:#b44"> seconds&#34;</span> +%s<span style="color:#b44">`</span> -gt <span style="color:#666">300</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>			mkdir -p <span style="color:#b44">&#34;</span><span style="color:#b8860b">$d</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#080;font-style:italic"># we cache the lookup because this command is slow...</span>
+</span></span><span style="display:flex;"><span>			vagrant ssh-config <span style="color:#b44">&#34;</span><span style="color:#b8860b">$h</span><span style="color:#b44">&#34;</span> &gt; <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">||</span> rm <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">[</span> -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span>; <span style="color:#a2f;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">cmd</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cmd</span><span style="color:#b44"> </span><span style="color:#b8860b">$i</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#b8860b">cat</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cat</span><span style="color:#b44"> </span><span style="color:#b8860b">$f</span><span style="color:#b44">&#34;</span>	<span style="color:#080;font-style:italic"># append config file to list</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a2f;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f;font-weight:bold">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#b8860b">cat</span><span style="color:#666">=</span><span style="color:#b44">&#34;</span><span style="color:#b8860b">$cat</span><span style="color:#b44"> &gt; </span><span style="color:#b8860b">$cssh</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">#echo $cat</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a2f">eval</span> <span style="color:#b44">&#34;</span><span style="color:#b8860b">$cat</span><span style="color:#b44">&#34;</span>			<span style="color:#080;font-style:italic"># generate combined config file</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">#echo $cmd &amp;&amp; return 1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic">#[ -e &#34;$cssh&#34; ] &amp;&amp; cssh --options &#34;-F ${cssh}$options&#34; $cmd</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># running: bash -c glues together --action &#39;foo --bar&#39; type commands...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#666">[</span> -e <span style="color:#b44">&#34;</span><span style="color:#b8860b">$cssh</span><span style="color:#b44">&#34;</span> <span style="color:#666">]</span> <span style="color:#666">&amp;&amp;</span> bash -c <span style="color:#b44">&#34;cssh --options &#39;-F </span><span style="color:#b68;font-weight:bold">${</span><span style="color:#b8860b">cssh</span><span style="color:#b68;font-weight:bold">}${</span><span style="color:#b8860b">screen</span><span style="color:#b68;font-weight:bold">}</span><span style="color:#b8860b">$options</span><span style="color:#b44">&#39; </span><span style="color:#b8860b">$cmd</span><span style="color:#b44">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">}</span></span></span></code></pre></div>
+This can be called like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vcssh annex{1..4} -l root
+</span></span></code></pre></div><p>or like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vcssh root@hostname foo user@bar james@machine --action &#39;pwd&#39;
+</span></span></code></pre></div><p>which, as you can see, passes <code>cssh</code> arguments through! Can you see any other special surprises in the code? Well, you can run <code>vcssh</code> like this too:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ vcssh root@foo james@bar --screen
+</span></span></code></pre></div><p>which will perform exactly as <code>vscreen</code> did above, but in <code>cssh</code>!</p>
+<p>You&rsquo;ll see that the <code>vagrant ssh-config</code> lookups are cached, so this will be speedy when it&rsquo;s running hot, but expect a few seconds delay when you first run it. If you want a longer cache timeout, it&rsquo;s easy to change yourself in the function.</p>
+<p><a href="https://gist.github.com/purpleidea/8071962">I&rsquo;ve uploaded the code here, so that you don&rsquo;t have to copy+paste it from my blog!</a></p>
+<p>Happy hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>January 2, 2014<br>
+				<small>1089 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/bash">bash</a> <a class="label label-default" href="/tags/clustered-ssh">clustered ssh</a> <a class="label label-default" href="/tags/cssh">cssh</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/planetdevops">planetdevops</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/planetpuppet">planetpuppet</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/screen">screen</a> <a class="label label-default" href="/tags/sftp">sftp</a> <a class="label label-default" href="/tags/ssh">ssh</a> <a class="label label-default" href="/tags/vagrant">vagrant</a> <a class="label label-default" href="/tags/vcssh">vcssh</a> <a class="label label-default" href="/tags/vscreen">vscreen</a> <a class="label label-default" href="/tags/vsftp">vsftp</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2014/01/02/vagrant-clustered-ssh-and-screen/"><small>https://ttboj.wordpress.com/2014/01/02/vagrant-clustered-ssh-and-screen/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2014/01/02/vagrant-clustered-ssh-and-screen">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2014/01/02/vagrant-clustered-ssh-and-screen.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

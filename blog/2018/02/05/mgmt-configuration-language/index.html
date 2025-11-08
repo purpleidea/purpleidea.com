@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Introducing the Mgmt Configuration Language">
+	<meta name="author" content="James Shubin">
+
+	<title>Mgmt Configuration Language - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Mgmt Configuration Language</strong><br><small>Introducing the Mgmt Configuration Language</small></h3>
+					<hr>
+					<p><a href="https://github.com/purpleidea/mgmt/">Mgmt</a> has given us a lot of great
+features, demos, and insight into how infrastructure automation should be
+managed. Unfortunately it wasn&rsquo;t a complete tool yet, because it was missing a
+crucial piece for its completeness. That all changes today with the addition of:
+the <strong>language</strong>.</p>
+<br />
+<blockquote>
+<p>An ideal language allows us to express easily what is useful for the programming task, and at the same time makes it difficult to write what leads to incomprehensible or incorrect programs.</p>
+<div style="text-align:right">– Nico Habermann</div>
+</blockquote>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>Much of the status-quo in configuration management and infrastructure automation
+relies on the <strong>flawed assumption</strong> that infrastructure is <em>static</em>. This was a
+reasonable first approximation for the past generation of tools to use to model
+our infrastructure, but is one that does not hold or satisfy us anymore.</p>
+<p>Many variables in our infrastructure change over time: the load, a failure
+count and even the time of day might affect what our infrastructure should be
+doing. Our desired state also changes over time: we add and remove servers and
+services, software updates need applying, and even passwords need (should be)
+changing routinely.</p>
+<p>The goal of the mgmt language is to be able to model your time varying
+infrastructure in a way which is <strong>safe</strong>, <strong>powerful</strong>, and <strong>easy to reason
+about</strong>. With that in mind, we&rsquo;ve built a unique <a href="https://en.wikipedia.org/wiki/Domain-specific_language">DSL</a>
+which is <strong>declarative</strong>, <strong>functional</strong> and <strong>reactive</strong>. Let&rsquo;s examine what
+all this means in more detail&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Basics</span>:<br /><br />
+
+<p>The language is <a href="https://github.com/purpleidea/mgmt/blob/master/lang/parser.y">actually quite small</a>,
+and only has a small number of statements and expressions. The main ones are:</p>
+<h5 id="statements">Statements:</h5>
+<ul>
+<li>
+<p><strong>bind</strong>: bind&rsquo;s an expression to a variable within that scope</p>
+<ul>
+<li>eg: <code>$x = 42</code></li>
+</ul>
+</li>
+<li>
+<p><strong>if</strong>: produces up to one branch of statements based on a conditional expression</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if &lt;conditional&gt; {
+</span></span><span style="display:flex;"><span>	&lt;statements&gt;
+</span></span><span style="display:flex;"><span>} else {
+</span></span><span style="display:flex;"><span>	# the else branch is optional for if statements
+</span></span><span style="display:flex;"><span>	&lt;statements&gt;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p><strong>resource</strong>: produces a resource</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>file &#34;/tmp/hello&#34; {
+</span></span><span style="display:flex;"><span>	content =&gt; &#34;world&#34;,
+</span></span><span style="display:flex;"><span>	mode =&gt; &#34;o=rwx&#34;,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p><strong>edge</strong>: produces an edge</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>file[&#34;/tmp/hello&#34;] -&gt; print[&#34;alert 4&#34;]
+</span></span></code></pre></div></li>
+</ul>
+<p>All statements produce <em>output</em>. Output consists of between zero and more
+<code>edges</code> and <code>resources</code>. A resource statement can produce a resource, whereas an
+<code>if</code> statement produces whatever the chosen branch produces. Ultimately the goal
+of executing our programs is to produce a list of <code>resources</code>, which along with
+the produced <code>edges</code>, is built into a resource graph. This graph is then passed
+to the engine for desired state application.</p>
+<h5 id="expressions">Expressions:</h5>
+<ul>
+<li><strong>var</strong>: looks up the value of a bound variable
+<ul>
+<li>eg: <code>$foo</code></li>
+</ul>
+</li>
+<li><strong>call</strong>: runs a function call
+<ul>
+<li>eg: <code>datetime()</code> or: <code>magic(42, &quot;answer&quot;)</code></li>
+</ul>
+</li>
+<li><strong>if</strong>: returns an expression from one of two branches based on a conditional expression
+<ul>
+<li>eg: <code>$x = if &lt;conditional&gt; { &lt;expr&gt; } else { &lt;expr&gt; }</code></li>
+</ul>
+</li>
+<li><strong>value</strong>: an explicit value of any type, like <code>42</code>, or <code>[63.2, -48.5, 16.1]</code></li>
+</ul>
+<p>Expression&rsquo;s can be of any type in our language. Their values are used to
+populate <code>resource</code> fields, <code>if</code> statement and expression conditionals, and
+other value consuming nodes. The available types are:</p>
+<h5 id="types">Types:</h5>
+<ul>
+<li><strong>bool</strong>: <code>true</code> or <code>false</code></li>
+<li><strong>str</strong>: any <code>&quot;string!&quot;</code></li>
+<li><strong>int</strong>: a number like <code>42</code> or <code>-13</code></li>
+<li><strong>float</strong>: a floating point number like: <code>3.1415926</code></li>
+<li><strong>list</strong>: an ordered collection of values of the same type, eg: <code>[6, 7, 8, 9,]</code></li>
+<li><strong>map</strong>: an unordered set of unique keys of the same type and corresponding value pairs of another type
+<ul>
+<li>eg: <code>{&quot;boiling&quot; =&gt; 100, &quot;freezing&quot; =&gt; 0, &quot;room&quot; =&gt; &quot;25&quot;, &quot;house&quot; =&gt; 22, &quot;canada&quot; =&gt; -30,}</code></li>
+</ul>
+</li>
+<li><strong>struct</strong>: an ordered set of field names and corresponding values, each of their own type
+<ul>
+<li>eg: <code>struct{answer =&gt; &quot;42&quot;, james =&gt; &quot;awesome&quot;, is_mgmt_awesome =&gt; true,}</code></li>
+</ul>
+</li>
+<li><strong>func</strong>: an ordered set of optionally named, differently typed input arguments, and a return type
+<ul>
+<li>eg: <code>func(s str) int</code> or: <code>func(bool, []str, {str: float}) struct{foo str; bar int}</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="example">Example:</h5>
+<p>Here is a short example program:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>endofweek <span style="color:#666">=</span> <span style="color:#b44">&#34;friday&#34;</span>	<span style="color:#080;font-style:italic"># variable binding perhaps set according to your locale</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pkg <span style="color:#b44">&#34;db&#34;</span> {
+</span></span><span style="display:flex;"><span>	state <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;installed&#34;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> hostname() <span style="color:#666">==</span> <span style="color:#b44">&#34;mon&#34;</span> {
+</span></span><span style="display:flex;"><span>	pkg <span style="color:#b44">&#34;db-monitoring&#34;</span> {
+</span></span><span style="display:flex;"><span>		state <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;latest&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file <span style="color:#b44">&#34;/etc/db/config.xml&#34;</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#080;font-style:italic"># read-only &#34;fridays&#34; :)</span>
+</span></span><span style="display:flex;"><span>	mode <span style="color:#666">=&gt;</span> <span style="color:#a2f;font-weight:bold">if</span> day() <span style="color:#666">==</span> <span style="color:#666">$</span>endofweek { <span style="color:#b44">&#34;ugo-w&#34;</span> } <span style="color:#a2f;font-weight:bold">else</span> { <span style="color:#b44">&#34;ug+w&#34;</span> },
+</span></span><span style="display:flex;"><span>	content <span style="color:#666">=&gt;</span> template(<span style="color:#b44">&#34;db/standalone.gtmpl&#34;</span>, hostname()),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>svc <span style="color:#b44">&#34;dbd&#34;</span> {
+</span></span><span style="display:flex;"><span>	state <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;running&#34;</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you look closely, you&rsquo;ll notice that there is both an <code>if</code> expression, and an
+<code>if</code> statement. This is a bit of a silly example, but try and think about what
+it might do. Users of existing tools will probably find this familiar. More on
+this later&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Semantics: Safety</span>:<br /><br />
+
+<p>One goal of the language is to prevent you from accidentally destroying a
+data-centre <em>when</em> you make a mistake in configuration. If the language can help
+you, then your weekends will be happier, and your infrastructure can have more
+<strong><strong>9&rsquo;s</strong></strong>. The above <em>Habermann</em> quote has been stuck to my wall for quite
+some time now. Hopefully you&rsquo;ll like my language and put up some
+<strong><a href="https://github.com/purpleidea/mgmt/tree/master/art">mgmt art</a></strong> on your wall.</p>
+<p>Some of the ways we help enforce safety are due to the fact that we are:</p>
+<ul>
+<li><strong>declarative/immutable</strong>
+<ul>
+<li>once a variable has been declared it cannot be re-declared</li>
+<li>preventing variable re-declaration guarantees thread-safety</li>
+<li>immutability makes it easier to track data throughout your code</li>
+<li>variable shadowing within child scopes <em>is</em> currently permitted</li>
+</ul>
+</li>
+<li><strong>statically type checked</strong>
+<ul>
+<li>our strong static type system prevents runtime type errors</li>
+<li>types help model your infrastructure, and add some limitations to prevent you using the wrong data</li>
+<li>static type checking is a well-known and well studied safety measure</li>
+</ul>
+</li>
+<li><strong>functional</strong>
+<ul>
+<li>the functional nature of the language prevents dangerous side effects</li>
+<li>this makes it much easier to ensure that data isn&rsquo;t silently changed or corrupted</li>
+</ul>
+</li>
+</ul>
+<h5 id="example-1">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$x = &#34;hello&#34;
+</span></span><span style="display:flex;"><span>$x = &#34;nope, nope&#34;		# the duplicate use of $x would be a compile error
+</span></span></code></pre></div><h5 id="example-2">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$x = &#34;hello&#34;
+</span></span><span style="display:flex;"><span>if true {
+</span></span><span style="display:flex;"><span>	$x = &#34;i am shadowed&#34;	# this is allowed, but not a good practice to intentionally shadow
+</span></span><span style="display:flex;"><span>	file &#34;/tmp/bar&#34; {
+</span></span><span style="display:flex;"><span>		content =&gt; $x,	# contents are: i am shadowed
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>file &#34;/tmp/foo&#34; {
+</span></span><span style="display:flex;"><span>	content =&gt; $x,	# contents are: hello
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h5 id="example-3">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>if &#34;true&#34; {	# compile error, condition contains a string!
+</span></span><span style="display:flex;"><span>	# whatever
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Semantics: Power</span>:<br /><br />
+
+<p>So far I&rsquo;ve described a small and mostly underwhelming language. You might think
+that it would constrain you heavily, and that it would be difficult to do
+anything powerful. There is nothing further than the truth. One of the most
+interesting parts of the language are its <strong>functions</strong>, which are <strong>reactive</strong>!
+Let&rsquo;s look at what that means&hellip;</p>
+<p>All variables and functions have a time &ldquo;axis&rdquo; component. This is exactly how we
+perceive our world to work as well. The date and time isn&rsquo;t a fixed value when
+you call a <code>datetime</code> function, but rather it is a continuous stream of values.
+A <code>load</code> function would represent a stream of the system load changing over
+time. Even an integer constant can be represented as a stream: one which has a
+<em>constant</em> (unchanging) value over time. Lastly, a random function which returns
+a new value every second is yet another possibility. The three of these that
+return integers are represented in the following graph:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="integer-graph.png"><img class="alignnone size-full" src="integer-graph.png" alt="a graph" width="100%" /></a></td></tr><tr><td>A graph depicting three different integer values in an mgmt program over time. A constant integer, the time/date in seconds relative to some initial time zero, and a random integer in the range [0,10] are all depicted.</td></tr></table></br />
+
+<p>Each function gets to decide how often it outputs new values, if at all. All
+functions must output at least one value. Lastly, statements and expressions
+that depend on such an expression, automatically update and re-run as needed.
+This means that functions, variables, resources and everything else are all
+updated in <strong>real-time</strong> when necessary!</p>
+<p>You will remember that the ultimate output of the program is a graph
+data-structure. In fact, the engine accepts a <em>stream</em> of graph data-structures
+and has a very efficient algorithm for switching from one to the next, to the
+next. Some programs might only output one single graph ever. Others might happen
+to regularly send a new graph every second or every hour. While others might
+generate new graphs with an irregular stochastic interval.</p>
+<p>This is not a new paradigm invented by mgmt. This is actually a variant of a
+reasonably well studied paradigm called
+<a href="https://en.wikipedia.org/wiki/Functional_reactive_programming"><strong>functional reactive programming</strong></a>.
+For mgmt, we&rsquo;ve actually implementing a domain specific version of an FRP that
+has some unique and novel properties.</p>
+<p>Hopefully you will learn to love this paradigm as I have, and it will let you
+model and build very powerful programs. Let&rsquo;s look at some examples:</p>
+<h5 id="example-4">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># this program outputs a single resource
+</span></span><span style="display:flex;"><span># it will only ever stream a new graph to the engine if the source code changes
+</span></span><span style="display:flex;"><span># after the graph is sent to the engine, the engine will create a single file on disk
+</span></span><span style="display:flex;"><span>$x = 42
+</span></span><span style="display:flex;"><span>file &#34;/tmp/answer&#34; {
+</span></span><span style="display:flex;"><span>	content =&gt; printf(&#34;the answer to life, the universe, and everything is: %d&#34;, $x),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h5 id="example-5">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># this program outputs a new graph every second, since the datetime() function
+</span></span><span style="display:flex;"><span># runs with a 1 second precision, in fact, if you watch the contents of this
+</span></span><span style="display:flex;"><span># text file that is created, you&#39;ll note that it changes every second as well!
+</span></span><span style="display:flex;"><span>$x = datetime()
+</span></span><span style="display:flex;"><span>file &#34;/tmp/seconds-since-1970&#34; {
+</span></span><span style="display:flex;"><span>	content =&gt; printf(&#34;there have been %d seconds since 1970&#34;, $x),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h5 id="example-6">Example:</h5>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># this program outputs a new graph every five seconds, since most kernels happen</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># to recalculate the 1 minute load average every five seconds!</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>x <span style="color:#666">=</span> <span style="color:#a2f">load</span>()
+</span></span><span style="display:flex;"><span>file <span style="color:#b44">&#34;/tmp/current-load-average&#34;</span> {
+</span></span><span style="display:flex;"><span>	content <span style="color:#666">=&gt;</span> <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>x <span style="color:#666">&gt;</span> <span style="color:#666">2.0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#b44">&#34;the load is very high!&#34;</span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#a2f;font-weight:bold">else</span> {
+</span></span><span style="display:flex;"><span>		printf(<span style="color:#b44">&#34;the current system load average is: </span><span style="color:#b68;font-weight:bold">%d</span><span style="color:#b44">&#34;</span>, <span style="color:#666">$</span>x)
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><!--
+##### Example:
+
+```mcl
+# TODO: this hasn't all been implemented yet...
+# this program creates a file which is present about 1/6th of the time...
+$x = random()	# returns a stream of values in [0, 1]
+$state = if round($x * 6.0) mod 6 == 0 { "exists" } else { "absent" }
+file "/tmp/BOOM" {
+	content => "thanks for playing!",
+	state => $state,
+}
+```
+-->
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Semantics: Easy to reason about</span>:<br /><br />
+
+<p>Having a language which is easy to reason about is always going to be important.
+No language or test suite can ever prevent all bugs, so it&rsquo;s important that the
+human can easily understand and predict what is expected to happen. In
+particular, it can get increasingly difficult to do so when reasoning about
+distributed systems. As a result, the languages size, simplicity and primitives
+should hopefully help make this as straightforward as possible. We&rsquo;ll discuss
+some of these primitives below.</p>
+<p>We invision that one day it should be possible to write some formal analysis
+tools that could provide some insights into the behaviour of a distributed
+cluster of mgmt agents running your program.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Structure of programs</span>:<br /><br />
+
+<p>Let&rsquo;s now consider the logical structure of a program. As we know, we need to
+model reactive dataflows. These are used to ultimately build some resources. The
+way we do this is by representing everything which is reactive (expressions) by
+vertices in a graph data structure, and with the edges representing the flows.</p>
+<p>An edge which loops back onto itself wouldn&rsquo;t be very logical because it would
+imply that a data flow was circular. As a result, we find that our structure
+needs to be a directed acyclic graph. We&rsquo;ll call this the function graph. (This
+is coincidentally the same kind of data structure used by our resource graph!)</p>
+<p>During compilation, the program is transformed into such a graph, which is then
+passed to the function graph engine for execution. Every time we populate all of
+the vertices which have <code>outdegree == 0</code>, we know that we can use that set of
+values to populate all the resources and other statements.</p>
+<p>Let&rsquo;s look at a short sample program and its corresponding graph. Remember the
+earlier &ldquo;read-only fridays&rdquo; example from earlier? Here it is again:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$endofweek = &#34;friday&#34;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pkg &#34;db&#34; {
+</span></span><span style="display:flex;"><span>	state =&gt; &#34;installed&#34;,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>if hostname() == &#34;mon&#34; {
+</span></span><span style="display:flex;"><span>	pkg &#34;db-monitoring&#34; {
+</span></span><span style="display:flex;"><span>		state =&gt; &#34;latest&#34;,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file &#34;/etc/db/config.xml&#34; {
+</span></span><span style="display:flex;"><span>	# read-only &#34;fridays&#34; :)
+</span></span><span style="display:flex;"><span>	mode =&gt; if day() == $endofweek { &#34;ugo-w&#34; } else { &#34;ug+w&#34; },
+</span></span><span style="display:flex;"><span>	content =&gt; template(&#34;db/standalone.gtmpl&#34;, hostname()),
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>svc &#34;dbd&#34; {
+</span></span><span style="display:flex;"><span>	state =&gt; &#34;running&#34;,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you&rsquo;re adventurous, try and imagine what the corresponding function graph
+might look like. You should probably have come up with something like this:</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="simple-program-graph.png"><img class="alignnone size-full" src="simple-program-graph.png" alt="a graph" width="100%" /></a></td></tr><tr><td>The function graph representation of a simple program.</td></tr></table></br />
+
+<p>You&rsquo;ll probably notice a few interesting characteristics about the graph:</p>
+<ul>
+<li>
+<p>Many vertices (in particular those of the form: <code>str(foo)</code> are not connected.</p>
+<p>This is because they don&rsquo;t need to send their values to any expressions,
+and are only consumed by statements.</p>
+</li>
+<li>
+<p>The <code>if</code> expression is present in the graph, but not the <code>if</code> statement.</p>
+<p>Remember, the reactive nature is only required for expressions. When all
+the necessary expressions have values, then they are used to populate
+the statements and ultimately generate a resource graph. This happens as
+often as is necessary, which occurs when at least one of the expressions
+would cause a change to a statement that would result in a different
+output resource graph.</p>
+</li>
+<li>
+<p>The <code>if</code> expression receives values from the conditional and the two branches.</p>
+<p>All three of these expressions can affect the output of the <code>if</code>
+expression.</p>
+</li>
+<li>
+<p>The function (<code>call</code>) args are incoming edges, and the result is an outgoing edge.</p>
+<p>Since a graph data structure needs to know which arg is the zeroth, 1st,
+and so on, all the edges are named accordingly, so that functions can
+decide which values to use and in which order.</p>
+</li>
+<li>
+<p>Every expression is also a function!</p>
+<p>As a result of all of our expressions being reactive, each one also has
+a corresponding function which performs the necessary data computation.
+In most cases this computation is quite simple and might only involve
+returning a static value (in the case of a constant like <code>int</code>) or might
+involve returning one of two arguments based on the value of a third if
+it was the function corresponding to the <code>if</code> expression.</p>
+</li>
+</ul>
+<p>If you&rsquo;d like to learn more about how these graphs are built, you can examine
+the <code>Graph</code> method of the <code>Expr</code> interface.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Historical values</span>:<br /><br />
+
+<p>You&rsquo;ve now learned that all expressions represent a sequence of values on a time
+domain &ldquo;axis&rdquo;. Wouldn&rsquo;t it be interesting if we could query a historical value?
+It turns out that we can. While the variable <code>$x</code> represents its current value,
+the variable <code>$x{1}</code> represents the last value it had, <code>$x{2}</code> represents the
+value before that, and so on&hellip; The zeroth index (<code>$x{0}</code>) was not forgotten, it
+actually represents the current value.</p>
+<p>Here&rsquo;s a short example that demonstrates the past dates and times:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># in a terminal run: watch -n 0.1 &#39;cat /tmp/mgmt/history&#39;
+</span></span><span style="display:flex;"><span># to see what happens to the file in real-time
+</span></span><span style="display:flex;"><span>$dt = datetime()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$hystvalues = {&#34;ix0&#34; =&gt; $dt, &#34;ix1&#34; =&gt; $dt{1}, &#34;ix2&#34; =&gt; $dt{2}, &#34;ix3&#34; =&gt; $dt{3},}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>file &#34;/tmp/mgmt/history&#34; {
+</span></span><span style="display:flex;"><span>	# please excuse the long line, in practice you might want
+</span></span><span style="display:flex;"><span>	# to use an external template so that this is more readable
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	content =&gt; template(&#34;Index(0) {{.ix0}}: {{ datetimeprint .ix0 }}\nIndex(1) {{.ix1}}: {{ datetimeprint .ix1 }}\nIndex(2) {{.ix2}}: {{ datetimeprint .ix2 }}\nIndex(3) {{.ix3}}: {{ datetimeprint .ix3 }}\n&#34;, $hystvalues),
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>One limitation of the current historical value lookup, is that all requested
+values must exist before a resource graph can be generated. In other words, the
+programs work most efficiently when the lookup index is a static (preferably
+small) constant. These semantics might change in the future as our function
+engine matures.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Hysteresis</span>:<br /><br />
+
+<p>If you don&rsquo;t know what hysteresis is, don&rsquo;t worry. It&rsquo;s a word that describes
+something you already understand&hellip; Put plainly, hysteresis is a property that
+stores a &ldquo;state history&rdquo; so that its current actions can depend on both the
+current value <em>and</em> previous values.</p>
+<p>For example, suppose you have a heated home in Canada. The average outdoor
+temperature in Canada is about -20°C. You wish to heat your house to +22°C.
+Let&rsquo;s suppose that the outdoor cooling is perfectly thermodynamically efficient,
+and so is your indoor heater. The indoor temperature would then drop below
++22°C, and the heater would turn on. It would then near instantly bring the heat
+back up above +22°C and then switch off. It would get cold again, and the cycle
+would continue. In a perfectly thermodynamically efficient scenario, the cycle
+would oscillate infinitely fast, which would probably either break your heater
+or make an incessant &ldquo;clicking noise&rdquo;.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="thermostat.png"><img class="alignnone size-full" src="thermostat.png" alt="a thermostat" width="100%" /></a></td></tr><tr><td>A thermostat exhibits hysteresis, some of which make a clicking noise when turning on or off. The top semi-circle of numbers denote the user requested set-point, while the bottom semi-circle denote the current temperature. Please excuse the blurry photograph.</td></tr></table></br />
+
+<p>To avoid this problem we have <em>hysteresis</em>. Once we are heated to +22°C, we turn
+off and remain off until we drop down below +20°C. After we&rsquo;re below that
+threshold, we can turn on again until we reach +22°C. You&rsquo;ll note that at +21°C,
+if we didn&rsquo;t know whether we we&rsquo;re heating or cooling, we wouldn&rsquo;t be able to
+determine whether we should be turning the heating on or off. That&rsquo;s possible
+with hysteresis since it knows the historical values we travelled through.</p>
+<p>Since we have a time domain for every variable, it is very easy to use this
+information to implement hysteresis. Instead of responding to the current
+temperature to control temperature, you might instead choose to respond to
+client load, and start up available processing hosts to handle that load.</p>
+<p>In the below example, if we go over a load threshold, we redistribute some of
+the load elsewhere so that each customer has a well performing virtual host. We
+can do this dynamically because of our reactive language and the power that
+comes when we integrate it with powerful resources such as <a href="https://github.com/purpleidea/mgmt/blob/master/resources/virt.go"><code>virt</code></a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-gdscript3" data-lang="gdscript3"><span style="display:flex;"><span><span style="color:#666">$</span>theload <span style="color:#666">=</span> <span style="color:#a2f">load</span>()
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>threshold <span style="color:#666">=</span> <span style="color:#666">1.5</span>	<span style="color:#080;font-style:italic"># change me if you like</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># simple hysteresis implementation</span>
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>h1 <span style="color:#666">=</span> <span style="color:#666">$</span>theload <span style="color:#666">&gt;</span> <span style="color:#666">$</span>threshold
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>h2 <span style="color:#666">=</span> <span style="color:#666">$</span>theload{<span style="color:#666">1</span>} <span style="color:#666">&gt;</span> <span style="color:#666">$</span>threshold
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>h3 <span style="color:#666">=</span> <span style="color:#666">$</span>theload{<span style="color:#666">2</span>} <span style="color:#666">&gt;</span> <span style="color:#666">$</span>threshold
+</span></span><span style="display:flex;"><span><span style="color:#666">$</span>unload <span style="color:#666">=</span> <span style="color:#666">$</span>h1 <span style="color:#666">||</span> <span style="color:#666">$</span>h2 <span style="color:#666">||</span> <span style="color:#666">$</span>h3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>virt <span style="color:#b44">&#34;mgmt1&#34;</span> {
+</span></span><span style="display:flex;"><span>	uri <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;qemu:///session&#34;</span>,
+</span></span><span style="display:flex;"><span>	cpus <span style="color:#666">=&gt;</span> <span style="color:#666">1</span>,
+</span></span><span style="display:flex;"><span>	memory <span style="color:#666">=&gt;</span> <span style="color:#666">524288</span>,
+</span></span><span style="display:flex;"><span>	state <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;running&#34;</span>,
+</span></span><span style="display:flex;"><span>	transient <span style="color:#666">=&gt;</span> true,
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># this vm shuts down under load...</span>
+</span></span><span style="display:flex;"><span>virt <span style="color:#b44">&#34;mgmt2&#34;</span> {
+</span></span><span style="display:flex;"><span>	uri <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;qemu:///session&#34;</span>,
+</span></span><span style="display:flex;"><span>	cpus <span style="color:#666">=&gt;</span> <span style="color:#666">1</span>,
+</span></span><span style="display:flex;"><span>	memory <span style="color:#666">=&gt;</span> <span style="color:#666">524288</span>,
+</span></span><span style="display:flex;"><span>	state <span style="color:#666">=&gt;</span> <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#666">$</span>unload { <span style="color:#b44">&#34;shutoff&#34;</span> } <span style="color:#a2f;font-weight:bold">else</span> { <span style="color:#b44">&#34;running&#34;</span> },
+</span></span><span style="display:flex;"><span>	transient <span style="color:#666">=&gt;</span> true,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Example programs</span>:<br /><br />
+
+<p>There are many more example programs which you might like to consider. Some of
+them are abstract and contrived as they are intended to demonstrate some of the
+language features and properties. The more interesting programs will emerge as
+more users apply this tool and design philosophy to their difficult problems.</p>
+<p>Have a look in our <a href="https://github.com/purpleidea/mgmt/tree/master/examples/lang/">examples</a>
+folder, and please feel free to submit your own!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Interesting properties</span>:<br /><br />
+
+<p>It turns out that the language has a number of interesting properties. I&rsquo;d like
+to point out a few&hellip;</p>
+<ol>
+<li>
+<p>The lang/engine separation means that runtime-errors are virtually as safe as
+compile-time errors!</p>
+<p>There is a separation between the (frontend) language and the (backend)
+engine. As a result, while we aim to eliminate run-time errors entirely,
+they are relatively safe if they do occur, because it would just mean
+that a new resource graph was <em>not</em> pushed to the engine.</p>
+</li>
+<li>
+<p>Code is actually a graph, so ordering is actually resolved cleverly.</p>
+<p>You would be insane to write out-of-order code, but since the language
+actually represents a graph, the following code is actually valid:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>file &#34;/tmp/hello&#34; {
+</span></span><span style="display:flex;"><span>	content =&gt; $x,	# this is in scope, and valid!
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$x = $y
+</span></span><span style="display:flex;"><span>$y = &#34;world&#34;	
+</span></span></code></pre></div><p>Please don&rsquo;t write it this way. If we need to, we can add a restriction
+to only allow in-order code.</p>
+</li>
+<li>
+<p>Variables are immutable, which helps create safer programs.</p>
+<p>This is actually a great restriction that goes hand-in-hand with
+functional programming. It&rsquo;s actually the binding which	is immutable, as
+each bound variable will have an ever changing stream of values
+associated with it. You can still &ldquo;switch&rdquo; that binding between to other
+expressions by having an if expression be bound to the variable first.</p>
+</li>
+<li>
+<p>Hysteresis will help us model real-life decision making and complex,
+distributed systems.</p>
+<p>Different types of hysteresis in the context of mgmt is possible. Of
+note, I&rsquo;ve thought of sequence-based and time-based hysteresis. We&rsquo;ve
+implemented the <code>$x{3}</code> syntax to express that we want the third
+historical value in the time series <em>sequence</em> of this variable, however
+an alternate variant that returns the value <code>N</code> seconds ago could be
+implemented.</p>
+</li>
+<li>
+<p>Reactive variables can help us model <em>local</em> real time systems, but can also
+handle events in the distributed system.</p>
+<p>Events from the output of functions that interact with the rest of the
+distributed system can provide some interesting information. They will
+be able to help eliminate patterns that previously required using and
+glueing more than one tool together. Those combinations also made it
+difficult to reason about how they actually interact together. In
+particular, passing data and enforcing type safety was nearly
+impossible!</p>
+<p>We&rsquo;ll also probably be able to handle a built-in <code>$error</code> event stream,
+which we generate from the engine, although we&rsquo;ll be looking into that
+feedback scenario at a later date.</p>
+</li>
+</ol>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">I&#39;m already familiar with FRP</span>:<br /><br />
+
+<p>There is already a large body of work and knowledge surrounding
+<a href="https://en.wikipedia.org/wiki/Functional_reactive_programming"><strong>f</strong>unctional <strong>r</strong>eactive <strong>p</strong>rogramming</a>.
+I am certainly no expert in FRP, and I&rsquo;ve got lots more to learn, but one
+thing FRP experts might notice is that some of the concepts from FRP are named
+differently from what they might expect, or are suspiciously absent.</p>
+<p>In mgmt, we don&rsquo;t talk about behaviours, events, or signals in the strict FRP
+definitons of the words. Firstly, because we only support discretized, streams
+of values with no plan to add continuous semantics. Secondly, because we prefer
+to use terms which are more natural and relatable to what our target audience is
+expecting. Our users are more likely to have a background in <a href="/about/">Physiology</a>,
+or systems administration than a background in FRP. Having said that, we hope
+that the FRP community will engage with us and help improve the parts that we
+got wrong. Even if that means adding continuous behaviours!</p>
+<p>Of note, I&rsquo;m particularly proud of how we&rsquo;ve designed and built the mgmt
+language, in particular because I think it has the possibility of bringing FRP
+closer to the mainstream. Up until now, there haven&rsquo;t been many use cases for
+FRP outside of UI interfaces. I was quite pleased when I realized that this
+would be a good fit. Functional programming enthusiasts can imagine this as a
+way to &ldquo;get those kids to eat their veggies&rdquo;, in that historically it has been
+very hard to get people to replace less safe imperative programming with
+functional paradigms.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Is there documentation?</span><br /><br />
+
+<p>Actually, yes. There is a <a href="https://github.com/purpleidea/mgmt/blob/master/docs/language-guide.md">language guide</a>.
+It would surely be improved with your patches. Please contribute.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What&#39;s missing?</span><br /><br />
+
+<p>Mgmt and the language aren&rsquo;t finished. There&rsquo;s still lots to do, but there&rsquo;s
+now so much you can use today. With this initial release of the language, I
+think we&rsquo;ve finally hit the &ldquo;I can use this to get real work done&rdquo; stage with
+the caveat that you might occasionally have to write a small patch for a new
+function that you need, or a test case if you find a bug. We&rsquo;re still targeting
+this to folks who want to get involved in the project, but the time till general
+availability and a <code>0.1</code> release is rapidly closing!</p>
+<p>Here are a few things that are currently missing or need improvement:</p>
+<ul>
+<li><code>ExprFunc</code> values and user defined functions (in the DSL) need more thought.</li>
+<li>We need more core functions to help build the base for a proper stdlib.</li>
+<li>Classes (&ldquo;singletons&rdquo;) and modules don&rsquo;t currently exist. We need to think
+about these a bit.</li>
+<li>More tests are needed. They&rsquo;re mostly easy to write, so please contribute one!</li>
+<li>Auth stuff plainly doesn&rsquo;t exist yet, so mgmt should only be used inside
+trusted networks for now. We have a design, but nobody to work on it yet. Let us
+know if you&rsquo;d like to be involved.</li>
+<li>I don&rsquo;t know what to name the language or the file format extension. For now
+it&rsquo;s just &ldquo;the mgmt language&rdquo;, and I&rsquo;ve been using <code>.mcl</code> as a file extension.
+Yes, we all know I suck at naming. Sorry about that. :/</li>
+<li>Syntax highlighting in <code>emacs</code>, <code>gedit</code> and <code>vim</code>. Patches would be welcome!</li>
+<li>A language formatting tool. (IOW, an AST annotator and print function?)</li>
+</ul>
+<p>Please see all of the issues tagged as <a href="https://github.com/purpleidea/mgmt/labels/mgmtlove"><strong>#mgmtlove</strong></a>
+if you&rsquo;d like to get involved. We can tag more as needed.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Mgmt needs a home...</span><br /><br />
+
+<p>Red Hat has been my main source of funding for this work up until now, and I&rsquo;m
+grateful for that, but I&rsquo;m sad to say that they&rsquo;ve officially set my time quota
+to zero. I&rsquo;m going to try and continue the work, but it&rsquo;s more difficult without
+being able to work on it full-time, or without funding.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="house-edited.png"><img class="alignnone size-full" src="house-edited.png" alt="a home" width="100%" /></a></td></tr><tr><td>Mgmt needs a home.</td></tr></table></br />
+
+<p>If you, your organization, or someone you know would like to help fund my mgmt
+work either via a development grant, <a href="https://purpleidea.com/misc/donate/">donation</a>,
+contract, or offer of employment, or, if you&rsquo;d like to be a contributor to the
+project, <a href="/contact/">please let me know</a>! Without your support, mgmt <strong>will</strong>
+die.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Coming up...</span><br /><br />
+
+<p>I might write a blog post on language internals if there&rsquo;s interest. I should
+also write a post on the &ldquo;deploys&rdquo; feature when it&rsquo;s a bit more polished. I&rsquo;ll
+be hacking on <a href="https://github.com/purpleidea/mgmt/">mgmt</a>, will you?</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Thanks</span>:<br /><br />
+
+<p>I owe a huge debt to my friend <a href="https://gelisam.blogspot.ca/">Sam</a> who so
+patiently answered all of my FRP questions, and guided me through all of the
+language/compiler design problems that I was facing. If you see both of us at a
+conference, buy <em>him</em> the <code>$beverage</code>.</p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><a href="https://twitter.com/purpleidea">@purpleidea</a></p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>February 5, 2018<br>
+				<small>4256 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mcl">mcl</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2018/02/05/mgmt-configuration-language">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2018/02/05/mgmt-configuration-language.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

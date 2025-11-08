@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>Finite state machines in puppet - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Finite state machines in puppet</strong><br><small></small></h3>
+					<hr>
+					<p>In my attempt to <a title="setting timed events in puppet" href="/blog/2012/11/14/setting-timed-events-in-puppet/">push puppet to its limits</a>, (for <a title="recursion in puppet (for no particular reason)" href="/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/">no particular reason</a>), to <a title="Collecting duplicate resources in puppet" href="/blog/2013/06/04/collecting-duplicate-resources-in-puppet/">develop more powerful puppet modules</a>, to<a title="How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet" href="/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/"> build in a distributed lock manager</a>, and to <a title="Dynamically including classes in puppet" href="/blog/2013/01/16/dynamically-including-classes-in-puppet/">be more dynamic</a>, I&rsquo;m now attempting to build a <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State Machine</a> (FSM) in puppet.</p>
+<p><span style="text-decoration:underline;">Is this a real finite state machine, and why would you do this</span>?</p>
+<p>Computer science professionals might not approve of the purity level, but they will hopefully appreciate the hack value. I&rsquo;ve done this to illustrate a <em>state transition</em> technique that will be necessary in a module that I am writing.</p>
+<p><span style="text-decoration:underline;">Can we have an example</span>?</p>
+<p>Sure! I&rsquo;ve decided to model <a href="https://en.wikipedia.org/wiki/Phase_transition">thermodynamic phase transitions</a>. Here&rsquo;s what we&rsquo;re building:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td><a href="phase_change_-_en-svg.png"><img class="alignnone size-full wp-image-515" alt="Phase_change_-_en.svg" src="phase_change_-_en-svg.png" width="100%" height="100%" /></a></td></tr></table></br />
+<p><span style="text-decoration:underline;">How does it work</span>?</p>
+<p>Start off with a given <em>define</em> that accepts an argument. It could have one argument, or many, and be of whichever type you like, such as an integer, or even a more complicated list type. To keep the example simple, let&rsquo;s work with a single argument named <em>$input</em>.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>define fsm<span style="color:#666">::</span>transition(
+</span></span><span style="display:flex;"><span>        $input <span style="color:#666">=</span> <span style="color:#b44">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic"># TODO: add amazing code here...</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
+<p>The FSM runs as follows: On first execution, the <em>$input</em> value is saved to a local file by means of a puppet <em>exec</em> type. A corresponding fact exists to read from that file and create a unique variable for the <em>fsm::transition</em> type. Let&rsquo;s call that variable <em>$last.</em> <strong>This is the special part!</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># ruby fact to pull in the data from the state file</span>
+</span></span><span style="display:flex;"><span>found <span style="color:#666">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#800">Dir</span><span style="color:#666">.</span>glob(transition_dir<span style="color:#666">+</span><span style="color:#b44">&#39;*&#39;</span>)<span style="color:#666">.</span>each <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>d<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>    n <span style="color:#666">=</span> <span style="color:#800">File</span><span style="color:#666">.</span>basename(d)    <span style="color:#080;font-style:italic"># should be the fsm::transition name</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span> n<span style="color:#666">.</span>length <span style="color:#666">&gt;</span> <span style="color:#666">0</span> <span style="color:#a2f;font-weight:bold">and</span> regexp<span style="color:#666">.</span>match(n)
+</span></span><span style="display:flex;"><span>        f <span style="color:#666">=</span> d<span style="color:#666">.</span>gsub(<span style="color:#b68">/\/$/</span>, <span style="color:#b44">&#39;&#39;</span>)<span style="color:#666">+</span><span style="color:#b44">&#39;/state&#39;</span>    <span style="color:#080;font-style:italic"># full file path</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#800">File</span><span style="color:#666">.</span>exists?(f)
+</span></span><span style="display:flex;"><span>            <span style="color:#080;font-style:italic"># TODO: future versions should unpickle (but with yaml)</span>
+</span></span><span style="display:flex;"><span>            v <span style="color:#666">=</span> <span style="color:#800">File</span><span style="color:#666">.</span>open(f, <span style="color:#b44">&#39;r&#39;</span>)<span style="color:#666">.</span>read<span style="color:#666">.</span>strip    <span style="color:#080;font-style:italic"># read into str</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">if</span> v<span style="color:#666">.</span>length <span style="color:#666">&gt;</span> <span style="color:#666">0</span> <span style="color:#a2f;font-weight:bold">and</span> regexp<span style="color:#666">.</span>match(v)
+</span></span><span style="display:flex;"><span>                found<span style="color:#666">[</span>n<span style="color:#666">]</span> <span style="color:#666">=</span> v
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>found<span style="color:#666">.</span>keys<span style="color:#666">.</span>each <span style="color:#a2f;font-weight:bold">do</span> <span style="color:#666">|</span>x<span style="color:#666">|</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#800">Facter</span><span style="color:#666">.</span>add(<span style="color:#b44">&#39;fsm_transition_&#39;</span><span style="color:#666">+</span>x) <span style="color:#a2f;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic">#confine :operatingsystem =&gt; %w{CentOS, RedHat, Fedora}</span>
+</span></span><span style="display:flex;"><span>        setcode {
+</span></span><span style="display:flex;"><span>            found<span style="color:#666">[</span>x<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">end</span></span></span></code></pre></div></p>
+<p>On subsequent runs, the process gets more interesting: The <em>$input</em> value and the <em>$last</em> value are used to decide what to run. They can be different because the user might have changed the <em>$input</em> value. Logic trees then decide what actions you&rsquo;d like to perform. This lets us compare the previous state to the new desired state, and as a result, be more intelligent about which actions need to run for a successful state transition. <strong>This is the FSM part.</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#080;font-style:italic"># logic tree modeling phase transitions</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># https://en.wikipedia.org/wiki/Phase_transition</span>
+</span></span><span style="display:flex;"><span>$transition <span style="color:#666">=</span> <span style="color:#b44">&#34;${valid_last}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;solid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${valid_input}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;solid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;liquid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;melting&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;gas&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;sublimation&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;plasma&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">false</span>,
+</span></span><span style="display:flex;"><span>               default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;liquid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${valid_input}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;solid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;freezing&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;liquid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;gas&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;vaporization&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;plasma&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">false</span>,
+</span></span><span style="display:flex;"><span>               default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;gas&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${valid_input}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;solid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;deposition&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;liquid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;condensation&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;gas&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;plasma&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;ionization&#39;</span>,
+</span></span><span style="display:flex;"><span>               default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">&#39;plasma&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;${valid_input}&#34;</span> ? {
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;solid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">false</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;liquid&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">false</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;gas&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;recombination&#39;</span>,
+</span></span><span style="display:flex;"><span>               <span style="color:#b44">&#39;plasma&#39;</span> <span style="color:#666">=&gt;</span> <span style="color:#a2f">true</span>,
+</span></span><span style="display:flex;"><span>               default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>        default <span style="color:#666">=&gt;</span> <span style="color:#b44">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div></p>
+<p>Once the state transition actions have completed successfully, the exec must store the <em>$input</em> value in the local file for future use as the unique <em>$last</em> fact for the next puppet run. If there are errors during state transition execution, you may choose to not store the updated value (to cause a re-run) and/or to add an error condition fact that the subsequent puppet run will have to read in and handle accordingly. <strong>This is the important part.</strong>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span>$f <span style="color:#666">=</span> <span style="color:#b44">&#34;${vardir}/transition/${name}/state&#34;</span>
+</span></span><span style="display:flex;"><span>$diff <span style="color:#666">=</span> <span style="color:#b44">&#34;/usr/bin/test &#39;${valid_input}&#39; != &#39;${valid_last}&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># TODO: future versions should pickle (but with yaml)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">exec</span> { <span style="color:#b44">&#34;/bin/echo &#39;${valid_input}&#39; &gt; &#39;${f}&#39;&#34;</span>:
+</span></span><span style="display:flex;"><span>        logoutput <span style="color:#666">=&gt;</span> on_failure,
+</span></span><span style="display:flex;"><span>        onlyif <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;/usr/bin/test ! -e &#39;${f}&#39; || ${diff}&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f">require</span> <span style="color:#666">=&gt;</span> <span style="color:#800">File</span><span style="color:#666">[</span><span style="color:#b44">&#34;${vardir}/&#34;</span><span style="color:#666">]</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">alias</span> <span style="color:#666">=&gt;</span> <span style="color:#b44">&#34;fsm-transition-${name}&#34;</span>,
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<span style="text-decoration:underline;">Can we take this further</span>?</p>
+<p>It might be beneficial to remember the path we took through our graph. To do this, on each transition we append the new state to a file on our local puppet client. The corresponding fact, is similar to the <em>$last</em> fact, except it maintains a list of values instead of just one. There is a max length variable that can be used to avoid storing unlimited old states.</p>
+<p><span style="text-decoration:underline;">Does this have a practical use</span>?</p>
+<p>Yes, absolutely! I realized that something like this could be useful for <a href="https://github.com/purpleidea/puppet-gluster">puppet-gluster</a>. Stay tuned for more patches.</p>
+<p>Hopefully you enjoyed this. By following the above guidelines, you should now have some extra tricks for building state transitions into your puppet modules. Let me know if you found this hack awesome and unique.</p>
+<p><a href="https://github.com/purpleidea/puppet-fsm">I&rsquo;ve posted the full example module here.</a></p>
+<p>Happy Hacking,</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>September 28, 2013<br>
+				<small>832 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/awesome">awesome</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/finite-state-machine">finite state machine</a> <a class="label label-default" href="/tags/fsm">fsm</a> <a class="label label-default" href="/tags/gluster">gluster</a> <a class="label label-default" href="/tags/hack">hack</a> <a class="label label-default" href="/tags/phase-transitions">phase transitions</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/puppet">puppet</a> <a class="label label-default" href="/tags/puppet-hacks">puppet hacks</a> <a class="label label-default" href="/tags/puppet-fsm">puppet-fsm</a> <a class="label label-default" href="/tags/puppet-gluster">puppet-gluster</a> <a class="label label-default" href="/tags/thermodynamics">thermodynamics</a> 
+				
+				<hr>
+				<strong>Original URL</strong><br>
+				<a href="https://ttboj.wordpress.com/2013/09/28/finite-state-machines-in-puppet/"><small>https://ttboj.wordpress.com/2013/09/28/finite-state-machines-in-puppet/</small></a>
+				
+
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2013/09/28/finite-state-machines-in-puppet">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2025 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2013/09/28/finite-state-machines-in-puppet.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

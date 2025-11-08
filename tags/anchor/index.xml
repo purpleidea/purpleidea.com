@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anchor on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/anchor/</link>
+    <description>Recent content in Anchor on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 02 Aug 2023 13:35:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/anchor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One minute hacks: Saving time inserting images in Libreoffice</title>
+      <link>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</link>
+      <pubDate>Wed, 02 Aug 2023 13:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</guid>
+      <description>You&amp;rsquo;ve probably used libreoffice. You opened a document, and proceeded to insert an image into the text. It wiggles all over and never rests where you want it to.&#xA;The solution:&#xA;You most likely want the &amp;ldquo;anchor as character&amp;rdquo; option. Right-click on the newly inserted image, go to the Anchor menu item, and choose As Character. You will have to do this for each image you insert which is annoying&amp;hellip;</description>
+    </item>
+  </channel>
+</rss>
