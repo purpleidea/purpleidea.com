@@ -89,7 +89,7 @@ talks: [
     topic: "A small, FRP DSL for distributed systems",
     video: "https://video.fosdem.org/2020/AW1.125/mgmtconfigmore.mp4",
     location: "FOSDEM Minimalistic Languages Devroom, Brussels",
-    location_url: "https://fosdem.org/2020/schedule/event/automation/",
+    location_url: "https://archive.fosdem.org/2020/schedule/event/mgmtconfigmore/",
     rating: "Positive!",
     rating_url: "feedback/mgmt-fosdem-2020-minimalistic-languages-feedback.png",
     date: "02/Feb/2020",
