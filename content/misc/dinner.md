@@ -19,6 +19,11 @@ This page has some more information about the annual [dinner](/projects/dinner/)
 		<th>Location</th>
 	</tr>
 	<tr>
+		<td>2025</td>
+		<td>921 (565+356)</td>
+		<td>Concordia</td>
+	</tr>
+	<tr>
 		<td>2024</td>
 		<td>980 (550+430)</td>
 		<td>Concordia</td>
