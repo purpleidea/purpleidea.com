@@ -5,6 +5,24 @@ draft: false
 talks: [
 
   {
+    topic: "Mgmt Config: Solving the bootstrapping problem",
+    video: "https://www.youtube.com/watch?v=h6Jxxqlgmu",
+    location: "CfgMgmtCamp.eu 2026, Ghent",
+    location_url: "https://cfp.cfgmgmtcamp.org/ghent2026/talk/WCDFP8/",
+    rating: "Unrated",
+    date: "03/Feb/2026",
+  },
+
+  {
+    topic: "Mgmt Config: Unexpected things mgmt can do",
+    video: "https://www.youtube.com/watch?v=f8TrYow6gdY",
+    location: "CfgMgmtCamp.eu 2026, Ghent",
+    location_url: "https://cfp.cfgmgmtcamp.org/ghent2026/talk/AAUVX8/",
+    rating: "Unrated",
+    date: "02/Feb/2026",
+  },
+
+  {
     topic: "Abnormal DevOps Roundtable @ CfgMgmtCamp 2025",
     video: "https://www.youtube.com/watch?v=lslYvSebqF8",
     location: "Abnormal DevOps Iterations Podcast, Ghent, Belgium",
