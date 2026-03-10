@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Token Bucket on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/token-bucket/</link>
+    <description>Recent content in Token Bucket on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 01 Mar 2017 16:11:59 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/token-bucket/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Metaparameters in mgmt</title>
+      <link>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</link>
+      <pubDate>Wed, 01 Mar 2017 16:11:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/03/01/metaparameters-in-mgmt/</guid>
+      <description>&lt;p&gt;In &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt; we have &lt;em&gt;meta parameters&lt;/em&gt;. They are similar in concept to what you might be familiar with from other tools, except that they are more clearly defined (in a single struct) and vastly more powerful.&lt;/p&gt;&#xA;&lt;p&gt;In mgmt, a meta parameter is a parameter which is codified entirely in the engine, and which can be used by any resource. In contrast with &lt;a href=&#34;https://docs.puppet.com/puppet/4.6/metaparameter.html#require&#34;&gt;Puppet, require/before are considered meta parameters&lt;/a&gt;, whereas in mgmt, the equivalent is a graph edge, which is not a meta parameter. [1]&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

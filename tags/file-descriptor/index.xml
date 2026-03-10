@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>File Descriptor on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/file-descriptor/</link>
+    <description>Recent content in File Descriptor on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 18 Nov 2012 01:02:22 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/file-descriptor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>continuous display of log files (better tail -f)</title>
+      <link>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</link>
+      <pubDate>Sun, 18 Nov 2012 01:02:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</guid>
+      <description>&lt;p&gt;All good sysadmins know about using &lt;em&gt;tail -f&lt;/em&gt; to &lt;em&gt;follow&lt;/em&gt; a log file. I use this all the time to follow &lt;em&gt;/var/log/messages&lt;/em&gt; and my gluster logs in particular. Maybe everyone already knows this, but it deserves a PSA: after a certain amount of time (~days) it seems that new messages don&amp;rsquo;t appear!&lt;/p&gt;&#xA;&lt;p&gt;What happens by default is that &lt;em&gt;tail -f&lt;/em&gt; follows the file &lt;span style=&#34;text-decoration:underline;&#34;&gt;descriptor&lt;/span&gt;, not the file &lt;span style=&#34;text-decoration:underline;&#34;&gt;name&lt;/span&gt;, so when your log files get rotated, the file descriptor still points to the (now renamed) file which no longer gets updates any more.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

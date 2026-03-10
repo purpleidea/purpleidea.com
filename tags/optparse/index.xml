@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optparse on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/optparse/</link>
+    <description>Recent content in Optparse on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 03 Feb 2010 12:25:08 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/optparse/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>getopt vs. optparse vs. argparse</title>
+      <link>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</link>
+      <pubDate>Wed, 03 Feb 2010 12:25:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</guid>
+      <description>&lt;p&gt;sooner or later you&amp;rsquo;ll end up needing to do some argument parsing. the foolish end up writing their own yucky parser that ends up having a big if statement filled with things like:&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;if len(sys.argv) &amp;gt; 1&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;in it. don&amp;rsquo;t do this unless you have a &lt;b&gt;really&lt;/b&gt; good excuse.&lt;/p&gt;&#xA;&lt;p&gt;sooner or later, someone directs you to &lt;a href=&#34;http://docs.python.org/library/getopt.html&#34;&gt;getopt&lt;/a&gt;, and you happily continue on with buggy manual parsing thinking you&amp;rsquo;ve &amp;ldquo;&lt;i&gt;found the way&lt;/i&gt;&amp;rdquo;. useful in some circumstances, but should generally be avoided.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

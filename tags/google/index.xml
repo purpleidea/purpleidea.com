@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/google/</link>
+    <description>Recent content in Google on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 02 May 2015 00:07:11 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/google/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve added the ability to deploy a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes&#34;&gt;Kubernetes&lt;/a&gt; cluster with &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (&lt;em&gt;omv&lt;/em&gt;). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md&#34;&gt;rolling update&lt;/a&gt;, you can use &lt;em&gt;omv&lt;/em&gt; to test this out in minutes! I&amp;rsquo;ve recorded a &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv&#34;&gt;screencast&lt;/a&gt; (~15 min), if you&amp;rsquo;d like to see some of this in action.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

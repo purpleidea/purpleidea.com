@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ANSI Escape Codes on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ansi-escape-codes/</link>
+    <description>Recent content in ANSI Escape Codes on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 29 Jun 2018 21:45:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/ansi-escape-codes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hyperlinks in GNOME terminal</title>
+      <link>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</link>
+      <pubDate>Fri, 29 Jun 2018 21:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/29/hyperlinks-in-gnome-terminal/</guid>
+      <description>&lt;p&gt;Over the years I&amp;rsquo;ve learned about many of the advantages of using a modern&#xA;terminal and shell. I&amp;rsquo;m talking about using &lt;a href=&#34;https://www.gnu.org/software/bash/&#34;&gt;&lt;code&gt;bash&lt;/code&gt;&lt;/a&gt;&#xA;with &lt;a href=&#34;https://en.wikipedia.org/wiki/GNOME_Terminal&#34;&gt;GNOME terminal&lt;/a&gt; on a modern&#xA;&lt;a href=&#34;https://getfedora.org/&#34;&gt;GNU/Linux&lt;/a&gt; distribution.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/&#34;&gt;I particularly like switching between the terminal and GUI applications.&lt;/a&gt;&#xA;It&amp;rsquo;s now even better.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Automatic Hyperlinks&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;Occasionally, some program running in your shell might output what looked like a&#xA;link:&lt;/p&gt;&#xA;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&#xA;&lt;a href=&#34;gnome-terminal-link.png&#34;&gt;&lt;img class=&#34;alignnone size-full&#34; src=&#34;gnome-terminal-link.png&#34;  width=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;gnome terminal and vte will automatically add links to text that looks like a web hyperlink or an email address&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&#xA;&lt;p&gt;They can be seen when you hover over them, and a right-click will display a&#xA;useful context menu:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

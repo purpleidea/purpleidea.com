@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jhbuild on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/jhbuild/</link>
+    <description>Recent content in Jhbuild on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 15 Oct 2013 16:52:29 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/jhbuild/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GNOME Montreal Summit</title>
+      <link>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</link>
+      <pubDate>Tue, 15 Oct 2013 16:52:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/15/gnome-montreal-summit/</guid>
+      <description>&lt;p&gt;This October 12th to 14th Montreal hosted the &lt;a href=&#34;https://www.gnome.org/&#34;&gt;GNOME&lt;/a&gt; &lt;del&gt;boston&lt;/del&gt; summit. Many thanks to &lt;a href=&#34;http://www.canonical.com/&#34;&gt;Canonical&lt;/a&gt; for sponsoring breakfast, &lt;a href=&#34;http://www.savoirfairelinux.com/en/&#34;&gt;Savoir Faire Linux&lt;/a&gt; for hosting a great &lt;em&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Cinq_%C3%A0_sept&#34;&gt;6 à 10&lt;/a&gt;&lt;/em&gt; with fancy snacks, and &lt;a href=&#34;http://www.redhat.com/&#34;&gt;RedHat&lt;/a&gt; for sponsoring a &lt;a href=&#34;https://en.wikipedia.org/wiki/Pool_%28cue_sports%29&#34;&gt;pool&lt;/a&gt; night. What follows is some technical commentary about stuff that went on.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;JHBuild&lt;/span&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://wiki.gnome.org/Jhbuild&#34;&gt;JHBuild&lt;/a&gt; is a tool to make it easy to download/clone (from git) and compile all the GNOME modules and applications. It was easy to get going. I (mostly) followed the steps listed on the &lt;a href=&#34;https://wiki.gnome.org/HowDoI/Jhbuild&#34;&gt;JHBuild HowDoI wiki page&lt;/a&gt;. I kept my &lt;em&gt;.jhbuildrc&lt;/em&gt; in my home directory instead of &lt;em&gt;~/.config/&lt;/em&gt;. On my Fedora 19 machine, I found certain unlisted dependencies were missing to build everything. You can figure these out yourself when your builds fail, or just run the following command to install them beforehand:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redhat on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/redhat/</link>
+    <description>Recent content in Redhat on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 30 Oct 2018 08:39:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/redhat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The End of a Red Giant</title>
+      <link>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</link>
+      <pubDate>Tue, 30 Oct 2018 08:39:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/10/30/the-end-of-a-red-giant/</guid>
+      <description>&lt;p&gt;As I&amp;rsquo;m sure you&amp;rsquo;ve now heard, &lt;a href=&#34;https://www.redhat.com/en/about/press-releases/ibm-acquire-red-hat-completely-changing-cloud-landscape-and-becoming-world%E2%80%99s-1-hybrid-cloud-provider&#34;&gt;Red Hat is being acquired by IBM&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Reactions have ranged from:&lt;/p&gt;&#xA;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&#xA;&lt;a href=&#34;reddit1.png&#34;&gt;&lt;img class=&#34;alignnone size-full&#34; src=&#34;reddit1.png&#34;  width=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;The first two emotions everyone experienced.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&#xA;&lt;p&gt;to:&lt;/p&gt;&#xA;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&#xA;&lt;a href=&#34;twitter1.png&#34;&gt;&lt;img class=&#34;alignnone size-full&#34; src=&#34;twitter1.png&#34;  width=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;The classic humourous response.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&#xA;&lt;p&gt;to:&lt;/p&gt;&#xA;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&#xA;&lt;a href=&#34;twitter2.png&#34;&gt;&lt;img class=&#34;alignnone size-full&#34; src=&#34;twitter2.png&#34;  width=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;The classy response.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&#xA;&lt;p&gt;to:&lt;/p&gt;&#xA;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&#xA;&lt;a href=&#34;reddit2.png&#34;&gt;&lt;img class=&#34;alignnone size-full&#34; src=&#34;reddit2.png&#34;  width=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;The thing we&amp;#39;re all curious about.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&#xA;&lt;p&gt;to everything in between. If someone were to leak me a copy of the memo-list&#xA;&lt;em&gt;2018-October.txt.gz&lt;/em&gt; mailman archive, I&amp;rsquo;d sure love to see that! (Of course I&amp;rsquo;m&#xA;joking and I wouldn&amp;rsquo;t actually ask anyone to do this.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Leaving Red Hat</title>
+      <link>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</link>
+      <pubDate>Wed, 04 Apr 2018 06:27:35 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/04/04/leaving-redhat/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve spent about &lt;a href=&#34;https://purpleidea.com/blog/2014/04/02/working-at-redhat/&#34;&gt;four years at Red Hat&lt;/a&gt;,&#xA;and now it&amp;rsquo;s time to move on&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;TL;DR:&lt;/em&gt; had to leave Red Hat and start &lt;a href=&#34;https://www.patreon.com/purpleidea&#34;&gt;Patreon&lt;/a&gt;&#xA;to fund &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;What follows is a bit of historical rambling, and some forward looking&#xA;statements.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Retrospective&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;Long-time readers of my blog will know that I was very active in the&#xA;&lt;a href=&#34;https://purpleidea.com/tags/puppet/&#34;&gt;puppet ecosystem&lt;/a&gt; for many years. I learned a lot while writing&#xA;puppet code, and while building some of my&#xA;&lt;a href=&#34;https://www.youtube.com/watch?v=hXIEJEE5d_4&#34;&gt;outrageous puppet hacks&lt;/a&gt;. Over&#xA;this time, I had quietly put together some design notes and a prototype for some&#xA;&amp;ldquo;future tool&amp;rdquo; ideas. I had code-named this project &amp;ldquo;&lt;em&gt;puppet-ng&lt;/em&gt;&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve added the ability to deploy a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes&#34;&gt;Kubernetes&lt;/a&gt; cluster with &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (&lt;em&gt;omv&lt;/em&gt;). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md&#34;&gt;rolling update&lt;/a&gt;, you can use &lt;em&gt;omv&lt;/em&gt; to test this out in minutes! I&amp;rsquo;ve recorded a &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv&#34;&gt;screencast&lt;/a&gt; (~15 min), if you&amp;rsquo;d like to see some of this in action.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Working at RedHat</title>
+      <link>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</link>
+      <pubDate>Wed, 02 Apr 2014 14:27:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/04/02/working-at-redhat/</guid>
+      <description>&lt;p&gt;&lt;em&gt;So this happened&lt;/em&gt;:&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;james-redhat.jpg&#34;&gt;&lt;img class=&#34;size-large wp-image-804&#34; src=&#34;james-redhat.jpg&#34; alt=&#34;James just James at RedHat headquarters in North Carolina&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; James just James at RedHat headquarters in North Carolina wearing his new red hat.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://www.redhat.com/&#34;&gt;RedHat&lt;/a&gt; made me an offer, and I am happy to say that I have just started this week!&lt;/p&gt;&#xA;&lt;p&gt;I am proud to have joined a company that employs many of the worlds foremost, highly professional and clever &lt;a href=&#34;https://en.wikipedia.org/wiki/Hacker_%28term%29&#34;&gt;hackers&lt;/a&gt;. It is indubitably the best &lt;a href=&#34;https://www.gnu.org/philosophy/selling.html&#34;&gt;Free Software&lt;/a&gt; [1] / &lt;a href=&#34;https://www.gnu.org/philosophy/free-sw.html&#34;&gt;Open Source&lt;/a&gt; company out there, and they ship some of the greatest and most elegant software available.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster and me at Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</link>
+      <pubDate>Mon, 02 Sep 2013 05:50:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.johnmark.org/blog/&#34;&gt;John Mark Walker&lt;/a&gt;, (from &lt;a href=&#34;http://www.redhat.com/&#34;&gt;Redhat&lt;/a&gt;) has been kind enough to invite me to speak at the &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/program/co-located-events&#34;&gt;Linuxcon Gluster Workshop&lt;/a&gt; in &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/extend-the-experience/about-new-orleans&#34;&gt;New Orleans&lt;/a&gt;. I&amp;rsquo;ll be speaking about &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;puppet-gluster&lt;/a&gt;, giving demos, and hopefully showing off some new features. I&amp;rsquo;m also looking forward to meeting up with &lt;a href=&#34;http://www.gluster.org/&#34;&gt;gluster&lt;/a&gt; expert &lt;a href=&#34;http://joejulian.name/&#34;&gt;Joe Julian&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;If there are features that puppet-gluster is missing, or you have a use case that I haven&amp;rsquo;t covered, please let me know, and I&amp;rsquo;ll try to work on it for you ahead of the conference. If you want to meet up for some puppet-gluster help, or to hack on code, I&amp;rsquo;ll be around from the 16th to the 20th of September. My talk is on the 19th.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

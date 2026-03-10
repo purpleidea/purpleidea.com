@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fibonacci on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fibonacci/</link>
+    <description>Recent content in Fibonacci on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Nov 2013 00:03:15 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/fibonacci/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Advanced recursion and memoization in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</link>
+      <pubDate>Wed, 27 Nov 2013 00:03:15 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/27/advanced-recursion-and-memoization-in-puppet/</guid>
+      <description>&lt;p&gt;As a follow-up to my original article on &lt;a title=&#34;recursion in puppet (for no particular reason)&#34; href=&#34;https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/&#34;&gt;recursion in Puppet&lt;/a&gt;, and in my attempt to &lt;a title=&#34;Pushing Puppet at Puppet Camp DC, LISA 2013&#34; href=&#34;https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/&#34;&gt;Push Puppet (to its limit)&lt;/a&gt;, I&amp;rsquo;ll now attempt some more advanced recursion techniques in Puppet.&lt;/p&gt;&#xA;&lt;p&gt;In my original &lt;a href=&#34;https://github.com/purpleidea/puppet-pushing/blob/master/standalone/recursion.pp&#34;&gt;recursion example&lt;/a&gt;, the type does recurse, but the &lt;em&gt;callee&lt;/em&gt; cannot return any value to the &lt;em&gt;caller&lt;/em&gt; because it is a type, and not strictly a function. This limitation immediately limits the usefulness of this technique, but I&amp;rsquo;ll try to press on! Let&amp;rsquo;s try to write a &lt;a href=&#34;https://en.wikipedia.org/wiki/Fibonacci_number&#34;&gt;Fibonacci series&lt;/a&gt; function in native Puppet.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

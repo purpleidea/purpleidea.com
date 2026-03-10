@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debugging on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/debugging/</link>
+    <description>Recent content in Debugging on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 15 Feb 2016 16:47:57 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/debugging/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Debugging golang programs</title>
+      <link>https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/</link>
+      <pubDate>Mon, 15 Feb 2016 16:47:57 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/02/15/debugging-golang-programs/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been writing a lot of &lt;a href=&#34;https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/&#34;&gt;golang&lt;/a&gt; lately. &lt;a href=&#34;https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/&#34;&gt;I&amp;rsquo;ve hit painful problems in the past.&lt;/a&gt; Here are some debugging tips. Hopefully they help you out. I bet you don&amp;rsquo;t know #2.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;#0 Use log.Printf&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;This should go without saying, but I&amp;rsquo;m ashamed to say it&amp;rsquo;s what I use the most. We&amp;rsquo;ve only been &lt;a href=&#34;https://en.wikipedia.org/wiki/C_%28programming_language%29&#34;&gt;C programming&lt;/a&gt; for 44+ years, and it&amp;rsquo;s still what is most useful!&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;#1 Use go run -race&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Since many problems are caused by random races, ensuring you use the built-in tools will help you catch some problems. One of these is a race detector. You can use it by adding the &lt;code&gt;-race&lt;/code&gt; flag to the &lt;code&gt;go run&lt;/code&gt;, &lt;code&gt;go build&lt;/code&gt; or &lt;code&gt;go test&lt;/code&gt; commands. In practice, it only ever caught beginner issues, and it hasn&amp;rsquo;t set off any alarms since. Maybe I need to write more test cases! Maybe &lt;a href=&#34;https://github.com/purpleidea/mgmt/compare?expand=1&#34;&gt;&lt;strong&gt;&lt;em&gt;you&lt;/em&gt;&lt;/strong&gt; need to write more test cases!&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

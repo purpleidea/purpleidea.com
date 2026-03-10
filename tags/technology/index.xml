@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Technology on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/technology/</link>
+    <description>Recent content in Technology on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Jun 2013 23:39:08 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/technology/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Collecting duplicate resources in puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</link>
+      <pubDate>Tue, 04 Jun 2013 23:39:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</guid>
+      <description>&lt;p&gt;I could probably write a long design article explaining why &lt;em&gt;identical&lt;/em&gt; duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, &lt;a href=&#34;https://twitter.com/bodepd&#34;&gt;Mr. Bode&lt;/a&gt; has already written part one of the hack: &lt;a href=&#34;https://github.com/puppetlabs/puppetlabs-stdlib#ensure_resource&#34;&gt;ensure_resource&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Suppose you have a given infrastructure with &lt;em&gt;N&lt;/em&gt; vaguely identical nodes. &lt;em&gt;N&lt;/em&gt; could equal &lt;strong&gt;2&lt;/strong&gt; for a &lt;em&gt;dual primary&lt;/em&gt; or &lt;em&gt;active-passive&lt;/em&gt; cluster, or &lt;em&gt;N&lt;/em&gt; could be greater than &lt;strong&gt;2&lt;/strong&gt; for a more elaborate N-ary cluster. It is sufficient to say, that each of those &lt;em&gt;N&lt;/em&gt; nodes might export an identical puppet resource which one (or many) clients might need to collect, to operate correctly. It&amp;rsquo;s important that each node export this, so that there is no single point of failure if one or more of the cluster nodes goes missing.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

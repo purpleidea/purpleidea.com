@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pointers on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/pointers/</link>
+    <description>Recent content in Pointers on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 27 Jul 2015 11:39:45 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/pointers/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang parallelism issues causing “too many open files” error</title>
+      <link>https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/</link>
+      <pubDate>Mon, 27 Jul 2015 11:39:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/27/golang-parallelism-issues-causing-too-many-open-files-error/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been hacking in &lt;a href=&#34;https://en.wikipedia.org/wiki/Go_%28programming_language%29&#34;&gt;golang&lt;/a&gt; for a while, but I&amp;rsquo;ll admit that I didn&amp;rsquo;t get too deep into some of the language nuances until more recently. Since some of them have started to bite me, here&amp;rsquo;s a little post-mortem of one of the problems I was having.&lt;/p&gt;&#xA;&lt;p&gt;After hacking and testing code all day, I made a seemingly innocuous change, and when running my program, I saw the following error:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;2015/07/10 14:34:12 too many open files&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I didn&amp;rsquo;t know what I broke, but it was obviously my fault. I reverted my recent changes, but still the error persisted. Internet searches and many painful hours of debugging ensued.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

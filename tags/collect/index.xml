@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Collect on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/collect/</link>
+    <description>Recent content in Collect on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 14 May 2013 01:41:23 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/collect/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overriding attributes of collected exported resources</title>
+      <link>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</link>
+      <pubDate>Tue, 14 May 2013 01:41:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/14/overriding-attributes-of-collected-exported-resources/</guid>
+      <description>&lt;p&gt;This post is about a particularly elegant (and crucial) feature in &lt;a href=&#34;https://en.wikipedia.org/wiki/Puppet_%28software%29&#34;&gt;puppet&lt;/a&gt; &lt;a href=&#34;http://docs.puppetlabs.com/guides/exported_resources.html&#34;&gt;exported resources&lt;/a&gt;: &lt;span style=&#34;text-decoration:underline;&#34;&gt;attribute overriding&lt;/span&gt;. If you&amp;rsquo;re not already familiar with exported resources, you should start there, as they are &lt;em&gt;the&lt;/em&gt; killer feature that makes configuration management with puppet awesome. (I haven&amp;rsquo;t found any explicit docs about this feature either, so feel free to comment if you know where they&amp;rsquo;re hidden.)&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Setup&lt;/span&gt;:&lt;/strong&gt; I&amp;rsquo;ve got a virtual machine which exports a resource to &lt;em&gt;N&lt;/em&gt; different nodes. I&amp;rsquo;d like to define the resource with just one exported (&lt;em&gt;@@&lt;/em&gt;) definition on my virtual machine.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

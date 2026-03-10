@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dhcp on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/dhcp/</link>
+    <description>Recent content in Dhcp on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 27 Mar 2024 16:58:57 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/dhcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A new provisioning tool built with mgmt</title>
+      <link>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</link>
+      <pubDate>Wed, 27 Mar 2024 16:58:57 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</guid>
+      <description>&lt;p&gt;Today I&amp;rsquo;m announcing a new type of provisioning tool. This is both the&#xA;culmination of a long road, and the start of a new era. Please read on for all&#xA;of the details. Feel free to skip to the relevant sections you&amp;rsquo;re interested in&#xA;if you don&amp;rsquo;t want all of the background.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Ten years&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;The vision for this specific tool started around ten years ago. Previously, as a&#xA;sysadmin, I spent a lot of my time using a configuration management tool called&#xA;&lt;code&gt;puppet&lt;/code&gt;. I eventually realized and accepted the shortcomings of the tool after&#xA;a failed attempt to combine &lt;code&gt;puppet&lt;/code&gt; and some python scripts into a provisioning&#xA;and clustering tool that I was trying to build for greenfield environments. The&#xA;idea is that it would bootstrap a whole suite of infrastructure services for a&#xA;new data centre.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

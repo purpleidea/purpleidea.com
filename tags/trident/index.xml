@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Trident on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/trident/</link>
+    <description>Recent content in Trident on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Nov 2014 02:23:52 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/trident/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>&lt;p&gt;The fact that we manage the &lt;a href=&#34;https://en.wikipedia.org/wiki/Network_switch&#34;&gt;switches&lt;/a&gt; in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of &lt;a href=&#34;https://en.wikipedia.org/wiki/Silicon#Electronic_grade&#34;&gt;silicon&lt;/a&gt; which happens to be able to dramatically speed up the switching bandwidth.&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;absurd.png&#34;&gt;&lt;img class=&#34;wp-image-984 size-full&#34; src=&#34;absurd.png&#34; alt=&#34;absurd&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; beware of proprietary silicon, it&#39;s absurd!&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;That tiny bit of silicon is known as an &lt;a href=&#34;https://en.wikipedia.org/wiki/Application-specific_integrated_circuit&#34;&gt;ASIC&lt;/a&gt;, or an &lt;a href=&#34;https://en.wikipedia.org/wiki/Application-specific_integrated_circuit&#34;&gt;&lt;em&gt;application specific integrated circuit&lt;/em&gt;&lt;/a&gt;, and one particularly well performing ASIC (which is present in many commercially available switches) is called the &lt;a href=&#34;https://www.broadcom.com/products/Switching/Data-Center/BCM56850-Series&#34;&gt;Trident&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

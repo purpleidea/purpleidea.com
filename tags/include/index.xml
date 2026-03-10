@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Include on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/include/</link>
+    <description>Recent content in Include on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 26 Jul 2019 06:35:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/include/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mgmt Configuration Language: Class and Include</title>
+      <link>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</link>
+      <pubDate>Fri, 26 Jul 2019 06:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been a little over a year since I introduced the&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;Mgmt Configuration Language&lt;/a&gt;. A&#xA;lot has happened since then, and I&amp;rsquo;d like to introduce some of the missing&#xA;features that weren&amp;rsquo;t available when the language was first introduced. If you&#xA;haven&amp;rsquo;t already read that &lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;post&lt;/a&gt;,&#xA;please start there and come back when you&amp;rsquo;re finished. In this article we&amp;rsquo;ll&#xA;learn about classes.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Classes&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;You might remember that the &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;&lt;em&gt;mgmt&lt;/em&gt;&lt;/a&gt;&#xA;language called &lt;code&gt;mcl&lt;/code&gt; has both &lt;code&gt;statements&lt;/code&gt;, and &lt;code&gt;expressions&lt;/code&gt;. Statements&#xA;ultimately produce the &lt;code&gt;resources&lt;/code&gt; and &lt;code&gt;edges&lt;/code&gt; that make up our output graph,&#xA;and expressions produce the values (strings, integers, lists, etc) that make up&#xA;the inputs to those statements.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

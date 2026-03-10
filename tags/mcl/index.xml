@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mcl on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/mcl/</link>
+    <description>Recent content in Mcl on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 03 Dec 2024 02:56:37 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/mcl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modules and imports in mgmt</title>
+      <link>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</link>
+      <pubDate>Tue, 03 Dec 2024 02:56:37 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;Mgmt&lt;/a&gt; modules are used for structuring&#xA;your code across multiple files. This keeps things readable and allows for code&#xA;reusability. For example, it should be easy to write a single module which can&#xA;be effectively used by many different parties. To me, it never felt like code&#xA;reuse was a core design objective with other tools. In mgmt it has been since&#xA;the very beginning. I&amp;rsquo;m very proud of our module system, so let me introduce you&#xA;to it properly.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language: Functions</title>
+      <link>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</link>
+      <pubDate>Fri, 22 Nov 2024 18:16:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been a little while since I introduced the&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;Mgmt Configuration Language&lt;/a&gt;. I&#xA;originally wrote this article in 2019, and as I was working on it alongside the&#xA;code for functions, when I realized that lambdas didn&amp;rsquo;t work properly. It took&#xA;some time to finally solve that properly. Since then I&amp;rsquo;ve been working to get &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt;&#xA;production ready. It&amp;rsquo;s properly useful for production now, and so it&amp;rsquo;s time for&#xA;me to catch up on my documentation. I&amp;rsquo;ve revived and updated this article, let&amp;rsquo;s&#xA;go&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A new provisioning tool built with mgmt</title>
+      <link>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</link>
+      <pubDate>Wed, 27 Mar 2024 16:58:57 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/</guid>
+      <description>&lt;p&gt;Today I&amp;rsquo;m announcing a new type of provisioning tool. This is both the&#xA;culmination of a long road, and the start of a new era. Please read on for all&#xA;of the details. Feel free to skip to the relevant sections you&amp;rsquo;re interested in&#xA;if you don&amp;rsquo;t want all of the background.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Ten years&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;The vision for this specific tool started around ten years ago. Previously, as a&#xA;sysadmin, I spent a lot of my time using a configuration management tool called&#xA;&lt;code&gt;puppet&lt;/code&gt;. I eventually realized and accepted the shortcomings of the tool after&#xA;a failed attempt to combine &lt;code&gt;puppet&lt;/code&gt; and some python scripts into a provisioning&#xA;and clustering tool that I was trying to build for greenfield environments. The&#xA;idea is that it would bootstrap a whole suite of infrastructure services for a&#xA;new data centre.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language: Class and Include</title>
+      <link>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</link>
+      <pubDate>Fri, 26 Jul 2019 06:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been a little over a year since I introduced the&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;Mgmt Configuration Language&lt;/a&gt;. A&#xA;lot has happened since then, and I&amp;rsquo;d like to introduce some of the missing&#xA;features that weren&amp;rsquo;t available when the language was first introduced. If you&#xA;haven&amp;rsquo;t already read that &lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;post&lt;/a&gt;,&#xA;please start there and come back when you&amp;rsquo;re finished. In this article we&amp;rsquo;ll&#xA;learn about classes.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Classes&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;You might remember that the &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;&lt;em&gt;mgmt&lt;/em&gt;&lt;/a&gt;&#xA;language called &lt;code&gt;mcl&lt;/code&gt; has both &lt;code&gt;statements&lt;/code&gt;, and &lt;code&gt;expressions&lt;/code&gt;. Statements&#xA;ultimately produce the &lt;code&gt;resources&lt;/code&gt; and &lt;code&gt;edges&lt;/code&gt; that make up our output graph,&#xA;and expressions produce the values (strings, integers, lists, etc) that make up&#xA;the inputs to those statements.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language</title>
+      <link>https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/</link>
+      <pubDate>Mon, 05 Feb 2018 00:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;Mgmt&lt;/a&gt; has given us a lot of great&#xA;features, demos, and insight into how infrastructure automation should be&#xA;managed. Unfortunately it wasn&amp;rsquo;t a complete tool yet, because it was missing a&#xA;crucial piece for its completeness. That all changes today with the addition of:&#xA;the &lt;strong&gt;language&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;br /&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;An ideal language allows us to express easily what is useful for the programming task, and at the same time makes it difficult to write what leads to incomprehensible or incorrect programs.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

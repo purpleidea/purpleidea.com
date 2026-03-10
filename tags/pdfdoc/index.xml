@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pdfdoc on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/pdfdoc/</link>
+    <description>Recent content in Pdfdoc on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 18 Oct 2014 16:43:00 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/pdfdoc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hacking out an Openshift app</title>
+      <link>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</link>
+      <pubDate>Sat, 18 Oct 2014 16:43:00 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/10/18/hacking-out-an-openshift-app/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/a4bf5cad81ca66212f4c8e52edb2e816b8895690&#34;&gt;I had an itch to scratch&lt;/a&gt;, and I wanted to get a bit more familiar with &lt;a href=&#34;https://www.openshift.com/&#34;&gt;Openshift&lt;/a&gt;. I had used it in the past, but it was time to have another go. The &lt;a href=&#34;https://pdfdoc-purpleidea.rhcloud.com/&#34;&gt;app&lt;/a&gt; and the &lt;a href=&#34;https://github.com/purpleidea/pdfdoc/&#34;&gt;code&lt;/a&gt; are now available. Feel free to check out:&lt;/p&gt;&#xA;&lt;h2 style=&#34;text-align:center;&#34;&gt;&lt;a href=&#34;https://pdfdoc-purpleidea.rhcloud.com/&#34;&gt;https://pdfdoc-purpleidea.rhcloud.com/&lt;/a&gt;&lt;/h2&gt;&#xA;This is a simple app that takes the URL of a markdown file on GitHub, and outputs a &lt;a href=&#34;https://github.com/jgm/pandoc/&#34;&gt;&lt;em&gt;pandoc&lt;/em&gt;&lt;/a&gt; converted PDF. I wanted to use &lt;em&gt;pandoc&lt;/em&gt; specifically, because it produces PDF&#39;s that were beautifully created with &lt;a href=&#34;https://en.wikipedia.org/wiki/Latex&#34;&gt;LaTeX&lt;/a&gt;. To embed a link in your upstream documentation that points to a PDF, just append the file&#39;s URL to this app&#39;s url, under a &lt;em&gt;/pdf/&lt;/em&gt; path. For example:&#xA;&lt;p&gt;&lt;a href=&#34;https://pdfdoc-purpleidea.rhcloud.com/pdf/https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md&#34;&gt;&lt;a href=&#34;https://pdfdoc-purpleidea.rhcloud.com/pdf/&#34;&gt;https://pdfdoc-purpleidea.rhcloud.com/pdf/&lt;/a&gt;&lt;em&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md&#34;&gt;https://github.com/purpleidea/puppet-gluster/blob/master/DOCUMENTATION.md&lt;/a&gt;&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

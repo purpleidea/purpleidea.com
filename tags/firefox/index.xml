@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Firefox on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/firefox/</link>
+    <description>Recent content in Firefox on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 14 Nov 2015 06:50:35 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/firefox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Matching arbitrary URL&#39;s to custom Firefox profiles</title>
+      <link>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</link>
+      <pubDate>Sat, 14 Nov 2015 06:50:35 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/11/14/matching-arbitrary-urls-to-custom-firefox-profiles/</guid>
+      <description>&lt;p&gt;We&amp;rsquo;re constantly clicking on all sorts of different URL&amp;rsquo;s throughout the day. These clickable links appear in webpages (including in &amp;ldquo;&lt;a href=&#34;https://www.gnu.org/philosophy/who-does-that-server-really-serve.html&#34;&gt;web apps&lt;/a&gt;&amp;rdquo; like gmail) in mail clients like &lt;a href=&#34;https://en.wikipedia.org/wiki/Evolution_%28software%29&#34;&gt;Evolution&lt;/a&gt;, in terminals such as &lt;a href=&#34;https://wiki.gnome.org/Apps/Terminal&#34;&gt;GNOME-terminal&lt;/a&gt;, and any other &lt;a href=&#34;https://en.wikipedia.org/wiki/GTK%2B&#34;&gt;GTK+&lt;/a&gt; app on your GNU/Linux desktop. I wanted to perform custom actions when arbitrary URL&amp;rsquo;s are clicked, including running certain links in separate Firefox profiles. There are a bunch of different steps you have to do to get this working, but it should be easy to follow along. I&amp;rsquo;m doing all of this on &lt;a href=&#34;https://getfedora.org/&#34;&gt;Fedora 23&lt;/a&gt;, but it should work on other GNU/Linux environments.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Captive web portals are considered harmful</title>
+      <link>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</link>
+      <pubDate>Thu, 27 Nov 2014 00:46:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</guid>
+      <description>&lt;p&gt;Recently, when I tried to access &lt;a href=&#34;http://slashdot.org/&#34;&gt;&lt;a href=&#34;http://slashdot.org/&#34;&gt;http://slashdot.org/&lt;/a&gt;&lt;/a&gt; in Firefox, I would see my browser title bar flash briefly to &amp;ldquo;AT&amp;amp;T GUI&amp;rdquo;, and then I would get redirected to: &lt;code&gt;&lt;a href=&#34;http://slashdot.org/&#34;&gt;http://slashdot.org/&lt;/a&gt;&lt;strong&gt;cgi-bin/redirect.ha&lt;/strong&gt;&lt;/code&gt; which returns slashdot&amp;rsquo;s custom error 404 page! What is going on? (Read on for answer&amp;hellip;)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;Did slashdot mess up their &lt;a href=&#34;http://httpd.apache.org/docs/current/mod/mod_rewrite.html&#34;&gt;mod_rewrite&lt;/a&gt; config?&#xA;(Nope, works fine in a different browser...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Did my &lt;a href=&#34;https://www.eff.org/https-everywhere&#34;&gt;HTTPS everywhere&lt;/a&gt; extension go crazy?&#xA;(Nope, still broken when disabled...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Are my HTTP requests being &lt;a href=&#34;https://en.wikipedia.org/wiki/Man-in-the-middle_attack&#34;&gt;MITM&lt;/a&gt;-ed?&#xA;(Yes, &lt;a href=&#34;https://www.schneier.com/blog/archives/2013/09/new_nsa_leak_sh.html&#34;&gt;probably by the NSA&lt;/a&gt;, but they wouldn&#39;t make this kind of mistake...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Is my computer p0wned?&#xA;(I use &lt;a href=&#34;https://fedoraproject.org/&#34;&gt;GNU/Linux&lt;/a&gt;, so probably not...)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;a href=&#34;https://duckduckgo.com/?q=AT%26T+GUI+cgi-bin%2Fredirect.ha&#34;&gt;A keyword search&lt;/a&gt; will show you that others are also affected by this, except that the base domain (slashdot.org) is usually different... One thing that all the links I viewed have in common: none of them seem to know what&#39;s happening.&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Some background&lt;/span&gt;:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>&lt;p&gt;There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to &lt;em&gt;off&lt;/em&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Since we already agree that &lt;a href=&#34;https://github.com/tomerfiliba/rpyc/tree/master/demos/web8&#34;&gt;HTML and the web are a terrible idea&lt;/a&gt;, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me. The cleanest version I found is here: &lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;&lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fixing jerky scrolling in Firefox</title>
+      <link>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</link>
+      <pubDate>Thu, 11 Apr 2013 05:53:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/11/fixing-jerky-scrolling-in-firefox/</guid>
+      <description>&lt;p&gt;Fedora did a lovely job of updating me to the latest version (v. 20) of &lt;a href=&#34;http://getfirefox.com&#34;&gt;Firefox&lt;/a&gt;. One problem I found, was that scrolling on certain pages was quite jerky. Performance was worse (or more likely) on pages with a frameset, and pages which were long. Pages with many images made this problem worse.&lt;/p&gt;&#xA;&lt;p&gt;It turns out that the workaround is to disable hardware acceleration:&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;firefox-disable-hardware-scrolling.png&#34;&gt;&lt;img class=&#34;alignnone size-full wp-image-394&#34; alt=&#34;firefox-disable-hardware-scrolling&#34; src=&#34;firefox-disable-hardware-scrolling.png&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;After you&amp;rsquo;ve unchecked this box, restart Firefox, and scrolling is now considerably smoother.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>visible close buttons on every firefox tab (including the last one)</title>
+      <link>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</link>
+      <pubDate>Mon, 26 Nov 2012 05:42:20 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/26/visible-close-buttons-on-every-firefox-tab-including-the-last-one/</guid>
+      <description>&lt;p&gt;&lt;a title=&#34;more rows and columns on firefox new tab page&#34; href=&#34;https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/&#34;&gt;After hacking around with a few firefox internals the other day&lt;/a&gt;, I decided there was another little annoyance that I had&amp;hellip; When I&amp;rsquo;m acting insane and &lt;a href=&#34;http://reddit.com/&#34;&gt;using my mouse to open and close tabs&lt;/a&gt;, the per tab close button disappears when there is only one tab left! &lt;a href=&#34;https://bugzilla.mozilla.org/show_bug.cgi?id=455990&#34;&gt;This is apparently a feature&lt;/a&gt;, and while I can respect it as a default, it certainly isn&amp;rsquo;t an option for me. Thankfully, there are a lot of common minded individuals on the net, and the (hack) solution already existed. Here&amp;rsquo;s to explaining it clearly:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>more rows and columns on firefox new tab page</title>
+      <link>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</link>
+      <pubDate>Sat, 24 Nov 2012 19:09:37 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://firefox.com/&#34;&gt;Firefox&lt;/a&gt; has a &amp;ldquo;new tab&amp;rdquo; &lt;em&gt;speed dial&lt;/em&gt; type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.&lt;/p&gt;&#xA;&lt;p&gt;My one gripe is that it only shows you a default grid of 3 x 3. You can easily change that if you look in the secret preferences. Open a new tab and type in: &lt;em&gt;about:config&lt;/em&gt;, accept the warning, and then search for: &lt;em&gt;browser.newtabpage.rows&lt;/em&gt; and &lt;em&gt;browser.newtabpage.columns&lt;/em&gt;. These values are easily editable by double clicking on the row. (Bold indicates non defaults.)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

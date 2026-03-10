@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Qa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/qa/</link>
+    <description>Recent content in Qa on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 16 Jan 2014 20:28:17 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/qa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Testing GlusterFS during “Glusterfest”</title>
+      <link>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</link>
+      <pubDate>Thu, 16 Jan 2014 20:28:17 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/16/testing-glusterfs-during-glusterfest/</guid>
+      <description>&lt;p&gt;The GlusterFS community is having a &amp;ldquo;test day&amp;rdquo;. &lt;a title=&#34;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&#34; href=&#34;https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Puppet-Gluster+Vagrant&lt;/a&gt; is a great tool to help with this, and it has now been patched to support &lt;em&gt;alpha&lt;/em&gt;, &lt;em&gt;beta&lt;/em&gt;, &lt;em&gt;qa&lt;/em&gt;, and &lt;em&gt;rc&lt;/em&gt; releases! Because it was built so well (&lt;strong&gt;*&lt;/strong&gt;&lt;em&gt;cough&lt;/em&gt;&lt;strong&gt;*&lt;/strong&gt;, shameless plug), it only took &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/30392fd0cb4e2bd0e39faea83915bfe8a6574bbc&#34;&gt;one patch&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Okay, first make sure that your Puppet-Gluster+Vagrant setup is working properly. I have only tested this on Fedora 20. Please read:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

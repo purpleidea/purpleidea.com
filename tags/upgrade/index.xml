@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Upgrade on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/upgrade/</link>
+    <description>Recent content in Upgrade on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 04 Jun 2012 22:31:41 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/upgrade/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fedora 14 to 17 upgrade</title>
+      <link>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</link>
+      <pubDate>Mon, 04 Jun 2012 22:31:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/06/04/fedora-14-to-17-upgrade/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been reluctantly dreading the switch to gnome 3 + shell until it&amp;rsquo;s been ironed out a little bit more than gnome 3.0 - finally took the plunge. overall it&amp;rsquo;s working well. here are some (hopefully) useful notes:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;preupgrade 14-&amp;gt;17 in one step doesn&#39;t work. it lets you wait an hour for all the downloads to finish, but once you&#39;ve rebooted, the preupgrade installer tells you it can&#39;t jump this far. fail. reboot into f14, yum clean all, rm -rf /var/cache/yum/preupgrade/* ? and preupgrade to f15. boot into that, and then jumping directly to f17 works great.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;remove default f17 ugly fireworks background. the gnome3 default is pretty.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;gnome-tweak-tool is essential. try all the options until you figure out which ones you want. listing my personal preferences here is far too boring for the internet.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;dash click fix extension was essential for me. also: https://extensions.gnome.org/review/download/1323.shell-extension.zip which does the same thing, but for application launcher entries. this allows gnome-shell to behave properly and launch applications where i want them.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;i also added: &#34;Remove user name&#34; and &#34;Remove a11y&#34; extensions.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#34;system-monitor&#34;, is close to what i want, but is not good enough yet. disks access/writes don&#39;t show, and it&#39;s got a super ugly popup window. old gnome-system-monitor applet was PERFECT. Please bring it back or fix this one.&lt;/li&gt;&#xA;&#x9;&lt;li&gt;choose non-ugly background for gdm: # sudo -u gdm dbus-launch gnome-control-center&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;Hope this helped! Happy hacking,&#xA;&lt;p&gt;James&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

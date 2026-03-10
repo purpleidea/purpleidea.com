@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Box on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/box/</link>
+    <description>Recent content in Box on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 20 Jan 2014 11:46:31 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/box/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building base images for Vagrant with a Makefile</title>
+      <link>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</link>
+      <pubDate>Mon, 20 Jan 2014 11:46:31 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/20/building-base-images-for-vagrant-with-a-makefile/</guid>
+      <description>&lt;p&gt;I needed a base image &amp;ldquo;&lt;a href=&#34;https://docs.vagrantup.com/v2/boxes.html&#34;&gt;box&lt;/a&gt;&amp;rdquo; for my &lt;a title=&#34;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&#34; href=&#34;https://purpleidea.com/blog/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Puppet-Gluster+Vagrant&lt;/a&gt; work. It would have been great if good boxes already existed, and even better if it were easy to build my own. As it turns out, I wasn&amp;rsquo;t able to satisfy either of these conditions, so I&amp;rsquo;ve had to build one myself! &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/blob/master/builder/README&#34;&gt;I&amp;rsquo;ve published all of my code&lt;/a&gt;, so that you can use these techniques and &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/blob/master/builder/Makefile&#34;&gt;tools&lt;/a&gt; too!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="James Shubin">
+
+	<title>The Technical Blog of James - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+	<link href="/blog/index.xml" rel="alternate" type="application/rss+xml" title="purpleidea.com" />
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+				<h3><strong>The Technical Blog of James</strong></h3><br />
+				<h4><p>This is the <a href="/blog/">The Technical Blog of James</a>!</p>
+<p>A full list of all posts can be found in the <a href="archives/">archives</a>.</p>
+<p>This blog was formerly available <a href="https://ttboj.wordpress.com/">here</a>, however all posts have been migrated over.</p>
+</h4><br />
+			</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/">10 years of mgmt</a> <small class="pull-right">Posted on Sep 25, 2025</small><br>
+		<small>I can&#39;t believe it&#39;s been 10 years</small>
+	</h4>
+	<hr>
+	<p><p>I publicly released <a href="https://mgmtconfig.com/">mgmt</a> to the internet 10 years
+ago. I can&rsquo;t believe it&rsquo;s been 10 years. In this post I&rsquo;ll talk about:</p>
+<ul>
+<li>The new <code>mgmt</code> company</li>
+<li>A one-time new customer offer</li>
+<li>Unexpected wins</li>
+<li>Past failures</li>
+<li>Some history</li>
+<li>A new release</li>
+</ul>
+<p>And more&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The company</span>:<br /><br />
+
+<p>I&rsquo;ve officially started a company. I&rsquo;ve been working on this for some time now,
+and it&rsquo;s time to let you all know about it officially. As you already know
+(<code>mgmt</code>, <code>purpleidea</code>, etc&hellip;) I&rsquo;ve never been great at naming. The company is
+called:</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2025/09/25/10-years-of-mgmt/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2025/08/04/better-git-status/">Better git status</a> <small class="pull-right">Posted on Aug 4, 2025</small><br>
+		<small>Avoid needing to scroll git status</small>
+	</h4>
+	<hr>
+	<p><p>I&rsquo;ve been using <code>git status</code> for quite a long time now. Let&rsquo;s make it better.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">My old aliases</span>:<br /><br />
+
+<p>My <code>~/.gitconfig</code> has had:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[alias]
+</span></span><span style="display:flex;"><span>	s = status
+</span></span><span style="display:flex;"><span>	d = diff
+</span></span><span style="display:flex;"><span>	l = log --show-signature
+</span></span></code></pre></div><p>for as long as I can remember. They&rsquo;ve served me well.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The problem</span>:<br /><br />
+
+<p>In one of my <a href="https://github.com/purpleidea/mgmt/">projects</a>, I occasionally
+have a bunch of untracked files, particularly when I&rsquo;m hacking on something new
+that isn&rsquo;t committed yet. This may include notes, new tests, and so on. My
+terminal is usually between <code>24</code> and <code>37</code> lines tall. (Eg: run <code>tput lines</code>.) If
+there&rsquo;s a lot of untracked stuff here, I&rsquo;ll quickly go over this limit and have
+to scroll to see what&rsquo;s staged and so on.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2025/08/04/better-git-status/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/">Running etcd over SSH</a> <small class="pull-right">Posted on May 14, 2025</small><br>
+		<small>Using authorized_keys options to securely tunnel</small>
+	</h4>
+	<hr>
+	<p><p>Want to tunnel etcd traffic over SSH? Here&rsquo;s a pitfall I ran into.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The problem</span>:<br /><br />
+
+<p><a href="https://mgmtconfig.com/">Mgmt</a> supports tunnelling the <code>etcd</code> traffic over SSH.
+This is quite useful, because it means that for it to connect to etcd, it
+doesn&rsquo;t need to open up any new ports other than <code>22</code>.</p>
+<p>You can run the agent like so:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mgmt run --ssh-url<span style="color:#666">=</span>etcd@etcdserver:22 --seeds<span style="color:#666">=</span>http://127.0.0.1:2379 --no-server --no-magic empty
+</span></span></code></pre></div><p>and it just works!</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/">Working around an iPXE issue</a> <small class="pull-right">Posted on Jan 23, 2025</small><br>
+		<small>Working around an iPXE, not syncing, kernel panic</small>
+	</h4>
+	<hr>
+	<p><p><a href="https://ipxe.org/">iPXE</a> is a terrific tool, but despite their very respectable
+documentation, it has some rough edges, and it still feels like an &ldquo;in crowd&rdquo;
+kind of thing, where you have to learn the common tricks by knowing someone.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The problem</span>:<br /><br />
+
+<p>I&rsquo;ve been building a <a href="/blog/2024/03/27/a-new-provisioning-tool/">provisioning tool</a>
+in <a href="https://mgmtconfig.com/">mgmt</a> and instead of always relying on
+distro-specific boot images, I decided to use <em>iPXE</em> to handle the early boot,
+and have it hand-off to the kernel installer.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/">Modules and imports in mgmt</a> <small class="pull-right">Posted on Dec 3, 2024</small><br>
+		<small>Understanding mgmt modules, imports, and entry points</small>
+	</h4>
+	<hr>
+	<p><p><a href="https://github.com/purpleidea/mgmt/">Mgmt</a> modules are used for structuring
+your code across multiple files. This keeps things readable and allows for code
+reusability. For example, it should be easy to write a single module which can
+be effectively used by many different parties. To me, it never felt like code
+reuse was a core design objective with other tools. In mgmt it has been since
+the very beginning. I&rsquo;m very proud of our module system, so let me introduce you
+to it properly.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/12/03/modules-and-imports-in-mgmt/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/">Mgmt Configuration Language: Functions</a> <small class="pull-right">Posted on Nov 22, 2024</small><br>
+		<small>Function expressions and statements in the Mgmt Configuration Language</small>
+	</h4>
+	<hr>
+	<p><p>It&rsquo;s been a little while since I introduced the
+<a href="/blog/2018/02/05/mgmt-configuration-language/">Mgmt Configuration Language</a>. I
+originally wrote this article in 2019, and as I was working on it alongside the
+code for functions, when I realized that lambdas didn&rsquo;t work properly. It took
+some time to finally solve that properly. Since then I&rsquo;ve been working to get <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+production ready. It&rsquo;s properly useful for production now, and so it&rsquo;s time for
+me to catch up on my documentation. I&rsquo;ve revived and updated this article, let&rsquo;s
+go&hellip;</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/11/17/better-dmesg/">Better dmesg in five minutes</a> <small class="pull-right">Posted on Nov 17, 2024</small><br>
+		<small>How to handle dmesg on a modern computer</small>
+	</h4>
+	<hr>
+	<p><p>I last wrote about <code>dmesg</code> in <a href="/blog/2016/08/29/live-dmesg-following/">2016</a>. It
+has mostly not changed since then, but I&rsquo;ve changed my setup slightly. Here&rsquo;s a
+short article about what I did so that you can do it too, and so that I can
+remember for the next time.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Previously</span>:<br /><br />
+
+<p>Previous I had a bash alias which looked like this:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>alias dmesg=&#39;dmesg --follow || dmesg&#39;
+</span></span></code></pre></div><p>since some machines didn&rsquo;t yet support the <code>--follow</code> flag.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/11/17/better-dmesg/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/">A new provisioning tool built with mgmt</a> <small class="pull-right">Posted on Mar 27, 2024</small><br>
+		<small>A modern, easy and powerful provisioning tool</small>
+	</h4>
+	<hr>
+	<p><p>Today I&rsquo;m announcing a new type of provisioning tool. This is both the
+culmination of a long road, and the start of a new era. Please read on for all
+of the details. Feel free to skip to the relevant sections you&rsquo;re interested in
+if you don&rsquo;t want all of the background.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Ten years</span>:<br /><br />
+
+<p>The vision for this specific tool started around ten years ago. Previously, as a
+sysadmin, I spent a lot of my time using a configuration management tool called
+<code>puppet</code>. I eventually realized and accepted the shortcomings of the tool after
+a failed attempt to combine <code>puppet</code> and some python scripts into a provisioning
+and clustering tool that I was trying to build for greenfield environments. The
+idea is that it would bootstrap a whole suite of infrastructure services for a
+new data centre.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/03/02/bash-path-filtering/">Bash $PATH filtering</a> <small class="pull-right">Posted on Mar 2, 2024</small><br>
+		<small>How to filter things out of bash completion</small>
+	</h4>
+	<hr>
+	<p><p>As most modern GNU+Linux distro users already know, you get a lot of <a href="https://en.wikipedia.org/wiki/GNU">tools</a>
+included for free! Many of these may clutter up your <code>$PATH</code> and make <code>bash</code> tab
+completion more difficult than it has to be. Here&rsquo;s a way to improve this!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">A mess</span>:<br /><br />
+
+<p>Here&rsquo;s what I see when I tab-complete <code>cd&lt;TAB&gt;</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~$ <span style="color:#a2f">cd</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">cd</span>                 cddb_query         cd-info            cd-read
+</span></span><span style="display:flex;"><span>cd-convert         cd-drive           cd-it8             cdrecord
+</span></span><span style="display:flex;"><span>cd-create-profile  cd-fix-profile     cdmkdir            cdtmpmkdir
+</span></span><span style="display:flex;"><span>cdda-player        cd-iccdump         cd-paranoia
+</span></span></code></pre></div><p>I genuinely only use three of those commands.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/03/02/bash-path-filtering/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/">Upcoming Speaking and Events</a> <small class="pull-right">Posted on Jan 31, 2024</small><br>
+		<small>Where to get your mgmt fix in the next month</small>
+	</h4>
+	<hr>
+	<p><p>There are <em>three</em> upcoming <a href="https://github.com/purpleidea/mgmt/">mgmtconfig</a>
+events happening within the next <em>seven</em> days!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">mgmt @ FOSDEM</span>:<br /><br />
+
+<p>On February 3rd, I&rsquo;ll be giving a talk in the <a href="https://fosdem.org/2024/schedule/event/fosdem-2024-2575-single-binary-full-stack-provisioning/">golang devroom at FOSDEM</a>. Please come early (1hr+) if you want to get a seat, usually this
+room is especially full. This happens in Brussels, but it should be recorded if
+there aren&rsquo;t any technical glitches.</p>
+<p>(I got rejected for the main track, but it&rsquo;s my fault because I need to make my
+work more generally appealing first.)</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2024/01/28/git-branch-filtering/">Git branch filtering</a> <small class="pull-right">Posted on Jan 28, 2024</small><br>
+		<small>How to make git branch filtering more palatable</small>
+	</h4>
+	<hr>
+	<p><p>If you have more than one git branch up in the air at the same time, having a
+system to track them and filter them is essential. Here are the stages I went
+through with <code>git branch</code>.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="https://xkcd.com/1597/"><img class="alignnone size-full" src="git_2x.png"  width="50%" /></a></td></tr><tr><td>xkcd reminds us that we&#39;re insane</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Prefixes</span>:<br /><br />
+
+<p>My first tip involves using a memorable prefix. For new features I name my
+branches with <code>feat/</code>. For example <code>feat/my-new-feature</code>. Yes the slash and the
+dashes are treated like any regular character. I also commonly use <code>bug/</code>. You
+can see all of the branches with <code>git branch -a</code>.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2024/01/28/git-branch-filtering/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/">Five minute hacks: Swapping left and right headphone audio in wireplumber</a> <small class="pull-right">Posted on Nov 22, 2023</small><br>
+		<small>How to actually make this happen.</small>
+	</h4>
+	<hr>
+	<p><p>I&rsquo;m on Fedora 37 at the moment. My headphone audio is backwards. How do we fix
+it? I&rsquo;ve apparently never found the right magic until now.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Setup</span>:<br /><br />
+
+<p>I have a crappy &ldquo;couch computer&rdquo;. It&rsquo;s used for casual internet browsing and
+video watching. It has an analog audio out which goes to my speakers. I&rsquo;d like
+to use headphones for when I don&rsquo;t want to annoy my neighbours. I have a pair of
+wireless headphones that I got for free, but the battery doesn&rsquo;t last longer
+than an hour. I also have an old pair of analog headphones that work okay and
+don&rsquo;t run out of battery! I got a free USB to analog dongle, but for some reason
+the left and right audio channels are reversed!</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/11/22/swapping-left-and-right-headphone-audio-in-wireplumber/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/">One minute hacks: Saving time inserting images in Libreoffice</a> <small class="pull-right">Posted on Aug 2, 2023</small><br>
+		<small>How to anchor as character by default.</small>
+	</h4>
+	<hr>
+	<p><p>You&rsquo;ve probably used libreoffice. You opened a document, and proceeded to insert
+an image into the text. It wiggles all over and never rests where you want it
+to.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The solution</span>:<br /><br />
+
+<p>You most likely want the &ldquo;anchor as character&rdquo; option. Right-click on the newly
+inserted image, go to the <code>Anchor</code> menu item, and choose <code>As Character</code>. You
+will have to do this for each image you insert which is annoying&hellip;</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/">UEFI booting, and with a new kernel module</a> <small class="pull-right">Posted on Jul 24, 2023</small><br>
+		<small>How to get your dracut-built initramfs machine to boot with UEFI when you&#39;re missing a kernel module.</small>
+	</h4>
+	<hr>
+	<p><p>Picture this. You&rsquo;ve got a supermicro server. It&rsquo;s got eight hot-swappable 3.5&quot;
+HDD&rsquo;s. You want to use all of those for storage, so you buy a <a href="#addon">nifty add-on</a>
+that let&rsquo;s you add four additional 2.5&quot; SSD&rsquo;s. Those are great for your OS.
+That&rsquo;s a great way to keep your data separate. The motherboard only supports
+eight drives, so you&rsquo;ll need an <a href="https://en.wikipedia.org/wiki/Host_adapter">HBA</a>
+for the additional four&hellip; What are some catches and things you need to watch
+out for?</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/07/24/uefi-booting-and-with-a-new-kernel-module/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/">Improving git diff output in 5 min</a> <small class="pull-right">Posted on Jun 1, 2023</small><br>
+		<small>How to get rid of the annoying a/ and b/ prefixes.</small>
+	</h4>
+	<hr>
+	<p><p>Everyone uses <code>git diff</code>. But there&rsquo;s that odd annoyance that you&rsquo;ve probably
+seen before but are so used to that you&rsquo;ve forgotten about it. The <code>a/</code> and <code>b/</code>
+prefixes&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Example</span>:<br /><br />
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>james@computer:~/code/mgmt <span style="color:#666">(</span>feat/cool-feature<span style="color:#666">)</span>$ git diff
+</span></span><span style="display:flex;"><span>diff --git a/lang/funcs/core/os/readfile_func.go b/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>index 206ba798d..48ac29dc7 <span style="color:#666">100644</span>
+</span></span><span style="display:flex;"><span>--- a/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>+++ b/lang/funcs/core/os/readfile_func.go
+</span></span><span style="display:flex;"><span>@@ -228,6 +228,8 @@ func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Stream<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> // Close runs some shutdown code <span style="color:#a2f;font-weight:bold">for</span> this <span style="color:#a2f;font-weight:bold">function</span> and turns off the stream.
+</span></span><span style="display:flex;"><span> func <span style="color:#666">(</span>obj *ReadFileFunc<span style="color:#666">)</span> Close<span style="color:#666">()</span> error <span style="color:#666">{</span>
+</span></span><span style="display:flex;"><span>+       // TODO: Port to the new ctx-in-Stream close API.
+</span></span><span style="display:flex;"><span>+       // Hello blog readers!
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.closeChan<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>        obj.wg.Wait<span style="color:#666">()</span>     // block so we don<span style="">&#39;</span>t <span style="color:#a2f">exit</span> by the closure of obj.events
+</span></span><span style="display:flex;"><span>        close<span style="color:#666">(</span>obj.events<span style="color:#666">)</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">What are they for?</span><br /><br />
+
+<p>The <code>git diff</code> command shows these to help you differentiate between the source
+and the destination files. In most cases you are in the midst of looking at and
+writing code, so you&rsquo;ll probably instinctively know whether you or something
+just added or deleted those lines. (Because if you flipped <code>a</code> and <code>b</code> you&rsquo;d
+have the opposite diff.)</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/06/01/improving-git-diff-output-in-5-min/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/">Blocked select logging (deadlock finding) in golang</a> <small class="pull-right">Posted on May 26, 2023</small><br>
+		<small>How to log when you&#39;re waiting for a blocked select statement...</small>
+	</h4>
+	<hr>
+	<p><p>I&rsquo;ve been writing some massively concurrent code for <a href="https://github.com/purpleidea/mgmt/">mgmt</a>
+lately. The concurrency makes it incredibly bug prone. In this case it&rsquo;s usually
+races or deadlocks. I&rsquo;ve got a new trick to make the process more pleasant.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>I&rsquo;m sure many of you have written some code like this before:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#080;font-style:italic">// just a small excerpt</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">for</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#a2f;font-weight:bold">select</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#a2f;font-weight:bold">case</span><span style="color:#bbb"> </span><span style="color:#666">&lt;-</span>someEvent:<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#080;font-style:italic">// some awesome thing happened!</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span><span style="color:#a2f;font-weight:bold">case</span><span style="color:#bbb"> </span><span style="color:#666">&lt;-</span>ctx.<span style="color:#00a000">Done</span>():<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">		</span><span style="color:#a2f;font-weight:bold">return</span><span style="color:#bbb"> </span>ctx.<span style="color:#00a000">Err</span>()<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb">	</span>}<span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></span></span></code></pre></div><p>And during debugging, you might have gotten frustrated and added some printf&rsquo;s:</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/05/26/blocked-select-logging-in-golang/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/">Deadline context test cancellation in golang</a> <small class="pull-right">Posted on Feb 24, 2023</small><br>
+		<small>How to map the cancellation context into your golang tests...</small>
+	</h4>
+	<hr>
+	<p><p>I decided to write a fancy test harness in golang today. The test wraps a big
+internal engine for <a href="https://github.com/purpleidea/mgmt/">mgmt</a> and at the
+top-level it takes a <a href="https://pkg.go.dev/context">context</a> for cancellation. If
+you don&rsquo;t know about the <code>context</code> package, then you should go understand that
+and then come back here&hellip; Don&rsquo;t feel bad, I had no idea what it was about at
+first either!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">The Problem</span>:<br /><br />
+
+<p>I assumed there would be some way to follow a notification from the test runner
+down into my test to tell it when it was time to cleanup and exit early&hellip; I
+expected that making my own <code>^C</code> signal handler wouldn&rsquo;t be correct, and I
+(incorrectly) assumed that the interface I&rsquo;d be looking for would offer a golang
+<code>context</code> that I could pass into my code. I was wrong, but I was on the right
+track and it did help me find what I was looking for. Let me explain the subtlety&hellip;</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2023/02/24/deadline-context-test-cancellation-in-golang/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/">Magic typing with shortcuts on Linux</a> <small class="pull-right">Posted on Jun 16, 2021</small><br>
+		<small>How to workaround bad software by automating your typing.</small>
+	</h4>
+	<hr>
+	<p><p>Ever find yourself typing more characters than is necessary when using some
+annoying application or website? Here&rsquo;s a quick hack around that.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Intro</span>:<br /><br />
+
+<p>There&rsquo;s a magic program called <code>xdotool</code> written by <a href="https://twitter.com/jordansissel/">Jordan Sissel</a>
+that solves this problem. I&rsquo;ve known about his excellent work for years, but
+only today did I learn he also wrote <code>xdotool</code>. It&rsquo;s named as such because it
+tells the <code>X</code> server to do something for you.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2021/06/15/magic-typing-with-shortcuts-on-linux/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/">USB Audio on a Boombox</a> <small class="pull-right">Posted on Jan 11, 2021</small><br>
+		<small>Getting USB audio working on a Sony ZS-RS60BT</small>
+	</h4>
+	<hr>
+	<p><p>In an earlier post, <a href="/blog/2020/08/11/usb-car-audio-in-a-civic/">I got USB audio working on my used, manual, 2013 Honda Civic EX</a>.
+Today I&rsquo;ll do the same for a Sony ZS-RS60BT <a href="https://en.wikipedia.org/wiki/Boombox">boombox</a>.</p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="boombox.jpg"><img class="alignnone size-full" src="boombox.jpg"  width="100%" /></a></td></tr><tr><td>Here it is in all its used glory after a little cleaning.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>I decided I should get a small portable boombox to practice my <a href="https://en.wikipedia.org/wiki/Popping">dope dance moves</a>.
+I currently still suck because I think I spend more time computering than out on
+the floor. In any case, in a stroke of luck, I happened upon a used boombox that
+was getting discarded due to a broken CD player. Nobody seemed either able or
+interested in getting USB audio working, so I took it home and gave it a go!</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2021/01/11/usb-audio-on-a-boombox/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2020/12/28/working-at-amazon/">Working at Amazon</a> <small class="pull-right">Posted on Dec 28, 2020</small><br>
+		<small>I found a new job</small>
+	</h4>
+	<hr>
+	<p><p><strong>TL;DR:</strong> I&rsquo;ve got a new job working for <a href="https://aws.amazon.com/">Amazon</a>, in
+the &ldquo;Open Source Program Office&rdquo;. I&rsquo;m now an Amazoner!
+More information below&hellip;
+<br />
+<br /></p>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="amazon.jpg"><img class="alignnone size-full" src="amazon.jpg"  width="100%" /></a></td></tr><tr><td>The Amazon. Source: https://en.wikipedia.org/wiki/Amazon_rainforest</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>A little over three months ago, <a href="/blog/2020/09/10/james-is-available-for-hire/">I decided to get back into full-time work</a>.
+For the past 2.5 years since <a href="/blog/2018/04/04/leaving-redhat/">I left my job at Red Hat</a>,
+I&rsquo;ve been mostly working full-time on <a href="/projects/mgmt-config/">Mgmt Config</a> and
+my <a href="/projects/mentoring-program/">DevOps/SWE Mentoring Program</a>. To do such
+things, I had to live off of my savings, which isn&rsquo;t sustainable long-term. I am
+thankful that I was able to do so for so long. It was time to dive back in, and
+here I am.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2020/12/28/working-at-amazon/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/">James is available for hire!</a> <small class="pull-right">Posted on Sep 10, 2020</small><br>
+		<small>Looking For A Job</small>
+	</h4>
+	<hr>
+	<p><p><strong>TL;DR:</strong> I&rsquo;m available for hire. Experienced at Linux/Golang/Mentoring/etc.
+More information below!</p>
+<br />
+<table><tr><td>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="james-working.png"><img class="alignnone size-full" src="james-working.png"  width="100%" /></a></td></tr><tr><td>A drawing of me coding away.</td></tr></table></br />
+
+</td><td>
+
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="james-speaking.png"><img class="alignnone size-full" src="james-speaking.png"  width="100%" /></a></td></tr><tr><td>A photo of me giving a talk to a sold-out crowd.</td></tr></table></br />
+
+</td></tr></table>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>Two years ago, <a href="/blog/2018/04/04/leaving-redhat/">I left my job at Red Hat</a> to
+work on <a href="https://github.com/purpleidea/mgmt/">mgmt config</a> full-time. I&rsquo;m still
+passionate about this project, and I&rsquo;m proud of the progress that has been made
+in the last two years, but it&rsquo;s time for me to explore new opportunities as
+well. My years of experience building mgmt has taught me a lot about open
+source, golang and mentoring others, and I hope this makes me a valuable
+addition to your team.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2020/09/10/james-is-available-for-hire/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/">Inexpensive Dynamic DNS over IRC</a> <small class="pull-right">Posted on Sep 1, 2020</small><br>
+		<small>Building inexpensive dynamic dns infrastructure for sysadmins</small>
+	</h4>
+	<hr>
+	<p><p>The one thing that I&rsquo;ve been using for longer than <code>ssh</code> is dynamic dns. In this
+article I&rsquo;ll explain how I built an inexpensive, reliable, private alternative
+to the mainstream tools commonly available today using only golang and <a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a>.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>I&rsquo;ve had an account with <code>dyndns.org</code> for a long time. They used to be free, but
+then they cut off the free tier, but left existing accounts alone, until they
+eventually cut all the non-payers off entirely. I think we need an inexpensive
+way of giving up-and-coming GNU+Linux hackers a way to <code>ssh</code> home, and run their
+<a href="https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/">irssi sessions</a>,
+without having to pay. I also wanted something reliable that wouldn&rsquo;t disappear
+the way dyndns did.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2020/08/11/usb-car-audio-in-a-civic/">USB Car Audio in a Civic</a> <small class="pull-right">Posted on Aug 24, 2020</small><br>
+		<small>Getting USB car audio working in a 2013 Honda Civic EX</small>
+	</h4>
+	<hr>
+	<p><p>Transportation is very important to me. My whole life I&rsquo;ve never owned a car. I
+have gotten by with biking, public transit, and various car sharing services.
+Sadly, biking is incredibly dangerous and stressful, because most cars don&rsquo;t
+respect bicycles, and in the winter it&rsquo;s not very practical, the
+<a href="https://www.stm.info/en">STM</a> (public transit) offers an incredibly unreliable
+and unpleasant service, and <a href="https://www.car2go.com/">Car2Go</a> (car sharing) now
+requires that you use their proprietary smart phone app (you used to be able to
+just swipe the membership card) so I finally gave up and decided to buy a used
+car.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2020/08/11/usb-car-audio-in-a-civic/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/">Mgmt Configuration Language: Class and Include</a> <small class="pull-right">Posted on Jul 26, 2019</small><br>
+		<small>Class and Include statements in the Mgmt Configuration Language</small>
+	</h4>
+	<hr>
+	<p><p>It&rsquo;s been a little over a year since I introduced the
+<a href="/blog/2018/02/05/mgmt-configuration-language/">Mgmt Configuration Language</a>. A
+lot has happened since then, and I&rsquo;d like to introduce some of the missing
+features that weren&rsquo;t available when the language was first introduced. If you
+haven&rsquo;t already read that <a href="/blog/2018/02/05/mgmt-configuration-language/">post</a>,
+please start there and come back when you&rsquo;re finished. In this article we&rsquo;ll
+learn about classes.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Classes</span>:<br /><br />
+
+<p>You might remember that the <a href="https://github.com/purpleidea/mgmt/"><em>mgmt</em></a>
+language called <code>mcl</code> has both <code>statements</code>, and <code>expressions</code>. Statements
+ultimately produce the <code>resources</code> and <code>edges</code> that make up our output graph,
+and expressions produce the values (strings, integers, lists, etc) that make up
+the inputs to those statements.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+			<div class="well well-sm">
+	<h4>
+		<a href="https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/">Upcoming Speaking and Events</a> <small class="pull-right">Posted on Feb 2, 2019</small><br>
+		<small>Where to get your mgmt fix in the next month</small>
+	</h4>
+	<hr>
+	<p><br /><span style="text-decoration:underline; font-weight: bold;">mgmt @ FOSDEM</span>:<br /><br />
+
+<p>Later today I&rsquo;m giving four talks about <a href="https://github.com/purpleidea/mgmt">mgmt</a>
+at <a href="https://fosdem.org/2019/schedule/speaker/james_shubin/">FOSDEM</a>. I&rsquo;m also
+giving two more on the following day. (One is a 5 min lightning talk.) I don&rsquo;t
+know how I got accepted for so many talks, I just replied to the CFP for every
+room where I thought I had something interesting to share, and well, here we
+are!</p>
+<p>I got rejected for the main track again, but I guess it&rsquo;s up to me to make my
+work more generally appealing first.</p></p>
+	<a class="btn btn-primary btn-xs" href="https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/">Read More <span class="fa fa-angle-double-right"></span></a>
+</div>
+
+		
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+			<a href="/blog/index.xml" style="background:#f26522" class="btn btn-primary btn-xs"><i class="fa fa-square-rss fa-2x"></i></a>
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+	<div class="well well-sm">
+		<i>&nbsp;A full list of all posts can be found in the <a href="archives/">archives</a>.</i>
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2026 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/_index.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Washington on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/washington/</link>
+    <description>Recent content in Washington on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 03 Nov 2013 19:40:08 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/washington/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Speaking at LISA 2013 about Puppet and GlusterFS</title>
+      <link>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</link>
+      <pubDate>Sun, 03 Nov 2013 19:40:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m speaking at &lt;a href=&#34;https://www.usenix.org/conference/lisa13&#34;&gt;LISA 2013&lt;/a&gt;, the &amp;ldquo;Large Installation System Administration&amp;rdquo; conference. This conference runs all week in &lt;a href=&#34;https://en.wikipedia.org/wiki/Washington,_DC&#34;&gt;Washington&lt;/a&gt;. I&amp;rsquo;ll be giving two talks during the week, and attending at least one BOF.&lt;/p&gt;&#xA;&lt;p&gt;My first talk is on Monday during the &lt;a href=&#34;https://www.usenix.org/conference/lisa13/gluster-community-day&#34;&gt;Gluster Community Day&lt;/a&gt;. I&amp;rsquo;ll be speaking about &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;puppet-gluster&lt;/a&gt;, and giving a live demo. I&amp;rsquo;ll be showing some new features too. If you&amp;rsquo;d like to talk more about puppet-gluster, or want to attend the talk, give me a shout, or sign up at the above &lt;em&gt;Gluster Community Day&lt;/em&gt; link.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

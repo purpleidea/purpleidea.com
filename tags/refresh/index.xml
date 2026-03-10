@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Refresh on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/refresh/</link>
+    <description>Recent content in Refresh on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 07 Dec 2016 07:00:20 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/refresh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Send/Recv in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</link>
+      <pubDate>Wed, 07 Dec 2016 07:00:20 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/12/07/sendrecv-in-mgmt/</guid>
+      <description>&lt;p&gt;I previously published &amp;ldquo;&lt;a href=&#34;https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/&#34;&gt;A revisionist history of configuration management&lt;/a&gt;&amp;rdquo;. I meant for that to be the intro to this article, but it ended up being long enough that it deserved a separate post. I &lt;em&gt;will&lt;/em&gt; explain Send/Recv in this article, but first a few clarifications to the aforementioned article.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Clarifications&lt;/span&gt;&lt;/p&gt;&#xA;&lt;p&gt;I mentioned that my &amp;ldquo;revisionist history&amp;rdquo; was inaccurate, but I failed to mention that it was also not exhaustive! Many things were left out either because they were proprietary, niche, not well-known, of obscure design or simply for brevity. My apologies if you were involved with Bcfg2, Bosh, Heat, Military specifications, SaltStack, SmartFrog, or something else entirely. I&amp;rsquo;d love it if someone else wrote an &amp;ldquo;exhaustive history&amp;rdquo;, but I don&amp;rsquo;t think that&amp;rsquo;s possible.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

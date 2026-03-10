@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yum on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/yum/</link>
+    <description>Recent content in Yum on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 14 Mar 2016 00:50:48 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/yum/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatic edges in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</link>
+      <pubDate>Mon, 14 Mar 2016 00:50:48 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been &lt;a href=&#34;https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/&#34;&gt;two months since I announced mgmt&lt;/a&gt;, and now it&amp;rsquo;s time to continue the story by telling you more about the design of &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;what&amp;rsquo;s now in git master&lt;/a&gt;. Before I get into those details, let me quickly &lt;a href=&#34;https://www.youtube.com/watch?v=M4vqr3_ROIk&amp;t=748&amp;html5=1&#34;&gt;recap&lt;/a&gt; what&amp;rsquo;s happened since then.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Mgmt community recap&lt;/span&gt;:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;    &lt;li&gt;I gave the first public presentation about mgmt at &lt;a href=&#34;http://cfgmgmtcamp.eu/schedule/speakers/JamesShubin.html&#34;&gt;CfgMgmtCamp&lt;/a&gt;.&lt;/li&gt;&#xA;    &lt;li&gt;I repeated the talk at &lt;a href=&#34;https://devconfcz2016.sched.org/event/5m14/next-generation-config-mgmt&#34;&gt;DevConf.cz&lt;/a&gt;. &lt;a href=&#34;https://www.youtube.com/watch?v=GVhpPF0j-iE&amp;html5=1&#34;&gt;The video recording is available.&lt;/a&gt;&lt;/li&gt;&#xA;    &lt;li&gt;Felix wrote about his work &lt;a href=&#34;https://ffrank.github.io/features/2016/02/18/from-catalog-to-mgmt/&#34;&gt;cross compiling puppet code to mgmt&lt;/a&gt;.&lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;https://github.com/purpleidea/mgmt/graphs/contributors&#34;&gt;Three new contributors&lt;/a&gt; got their feet wet in git master.&lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;https://github.com/purpleidea/mgmt/#on-the-web&#34;&gt;Mgmt got a lot more attention on the web...&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Okay, time to tell you what&amp;rsquo;s new in mgmt!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>&lt;p&gt;In this new crazy world of &lt;a href=&#34;https://en.wikipedia.org/wiki/Docker_%28software%29&#34;&gt;containers&lt;/a&gt; and immutable hosts, one might still want to run previous generation software such as &lt;a href=&#34;https://duckduckgo.com/l/?kh=-1&amp;uddg=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPuppet_(software)&#34;&gt;Puppet&lt;/a&gt; on a current generation &lt;a href=&#34;https://www.projectatomic.io/&#34;&gt;Atomic host&lt;/a&gt;. This article will explain how you can do that, and offer some &lt;a href=&#34;https://github.com/purpleidea/spc-puppet-apply&#34;&gt;proof of concept code&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;The atomic host doesn&amp;rsquo;t provide a &lt;a href=&#34;https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified&#34;&gt;yum&lt;/a&gt; or &lt;a href=&#34;https://fedoraproject.org/wiki/Dnf&#34;&gt;dnf&lt;/a&gt; command, because the software is pre-baked into a read-only &lt;code&gt;/usr/&lt;/code&gt; partition. To &amp;ldquo;&lt;em&gt;install&lt;/em&gt;&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster now available as RPM</title>
+      <link>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</link>
+      <pubDate>Thu, 27 Mar 2014 20:32:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been afraid of &lt;a href=&#34;https://en.wikipedia.org/wiki/RPM_Package_Manager&#34;&gt;RPM&lt;/a&gt; and package maintaining [1] for years, but thanks to &lt;a href=&#34;http://www.keithley.org/kaleb/kaleb.html&#34;&gt;Kaleb Keithley&lt;/a&gt;, I have finally made some RPM&amp;rsquo;s that weren&amp;rsquo;t generated from a &lt;a href=&#34;http://docs.python.org/3/distutils/builtdist.html&#34;&gt;high level tool&lt;/a&gt;. Now that I have the &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155&#34;&gt;boilerplate&lt;/a&gt; done, it&amp;rsquo;s a relatively painless process!&lt;/p&gt;&#xA;&lt;p&gt;In case you don&amp;rsquo;t know &lt;a href=&#34;https://twitter.com/kalebkuechle&#34;&gt;kkeithley&lt;/a&gt;, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a &lt;a href=&#34;https://en.wikipedia.org/wiki/Beer&#34;&gt;&lt;em&gt;$BEVERAGE&lt;/em&gt;&lt;/a&gt;. &amp;lt;/plug&amp;gt;&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;wizard_penguin.png&#34;&gt;&lt;img class=&#34;size-large wp-image-799&#34; src=&#34;wizard_penguin.png&#34; alt=&#34;A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155&#34;&gt;The full source of my changes is available in git.&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vagrant vsftp and other tricks</title>
+      <link>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</link>
+      <pubDate>Sat, 21 Dec 2013 11:58:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/</guid>
+      <description>&lt;p&gt;&lt;a title=&#34;Vagrant on Fedora with libvirt&#34; href=&#34;https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/&#34;&gt;As I previously wrote, I&amp;rsquo;ve been busy with Vagrant on Fedora with libvirt&lt;/a&gt;, and have even been &lt;a href=&#34;https://github.com/mitchellh/vagrant/pull/2677&#34;&gt;submitting&lt;/a&gt;, &lt;a href=&#34;https://github.com/fgrehm/vagrant-cachier/pull/68&#34;&gt;patches&lt;/a&gt; and &lt;a href=&#34;https://github.com/mitchellh/vagrant/issues/2680&#34;&gt;issues&lt;/a&gt;! (&lt;a href=&#34;https://github.com/pradels/vagrant-libvirt/issues/107&#34;&gt;This &amp;ldquo;&lt;em&gt;closed&lt;/em&gt;&amp;rdquo; issue needs solving!&lt;/a&gt;) Here are some of the tricks that I&amp;rsquo;ve used while hacking away.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Default provider&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;I should have mentioned this in my earlier article but I forgot: If you&amp;rsquo;re always using the same provider, you might want to set it as the default. In my case I&amp;rsquo;m using &lt;a href=&#34;https://github.com/purpleidea/vagrant-libvirt&#34;&gt;vagrant-libvirt&lt;/a&gt;. To do so, add the following to your &lt;code&gt;.bashrc&lt;/code&gt;:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Bittorent sync for repository mirroring</title>
+      <link>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</link>
+      <pubDate>Mon, 23 Sep 2013 02:06:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://twitter.com/theronconrey&#34;&gt;Theron Conrey&lt;/a&gt; writes about using:&lt;/p&gt;&#xA;&lt;blockquote&gt;&lt;a href=&#34;http://conrey.org/2013/05/21/bittorrent-sync-as-geo-replication-for-storage/&#34;&gt;BitTorrent Sync as Geo-Replication for Storage&lt;/a&gt;&lt;/blockquote&gt;&#xA;We got a chance to talk about this idea at Linuxcon. I&#39;m not entirely convinced there aren&#39;t some problem edge cases with this solution, but I think it will be hard to tell as long as the BitTorrent sync library is proprietary. I did come up with a special case of Theron&#39;s idea that I believe could work well.&#xA;&lt;p&gt;The special case uses the optimization that the synchronization (or file transferring) is unidirectional. This avoids any coherency complications involved if both sides were to write to the same file. Combined with the BitTorrent protocol, this does what normal torrent usage does, except with BitTorrent sync, we&amp;rsquo;re looking at a folder full of files.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Upgrading from Fedora 18 to Fedora 19</title>
+      <link>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</link>
+      <pubDate>Sun, 04 Aug 2013 05:02:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</guid>
+      <description>&lt;p&gt;It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. &lt;a title=&#34;Picking up the pieces after a Fedora 18 install&#34; href=&#34;https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/&#34;&gt;Fedora 18 was one of the worst releases ever&lt;/a&gt;, so I figured it could only get better. I ran my backups as usual, however this time I didn&amp;rsquo;t seem to need them, the upgrade process went off without a hitch! &lt;a href=&#34;https://fedoraproject.org/wiki/FedUp&#34;&gt;I used the fedup-cli process over the network.&lt;/a&gt; I always run these things inside of screen.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gluster Community Day on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gluster-community-day/</link>
+    <description>Recent content in Gluster Community Day on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 05 Nov 2013 01:30:05 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/gluster-community-day/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gluster Community Day, LISA 2013, Monday</title>
+      <link>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</link>
+      <pubDate>Tue, 05 Nov 2013 01:30:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m here at LISA 2013 at the &lt;a href=&#34;http://glusterday-lisa.eventbrite.com/&#34;&gt;Gluster Community Day&lt;/a&gt;. I&amp;rsquo;ve been asked by &lt;a href=&#34;https://twitter.com/jzb&#34;&gt;Joe Brockmeier&lt;/a&gt; to give a little recap about what&amp;rsquo;s been going on. So here it is!&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://twitter.com/wphotos&#34;&gt;Wesley Duffee-Braun&lt;/a&gt; started off with a nice overview talk about &lt;a href=&#34;http://www.gluster.org/&#34;&gt;GlusterFS&lt;/a&gt;. The great thing about his talk was that he gave a live demo, running on virtual machines, on his laptop. If you&amp;rsquo;re a new GlusterFS user, this is good exposure to help you get started. He also has the nicest slides I&amp;rsquo;ve ever seen. Someone needs to send me the .&lt;em&gt;odp&lt;/em&gt; template!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

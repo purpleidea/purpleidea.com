@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Captive Portal on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/captive-portal/</link>
+    <description>Recent content in Captive Portal on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 27 Nov 2014 00:46:06 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/captive-portal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Captive web portals are considered harmful</title>
+      <link>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</link>
+      <pubDate>Thu, 27 Nov 2014 00:46:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/27/captive-web-portals-are-considered-harmful/</guid>
+      <description>&lt;p&gt;Recently, when I tried to access &lt;a href=&#34;http://slashdot.org/&#34;&gt;&lt;a href=&#34;http://slashdot.org/&#34;&gt;http://slashdot.org/&lt;/a&gt;&lt;/a&gt; in Firefox, I would see my browser title bar flash briefly to &amp;ldquo;AT&amp;amp;T GUI&amp;rdquo;, and then I would get redirected to: &lt;code&gt;&lt;a href=&#34;http://slashdot.org/&#34;&gt;http://slashdot.org/&lt;/a&gt;&lt;strong&gt;cgi-bin/redirect.ha&lt;/strong&gt;&lt;/code&gt; which returns slashdot&amp;rsquo;s custom error 404 page! What is going on? (Read on for answer&amp;hellip;)&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;Did slashdot mess up their &lt;a href=&#34;http://httpd.apache.org/docs/current/mod/mod_rewrite.html&#34;&gt;mod_rewrite&lt;/a&gt; config?&#xA;(Nope, works fine in a different browser...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Did my &lt;a href=&#34;https://www.eff.org/https-everywhere&#34;&gt;HTTPS everywhere&lt;/a&gt; extension go crazy?&#xA;(Nope, still broken when disabled...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Are my HTTP requests being &lt;a href=&#34;https://en.wikipedia.org/wiki/Man-in-the-middle_attack&#34;&gt;MITM&lt;/a&gt;-ed?&#xA;(Yes, &lt;a href=&#34;https://www.schneier.com/blog/archives/2013/09/new_nsa_leak_sh.html&#34;&gt;probably by the NSA&lt;/a&gt;, but they wouldn&#39;t make this kind of mistake...)&lt;/li&gt;&#xA;&#x9;&lt;li&gt;Is my computer p0wned?&#xA;(I use &lt;a href=&#34;https://fedoraproject.org/&#34;&gt;GNU/Linux&lt;/a&gt;, so probably not...)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;a href=&#34;https://duckduckgo.com/?q=AT%26T+GUI+cgi-bin%2Fredirect.ha&#34;&gt;A keyword search&lt;/a&gt; will show you that others are also affected by this, except that the base domain (slashdot.org) is usually different... One thing that all the links I viewed have in common: none of them seem to know what&#39;s happening.&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Some background&lt;/span&gt;:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

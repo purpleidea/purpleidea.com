@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Octave on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/octave/</link>
+    <description>Recent content in Octave on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Jun 2013 02:46:27 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/octave/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>puppet matlab module</title>
+      <link>https://purpleidea.com/blog/2013/06/04/puppet-matlab-module/</link>
+      <pubDate>Tue, 04 Jun 2013 02:46:27 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/puppet-matlab-module/</guid>
+      <description>&lt;p&gt;I don&amp;rsquo;t like repetitive work, and installing matlab counts doubly as so. Once I figured out the correct steps, I automated it with a puppet module. The downside is that the install takes a while because puppet needs to copy the &lt;em&gt;iso&lt;/em&gt; locally. This is okay because I can be busy doing something else while this is happening.&lt;/p&gt;&#xA;&lt;p&gt;Using the module is quite easy:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;matlab::install { &amp;#39;R2011a&amp;#39;:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    iso =&amp;gt; &amp;#39;puppet://files/matlab/MATHWORKS_R2011A.iso&amp;#39;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    licensekey =&amp;gt; &amp;#39;#####-#####-#####-#####&amp;#39;,    # provide your own here&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    licensefile =&amp;gt; &amp;#39;puppet:///files/matlab/license.lic&amp;#39;,    # get your own!&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    licenseagree =&amp;gt; true,    # setting this to true &amp;#39;acknowledges&amp;#39; their (C)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    prefix =&amp;gt; &amp;#39;/usr/local&amp;#39;,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You might notice that this supports installing multiple releases on the same machine. You will have to provide your own license key and license file.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

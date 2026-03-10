@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Planet on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/planet/</link>
+    <description>Recent content in Planet on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Nov 2016 23:59:49 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/planet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve got a brand new core feature in mgmt called &lt;em&gt;send/recv&lt;/em&gt; which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;History&lt;/span&gt;&lt;/p&gt;&#xA;&lt;p&gt;This is &lt;em&gt;my&lt;/em&gt; historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.&lt;/p&gt;&#xA;&lt;p&gt;Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, &lt;em&gt;CFEngine&lt;/em&gt; burst onto the scene with the first real solution to this problem. I think it was mostly all quite sane, but it wasn&amp;rsquo;t a tool which let us build autonomous systems, so people eventually looked elsewhere.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

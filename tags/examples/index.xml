@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Examples on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/examples/</link>
+    <description>Recent content in Examples on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 09 Jul 2013 06:41:54 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/examples/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>&lt;p&gt;A simple hack to add a &lt;em&gt;user&lt;/em&gt; type to my &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3 files changed, 1401 insertions(+), 215 deletions(-)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should now have a highly capable user type, along with &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/examples/simple-usage3.pp#L13&#34;&gt;some quick examples&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve also done a rewrite of the &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/files/diff.py&#34;&gt;difference engine&lt;/a&gt;, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms. This should make adding future types easier, and less error prone. If you&amp;rsquo;re not comfortable with ruby, that&amp;rsquo;s okay, because it&amp;rsquo;s written in python!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve just released the third stage of my &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet-nfs&lt;/a&gt; module to allow you to easily setup and run an NFSv4 kerberized server and client.&lt;/p&gt;&#xA;&lt;p&gt;While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet-nfs&lt;/a&gt; module to make your &lt;em&gt;/etc/exports&lt;/em&gt; management easier. It&amp;rsquo;s designed to manage other security types, or even to work without kerberos or any authentication at all, but I haven&amp;rsquo;t tested those.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

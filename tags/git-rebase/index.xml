@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git Rebase on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/git-rebase/</link>
+    <description>Recent content in Git Rebase on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 16 Mar 2015 05:36:19 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/git-rebase/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fancy git aliases and git cherryfetch</title>
+      <link>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</link>
+      <pubDate>Mon, 16 Mar 2015 05:36:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/03/16/fancy-git-aliases-and-git-cherryfetch/</guid>
+      <description>&lt;p&gt;Here are two quick &lt;a href=&#34;https://en.wikipedia.org/wiki/Git_%28software%29&#34;&gt;git&lt;/a&gt; tricks that I&amp;rsquo;ve added to my toolbox lately&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I wanted to create a git alias that takes in argv from the command, but in the middle of the command. Here&amp;rsquo;s the hack that I came up with for the &lt;code&gt;[alias]&lt;/code&gt; section of my &lt;code&gt;~/.gitconfig&lt;/code&gt;:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[alias]&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    # cherryfetch fetches a repo ($1) / branch ($2) and applies it rebased!&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    # the &amp;amp;&amp;amp; true at the end eats up the appended args&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cherryfetch = !git fetch &amp;#34;$1&amp;#34; &amp;#34;$2&amp;#34; &amp;amp;&amp;amp; git cherry-pick HEAD..FETCH_HEAD &amp;amp;&amp;amp; true&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Explanation&lt;/span&gt;:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

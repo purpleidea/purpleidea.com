@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Finite State Machine on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/finite-state-machine/</link>
+    <description>Recent content in Finite State Machine on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 24 Mar 2014 18:37:23 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/finite-state-machine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing Puppet Exec[&#39;again&#39;]</title>
+      <link>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</link>
+      <pubDate>Mon, 24 Mar 2014 18:37:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/24/introducing-puppet-execagain/</guid>
+      <description>&lt;p&gt;Puppet is missing a number of much-needed features. That&amp;rsquo;s the bad news. The good news is that I&amp;rsquo;ve been able to write some of these as modules that don&amp;rsquo;t need to change the Puppet core! This is an article about one of these features.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Posit&lt;/span&gt;:&lt;/strong&gt; It&amp;rsquo;s not possible to apply all of your Puppet manifests in a single run.&lt;/p&gt;&#xA;&lt;p&gt;I believe that this holds true for the current implementation of Puppet. Most manifests can, do and &lt;em&gt;should&lt;/em&gt; apply completely in a single run. If your Puppet run takes more than one run to converge, then chances are that you&amp;rsquo;re doing something wrong.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Finite state machines in puppet</title>
+      <link>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</link>
+      <pubDate>Sat, 28 Sep 2013 06:09:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</guid>
+      <description>&lt;p&gt;In my attempt to &lt;a title=&#34;setting timed events in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/11/14/setting-timed-events-in-puppet/&#34;&gt;push puppet to its limits&lt;/a&gt;, (for &lt;a title=&#34;recursion in puppet (for no particular reason)&#34; href=&#34;https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/&#34;&gt;no particular reason&lt;/a&gt;), to &lt;a title=&#34;Collecting duplicate resources in puppet&#34; href=&#34;https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/&#34;&gt;develop more powerful puppet modules&lt;/a&gt;, to&lt;a title=&#34;How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/&#34;&gt; build in a distributed lock manager&lt;/a&gt;, and to &lt;a title=&#34;Dynamically including classes in puppet&#34; href=&#34;https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/&#34;&gt;be more dynamic&lt;/a&gt;, I&amp;rsquo;m now attempting to build a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;Finite State Machine&lt;/a&gt; (FSM) in puppet.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

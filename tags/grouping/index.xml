@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Grouping on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/grouping/</link>
+    <description>Recent content in Grouping on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Mar 2016 06:03:47 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/grouping/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatic grouping in mgmt</title>
+      <link>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</link>
+      <pubDate>Wed, 30 Mar 2016 06:03:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/03/30/automatic-grouping-in-mgmt/</guid>
+      <description>&lt;p&gt;In this post, I&amp;rsquo;ll tell you about the recently released &amp;ldquo;automatic grouping&amp;rdquo; or &amp;ldquo;AutoGroup&amp;rdquo; feature in &lt;em&gt;&lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt;&lt;/em&gt;, a next generation configuration management prototype. If you aren&amp;rsquo;t already familiar with mgmt, I&amp;rsquo;d recommend you start by reading the &lt;a href=&#34;https://purpleidea.com/blog/2016/01/18/next-generation-configuration-mgmt/&#34;&gt;introductory post&lt;/a&gt;, and the &lt;a href=&#34;https://purpleidea.com/blog/2016/03/14/automatic-edges-in-mgmt/&#34;&gt;second post&lt;/a&gt;. There&amp;rsquo;s also an &lt;a href=&#34;https://www.youtube.com/watch?v=GVhpPF0j-iE&amp;html5=1&#34;&gt;introductory video&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Resources in a graph&lt;/span&gt;&lt;/p&gt;&#xA;&lt;p&gt;Most configuration management systems use something called a &lt;a href=&#34;https://en.wikipedia.org/wiki/Directed_acyclic_graph&#34;&gt;directed acyclic graph, or DAG&lt;/a&gt;. This is a fancy way of saying that it is a bunch of circles (vertices) which are connected with arrows (edges). The arrows must be connected to exactly two vertices, and you&amp;rsquo;re only allowed to move along each arrow in one direction (directed). Lastly, if you start at any vertex in the graph, you must never be able to return to where you started by following the arrows (acyclic). If you can, the graph is not fit for our purpose.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

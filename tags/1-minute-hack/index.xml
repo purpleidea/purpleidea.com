@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1 Minute Hack on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/1-minute-hack/</link>
+    <description>Recent content in 1 Minute Hack on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 02 Aug 2023 13:35:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/1-minute-hack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One minute hacks: Saving time inserting images in Libreoffice</title>
+      <link>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</link>
+      <pubDate>Wed, 02 Aug 2023 13:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2023/08/02/one-minute-hacks-saving-time-inserting-images-in-libreoffice/</guid>
+      <description>&lt;p&gt;You&amp;rsquo;ve probably used libreoffice. You opened a document, and proceeded to insert&#xA;an image into the text. It wiggles all over and never rests where you want it&#xA;to.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;The solution&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;You most likely want the &amp;ldquo;anchor as character&amp;rdquo; option. Right-click on the newly&#xA;inserted image, go to the &lt;code&gt;Anchor&lt;/code&gt; menu item, and choose &lt;code&gt;As Character&lt;/code&gt;. You&#xA;will have to do this for each image you insert which is annoying&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>&lt;p&gt;Master &lt;a href=&#34;https://en.wikipedia.org/wiki/Software_Defined_Networking&#34;&gt;SDN&lt;/a&gt; hacker &lt;a href=&#34;https://twitter.com/guteusa&#34;&gt;Flavio&lt;/a&gt; sent me some tunes. They were sitting on my desktop in a folder:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ls ~/Desktop/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uncopyrighted_tunes_from_flavio/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the &lt;em&gt;nautilus&lt;/em&gt; file browser to select which folder to play, and the &lt;em&gt;totem&lt;/em&gt; music/video player to do the playing.&lt;/p&gt;&#xA;&lt;p&gt;Drop a file named &lt;code&gt;totem&lt;/code&gt; into:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;~/.local/share/nautilus/scripts/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;with the contents:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;#!/bin/bash&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# o hai from purpleidea&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;exec&lt;/span&gt; totem -- &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and make it executable with:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>&lt;p&gt;I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&lt;/p&gt;&#xA;&lt;p&gt;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections. I wanted to see eight. Since I knew it would have been silly for the developers to hard code the number five, I decided there was a chance that they stored it in the &lt;a href=&#34;https://live.gnome.org/dconf&#34;&gt;dconf&lt;/a&gt; settings. (BTW, there&amp;rsquo;s also an amazing &amp;ldquo;&lt;a href=&#34;http://seilo.geekyogre.com/2011/12/gedit-plugins-now-has-the-dashboard/&#34;&gt;Dashboard&lt;/a&gt;&amp;rdquo; plugin which I use for more complex recent-files searching&amp;hellip;)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

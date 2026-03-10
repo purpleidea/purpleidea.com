@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ipxe on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ipxe/</link>
+    <description>Recent content in Ipxe on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 23 Jan 2025 21:34:56 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/ipxe/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Working around an iPXE issue</title>
+      <link>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</link>
+      <pubDate>Thu, 23 Jan 2025 21:34:56 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2025/01/23/working-around-an-ipxe-issue/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://ipxe.org/&#34;&gt;iPXE&lt;/a&gt; is a terrific tool, but despite their very respectable&#xA;documentation, it has some rough edges, and it still feels like an &amp;ldquo;in crowd&amp;rdquo;&#xA;kind of thing, where you have to learn the common tricks by knowing someone.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;The problem&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;I&amp;rsquo;ve been building a &lt;a href=&#34;https://purpleidea.com/blog/2024/03/27/a-new-provisioning-tool/&#34;&gt;provisioning tool&lt;/a&gt;&#xA;in &lt;a href=&#34;https://mgmtconfig.com/&#34;&gt;mgmt&lt;/a&gt; and instead of always relying on&#xA;distro-specific boot images, I decided to use &lt;em&gt;iPXE&lt;/em&gt; to handle the early boot,&#xA;and have it hand-off to the kernel installer.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
