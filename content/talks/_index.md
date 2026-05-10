@@ -6,7 +6,7 @@ talks: [
 
   {
     topic: "Mgmt Config: Solving the bootstrapping problem",
-    video: "https://www.youtube.com/watch?v=h6Jxxqlgmu",
+    video: "https://www.youtube.com/watch?v=h6JxxqlgmuM",
     location: "CfgMgmtCamp.eu 2026, Ghent",
     location_url: "https://cfp.cfgmgmtcamp.org/ghent2026/talk/WCDFP8/",
     rating: "Unrated",
