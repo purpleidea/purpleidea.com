@@ -1,6 +1,15 @@
 {{/* insert an image into post: src is required, alt, caption and scale are optional */}}
+{{- $src := .Get "src" -}}
+{{- $img := $src -}}
+{{- if and $src (not (or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "/"))) -}}
+{{- $img = printf "%s%s" .Page.RelPermalink $src -}}
+{{- end -}}
+{{- $href := $img -}}
+{{- with .Get "url" -}}
+{{- $href = . -}}
+{{- end -}}
 <table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
-<a href="{{ if .Get "url" }}{{.Get "url"}}{{ else }}{{.Get "src"}}{{ end }}"><img class="alignnone size-full" src="{{.Get "src"}}" {{ if .Get "alt" }}alt="{{.Get "alt"}}"{{ end }} {{ if .Get "scale" }}width="{{.Get "scale"}}"{{ else }}width="100%"{{ end }} /></a></td></tr>
+<a href="{{ $href }}"><img class="alignnone size-full" src="{{ $img }}" {{ if .Get "alt" }}alt="{{.Get "alt"}}"{{ end }} {{ if .Get "scale" }}width="{{.Get "scale"}}"{{ else }}width="100%"{{ end }} /></a></td></tr>
 {{- if .Get "caption" -}}
 <tr><td>{{.Get "caption"}}</td>
 {{- end -}}
