@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Clipboard on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/clipboard/</link>
+    <description>Recent content in Clipboard on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 05 Jul 2012 18:56:40 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/clipboard/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gnome3&#43;others glipper/klipper replacement</title>
+      <link>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</link>
+      <pubDate>Thu, 05 Jul 2012 18:56:40 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/07/05/gnome3others-glipperklipper-replacement/</guid>
+      <description>&lt;p&gt;So a friend of mine uses kde4 for its klipper feature. Turns out he&amp;rsquo;s right that it&amp;rsquo;s an awesome feature! I realized I couldn&amp;rsquo;t let gnome3 take second place to a clipboard app, so after a bit of searching&amp;hellip;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo yum install gnome-shell-extension-gpaste gpaste xsel&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next hit up: &lt;a href=&#34;https://extensions.gnome.org/local/&#34;&gt;&lt;a href=&#34;https://extensions.gnome.org/local/&#34;&gt;https://extensions.gnome.org/local/&lt;/a&gt;&lt;/a&gt; to flip on the extension. I had to first type: ALT-F2, &amp;ldquo;r&amp;rdquo; (to restart the gnome shell). Don&amp;rsquo;t worry your apps won&amp;rsquo;t die. And then I flipped it on.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

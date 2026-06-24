@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Localhost on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/localhost/</link>
+    <description>Recent content in Localhost on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 14 May 2025 19:45:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/localhost/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Running etcd over SSH</title>
+      <link>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</link>
+      <pubDate>Wed, 14 May 2025 19:45:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2025/05/14/running-etcd-over-ssh/</guid>
+      <description>&lt;p&gt;Want to tunnel etcd traffic over SSH? Here&amp;rsquo;s a pitfall I ran into.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;The problem&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;https://mgmtconfig.com/&#34;&gt;Mgmt&lt;/a&gt; supports tunnelling the &lt;code&gt;etcd&lt;/code&gt; traffic over SSH.&#xA;This is quite useful, because it means that for it to connect to etcd, it&#xA;doesn&amp;rsquo;t need to open up any new ports other than &lt;code&gt;22&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;You can run the agent like so:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mgmt run --ssh-url&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;etcd@etcdserver:22 --seeds&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;http://127.0.0.1:2379 --no-server --no-magic empty&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and it just works!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

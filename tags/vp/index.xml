@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vp on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vp/</link>
+    <description>Recent content in Vp on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jul 2015 01:14:19 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/vp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>&lt;p&gt;Making &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Prerequisites&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;If you haven&amp;rsquo;t read any of the &lt;a href=&#34;https://purpleidea.com/tags/oh-my-vagrant/&#34;&gt;previous articles about Oh-My-Vagrant&lt;/a&gt;, I&amp;rsquo;d recommend you start there. Many of the articles include screencasts, and combined with the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/tree/master/examples&#34;&gt;examples/&lt;/a&gt; folder, this is probably the best way to learn OMV, because the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/issues/79&#34;&gt;documentation could use some love&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

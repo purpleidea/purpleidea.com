@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Juju on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/juju/</link>
+    <description>Recent content in Juju on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 20 Sep 2013 16:23:12 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/juju/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gluster Community Day, Thursday</title>
+      <link>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</link>
+      <pubDate>Fri, 20 Sep 2013 16:23:12 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m here in New Orleans &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;hacking up a storm&lt;/a&gt; and getting to meet fellow &lt;a href=&#34;http://blog.gluster.org/blog/&#34;&gt;gluster&lt;/a&gt; users IRL. John Mark Walker started off with a great &amp;ldquo;State of the GlusterFS union&amp;rdquo; style talk.&lt;/p&gt;&#xA;&lt;p&gt;Today Louis (semiosis) gave a great talk about running glusterfs on amazon. It was highly pragmatic and he explained how he chose the number of bricks per host. The talk will be posted online shortly.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://twitter.com/marcoceppi&#34;&gt;Marco Ceppi&lt;/a&gt; from Canonical gave a talk about juju and gluster. I haven&amp;rsquo;t had much time to look at juju, so it was good exposure. Marco&amp;rsquo;s gluster charm suffers from a lack of high availability peering, but I&amp;rsquo;m sure that is easily solved, and it isn&amp;rsquo;t a big issue. I had the same issue when working on puppet-gluster. &lt;a title=&#34;How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/&#34;&gt;I&amp;rsquo;ve written an article about how I solved this problem.&lt;/a&gt; I think it&amp;rsquo;s the most elegant solution, but if anyone has a better idea, please let me know. The solutions I used for puppet, can be applied to juju too. Marco and I talked about porting puppet-gluster to ubuntu. We also talked about using puppet inside of juju, &lt;em&gt;with&lt;/em&gt; a puppetmaster, but we&amp;rsquo;re not sure how useful that would be beyond pure hack value.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

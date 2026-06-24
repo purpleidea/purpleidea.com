@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gio on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gio/</link>
+    <description>Recent content in Gio on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 21 Jul 2009 10:19:52 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/gio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[py]inotify, polling, gtk and gio</title>
+      <link>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</link>
+      <pubDate>Tue, 21 Jul 2009 10:19:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</guid>
+      <description>&lt;p&gt;i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel &lt;a href=&#34;http://en.wikipedia.org/wiki/Inotify&#34;&gt;inotify&lt;/a&gt; support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with &lt;a href=&#34;http://trac.dbzteam.org/pyinotify&#34;&gt;pyinotify&lt;/a&gt; and &lt;a href=&#34;http://www.pygtk.org/pygtk2reference/gobject-functions.html#function-gobject--io-add-watch&#34;&gt;io_add_watch&lt;/a&gt;, but on closer inspection into the pyinotify code it turns out that it seems to actually use &lt;a href=&#34;http://trac.dbzteam.org/pyinotify/browser/pyinotify.py&#34;&gt;polling&lt;/a&gt;! (search for: select.poll)&lt;/p&gt;&#xA;&lt;p&gt;thinking i was confused, i emailed a friend to see if he could confirm my suspicions. we both weren&amp;rsquo;t 100% sure, a little searching later i was convinced when i found &lt;a href=&#34;http://www.tenshu.net/archives/2008/10/24/using-inotify-in-a-pygtk-application-without-pyinotify/&#34;&gt;this&lt;/a&gt; blog posting. i&amp;rsquo;m surprised i didn&amp;rsquo;t find out about this sooner. in any case, my application seems to be happy now.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

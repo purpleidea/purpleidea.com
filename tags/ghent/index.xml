@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ghent on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ghent/</link>
+    <description>Recent content in Ghent on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 31 Jan 2024 09:57:30 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/ghent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upcoming Speaking and Events</title>
+      <link>https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/</link>
+      <pubDate>Wed, 31 Jan 2024 09:57:30 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/01/31/upcoming-speaking-and-events/</guid>
+      <description>&lt;p&gt;There are &lt;em&gt;three&lt;/em&gt; upcoming &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmtconfig&lt;/a&gt;&#xA;events happening within the next &lt;em&gt;seven&lt;/em&gt; days!&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;mgmt @ FOSDEM&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;On February 3rd, I&amp;rsquo;ll be giving a talk in the &lt;a href=&#34;https://fosdem.org/2024/schedule/event/fosdem-2024-2575-single-binary-full-stack-provisioning/&#34;&gt;golang devroom at FOSDEM&lt;/a&gt;. Please come early (1hr+) if you want to get a seat, usually this&#xA;room is especially full. This happens in Brussels, but it should be recorded if&#xA;there aren&amp;rsquo;t any technical glitches.&lt;/p&gt;&#xA;&lt;p&gt;(I got rejected for the main track, but it&amp;rsquo;s my fault because I need to make my&#xA;work more generally appealing first.)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

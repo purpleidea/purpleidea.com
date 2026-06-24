@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tail -F on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/tail--f/</link>
+    <description>Recent content in Tail -F on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 29 Aug 2016 09:00:39 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/tail--f/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Live dmesg following</title>
+      <link>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</link>
+      <pubDate>Mon, 29 Aug 2016 09:00:39 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/08/29/live-dmesg-following/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/&#34;&gt;All good sysadmins eventually learn about using tail -F to tail files. Yes upper-case F is superior.&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Around the time I wrote that article, I remember wanting to stream &lt;code&gt;dmesg&lt;/code&gt; output too! The functionality wasn&amp;rsquo;t available without some sort of polling hack, but it turns out that kernel support for this actually landed around the same time in version 3.5.0!&lt;/p&gt;&#xA;&lt;p&gt;Most GNU/Linux distros are probably running a new enough version by now, and you can now &lt;code&gt;dmesg &amp;ndash;follow&lt;/code&gt; (or &lt;code&gt;dmesg -w&lt;/code&gt;):&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>continuous display of log files (better tail -f)</title>
+      <link>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</link>
+      <pubDate>Sun, 18 Nov 2012 01:02:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/18/continuous-display-of-log-files-better-tail-f/</guid>
+      <description>&lt;p&gt;All good sysadmins know about using &lt;em&gt;tail -f&lt;/em&gt; to &lt;em&gt;follow&lt;/em&gt; a log file. I use this all the time to follow &lt;em&gt;/var/log/messages&lt;/em&gt; and my gluster logs in particular. Maybe everyone already knows this, but it deserves a PSA: after a certain amount of time (~days) it seems that new messages don&amp;rsquo;t appear!&lt;/p&gt;&#xA;&lt;p&gt;What happens by default is that &lt;em&gt;tail -f&lt;/em&gt; follows the file &lt;span style=&#34;text-decoration:underline;&#34;&gt;descriptor&lt;/span&gt;, not the file &lt;span style=&#34;text-decoration:underline;&#34;&gt;name&lt;/span&gt;, so when your log files get rotated, the file descriptor still points to the (now renamed) file which no longer gets updates any more.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/docker/</link>
+    <description>Recent content in Docker on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 30 Nov 2016 23:59:49 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A revisionist history of configuration management</title>
+      <link>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</link>
+      <pubDate>Wed, 30 Nov 2016 23:59:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/11/30/a-revisionist-history-of-configuration-management/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve got a brand new core feature in mgmt called &lt;em&gt;send/recv&lt;/em&gt; which I plan to show you shortly, but first I&amp;rsquo;d like to start with some background.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;History&lt;/span&gt;&lt;/p&gt;&#xA;&lt;p&gt;This is &lt;em&gt;my&lt;/em&gt; historical perspective and interpretation about the last twenty years in configuration management. It&amp;rsquo;s likely inaccurate and slightly revisionist, but it should be correct enough to tell the design story that I want to share.&lt;/p&gt;&#xA;&lt;p&gt;Sometime after people started to realize that writing bash scripts wasn&amp;rsquo;t a safe, scalable, or reusable way to automate systems, &lt;em&gt;CFEngine&lt;/em&gt; burst onto the scene with the first real solution to this problem. I think it was mostly all quite sane, but it wasn&amp;rsquo;t a tool which let us build autonomous systems, so people eventually looked elsewhere.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>&lt;p&gt;In this new crazy world of &lt;a href=&#34;https://en.wikipedia.org/wiki/Docker_%28software%29&#34;&gt;containers&lt;/a&gt; and immutable hosts, one might still want to run previous generation software such as &lt;a href=&#34;https://duckduckgo.com/l/?kh=-1&amp;uddg=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPuppet_(software)&#34;&gt;Puppet&lt;/a&gt; on a current generation &lt;a href=&#34;https://www.projectatomic.io/&#34;&gt;Atomic host&lt;/a&gt;. This article will explain how you can do that, and offer some &lt;a href=&#34;https://github.com/purpleidea/spc-puppet-apply&#34;&gt;proof of concept code&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;The atomic host doesn&amp;rsquo;t provide a &lt;a href=&#34;https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified&#34;&gt;yum&lt;/a&gt; or &lt;a href=&#34;https://fedoraproject.org/wiki/Dnf&#34;&gt;dnf&lt;/a&gt; command, because the software is pre-baked into a read-only &lt;code&gt;/usr/&lt;/code&gt; partition. To &amp;ldquo;&lt;em&gt;install&lt;/em&gt;&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve added the ability to deploy a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes&#34;&gt;Kubernetes&lt;/a&gt; cluster with &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (&lt;em&gt;omv&lt;/em&gt;). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md&#34;&gt;rolling update&lt;/a&gt;, you can use &lt;em&gt;omv&lt;/em&gt; to test this out in minutes! I&amp;rsquo;ve recorded a &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv&#34;&gt;screencast&lt;/a&gt; (~15 min), if you&amp;rsquo;d like to see some of this in action.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, &lt;em&gt;omv&lt;/em&gt; can be used to help this happen more naturally.&lt;/p&gt;&#xA;&lt;p&gt;Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&#34;&gt;&lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&#34;&gt;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;With &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (omv) you can set up a dev environment in seconds. (Read the &lt;a href=&#34;https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/&#34;&gt;omv introduction&lt;/a&gt; if you&amp;rsquo;ve never used it before!) Since everything is defined in a single &lt;code&gt;omv.yaml&lt;/code&gt; file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;In the &lt;code&gt;omv.yaml&lt;/code&gt; file there is an &lt;code&gt;extern&lt;/code&gt; variable. It is a list of each &lt;em&gt;external&lt;/em&gt; repository which you&amp;rsquo;d like to include. Each element in this list is a hash of key value pairs. Currently four are supported: &lt;em&gt;type&lt;/em&gt;, &lt;em&gt;system&lt;/em&gt;, &lt;em&gt;repository&lt;/em&gt;, &lt;em&gt;directory&lt;/em&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Introducing: Oh My Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</link>
+      <pubDate>Wed, 03 Sep 2014 23:19:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;re a reader of my &lt;a href=&#34;https://github.com/purpleidea/&#34;&gt;code&lt;/a&gt; or of &lt;a href=&#34;https://purpleidea.com/blog/&#34;&gt;this blog&lt;/a&gt;, it&amp;rsquo;s no secret that I hack on a lot of &lt;a href=&#34;https://en.wikipedia.org/wiki/Puppet_%28software%29&#34;&gt;puppet&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Vagrant_%28software%29&#34;&gt;vagrant&lt;/a&gt;. Recently I&amp;rsquo;ve fooled around with a bit of &lt;a href=&#34;https://en.wikipedia.org/wiki/Docker_%28software%29&#34;&gt;docker&lt;/a&gt;, too. I realized that the &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/blob/master/vagrant/Vagrantfile&#34;&gt;vagrant&lt;/a&gt;, &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/vagrant/Vagrantfile&#34;&gt;environments&lt;/a&gt; I built for &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;puppet-gluster&lt;/a&gt; and &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/&#34;&gt;puppet-ipa&lt;/a&gt; needed to be generalized, and they needed new features too. Therefore&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;Introducing: &lt;strong&gt;Oh My Vagrant!&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;Oh My Vagrant&lt;/em&gt; is an attempt to provide an &lt;em&gt;easy&lt;/em&gt; to use development environment so that you can be up and hacking &lt;em&gt;quickly&lt;/em&gt;, and focusing on the real &lt;em&gt;devops&lt;/em&gt; problems. The &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/blob/master/README&#34;&gt;README&lt;/a&gt; explains my choice of project name.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

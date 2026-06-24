@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data-in-Modules on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/data-in-modules/</link>
+    <description>Recent content in Data-in-Modules on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 04 Jun 2014 03:47:23 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/data-in-modules/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hiera data in modules and OS independent puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</link>
+      <pubDate>Wed, 04 Jun 2014 03:47:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/04/hiera-data-in-modules-and-os-independent-puppet/</guid>
+      <description>&lt;p&gt;Earlier this year, &lt;a href=&#34;https://github.com/ripienaar&#34;&gt;R.I.Pienaar&lt;/a&gt; released his brilliant &lt;a href=&#34;https://github.com/ripienaar/puppet-module-data/&#34;&gt;data in modules hack&lt;/a&gt;, a few months ago, I got the chance to start &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/32fdb618625f011b7d7387428520441a91321e0e&#34;&gt;implementing it in Puppet-Gluster&lt;/a&gt;, and today I have found the time to blog about it.&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;What is it&lt;/span&gt;?&lt;/p&gt;&#xA;&lt;p&gt;R.I.&amp;rsquo;s hack lets you store &lt;a href=&#34;https://github.com/puppetlabs/hiera&#34;&gt;hiera&lt;/a&gt; data inside a puppet module. This can have many uses including letting you throw out the nested mess that is commonly &lt;code&gt;params.pp&lt;/code&gt;, and replace it with something file based that is elegant and hierarchical. For my use case, I&amp;rsquo;m using it to build OS independent puppet modules, without storing this data as code. The secondary win is that porting your module to a new GNU/Linux distribution or version could be as simple as adding a &lt;a href=&#34;https://en.wikipedia.org/wiki/YAML&#34;&gt;YAML&lt;/a&gt; file.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

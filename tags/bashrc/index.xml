@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bashrc on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bashrc/</link>
+    <description>Recent content in Bashrc on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 10 Oct 2013 22:16:28 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/bashrc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Show current git branch in PS1 when branch is not master</title>
+      <link>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</link>
+      <pubDate>Thu, 10 Oct 2013 22:16:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/10/show-current-git-branch-in-ps1-when-branch-is-not-master/</guid>
+      <description>&lt;p&gt;Short post, long command&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve decided to start showing the current &lt;a title=&#34;git&#34; href=&#34;http://github.com/purpleidea/&#34;&gt;git&lt;/a&gt; branch in my &lt;em&gt;PS1&lt;/em&gt;. However, since I don&amp;rsquo;t want to know when I&amp;rsquo;m on &lt;em&gt;master&lt;/em&gt;, I had to write a new PS1 that I haven&amp;rsquo;t yet seen anywhere. Add the following to your &lt;em&gt;.bashrc&lt;/em&gt;:&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;PS1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w\$ &amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;[&lt;/span&gt; -e /usr/share/git-core/contrib/completion/git-prompt.sh &lt;span style=&#34;color:#666&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;then&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    . /usr/share/git-core/contrib/completion/git-prompt.sh&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#b8860b&#34;&gt;PS1&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#39;${debian_chroot:+($debian_chroot)}\u@\h:\w$([ &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;&amp;#34; -a &amp;#34;$(__git_ps1 %s)&amp;#34; != &amp;#34;master&amp;#34; ] &amp;amp;&amp;amp; (echo -e &amp;#34; (\[33[32m\]&amp;#34;$(__git_ps1 &amp;#34;%s&amp;#34;)&amp;#34;\[33[0m\])&amp;#34;) || echo &amp;#34;&amp;#34;)\$ &amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f;font-weight:bold&#34;&gt;fi&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

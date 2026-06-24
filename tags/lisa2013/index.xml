@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lisa2013 on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/lisa2013/</link>
+    <description>Recent content in Lisa2013 on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 05 Nov 2013 15:00:19 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/lisa2013/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pushing Puppet at Puppet Camp DC, LISA 2013</title>
+      <link>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</link>
+      <pubDate>Tue, 05 Nov 2013 15:00:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/05/pushing-puppet-at-puppet-camp-dc-lisa-2013/</guid>
+      <description>&lt;p&gt;Hi there,&lt;/p&gt;&#xA;&lt;p&gt;I hope you enjoyed my &amp;ldquo;&lt;strong&gt;Pushing Puppet&lt;/strong&gt; (to its limit)&amp;rdquo; talk and demos from &lt;a href=&#34;https://puppetcampdc2013.eventbrite.com/&#34;&gt;Puppet Camp D.C., LISA 2013&lt;/a&gt;. As requested, I&amp;rsquo;ve posted the code and slides.&lt;/p&gt;&#xA;&lt;p&gt;Here is the code:&#xA;&lt;a href=&#34;https://github.com/purpleidea/puppet-pushing&#34;&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-pushing&#34;&gt;https://github.com/purpleidea/puppet-pushing&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;This module will require three modules as dependencies. The dependencies are:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;My Puppet-Common module&lt;/span&gt;&#xA;&lt;a href=&#34;https://github.com/purpleidea/puppet-common&#34;&gt;https://github.com/purpleidea/puppet-common&lt;/a&gt;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;My Puppet-Runonce module&lt;/span&gt;&#xA;&lt;a href=&#34;https://github.com/purpleidea/puppet-runonce&#34;&gt;https://github.com/purpleidea/puppet-runonce&lt;/a&gt;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;My Puppet-FSM module&#xA;&lt;a href=&#34;https://github.com/purpleidea/puppet-fsm&#34;&gt;https://github.com/purpleidea/puppet-fsm&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;Each example doesn&#39;t require all the dependencies, so if you&#39;re only interested in the &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;FSM&lt;/a&gt;, you only need that module.&#xA;&lt;p&gt;Here are the slides:&#xA;&lt;a href=&#34;https://github.com/purpleidea/puppet-pushing/blob/master/talks/pushing-puppet.pdf&#34;&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-pushing/blob/master/talks/pushing-puppet.pdf&#34;&gt;https://github.com/purpleidea/puppet-pushing/blob/master/talks/pushing-puppet.pdf&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Gluster Community Day, LISA 2013, Monday</title>
+      <link>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</link>
+      <pubDate>Tue, 05 Nov 2013 01:30:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/05/gluster-community-day-lisa-2013-monday/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m here at LISA 2013 at the &lt;a href=&#34;http://glusterday-lisa.eventbrite.com/&#34;&gt;Gluster Community Day&lt;/a&gt;. I&amp;rsquo;ve been asked by &lt;a href=&#34;https://twitter.com/jzb&#34;&gt;Joe Brockmeier&lt;/a&gt; to give a little recap about what&amp;rsquo;s been going on. So here it is!&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://twitter.com/wphotos&#34;&gt;Wesley Duffee-Braun&lt;/a&gt; started off with a nice overview talk about &lt;a href=&#34;http://www.gluster.org/&#34;&gt;GlusterFS&lt;/a&gt;. The great thing about his talk was that he gave a live demo, running on virtual machines, on his laptop. If you&amp;rsquo;re a new GlusterFS user, this is good exposure to help you get started. He also has the nicest slides I&amp;rsquo;ve ever seen. Someone needs to send me the .&lt;em&gt;odp&lt;/em&gt; template!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Speaking at LISA 2013 about Puppet and GlusterFS</title>
+      <link>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</link>
+      <pubDate>Sun, 03 Nov 2013 19:40:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/03/speaking-at-lisa-2013-about-puppet-and-glusterfs/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m speaking at &lt;a href=&#34;https://www.usenix.org/conference/lisa13&#34;&gt;LISA 2013&lt;/a&gt;, the &amp;ldquo;Large Installation System Administration&amp;rdquo; conference. This conference runs all week in &lt;a href=&#34;https://en.wikipedia.org/wiki/Washington,_DC&#34;&gt;Washington&lt;/a&gt;. I&amp;rsquo;ll be giving two talks during the week, and attending at least one BOF.&lt;/p&gt;&#xA;&lt;p&gt;My first talk is on Monday during the &lt;a href=&#34;https://www.usenix.org/conference/lisa13/gluster-community-day&#34;&gt;Gluster Community Day&lt;/a&gt;. I&amp;rsquo;ll be speaking about &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;puppet-gluster&lt;/a&gt;, and giving a live demo. I&amp;rsquo;ll be showing some new features too. If you&amp;rsquo;d like to talk more about puppet-gluster, or want to attend the talk, give me a shout, or sign up at the above &lt;em&gt;Gluster Community Day&lt;/em&gt; link.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

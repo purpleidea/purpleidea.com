@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Speeddial on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/speeddial/</link>
+    <description>Recent content in Speeddial on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 24 Nov 2012 19:09:37 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/speeddial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>more rows and columns on firefox new tab page</title>
+      <link>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</link>
+      <pubDate>Sat, 24 Nov 2012 19:09:37 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/11/24/more-rows-and-columns-on-firefox-new-tab-page/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://firefox.com/&#34;&gt;Firefox&lt;/a&gt; has a &amp;ldquo;new tab&amp;rdquo; &lt;em&gt;speed dial&lt;/em&gt; type page available. I use it as my homepage (hint, use: about:newtab) and find it very useful for launching my often used favourites.&lt;/p&gt;&#xA;&lt;p&gt;My one gripe is that it only shows you a default grid of 3 x 3. You can easily change that if you look in the secret preferences. Open a new tab and type in: &lt;em&gt;about:config&lt;/em&gt;, accept the warning, and then search for: &lt;em&gt;browser.newtabpage.rows&lt;/em&gt; and &lt;em&gt;browser.newtabpage.columns&lt;/em&gt;. These values are easily editable by double clicking on the row. (Bold indicates non defaults.)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

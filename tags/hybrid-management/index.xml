@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hybrid Management on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hybrid-management/</link>
+    <description>Recent content in Hybrid Management on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 24 Jul 2014 00:41:08 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/hybrid-management/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hybrid management of FreeIPA types with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</link>
+      <pubDate>Thu, 24 Jul 2014 00:41:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/07/24/hybrid-management-of-freeipa-types-with-puppet/</guid>
+      <description>&lt;p&gt;&lt;em&gt;(Note: this hybrid management technique is being demonstrated in the &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module for &lt;a href=&#34;https://www.freeipa.org/&#34;&gt;FreeIPA&lt;/a&gt;, but the idea could be used for other modules and scenarios too. See below for some use cases&amp;hellip;)&lt;/em&gt;&lt;/p&gt;&#xA;&lt;p&gt;The error message that puppet hackers are probably most familiar is:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Error: Duplicate declaration: Thing[/foo/bar] is already declared in file /tmp/baz.pp:2; &#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cannot redeclare at /tmp/baz.pp:4 on node computer.example.com&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Typically this means that there is either a bug in your code, or someone has defined something more than once. As annoying as this might be, a compile error happens for a reason: puppet detected a problem, and it is giving you a chance to fix it, without first running code that could otherwise leave your machine in an undefined state.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

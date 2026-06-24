@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>New Orleans on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/new-orleans/</link>
+    <description>Recent content in New Orleans on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 20 Sep 2013 16:23:12 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/new-orleans/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gluster Community Day, Thursday</title>
+      <link>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</link>
+      <pubDate>Fri, 20 Sep 2013 16:23:12 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/20/gluster-community-day-thursday-2/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m here in New Orleans &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;hacking up a storm&lt;/a&gt; and getting to meet fellow &lt;a href=&#34;http://blog.gluster.org/blog/&#34;&gt;gluster&lt;/a&gt; users IRL. John Mark Walker started off with a great &amp;ldquo;State of the GlusterFS union&amp;rdquo; style talk.&lt;/p&gt;&#xA;&lt;p&gt;Today Louis (semiosis) gave a great talk about running glusterfs on amazon. It was highly pragmatic and he explained how he chose the number of bricks per host. The talk will be posted online shortly.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://twitter.com/marcoceppi&#34;&gt;Marco Ceppi&lt;/a&gt; from Canonical gave a talk about juju and gluster. I haven&amp;rsquo;t had much time to look at juju, so it was good exposure. Marco&amp;rsquo;s gluster charm suffers from a lack of high availability peering, but I&amp;rsquo;m sure that is easily solved, and it isn&amp;rsquo;t a big issue. I had the same issue when working on puppet-gluster. &lt;a title=&#34;How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/&#34;&gt;I&amp;rsquo;ve written an article about how I solved this problem.&lt;/a&gt; I think it&amp;rsquo;s the most elegant solution, but if anyone has a better idea, please let me know. The solutions I used for puppet, can be applied to juju too. Marco and I talked about porting puppet-gluster to ubuntu. We also talked about using puppet inside of juju, &lt;em&gt;with&lt;/em&gt; a puppetmaster, but we&amp;rsquo;re not sure how useful that would be beyond pure hack value.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Linuxcon day one, Monday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</link>
+      <pubDate>Wed, 18 Sep 2013 22:32:16 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m here in New Orleans at Linux Con, hacking on &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;puppet-gluster&lt;/a&gt; and talking to lots of interesting folks. I&amp;rsquo;ve met gluster hacker &lt;a href=&#34;https://twitter.com/theronconrey&#34;&gt;Theron Conrey&lt;/a&gt;, and my host &lt;a href=&#34;https://twitter.com/johnmark&#34;&gt;John Mark Walker&lt;/a&gt;, Fedora and Raspberry Pi experts &lt;a href=&#34;https://twitter.com/spotrh&#34;&gt;Spot&lt;/a&gt; and &lt;a href=&#34;https://twitter.com/suehle&#34;&gt;Ruth Suehle&lt;/a&gt;, and many others too.&lt;/p&gt;&#xA;&lt;p&gt;The hotel is very nice. The bathroom sink has two taps of course, but both of them are hot. The New Orleans heat is probably the cause of this.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m hacking at full speed to get some new features and testing in before my talk on Thursday. I&amp;rsquo;ve been &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/1d423ade0362a01acf2cbc35399808b4befe0864&#34;&gt;reworking the simple firewall support&lt;/a&gt; in my puppet module. For those that want automated and correct firewall configuration, expect some improvements soon.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster and me at Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</link>
+      <pubDate>Mon, 02 Sep 2013 05:50:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.johnmark.org/blog/&#34;&gt;John Mark Walker&lt;/a&gt;, (from &lt;a href=&#34;http://www.redhat.com/&#34;&gt;Redhat&lt;/a&gt;) has been kind enough to invite me to speak at the &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/program/co-located-events&#34;&gt;Linuxcon Gluster Workshop&lt;/a&gt; in &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/extend-the-experience/about-new-orleans&#34;&gt;New Orleans&lt;/a&gt;. I&amp;rsquo;ll be speaking about &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;puppet-gluster&lt;/a&gt;, giving demos, and hopefully showing off some new features. I&amp;rsquo;m also looking forward to meeting up with &lt;a href=&#34;http://www.gluster.org/&#34;&gt;gluster&lt;/a&gt; expert &lt;a href=&#34;http://joejulian.name/&#34;&gt;Joe Julian&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;If there are features that puppet-gluster is missing, or you have a use case that I haven&amp;rsquo;t covered, please let me know, and I&amp;rsquo;ll try to work on it for you ahead of the conference. If you want to meet up for some puppet-gluster help, or to hack on code, I&amp;rsquo;ll be around from the 16th to the 20th of September. My talk is on the 19th.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

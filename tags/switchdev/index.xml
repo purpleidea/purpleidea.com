@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Switchdev on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/switchdev/</link>
+    <description>Recent content in Switchdev on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 09 Apr 2026 02:23:52 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/switchdev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Thu, 09 Apr 2026 02:23:52 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/&#34;&gt;In 2014 I wrote an article about the switch as an ordinary GNU/Linux server.&lt;/a&gt;&#xA;This had been my dream since my early days using Linux to build routers and I&#xA;didn&amp;rsquo;t know why we didn&amp;rsquo;t use the same management interfaces on switches as we&#xA;did on Linux. The folks at &lt;em&gt;Cumulus Networks&lt;/em&gt; made this a reality and in 2014&#xA;they were kind enough to give me access to some hardware to test things out.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

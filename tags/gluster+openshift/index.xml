@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gluster&#43;openshift on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gluster&#43;openshift/</link>
+    <description>Recent content in Gluster&#43;openshift on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 18 Sep 2013 23:05:05 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/gluster+openshift/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linuxcon day two, Tuesday</title>
+      <link>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</link>
+      <pubDate>Wed, 18 Sep 2013 23:05:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/18/linuxcon-day-two-tuesday/</guid>
+      <description>&lt;p&gt;&lt;a title=&#34;Linuxcon day one, Monday&#34; href=&#34;https://purpleidea.com/blog/2013/09/18/linuxcon-day-one-monday/&#34;&gt;Continuing on from yesterday&lt;/a&gt;, I&amp;rsquo;ve met even more interesting people. I chatted with &lt;a href=&#34;https://twitter.com/pythondj&#34;&gt;Dianne Mueller&lt;/a&gt; about some interesting ideas for gluster+&lt;a href=&#34;https://www.openshift.com/&#34;&gt;openshift&lt;/a&gt;. More to come on that front soon. Hung out with &lt;a href=&#34;https://twitter.com/jonobacon&#34;&gt;Jono Bacon&lt;/a&gt; and talked a bit about &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;puppet-gluster&lt;/a&gt; on &lt;a href=&#34;http://www.ubuntu.com/&#34;&gt;Ubuntu&lt;/a&gt;. If there is interest in the community for this, please let me know. Thanks to John Mark Walker and RedHat for sponsoring me and introducing me to many of these folks. Hello to all the others that I didn&amp;rsquo;t mention.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

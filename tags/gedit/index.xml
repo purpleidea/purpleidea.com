@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gedit on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gedit/</link>
+    <description>Recent content in Gedit on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 04 Aug 2013 05:02:18 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/gedit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upgrading from Fedora 18 to Fedora 19</title>
+      <link>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</link>
+      <pubDate>Sun, 04 Aug 2013 05:02:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/08/04/upgrading-from-fedora-18-to-fedora-19/</guid>
+      <description>&lt;p&gt;It was time to take the plunge and upgrade from Fedora 18 to Fedora 19. &lt;a title=&#34;Picking up the pieces after a Fedora 18 install&#34; href=&#34;https://purpleidea.com/blog/2013/02/12/picking-up-the-pieces-after-a-fedora-18-install/&#34;&gt;Fedora 18 was one of the worst releases ever&lt;/a&gt;, so I figured it could only get better. I ran my backups as usual, however this time I didn&amp;rsquo;t seem to need them, the upgrade process went off without a hitch! &lt;a href=&#34;https://fedoraproject.org/wiki/FedUp&#34;&gt;I used the fedup-cli process over the network.&lt;/a&gt; I always run these things inside of screen.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>running your file manager from a terminal</title>
+      <link>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</link>
+      <pubDate>Fri, 22 Mar 2013 23:34:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/22/running-your-file-manager-from-a-terminal/</guid>
+      <description>&lt;p&gt;I do a lot of my work in a terminal. For the unfamiliar, this might seem strange, however once you&amp;rsquo;re comfortable with your shell, this is the best place to be. I don&amp;rsquo;t restrict myself to it though. I often want to spawn a file manager, or a graphical text editor. When I run nautilus, I usually see something like this:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;james@computer:~/some/awesome/directory$ nautilus .&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Initializing nautilus-open-terminal extension&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Shutting down nautilus-open-terminal extension&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;james@computer:~/some/awesome/directory$&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is useful, because I can open a file browser right where I want it, it&amp;rsquo;s annoying, because nautilus runs in that terminal until I close it. (This doesn&amp;rsquo;t happen if the nautilus process is always running, but since GNOME 3, it isn&amp;rsquo;t.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>&lt;p&gt;I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&lt;/p&gt;&#xA;&lt;p&gt;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections. I wanted to see eight. Since I knew it would have been silly for the developers to hard code the number five, I decided there was a chance that they stored it in the &lt;a href=&#34;https://live.gnome.org/dconf&#34;&gt;dconf&lt;/a&gt; settings. (BTW, there&amp;rsquo;s also an amazing &amp;ldquo;&lt;a href=&#34;http://seilo.geekyogre.com/2011/12/gedit-plugins-now-has-the-dashboard/&#34;&gt;Dashboard&lt;/a&gt;&amp;rdquo; plugin which I use for more complex recent-files searching&amp;hellip;)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Multifile mode for text editors</title>
+      <link>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</link>
+      <pubDate>Wed, 24 Oct 2012 04:08:38 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/10/24/multifile-mode-for-text-editors/</guid>
+      <description>&lt;p&gt;Dear internets,&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m a sysadmin/architect, which means I spend a good amount of time &lt;a href=&#34;http://developers.slashdot.org/story/12/10/22/2257222/system-admins-should-know-how-to-code&#34;&gt;coding&lt;/a&gt; in &lt;a href=&#34;http://en.wikipedia.org/wiki/Puppet_%28software%29&#34;&gt;puppet&lt;/a&gt; and other languages. Puppet is a great tool, however the puppet community is a bit &lt;del&gt;anal&lt;/del&gt; strict about their style policies. I can respect this because I understand how important uniformity is when many developers are sharing code.&lt;/p&gt;&#xA;&lt;p&gt;(&lt;a href=&#34;http://www.kernel.org/doc/Documentation/CodingStyle&#34;&gt;On a side note, I absolutely can&amp;rsquo;t stand using spaces for indentation, but that&amp;rsquo;s another story. Please, just tell people to use tabs - preferably with a width of eight spaces.&lt;/a&gt;)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>getting gedit to work like magic</title>
+      <link>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</link>
+      <pubDate>Tue, 09 Mar 2010 17:17:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</guid>
+      <description>&lt;p&gt;i use &lt;a href=&#34;http://en.wikipedia.org/wiki/GNU/Linux&#34;&gt;gnu/linux&lt;/a&gt;. it&amp;rsquo;s probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using &lt;a href=&#34;http://projects.gnome.org/gedit/&#34;&gt;gedit&lt;/a&gt; for editing text. i still use &lt;a href=&#34;http://www.vim.org/&#34;&gt;vim&lt;/a&gt;, echo (&lt;a href=&#34;http://www.gnu.org/&#34;&gt;gnu&lt;/a&gt; bash) and &lt;a href=&#34;http://www.gnu.org/software/emacs/&#34;&gt;emacs&lt;/a&gt; (but only for &lt;a href=&#34;http://orgmode.org/&#34;&gt;org-mode&lt;/a&gt;).&lt;/p&gt;&#xA;&lt;p&gt;vim is really, really great. but for day to day full-screen coding, i love working in gedit. i only have one [1] longstanding gripe, and today i believe that it is solved. here is the magic combination which appeases my troubled spirit:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

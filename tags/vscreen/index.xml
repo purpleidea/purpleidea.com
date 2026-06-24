@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vscreen on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/vscreen/</link>
+    <description>Recent content in Vscreen on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jul 2015 01:14:19 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/vscreen/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Oh-My-Vagrant “Mainstream” mode and COPR RPM&#39;s</title>
+      <link>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</link>
+      <pubDate>Wed, 08 Jul 2015 01:14:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/07/08/oh-my-vagrant-mainstream-mode-and-copr-rpms/</guid>
+      <description>&lt;p&gt;Making &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (OMV) more developer accessible and easy to install (from a distribution package like RPM) has always been a goal, but was previously never a priority. This is all sorted out now. In this article, I&amp;rsquo;ll explain how &amp;ldquo;mainstream&amp;rdquo; mode works, and how the RPM work was done. (I promise this will be somewhat interesting!)&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Prerequisites&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;If you haven&amp;rsquo;t read any of the &lt;a href=&#34;https://purpleidea.com/tags/oh-my-vagrant/&#34;&gt;previous articles about Oh-My-Vagrant&lt;/a&gt;, I&amp;rsquo;d recommend you start there. Many of the articles include screencasts, and combined with the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/tree/master/examples&#34;&gt;examples/&lt;/a&gt; folder, this is probably the best way to learn OMV, because the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/issues/79&#34;&gt;documentation could use some love&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>A super privileged Puppet container</title>
+      <link>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</link>
+      <pubDate>Fri, 12 Jun 2015 18:06:55 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/06/12/a-super-privileged-puppet-container/</guid>
+      <description>&lt;p&gt;In this new crazy world of &lt;a href=&#34;https://en.wikipedia.org/wiki/Docker_%28software%29&#34;&gt;containers&lt;/a&gt; and immutable hosts, one might still want to run previous generation software such as &lt;a href=&#34;https://duckduckgo.com/l/?kh=-1&amp;uddg=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPuppet_(software)&#34;&gt;Puppet&lt;/a&gt; on a current generation &lt;a href=&#34;https://www.projectatomic.io/&#34;&gt;Atomic host&lt;/a&gt;. This article will explain how you can do that, and offer some &lt;a href=&#34;https://github.com/purpleidea/spc-puppet-apply&#34;&gt;proof of concept code&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;The atomic host doesn&amp;rsquo;t provide a &lt;a href=&#34;https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified&#34;&gt;yum&lt;/a&gt; or &lt;a href=&#34;https://fedoraproject.org/wiki/Dnf&#34;&gt;dnf&lt;/a&gt; command, because the software is pre-baked into a read-only &lt;code&gt;/usr/&lt;/code&gt; partition. To &amp;ldquo;&lt;em&gt;install&lt;/em&gt;&amp;rdquo; (to use) additional software, it usually needs to be distributed and run as a container.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>&lt;p&gt;I decided to record some screencasts to show how easy it is to deploy &lt;a href=&#34;https://gluster.org/&#34;&gt;GlusterFS&lt;/a&gt; using &lt;a title=&#34;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&#34; href=&#34;https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Puppet-Gluster+Vagrant&lt;/a&gt;. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!&lt;/p&gt;&#xA;&lt;p&gt;If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/&#34;&gt;Vagrant on Fedora with libvirt&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/&#34;&gt;Vagrant vsftp and other tricks&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/&#34;&gt;Vagrant clustered SSH and &#39;screen&#39;&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;Without any further delay, here are the screencasts:&#xA;&lt;p&gt;&lt;strong&gt;Part 1:&lt;/strong&gt; &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/puppet-gluster-screencast.part1.ogv&#34;&gt;Intro, and provisioning of the Puppet server.&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vagrant clustered SSH and ‘screen’</title>
+      <link>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</link>
+      <pubDate>Thu, 02 Jan 2014 00:40:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/</guid>
+      <description>&lt;p&gt;Some fun updates for vagrant hackers&amp;hellip; I wanted to use the venerable clustered SSH (&lt;code&gt;cssh&lt;/code&gt;) and &lt;code&gt;screen&lt;/code&gt; with vagrant. I decided to expand on my &lt;a href=&#34;https://gist.github.com/purpleidea/8071962#file-bashrc_vagrant-sh-L17&#34;&gt;&lt;code&gt;vsftp&lt;/code&gt;&lt;/a&gt; script. First read:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p style=&#34;text-align:center;&#34;&gt;&lt;strong&gt;&lt;a title=&#34;Vagrant on Fedora with libvirt&#34; href=&#34;https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/&#34;&gt;Vagrant on Fedora with libvirt&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;and&#xA;&lt;blockquote&gt;&#xA;&lt;p style=&#34;text-align:center;&#34;&gt;&lt;strong&gt;&lt;a title=&#34;Vagrant vsftp and other tricks&#34; href=&#34;https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/&#34;&gt;Vagrant vsftp and other tricks&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;to get up to speed on the background information.&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;Vagrant screen&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;First, a simple &lt;code&gt;screen&lt;/code&gt; hack&amp;hellip; I often use my &lt;code&gt;vssh&lt;/code&gt; alias to quickly ssh into a machine, but I don&amp;rsquo;t want to have to waste time with &lt;code&gt;sudo&lt;/code&gt;-ing to &lt;em&gt;root&lt;/em&gt; and then running &lt;code&gt;screen&lt;/code&gt; each time. Enter &lt;code&gt;vscreen&lt;/code&gt;:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

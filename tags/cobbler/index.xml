@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cobbler on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/cobbler/</link>
+    <description>Recent content in Cobbler on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sun, 23 Jun 2013 09:22:32 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/cobbler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fresh releases! puppet-ipa, puppet-nfs, puppet-gluster</title>
+      <link>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</link>
+      <pubDate>Sun, 23 Jun 2013 09:22:32 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/23/fresh-releases-puppet-ipa-puppet-nfs-puppet-gluster/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been a little slow in making release announcements, so here&amp;rsquo;s some news:&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve just released the third stage of my &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module. At the moment it now supports installation, managing of hosts, and managing of services. It integrates with my &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet-nfs&lt;/a&gt; module to allow you to easily setup and run an NFSv4 kerberized server and client.&lt;/p&gt;&#xA;&lt;p&gt;While we&amp;rsquo;re at it, that&amp;rsquo;s some more news: I&amp;rsquo;ve just released a &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet-nfs&lt;/a&gt; module to make your &lt;em&gt;/etc/exports&lt;/em&gt; management easier. It&amp;rsquo;s designed to manage other security types, or even to work without kerberos or any authentication at all, but I haven&amp;rsquo;t tested those.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>IPMI for linux professionals</title>
+      <link>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</link>
+      <pubDate>Wed, 25 Apr 2012 01:22:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2012/04/25/ipmi-for-linux-professionals/</guid>
+      <description>&lt;p&gt;The nostalgia of serial console servers, kvm&amp;rsquo;s and switched PDU&amp;rsquo;s is hopefully no longer visible in your server room. If not, you must definitely start playing catch up. Please forgive my ignorance, but these things might still be common for big windows shops, however if that&amp;rsquo;s the case, you&amp;rsquo;ve got an entirely different set of problems ;)&lt;/p&gt;&#xA;&lt;p&gt;IPMI is an IP based protocol that allows you to talk directly to a little computer, usually built in to your server. It lets you remotely manage power (on, off, reboot, cycle&amp;hellip;) get a serial console, collect sensor readings like temperatures, and do other magical things too if you care to figure them out.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

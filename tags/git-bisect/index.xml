@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git-Bisect on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/git-bisect/</link>
+    <description>Recent content in Git-Bisect on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 31 Mar 2010 10:13:48 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/git-bisect/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lecturing and git-bisect</title>
+      <link>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</link>
+      <pubDate>Wed, 31 Mar 2010 10:13:48 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/lecturing-and-git-bisect/</guid>
+      <description>&lt;p&gt;I was recently asked to give a lecture for the &lt;a href=&#34;http://www.cs.mcgill.ca/~prelude/Prelude/Home.html&#34;&gt;PRELUDE&lt;/a&gt; series at McGill. Here was my abstract:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;blockquote&gt;I don&#39;t like computers, and neither should you.&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;We spend too much time figuring out how to talk to them, instead of having them figure out how to understand us.&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;There&#39;s a big discontinuity between what software is providing, and the killer features we want!&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;We&#39;re not completely lost though. There are a lot of good tools and methodologies available!&lt;/blockquote&gt;&#xA;&lt;blockquote&gt;Until the feature gap closes, let me introduce you to some of these tools, and show you how I use the computer.&lt;/blockquote&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;span style=&#34;background-color:#ffffff;&#34;&gt;I spoke about a variety of topics with the intention of filling in everyone&#39;s knowledge about the useful tools available to users and developers. I included a section about &lt;a href=&#34;http://www.kernel.org/pub/software/scm/git/docs/git-bisect.html&#34;&gt;git-bisect&lt;/a&gt; and have posted the script in the examples section of the &lt;a href=&#34;http://www.cs.mcgill.ca/~james/code/&#34;&gt;bash-tutor&lt;/a&gt; tarball. It is now available for you to download and share.&lt;/span&gt;&#xA;&lt;p&gt;&lt;span style=&#34;background-color:#ffffff;&#34;&gt;I hope everyone enjoyed the lecture, and I always appreciate feedback!&lt;/span&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Irssi on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/irssi/</link>
+    <description>Recent content in Irssi on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 01 Sep 2020 17:08:00 -0400</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/irssi/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Inexpensive Dynamic DNS over IRC</title>
+      <link>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</link>
+      <pubDate>Tue, 01 Sep 2020 17:08:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2020/09/01/inexpensive-dns-over-irc/</guid>
+      <description>&lt;p&gt;The one thing that I&amp;rsquo;ve been using for longer than &lt;code&gt;ssh&lt;/code&gt; is dynamic dns. In this&#xA;article I&amp;rsquo;ll explain how I built an inexpensive, reliable, private alternative&#xA;to the mainstream tools commonly available today using only golang and &lt;a href=&#34;https://en.wikipedia.org/wiki/Internet_Relay_Chat&#34;&gt;IRC&lt;/a&gt;.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Background&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;I&amp;rsquo;ve had an account with &lt;code&gt;dyndns.org&lt;/code&gt; for a long time. They used to be free, but&#xA;then they cut off the free tier, but left existing accounts alone, until they&#xA;eventually cut all the non-payers off entirely. I think we need an inexpensive&#xA;way of giving up-and-coming GNU+Linux hackers a way to &lt;code&gt;ssh&lt;/code&gt; home, and run their&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/&#34;&gt;irssi sessions&lt;/a&gt;,&#xA;without having to pay. I also wanted something reliable that wouldn&amp;rsquo;t disappear&#xA;the way dyndns did.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Breaking out of the Slack walled garden</title>
+      <link>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</link>
+      <pubDate>Fri, 22 Jun 2018 13:50:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2018/06/22/breaking-out-of-the-slack-walled-garden/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m old school cool. Real hackers chat on open, distributed platforms. Most&#xA;technical discussion can be found on the &lt;a href=&#34;https://libera.chat/&#34;&gt;Libera.chat&lt;/a&gt; IRC&#xA;network. It&amp;rsquo;s not perfect, but the advantages clearly outweigh the drawbacks.&lt;/p&gt;&#xA;&lt;p&gt;Recently, I needed to join an existing large &amp;ldquo;community&amp;rdquo; on the centralized,&#xA;proprietary &lt;a href=&#34;https://en.wikipedia.org/wiki/Closed_platform&#34;&gt;walled garden&lt;/a&gt; that&#xA;is the &lt;a href=&#34;https://slack.com/&#34;&gt;Slack&lt;/a&gt; network.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;The Problem&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;Connecting to the the Slack server requires that you use either the proprietary&#xA;client or their proprietary web app. There&amp;rsquo;s zero chance I will install the&#xA;former on my machine, and the latter uses an absurd amount of browser memory and&#xA;CPU. I&amp;rsquo;m already happy with my &lt;a href=&#34;https://irssi.org/&#34;&gt;&lt;em&gt;irssi&lt;/em&gt;&lt;/a&gt; experience, and I&#xA;didn&amp;rsquo;t want to need another app.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Desktop Notifications for Irssi in Screen through SSH in Gnome Terminal</title>
+      <link>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</link>
+      <pubDate>Fri, 18 Oct 2013 06:00:49 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/18/desktop-notifications-for-irssi-in-screen-through-ssh-in-gnome-terminal/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m usually on &lt;a href=&#34;https://libera.chat/&#34;&gt;IRC&lt;/a&gt;, but I don&amp;rsquo;t often notice incoming pings until after the fact. I had to both write, and modify various scripts to get what I wanted, but now it&amp;rsquo;s all done, and you can benefit from my hacking by following along&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;The Setup&lt;/span&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Laptop -&amp;gt; Gnome-Terminal -&amp;gt; SSH -&amp;gt; Screen -&amp;gt; Irssi&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This way, I&amp;rsquo;m connected to IRC, even when my laptop isn&amp;rsquo;t. I run &lt;a href=&#34;http://irssi.org/&#34;&gt;irssi&lt;/a&gt; in a &lt;a href=&#34;https://www.gnu.org/software/screen/&#34;&gt;screen&lt;/a&gt; session on an SSH server that I manage, and I use &lt;a href=&#34;https://en.wikipedia.org/wiki/GNOME_Terminal&#34;&gt;gnome-terminal&lt;/a&gt; on my laptop. If you don&amp;rsquo;t understand this setup, then you&amp;rsquo;ll need to get more comfortable with these tools first.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

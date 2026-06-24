@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hack on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/hack/</link>
+    <description>Recent content in Hack on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 06 Jan 2017 05:57:08 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/hack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ten minute hacks: Process pause &amp; resume</title>
+      <link>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</link>
+      <pubDate>Fri, 06 Jan 2017 05:57:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2017/01/06/ten-minute-hacks-process-pause-resume/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m old school and still rocking an old X220 laptop &lt;a href=&#34;https://purpleidea.com/blog/2014/02/02/scathing-review-of-the-lenovo-x240/&#34;&gt;because I didn&amp;rsquo;t like the new ones&lt;/a&gt;. My battery life isn&amp;rsquo;t as great as I&amp;rsquo;d like it to be, but it gets worse when some &amp;ldquo;webapp&amp;rdquo; (which I&amp;rsquo;d much rather have as a native &lt;a href=&#34;https://en.wikipedia.org/wiki/GTK%2B&#34;&gt;GTK+&lt;/a&gt; app) causes Firefox to rev my CPU with their websocket (hi gmail!) poller.&lt;/p&gt;&#xA;&lt;p&gt;This seems to happen most often on planes or when I&amp;rsquo;m disconnected from the internet. Since it&amp;rsquo;s difficult to know which tab is the offending one, and since I might want to keep that tabs state anyway, I decided to write a little shell script to pause and resume misbehaving processes.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Ten minute hacks: Hacking airplane headphones</title>
+      <link>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</link>
+      <pubDate>Mon, 18 Jul 2016 16:41:47 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/07/18/ten-minute-hacks-hacking-airplane-headphones/</guid>
+      <description>&lt;p&gt;I was stuck on a 14 hour flight last week, and to my disappointment, only one of the two headphone speakers were working. The plane&amp;rsquo;s media centre has an audio connector that looks like this:&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;airplane-headphones-jack.jpg&#34;&gt;&lt;img class=&#34;wp-image-1856 size-large&#34; src=&#34;airplane-headphones-jack.jpg&#34; alt=&#34;airplane-headphones-jack&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Someone should consider probing this USB port.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;The hole to the left is smaller than a 3.5mm headphone jack, and designed for a proprietary headphone connector that I didn&amp;rsquo;t have, and the two holes to the right are part of a different proprietary connector which match with the cheap airline headphones to provide the left and right audio channels.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>One hour hacks: Remote LUKS over SSH</title>
+      <link>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</link>
+      <pubDate>Mon, 25 Apr 2016 13:46:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/04/25/one-hour-hacks-remote-luks-over-ssh/</guid>
+      <description>&lt;p&gt;I have a &lt;a href=&#34;https://gnu.org/&#34;&gt;GNU/Linux&lt;/a&gt; server which I mount a few &lt;a href=&#34;https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup&#34;&gt;LUKS&lt;/a&gt; encrypted drives on. I only ever interact with the server over SSH, and I never want to keep the LUKS credentials on the remote server. I don&amp;rsquo;t have anything especially sensitive on the drives, but I think it&amp;rsquo;s a good security practice to &lt;a href=&#34;http://www.theguardian.com/commentisfree/2013/jul/15/crux-nsa-collect-it-all&#34;&gt;encrypt it all&lt;/a&gt;, if only to add noise into the system and for solidarity with &lt;a href=&#34;https://en.wikipedia.org/wiki/Whistleblower&#34;&gt;those&lt;/a&gt; who harbour much more sensitive data.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.berrange.com/posts/2015/12/21/ceph-single-node-deployment-on-fedora-23/&#34;&gt;Daniel P. Berrangé wrote about trying out a single node ceph cluster.&lt;/a&gt; I decided to take his article and turn it into an Oh-My-Vagrant &lt;code&gt;omv.yaml&lt;/code&gt; file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.&lt;/p&gt;&#xA;&lt;p&gt;If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/blob/master/examples/ceph-deploy.yaml&#34;&gt;omv.yaml&lt;/a&gt; file that I&amp;rsquo;ve just published and run &lt;code&gt;omv up&lt;/code&gt;. Here&amp;rsquo;s the full terminal output of my session:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fixing dropbox “conflicted copy” problems</title>
+      <link>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</link>
+      <pubDate>Tue, 30 Sep 2014 01:05:07 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/09/30/fixing-dropbox-conflicted-copy-problems/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.gnu.org/philosophy/who-does-that-server-really-serve.html&#34;&gt;I usually avoid proprietary cloud services because of freedom, privacy and vendor lock-in concerns.&lt;/a&gt; In addition, there are some excellent &lt;em&gt;libre&lt;/em&gt; (and hosted) services such as &lt;a href=&#34;https://wordpress.com/&#34;&gt;WordPress&lt;/a&gt;, &lt;a href=&#34;https://www.wikipedia.org/&#34;&gt;Wikipedia&lt;/a&gt; and &lt;a href=&#34;https://www.openshift.com/&#34;&gt;OpenShift&lt;/a&gt; which don&amp;rsquo;t have the above problems. Thirdly, there are every day &lt;a href=&#34;https://www.gnu.org/philosophy/free-sw.html&#34;&gt;Free Software&lt;/a&gt; tools such as &lt;a href=&#34;https://fedoraproject.org/&#34;&gt;Fedora GNU/Linux&lt;/a&gt;, &lt;a href=&#34;https://www.libreoffice.org/&#34;&gt;Libreoffice&lt;/a&gt;, and &lt;a href=&#34;http://git-annex.branchable.com/assistant/&#34;&gt;git-annex-assistant&lt;/a&gt; which make &lt;em&gt;my&lt;/em&gt; computing much more powerful. Finally, there are some hosted services that I use that don&amp;rsquo;t lock me in because I use them as push-only mirrors, and I only interact with them using Free Software tools. The two examples are &lt;a href=&#34;https://github.com/purpleidea/&#34;&gt;GitHub&lt;/a&gt; and &lt;a href=&#34;https://db.tt/svmqLvX7&#34;&gt;Dropbox&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>One minute hacks: the nautilus scripts folder</title>
+      <link>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</link>
+      <pubDate>Thu, 26 Jun 2014 00:01:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/26/one-minute-hacks-the-nautilus-scripts-folder/</guid>
+      <description>&lt;p&gt;Master &lt;a href=&#34;https://en.wikipedia.org/wiki/Software_Defined_Networking&#34;&gt;SDN&lt;/a&gt; hacker &lt;a href=&#34;https://twitter.com/guteusa&#34;&gt;Flavio&lt;/a&gt; sent me some tunes. They were sitting on my desktop in a folder:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ls ~/Desktop/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;uncopyrighted_tunes_from_flavio/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;I wanted to listen them while hacking, but what was the easiest way&amp;hellip;? I wanted to use the &lt;em&gt;nautilus&lt;/em&gt; file browser to select which folder to play, and the &lt;em&gt;totem&lt;/em&gt; music/video player to do the playing.&lt;/p&gt;&#xA;&lt;p&gt;Drop a file named &lt;code&gt;totem&lt;/code&gt; into:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;~/.local/share/nautilus/scripts/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;with the contents:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;#!/bin/bash&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#080&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-style:italic&#34;&gt;# o hai from purpleidea&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a2f&#34;&gt;exec&lt;/span&gt; totem -- &lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#b8860b&#34;&gt;$@&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and make it executable with:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Finite state machines in puppet</title>
+      <link>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</link>
+      <pubDate>Sat, 28 Sep 2013 06:09:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/28/finite-state-machines-in-puppet/</guid>
+      <description>&lt;p&gt;In my attempt to &lt;a title=&#34;setting timed events in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/11/14/setting-timed-events-in-puppet/&#34;&gt;push puppet to its limits&lt;/a&gt;, (for &lt;a title=&#34;recursion in puppet (for no particular reason)&#34; href=&#34;https://purpleidea.com/blog/2012/11/20/recursion-in-puppet-for-no-particular-reason/&#34;&gt;no particular reason&lt;/a&gt;), to &lt;a title=&#34;Collecting duplicate resources in puppet&#34; href=&#34;https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/&#34;&gt;develop more powerful puppet modules&lt;/a&gt;, to&lt;a title=&#34;How to avoid cluster race conditions or: How to implement a distributed lock manager in puppet&#34; href=&#34;https://purpleidea.com/blog/2012/08/23/how-to-avoid-cluster-race-conditions-or-how-to-implement-a-distributed-lock-manager-in-puppet/&#34;&gt; build in a distributed lock manager&lt;/a&gt;, and to &lt;a title=&#34;Dynamically including classes in puppet&#34; href=&#34;https://purpleidea.com/blog/2013/01/16/dynamically-including-classes-in-puppet/&#34;&gt;be more dynamic&lt;/a&gt;, I&amp;rsquo;m now attempting to build a &lt;a href=&#34;https://en.wikipedia.org/wiki/Finite-state_machine&#34;&gt;Finite State Machine&lt;/a&gt; (FSM) in puppet.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Collecting duplicate resources in puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</link>
+      <pubDate>Tue, 04 Jun 2013 23:39:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/04/collecting-duplicate-resources-in-puppet/</guid>
+      <description>&lt;p&gt;I could probably write a long design article explaining why &lt;em&gt;identical&lt;/em&gt; duplicate resources should be allowed [1] in puppet. If puppet is going to survive in the long-term, they will have to build in this feature. In the short-term, I will have to hack around deficiency. As luck would have it, &lt;a href=&#34;https://twitter.com/bodepd&#34;&gt;Mr. Bode&lt;/a&gt; has already written part one of the hack: &lt;a href=&#34;https://github.com/puppetlabs/puppetlabs-stdlib#ensure_resource&#34;&gt;ensure_resource&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Suppose you have a given infrastructure with &lt;em&gt;N&lt;/em&gt; vaguely identical nodes. &lt;em&gt;N&lt;/em&gt; could equal &lt;strong&gt;2&lt;/strong&gt; for a &lt;em&gt;dual primary&lt;/em&gt; or &lt;em&gt;active-passive&lt;/em&gt; cluster, or &lt;em&gt;N&lt;/em&gt; could be greater than &lt;strong&gt;2&lt;/strong&gt; for a more elaborate N-ary cluster. It is sufficient to say, that each of those &lt;em&gt;N&lt;/em&gt; nodes might export an identical puppet resource which one (or many) clients might need to collect, to operate correctly. It&amp;rsquo;s important that each node export this, so that there is no single point of failure if one or more of the cluster nodes goes missing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>&lt;p&gt;There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to &lt;em&gt;off&lt;/em&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Since we already agree that &lt;a href=&#34;https://github.com/tomerfiliba/rpyc/tree/master/demos/web8&#34;&gt;HTML and the web are a terrible idea&lt;/a&gt;, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me. The cleanest version I found is here: &lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;&lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mothers day hacks</title>
+      <link>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</link>
+      <pubDate>Sun, 12 May 2013 07:32:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/12/mothers-day-hacks/</guid>
+      <description>&lt;p&gt;Firstly Happy Mother&amp;rsquo;s day to my mother.&lt;/p&gt;&#xA;&lt;p&gt;Google is, as usual, busily releasing &lt;a href=&#34;http://www.google.com/doodles/&#34;&gt;doodles&lt;/a&gt;. Today, the doodle takes you through a &lt;a href=&#34;https://en.wikipedia.org/wiki/Rube_Goldberg&#34;&gt;Rube Goldberg&lt;/a&gt; -esque sequence, giving you four decisions to make along the way. Each decision gives you one of three different choices, and at the end, a unique drawing is displayed. I expect:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3 * 3 * 3 * 3 = 81&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;different permutations. At the end of the process, you can print your image. I got directed to:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Knowing when to release and deploy your code (...and a mini script)</title>
+      <link>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</link>
+      <pubDate>Mon, 08 Apr 2013 21:27:29 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/04/08/knowing-when-to-release-and-deploy-your-code-and-a-mini-script/</guid>
+      <description>&lt;p&gt;Knowing when to release and deploy your code can turn into a complicated discussion. In general, In general, I tend to support &lt;a href=&#34;https://en.wikipedia.org/wiki/Release_early,_release_often&#34;&gt;releasing early and often&lt;/a&gt;, for some value of &lt;em&gt;$early&lt;/em&gt; and &lt;em&gt;$often&lt;/em&gt;. I&amp;rsquo;ve decided to keep this simple and introduce you to one metric that I use&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I think that I am fairly diligent in adding plenty of comments to my source code. I might even sometimes add too many. I create plenty of XXX, FIXME, or TODO tagged comments as reminders of things to work on.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>&lt;p&gt;I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&lt;/p&gt;&#xA;&lt;p&gt;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections. I wanted to see eight. Since I knew it would have been silly for the developers to hard code the number five, I decided there was a chance that they stored it in the &lt;a href=&#34;https://live.gnome.org/dconf&#34;&gt;dconf&lt;/a&gt; settings. (BTW, there&amp;rsquo;s also an amazing &amp;ldquo;&lt;a href=&#34;http://seilo.geekyogre.com/2011/12/gedit-plugins-now-has-the-dashboard/&#34;&gt;Dashboard&lt;/a&gt;&amp;rdquo; plugin which I use for more complex recent-files searching&amp;hellip;)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

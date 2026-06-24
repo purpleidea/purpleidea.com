@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Programming on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/programming/</link>
+    <description>Recent content in Programming on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 02 Sep 2013 05:50:23 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Puppet-Gluster and me at Linuxcon</title>
+      <link>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</link>
+      <pubDate>Mon, 02 Sep 2013 05:50:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/02/puppet-gluster-and-me-at-linuxcon/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.johnmark.org/blog/&#34;&gt;John Mark Walker&lt;/a&gt;, (from &lt;a href=&#34;http://www.redhat.com/&#34;&gt;Redhat&lt;/a&gt;) has been kind enough to invite me to speak at the &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/program/co-located-events&#34;&gt;Linuxcon Gluster Workshop&lt;/a&gt; in &lt;a href=&#34;https://events.linuxfoundation.org/events/linuxcon-north-america/extend-the-experience/about-new-orleans&#34;&gt;New Orleans&lt;/a&gt;. I&amp;rsquo;ll be speaking about &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster&#34;&gt;puppet-gluster&lt;/a&gt;, giving demos, and hopefully showing off some new features. I&amp;rsquo;m also looking forward to meeting up with &lt;a href=&#34;http://www.gluster.org/&#34;&gt;gluster&lt;/a&gt; expert &lt;a href=&#34;http://joejulian.name/&#34;&gt;Joe Julian&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;If there are features that puppet-gluster is missing, or you have a use case that I haven&amp;rsquo;t covered, please let me know, and I&amp;rsquo;ll try to work on it for you ahead of the conference. If you want to meet up for some puppet-gluster help, or to hack on code, I&amp;rsquo;ll be around from the 16th to the 20th of September. My talk is on the 19th.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>&lt;p&gt;A simple hack to add a &lt;em&gt;user&lt;/em&gt; type to my &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3 files changed, 1401 insertions(+), 215 deletions(-)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should now have a highly capable user type, along with &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/examples/simple-usage3.pp#L13&#34;&gt;some quick examples&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve also done a rewrite of the &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/files/diff.py&#34;&gt;difference engine&lt;/a&gt;, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms. This should make adding future types easier, and less error prone. If you&amp;rsquo;re not comfortable with ruby, that&amp;rsquo;s okay, because it&amp;rsquo;s written in python!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>scary cool bash scripting inside a Makefile</title>
+      <link>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</link>
+      <pubDate>Wed, 31 Mar 2010 10:05:21 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/31/scary-cool-bash-scripting-inside-a-makefile/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.gnu.org/software/make/manual/make.html&#34;&gt;Makefiles&lt;/a&gt; are both scary and wonderful. When both these adjectives are involved, it often makes for interesting hacking. This is likely the reason I use &lt;a href=&#34;http://www.gnu.org/software/bash/&#34;&gt;bash&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In any case, I digress, back to real work. I use Makefiles as a general purpose tool to launch any of a number of shell scripts which I use to maintain my code, and instead of actually having external shell scripts, I just build any necessary bash right into the Makefile.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>getting gedit to work like magic</title>
+      <link>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</link>
+      <pubDate>Tue, 09 Mar 2010 17:17:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/03/09/getting-gedit-to-work-like-magic/</guid>
+      <description>&lt;p&gt;i use &lt;a href=&#34;http://en.wikipedia.org/wiki/GNU/Linux&#34;&gt;gnu/linux&lt;/a&gt;. it&amp;rsquo;s probably no secret. what is more of a secret, is that i secretly (well actually not so secretly) love using &lt;a href=&#34;http://projects.gnome.org/gedit/&#34;&gt;gedit&lt;/a&gt; for editing text. i still use &lt;a href=&#34;http://www.vim.org/&#34;&gt;vim&lt;/a&gt;, echo (&lt;a href=&#34;http://www.gnu.org/&#34;&gt;gnu&lt;/a&gt; bash) and &lt;a href=&#34;http://www.gnu.org/software/emacs/&#34;&gt;emacs&lt;/a&gt; (but only for &lt;a href=&#34;http://orgmode.org/&#34;&gt;org-mode&lt;/a&gt;).&lt;/p&gt;&#xA;&lt;p&gt;vim is really, really great. but for day to day full-screen coding, i love working in gedit. i only have one [1] longstanding gripe, and today i believe that it is solved. here is the magic combination which appeases my troubled spirit:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>reading obscure documentation</title>
+      <link>https://purpleidea.com/blog/2010/02/08/reading-obscure-documentation/</link>
+      <pubDate>Mon, 08 Feb 2010 13:05:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/08/reading-obscure-documentation/</guid>
+      <description>&lt;p&gt;Sometimes the interfaces you need just aren&amp;rsquo;t well documented, but &lt;span style=&#34;background-color:#ffffff;&#34;&gt;thanks to the &lt;a href=&#34;http://en.wikipedia.org/wiki/Internets&#34;&gt;internets&lt;/a&gt;, some &lt;a href=&#34;http://google.com/&#34;&gt;websearches&lt;/a&gt;, and a useful &lt;a href=&#34;http://www.chiark.greenend.org.uk/ucam/chat/FAQ.0.8.html#3%2010&#34;&gt;dictionary&lt;/a&gt;, you can often decipher random web documentation jargon to help you produce useful &lt;a href=&#34;http://www.cs.mcgill.ca/~james/code/&#34;&gt;code&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;&#xA;&lt;span style=&#34;background-color:#ffffff;&#34;&gt;&#xA;&lt;/span&gt;&#xA;&lt;p&gt;&lt;br /&gt;&lt;i&gt;You can &lt;a target=&#34;_blank&#34; href=&#34;https://m9rx.com/&#34;&gt;hire James&lt;/a&gt; and his team at &lt;a target=&#34;_blank&#34; href=&#34;https://m9rx.com/&#34;&gt;m9rx corporation&lt;/a&gt;.&lt;/i&gt;&#xA;&#xA;&lt;br /&gt;&lt;i&gt;You can &lt;a target=&#34;_blank&#34; href=&#34;https://mastodon.social/@purpleidea&#34;&gt;follow James on Mastodon&lt;/a&gt; for more frequent updates and other random thoughts.&lt;/i&gt;&#xA;&#xA;&lt;br /&gt;&lt;i&gt;You can &lt;a target=&#34;_blank&#34; href=&#34;https://twitter.com/intent/follow?screen_name=purpleidea&#34;&gt;follow James on Twitter&lt;/a&gt; for more frequent updates and other random thoughts.&lt;/i&gt;&#xA;&#xA;&lt;br /&gt;&lt;i&gt;You can &lt;a target=&#34;_blank&#34; href=&#34;https://github.com/sponsors/purpleidea/&#34;&gt;support James on GitHub&lt;/a&gt; if you&#39;d like to help sustain this kind of content.&lt;/i&gt;&#xA;&#xA;&lt;br /&gt;&lt;i&gt;You can &lt;a target=&#34;_blank&#34; href=&#34;https://www.patreon.com/purpleidea&#34;&gt;support James on Patreon&lt;/a&gt; if you&#39;d like to help sustain this kind of content.&lt;/i&gt;&#xA;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>getopt vs. optparse vs. argparse</title>
+      <link>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</link>
+      <pubDate>Wed, 03 Feb 2010 12:25:08 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/02/03/getopt-vs-optparse-vs-argparse/</guid>
+      <description>&lt;p&gt;sooner or later you&amp;rsquo;ll end up needing to do some argument parsing. the foolish end up writing their own yucky parser that ends up having a big if statement filled with things like:&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;if len(sys.argv) &amp;gt; 1&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;in it. don&amp;rsquo;t do this unless you have a &lt;b&gt;really&lt;/b&gt; good excuse.&lt;/p&gt;&#xA;&lt;p&gt;sooner or later, someone directs you to &lt;a href=&#34;http://docs.python.org/library/getopt.html&#34;&gt;getopt&lt;/a&gt;, and you happily continue on with buggy manual parsing thinking you&amp;rsquo;ve &amp;ldquo;&lt;i&gt;found the way&lt;/i&gt;&amp;rdquo;. useful in some circumstances, but should generally be avoided.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>sorting out the confusion</title>
+      <link>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</link>
+      <pubDate>Wed, 27 Jan 2010 13:03:51 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2010/01/27/sorting-out-the-confusion/</guid>
+      <description>&lt;p&gt;if i&amp;rsquo;ve been silent as of late, it&amp;rsquo;s because i&amp;rsquo;ve been furiously coding away. i&amp;rsquo;ve got what i think are some elegant implementations cooking, and with any luck my extra work will pay off in hours and days and months of time saved down the road. i&amp;rsquo;ve got a few interesting (interesting with respect to your average rating of the blog posts on this site) posts cooking in my mind, and hopefully they&amp;rsquo;ll appear shortly!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>the python subprocess module</title>
+      <link>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</link>
+      <pubDate>Wed, 07 Oct 2009 10:24:53 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/10/07/the-python-subprocess-module/</guid>
+      <description>&lt;p&gt;i&amp;rsquo;m sure that i won&amp;rsquo;t be able to tell you anything revolutionary which can&amp;rsquo;t be found out by reading the &lt;a href=&#34;http://docs.python.org/library/subprocess.html&#34;&gt;manual&lt;/a&gt;, but i thought i would clarify it, and by showing you a specific example which i needed.&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;subprocess.Popen&lt;/em&gt; accepts a bunch or args, one of which is the &lt;strong&gt;shell&lt;/strong&gt; argument, which is False by default. If you specify &lt;em&gt;shell=True&lt;/em&gt; then the first argument of popen should be a &lt;strong&gt;string&lt;/strong&gt; which is what gets parsed by the shell and then eventually run. (nothing revolutionary)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>cheetah == fortran</title>
+      <link>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</link>
+      <pubDate>Tue, 21 Jul 2009 16:59:50 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/cheetah-fortran/</guid>
+      <description>&lt;p&gt;turns out the &lt;a href=&#34;http://www.cheetahtemplate.org/&#34;&gt;cheetah&lt;/a&gt; python templating engine (2.0 since year 2006) is quite reminiscent of &lt;a href=&#34;http://en.wikipedia.org/wiki/Fortran&#34;&gt;fortran&lt;/a&gt; (since the 1950&amp;rsquo;s) in their use of the &lt;strong&gt;#slurp&lt;/strong&gt; directive (cheetah) and the &lt;strong&gt;$&lt;/strong&gt; string. either one, when appended to the end of a string, remove the implicit newline which usually gets printed. it took me ages to figure out how to suppress newline printing back when i did someone&amp;rsquo;s fortran homework, now i&amp;rsquo;ve had to struggle with it all over again.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>[py]inotify, polling, gtk and gio</title>
+      <link>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</link>
+      <pubDate>Tue, 21 Jul 2009 10:19:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/21/pyinotify-polling-gtk-and-gio/</guid>
+      <description>&lt;p&gt;i have this software with a gtk mainloop, using dbus and all that fun stuff that seems to play together nicely. i know about the kernel &lt;a href=&#34;http://en.wikipedia.org/wiki/Inotify&#34;&gt;inotify&lt;/a&gt; support, and i wanted it to get integrated with that above stack. i thought i was supposed to do it with &lt;a href=&#34;http://trac.dbzteam.org/pyinotify&#34;&gt;pyinotify&lt;/a&gt; and &lt;a href=&#34;http://www.pygtk.org/pygtk2reference/gobject-functions.html#function-gobject--io-add-watch&#34;&gt;io_add_watch&lt;/a&gt;, but on closer inspection into the pyinotify code it turns out that it seems to actually use &lt;a href=&#34;http://trac.dbzteam.org/pyinotify/browser/pyinotify.py&#34;&gt;polling&lt;/a&gt;! (search for: select.poll)&lt;/p&gt;&#xA;&lt;p&gt;thinking i was confused, i emailed a friend to see if he could confirm my suspicions. we both weren&amp;rsquo;t 100% sure, a little searching later i was convinced when i found &lt;a href=&#34;http://www.tenshu.net/archives/2008/10/24/using-inotify-in-a-pygtk-application-without-pyinotify/&#34;&gt;this&lt;/a&gt; blog posting. i&amp;rsquo;m surprised i didn&amp;rsquo;t find out about this sooner. in any case, my application seems to be happy now.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>logging out of $SESSION</title>
+      <link>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</link>
+      <pubDate>Mon, 13 Jul 2009 10:05:05 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2009/07/13/logging-out-of-session/</guid>
+      <description>&lt;p&gt;the &lt;a href=&#34;http://www.cs.mcgill.ca/~james/code/&#34;&gt;software&lt;/a&gt; (evanescent) that i&amp;rsquo;m working on is supposed to log out the user from its current X session. originally i had some yucky looking code that ran a kill on gnome-session, which quickly got replaced with:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;os.system(&amp;#39;gnome-session-save --logout-dialog&amp;#39;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;i&amp;rsquo;ve decided this was still a little crufty, so i&amp;rsquo;ve recently replaced this with:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;bus = dbus.SessionBus()&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;remote_object = bus.get_object(&amp;#39;org.gnome.SessionManager&amp;#39;, &amp;#39;/org/gnome/SessionManager&amp;#39;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# specify the dbus_interface in each call&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;remote_object.Logout(0, dbus_interface=&amp;#39;org.gnome.SessionManager&amp;#39;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# or create an Interface wrapper for the remote object&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;#iface = dbus.Interface(remote_object, &amp;#39;org.gnome.SessionManager&amp;#39;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;#iface.Logout(0)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# introspection is automatically supported&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;#print remote_object.Introspect(dbus_interface=&amp;#39;org.freedesktop.DBus.Introspectable&amp;#39;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;http://www.gnome.org/~mccann/gnome-session/docs/gnome-session.html#org.gnome.SessionManager.Logout&#34;&gt;documentation&lt;/a&gt; can be found, although it took a little digging. the only catch is that this is gnome specific, and you need different code for kde, and each other DE. thanks to &lt;a href=&#34;http://www.purinchu.net/wp/2009/06/12/oh-fun/&#34;&gt;&lt;a href=&#34;http://www.purinchu.net/wp/2009/06/12/oh-fun/&#34;&gt;http://www.purinchu.net/wp/2009/06/12/oh-fun/&lt;/a&gt;&lt;/a&gt; for the kde version of the above.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

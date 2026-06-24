@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recent-Files on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/recent-files/</link>
+    <description>Recent content in Recent-Files on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Thu, 07 Mar 2013 18:38:45 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/recent-files/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>learn how to do one minute hacks, in three minutes</title>
+      <link>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</link>
+      <pubDate>Thu, 07 Mar 2013 18:38:45 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/03/07/learn-how-to-do-one-minute-hacks-in-three-minutes/</guid>
+      <description>&lt;p&gt;I write this technical blog for you to enjoy, and to help me remember. So where do I get all this knowledge? I figure it out! Here&amp;rsquo;s how I learned to fix a small gedit annoyance in one minute, and within the next three, you&amp;rsquo;ll be able to do the same for other types of problems too. Ready? Set? Go!&lt;/p&gt;&#xA;&lt;p&gt;I use gedit enough, that when I hack, I often end up using up more than the five allotted spaces in the &amp;ldquo;recent files&amp;rdquo; sections. I wanted to see eight. Since I knew it would have been silly for the developers to hard code the number five, I decided there was a chance that they stored it in the &lt;a href=&#34;https://live.gnome.org/dconf&#34;&gt;dconf&lt;/a&gt; settings. (BTW, there&amp;rsquo;s also an amazing &amp;ldquo;&lt;a href=&#34;http://seilo.geekyogre.com/2011/12/gedit-plugins-now-has-the-dashboard/&#34;&gt;Dashboard&lt;/a&gt;&amp;rdquo; plugin which I use for more complex recent-files searching&amp;hellip;)&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

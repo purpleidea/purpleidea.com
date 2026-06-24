@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Screencast on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/screencast/</link>
+    <description>Recent content in Screencast on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 02 May 2015 00:07:11 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/screencast/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes clusters with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</link>
+      <pubDate>Sat, 02 May 2015 00:07:11 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/05/02/kubernetes-clusters-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve added the ability to deploy a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes&#34;&gt;Kubernetes&lt;/a&gt; cluster with &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (&lt;em&gt;omv&lt;/em&gt;). I&amp;rsquo;ve also built an automated developer experience so that you can test your Kubernetes powered app in minutes. If you want to redeploy a new version, or see how your app behaves during a &lt;a href=&#34;https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/kubectl_rolling-update.md&#34;&gt;rolling update&lt;/a&gt;, you can use &lt;em&gt;omv&lt;/em&gt; to test this out in minutes! I&amp;rsquo;ve recorded a &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-kubernetes-screencast.ogv&#34;&gt;screencast&lt;/a&gt; (~15 min), if you&amp;rsquo;d like to see some of this in action.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Docker containers in Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</link>
+      <pubDate>Mon, 20 Apr 2015 04:35:43 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/20/docker-containers-in-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (omv) project is an easy way to bootstrap a development environment. It is particularly useful for spinning up an arbitrary number of virtual machines in Vagrant without writing ruby code. For multi-machine container development, &lt;em&gt;omv&lt;/em&gt; can be used to help this happen more naturally.&lt;/p&gt;&#xA;&lt;p&gt;Oh-My-Vagrant can be very useful as a docker application development environment. I&amp;rsquo;ve made a quick (&amp;lt;9min) screencast demoing this topic. Please have a look:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&#34;&gt;&lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&#34;&gt;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/oh-my-vagrant-docker-screencast.ogv&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Sharing dev environments with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</link>
+      <pubDate>Wed, 08 Apr 2015 03:37:18 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/04/08/sharing-dev-environments-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;With &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant&#34;&gt;Oh-My-Vagrant&lt;/a&gt; (omv) you can set up a dev environment in seconds. (Read the &lt;a href=&#34;https://purpleidea.com/blog/2014/09/03/introducing-oh-my-vagrant/&#34;&gt;omv introduction&lt;/a&gt; if you&amp;rsquo;ve never used it before!) Since everything is defined in a single &lt;code&gt;omv.yaml&lt;/code&gt; file, it is easy to share your cluster prototype with a friend! The one missing feature was associating code with this config file. This is now possible! Let me show you how it works&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;In the &lt;code&gt;omv.yaml&lt;/code&gt; file there is an &lt;code&gt;extern&lt;/code&gt; variable. It is a list of each &lt;em&gt;external&lt;/em&gt; repository which you&amp;rsquo;d like to include. Each element in this list is a hash of key value pairs. Currently four are supported: &lt;em&gt;type&lt;/em&gt;, &lt;em&gt;system&lt;/em&gt;, &lt;em&gt;repository&lt;/em&gt;, &lt;em&gt;directory&lt;/em&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Screencasts of Puppet-Gluster &#43; Vagrant</title>
+      <link>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</link>
+      <pubDate>Mon, 27 Jan 2014 16:13:10 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/27/screencasts-of-puppet-gluster-vagrant/</guid>
+      <description>&lt;p&gt;I decided to record some screencasts to show how easy it is to deploy &lt;a href=&#34;https://gluster.org/&#34;&gt;GlusterFS&lt;/a&gt; using &lt;a title=&#34;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&#34; href=&#34;https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Puppet-Gluster+Vagrant&lt;/a&gt;. You can follow along even if you don&amp;rsquo;t know anything about Puppet or Vagrant. The hardest part of this process was producing the actual videos!&lt;/p&gt;&#xA;&lt;p&gt;If recommend first reading my earlier articles if you&amp;rsquo;re planning on following along:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/&#34;&gt;Vagrant on Fedora with libvirt&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/&#34;&gt;Vagrant vsftp and other tricks&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/&#34;&gt;Vagrant clustered SSH and &#39;screen&#39;&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&#x9;&#x9;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/&#34;&gt;Automatically deploying GlusterFS with Puppet-Gluster + Vagrant!&lt;/a&gt;&lt;/blockquote&gt;&#xA;&#x9;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;Without any further delay, here are the screencasts:&#xA;&lt;p&gt;&lt;strong&gt;Part 1:&lt;/strong&gt; &lt;a href=&#34;https://dl.fedoraproject.org/pub/alt/purpleidea/screencasts/puppet-gluster-screencast.part1.ogv&#34;&gt;Intro, and provisioning of the Puppet server.&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

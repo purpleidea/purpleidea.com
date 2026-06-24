@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Asia on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/asia/</link>
+    <description>Recent content in Asia on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 20 Jun 2016 04:08:59 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/asia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upcoming speaking In Hong Kong and South Africa</title>
+      <link>https://purpleidea.com/blog/2016/06/20/upcoming-speaking-in-hong-kong-and-south-africa/</link>
+      <pubDate>Mon, 20 Jun 2016 04:08:59 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2016/06/20/upcoming-speaking-in-hong-kong-and-south-africa/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m thrilled to tell you that I&amp;rsquo;ll be speaking about &lt;a href=&#34;https://purpleidea.com/tags/mgmtconfig/&#34;&gt;mgmt&lt;/a&gt; in Hong Kong and South Africa. It will be my first time to both countries and my first time to &lt;a href=&#34;https://en.wikipedia.org/wiki/Asia&#34;&gt;Asia&lt;/a&gt; and &lt;a href=&#34;https://en.wikipedia.org/wiki/Africa&#34;&gt;Africa&lt;/a&gt;!&lt;/p&gt;&#xA;&lt;p&gt;In Hong Kong I&amp;rsquo;ll be speaking at &lt;a href=&#34;https://2016.opensource.hk/topics/next-generation-config-mgmt/&#34;&gt;HKOSCon2016&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In South Africa I&amp;rsquo;ll be speaking at &lt;a href=&#34;https://debconf16.debconf.org/schedule/&#34;&gt;DebConf16&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m looking forward to meeting with many of the hard-working Debian hackers, and collaborating with them to build and promote excellent Free Software. The &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt; project considers both Fedora and Debian to be first class platforms, and parity is a primary design goal.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

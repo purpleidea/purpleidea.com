@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="I can&#39;t believe it&#39;s been over 11 years">
+	<meta name="author" content="James Shubin">
+
+	<title>The switch as an ordinary GNU/Linux server - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>The switch as an ordinary GNU/Linux server</strong><br><small>I can&#39;t believe it&#39;s been over 11 years</small></h3>
+					<hr>
+					<p><a href="/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/">In 2014 I wrote an article about the switch as an ordinary GNU/Linux server.</a>
+This had been my dream since my early days using Linux to build routers and I
+didn&rsquo;t know why we didn&rsquo;t use the same management interfaces on switches as we
+did on Linux. The folks at <em>Cumulus Networks</em> made this a reality and in 2014
+they were kind enough to give me access to some hardware to test things out.</p>
+<p>The fact that we manage the <a href="https://en.wikipedia.org/wiki/Network_switch">switches</a>
+in our data centres differently than any other server is patently absurd, but we
+do so because we want to harness the power of a tiny bit of <a href="https://en.wikipedia.org/wiki/Silicon#Electronic_grade">silicon</a>
+which happens to be able to dramatically speed up the switching bandwidth.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/absurd.png"><img class="alignnone size-full" src="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/absurd.png"  width="100%" /></a></td></tr><tr><td>beware of proprietary silicon, it&#39;s absurd!</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">A new competitor emerges</span>:<br /><br />
+
+<p>There has been much to this story in the intervening years since, but you can go
+read about that history elsewhere. One recent development caught my eye, a new
+company by the name of <a href="https://novarq.com/pages/tactical-1000">Novarq is selling a new switch</a>
+claiming to carry on this tradition.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/novarq-tactical-1000.png"><img class="alignnone size-full" src="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/novarq-tactical-1000.png"  width="100%" /></a></td></tr><tr><td>the switch in question</td></tr></table></br />
+
+<p>They were kind enough to have a short chat with me and to give me access to some
+hardware to test it out. No money exchanged hands, and I wasn&rsquo;t told what I
+could or couldn&rsquo;t say. What follows is my honest review and advice which I
+publish in the hopes of helping them succeed for the selfish reason that I think
+the switching and automation world would be a better place by being able to
+manage all of your hardware in the exact same way.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Getting Started</span>:<br /><br />
+
+<h3 id="logging-in">Logging in&hellip;</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh root@&lt;censored&gt; -p &lt;censored&gt;
+</span></span><span style="display:flex;"><span>Linux bookworm-tactical1000 7.0.0-rc4-next-20260320 <span style="color:#080;font-style:italic">#1 SMP PREEMPT Thu Apr  2 20:56:11 CEST 2026 aarch64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The programs included with the Debian GNU/Linux system are free software;
+</span></span><span style="display:flex;"><span>the exact distribution terms <span style="color:#a2f;font-weight:bold">for</span> each program are described in the
+</span></span><span style="display:flex;"><span>individual files in /usr/share/doc/*/copyright.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span style="display:flex;"><span>permitted by applicable law.
+</span></span><span style="display:flex;"><span>Last login: Mon Apr  <span style="color:#666">6</span> 18:30:36 <span style="color:#666">2026</span> from &lt;censored&gt;
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><h3 id="being-curious">Being curious&hellip;</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat .bash_history
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ping 172.16.255.2
+</span></span><span style="display:flex;"><span>ping 172.16.222.223
+</span></span><span style="display:flex;"><span>ping 1.1.1.1
+</span></span><span style="display:flex;"><span>ping 172.16.223.183
+</span></span><span style="display:flex;"><span>apt update
+</span></span><span style="display:flex;"><span>nmap
+</span></span><span style="display:flex;"><span>apt install nmap
+</span></span><span style="display:flex;"><span>nmap -sn 172.16.0.1/16
+</span></span><span style="display:flex;"><span>nmap -sn 172.16.222.223
+</span></span><span style="display:flex;"><span>apt purge nmap
+</span></span><span style="display:flex;"><span>cat .bash_history
+</span></span><span style="display:flex;"><span><span style="color:#a2f">echo</span> <span style="color:#b44">&#34;&#34;</span> &gt; .bash_history
+</span></span><span style="display:flex;"><span>htop
+</span></span><span style="display:flex;"><span>top
+</span></span><span style="display:flex;"><span><span style="color:#a2f">exit</span>
+</span></span><span style="display:flex;"><span>ls
+</span></span><span style="display:flex;"><span><span style="color:#a2f">exit</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Secrets are gone!</p>
+<h3 id="setup">Setup</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# screen
+</span></span><span style="display:flex;"><span>-bash: screen: <span style="color:#a2f">command</span> not found
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# apt install screen
+</span></span><span style="display:flex;"><span>Reading package lists... Done
+</span></span><span style="display:flex;"><span>Building dependency tree... Done
+</span></span><span style="display:flex;"><span>Reading state information... Done
+</span></span><span style="display:flex;"><span>The following packages were automatically installed and are no longer required:
+</span></span><span style="display:flex;"><span>  libblas3 liblinear4 liblua5.3-0 libpcap0.8 libpcre3 libssh2-1 lua-lpeg nmap-common
+</span></span><span style="display:flex;"><span>Use <span style="color:#b44">&#39;apt autoremove&#39;</span> to remove them.
+</span></span><span style="display:flex;"><span>The following additional packages will be installed:
+</span></span><span style="display:flex;"><span>  libutempter0
+</span></span><span style="display:flex;"><span>Suggested packages:
+</span></span><span style="display:flex;"><span>  byobu | screenie | iselect
+</span></span><span style="display:flex;"><span>The following NEW packages will be installed:
+</span></span><span style="display:flex;"><span>  libutempter0 screen
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> upgraded, <span style="color:#666">2</span> newly installed, <span style="color:#666">0</span> to remove and <span style="color:#666">3</span> not upgraded.
+</span></span><span style="display:flex;"><span>Need to get <span style="color:#666">574</span> kB of archives.
+</span></span><span style="display:flex;"><span>After this operation, <span style="color:#666">1172</span> kB of additional disk space will be used.
+</span></span><span style="display:flex;"><span>Do you want to <span style="color:#a2f;font-weight:bold">continue</span>? <span style="color:#666">[</span>Y/n<span style="color:#666">]</span> y
+</span></span><span style="display:flex;"><span>Get:1 https://deb.debian.org/debian bookworm/main arm64 libutempter0 arm64 1.2.1-3 <span style="color:#666">[</span><span style="color:#666">8964</span> B<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>Get:2 https://deb.debian.org/debian bookworm/main arm64 screen arm64 4.9.0-4 <span style="color:#666">[</span><span style="color:#666">565</span> kB<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>Fetched <span style="color:#666">574</span> kB in 1s <span style="color:#666">(</span><span style="color:#666">970</span> kB/s<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libutempter0:arm64.
+</span></span><span style="display:flex;"><span><span style="color:#666">(</span>Reading database ... <span style="color:#666">15806</span> files and directories currently installed.<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>Preparing to unpack .../libutempter0_1.2.1-3_arm64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libutempter0:arm64 <span style="color:#666">(</span>1.2.1-3<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package screen.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../screen_4.9.0-4_arm64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking screen <span style="color:#666">(</span>4.9.0-4<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libutempter0:arm64 <span style="color:#666">(</span>1.2.1-3<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up screen <span style="color:#666">(</span>4.9.0-4<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#a2f;font-weight:bold">for</span> libc-bin <span style="color:#666">(</span>2.36-9+deb12u13<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#a2f;font-weight:bold">for</span> debianutils <span style="color:#666">(</span>5.7-0.5~deb12u1<span style="color:#666">)</span> ...
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>In total I installed <code>bash-completion</code>, <code>bridge-utils</code>, <code>ethtool</code>, <code>man</code>,
+<code>psmisc</code>, <code>pciutils</code>, <code>screen</code>, <code>tree</code>.</p>
+<h3 id="exploring">Exploring</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# pstree
+</span></span><span style="display:flex;"><span>systemd-+-agetty
+</span></span><span style="display:flex;"><span>        |-cron
+</span></span><span style="display:flex;"><span>        |-dbus-daemon
+</span></span><span style="display:flex;"><span>        |-dhclient
+</span></span><span style="display:flex;"><span>        |-login---bash
+</span></span><span style="display:flex;"><span>        |-sshd---sshd---bash---screen---screen---bash---pstree
+</span></span><span style="display:flex;"><span>        |-systemd---<span style="color:#666">(</span>sd-pam<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>        |-systemd-journal
+</span></span><span style="display:flex;"><span>        |-systemd-logind
+</span></span><span style="display:flex;"><span>        |-systemd-timesyn---<span style="color:#666">{</span>systemd-timesyn<span style="color:#666">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#b44">`</span>-systemd-udevd
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Surprisingly little going on.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# uname -a
+</span></span><span style="display:flex;"><span>Linux bookworm-tactical1000 7.0.0-rc4-next-20260320 <span style="color:#080;font-style:italic">#1 SMP PREEMPT Thu Apr  2 20:56:11 CEST 2026 aarch64 GNU/Linux</span>
+</span></span></code></pre></div><p>ARM64 hardware as expected. This is a mostly stock Debian AIUI.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat /proc/cpuinfo
+</span></span><span style="display:flex;"><span>processor       : <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>BogoMIPS        : 500.00
+</span></span><span style="display:flex;"><span>Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
+</span></span><span style="display:flex;"><span>CPU implementer : 0x41
+</span></span><span style="display:flex;"><span>CPU architecture: <span style="color:#666">8</span>
+</span></span><span style="display:flex;"><span>CPU variant     : 0x0
+</span></span><span style="display:flex;"><span>CPU part        : 0xd03
+</span></span><span style="display:flex;"><span>CPU revision    : <span style="color:#666">4</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# free -g
+</span></span><span style="display:flex;"><span>               total        used        free      shared  buff/cache   available
+</span></span><span style="display:flex;"><span>Mem:               <span style="color:#666">1</span>           <span style="color:#666">0</span>           <span style="color:#666">1</span>           <span style="color:#666">0</span>           <span style="color:#666">0</span>           <span style="color:#666">1</span>
+</span></span><span style="display:flex;"><span>Swap:              <span style="color:#666">0</span>           <span style="color:#666">0</span>           <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# free -m
+</span></span><span style="display:flex;"><span>               total        used        free      shared  buff/cache   available
+</span></span><span style="display:flex;"><span>Mem:            <span style="color:#666">1985</span>         <span style="color:#666">136</span>        <span style="color:#666">1621</span>           <span style="color:#666">0</span>         <span style="color:#666">295</span>        <span style="color:#666">1849</span>
+</span></span><span style="display:flex;"><span>Swap:              <span style="color:#666">0</span>           <span style="color:#666">0</span>           <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# df -h
+</span></span><span style="display:flex;"><span>Filesystem      Size  Used Avail Use% Mounted on
+</span></span><span style="display:flex;"><span>/dev/root       974M  567M  340M  63% /
+</span></span><span style="display:flex;"><span>devtmpfs        977M     <span style="color:#666">0</span>  977M   0% /dev
+</span></span><span style="display:flex;"><span>tmpfs           993M     <span style="color:#666">0</span>  993M   0% /dev/shm
+</span></span><span style="display:flex;"><span>tmpfs           398M  572K  397M   1% /run
+</span></span><span style="display:flex;"><span>tmpfs           5.0M     <span style="color:#666">0</span>  5.0M   0% /run/lock
+</span></span><span style="display:flex;"><span>tmpfs           199M     <span style="color:#666">0</span>  199M   0% /run/user/0
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>This machine is not fast. Storage and RAM are a bit tight.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ps auxww
+</span></span><span style="display:flex;"><span>USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">1</span>  0.0  0.5 <span style="color:#666">103212</span> <span style="color:#666">11740</span> ?        Ss   Apr03   0:10 /sbin/init
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">2</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>kthreadd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">3</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>pool_workqueue_release<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">4</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-rcu_gp<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">5</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-sync_wq<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">6</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-kvfree_rcu_reclaim<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">7</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-slub_flushwq<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root           <span style="color:#666">8</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-netns<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">13</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-mm_percpu_wq<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">14</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>ksoftirqd/0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">15</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    Apr03   0:00 <span style="color:#666">[</span>rcu_preempt<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">16</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>rcu_exp_par_gp_kthread_worker/0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">17</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>rcu_exp_gp_kthread_worker<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">18</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>migration/0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">19</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>cpuhp/0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">20</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>kdevtmpfs<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">21</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-inet_frag_wq<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">22</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    Apr03   0:00 <span style="color:#666">[</span>rcu_tasks_kthread<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">23</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>kauditd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">25</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>oom_reaper<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">26</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-writeback<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">27</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:02 <span style="color:#666">[</span>kcompactd0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">28</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        SN   Apr03   0:00 <span style="color:#666">[</span>ksmd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">29</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        SN   Apr03   0:02 <span style="color:#666">[</span>khugepaged<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">30</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-kblockd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">31</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-kintegrityd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">32</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>watchdogd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">33</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-quota_events_unbound<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">36</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-rpciod<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">37</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-xprtiod<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">38</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>kswapd0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">39</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-nfsiod<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">40</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/u5:0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">68</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-e00c0000.switch-mact<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">69</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-e00c0000.switch-stats<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">70</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/23-sparx5-ptp<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">71</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-uas<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">72</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-sdhci<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">73</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/26-mmc0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">75</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-mld<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">76</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-ipv6_addrconf<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">77</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-mmc_complete<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">79</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/29-sfp0-mod-def0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">80</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/30-sfp0-los<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">81</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/31-sfp0-tx-fault<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">82</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/32-sfp1-mod-def0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">83</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/33-sfp1-los<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">84</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/34-sfp1-tx-fault<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">85</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/35-sfp2-mod-def0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">86</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/36-sfp2-los<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">87</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/37-sfp2-tx-fault<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">88</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/38-sfp3-mod-def0<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">89</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/39-sfp3-los<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">90</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/40-sfp3-tx-fault<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">91</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:02 <span style="color:#666">[</span>jbd2/mmcblk0p5-8<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root          <span style="color:#666">92</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr03   0:00 <span style="color:#666">[</span>kworker/R-ext4-rsv-conversion<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">121</span>  0.0  0.4  <span style="color:#666">49956</span>  <span style="color:#666">8948</span> ?        Ss   Apr03   0:02 /lib/systemd/systemd-journald
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">137</span>  0.0  0.3  <span style="color:#666">24892</span>  <span style="color:#666">6316</span> ?        Ss   Apr03   0:00 /lib/systemd/systemd-udevd
+</span></span><span style="display:flex;"><span>systemd+     <span style="color:#666">141</span>  0.0  0.3  <span style="color:#666">90524</span>  <span style="color:#666">7088</span> ?        Ssl  Apr03   0:02 /lib/systemd/systemd-timesyncd
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">220</span>  0.0  0.1   <span style="color:#666">4116</span>  <span style="color:#666">2360</span> ?        Ss   Apr03   0:00 /usr/sbin/cron -f
+</span></span><span style="display:flex;"><span>message+     <span style="color:#666">238</span>  0.0  0.1   <span style="color:#666">8508</span>  <span style="color:#666">3908</span> ?        Ss   Apr03   0:01 /usr/bin/dbus-daemon --system --address<span style="color:#666">=</span>systemd: --nofork --nopidfile --systemd-activation --syslog-only
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">242</span>  0.0  0.3  <span style="color:#666">17216</span>  <span style="color:#666">7416</span> ?        Ss   Apr03   0:01 /lib/systemd/systemd-logind
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">362</span>  0.0  0.1   <span style="color:#666">5524</span>  <span style="color:#666">3572</span> ?        Ss   Apr03   0:00 dhclient -4 -v -i -pf /run/dhclient.eth28.pid -lf /var/lib/dhcp/dhclient.eth28.leases -I -df /var/lib/dhcp/dhclient6.eth28.leases eth28
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">366</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        S    Apr03   0:00 <span style="color:#666">[</span>irq/20-e20101a8.mdio-mii:03<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">397</span>  0.0  0.0   <span style="color:#666">2652</span>  <span style="color:#666">1572</span> tty1     Ss+  Apr03   0:00 /sbin/agetty -o -p -- <span style="color:#b62;font-weight:bold">\u</span> --noclear - linux
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">398</span>  0.0  0.1   <span style="color:#666">7856</span>  <span style="color:#666">3528</span> ttyAT0   Ss   Apr03   0:00 /bin/login -p --
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">399</span>  0.0  0.4  <span style="color:#666">16352</span>  <span style="color:#666">8928</span> ?        Ss   Apr03   0:00 sshd: /usr/sbin/sshd -D <span style="color:#666">[</span>listener<span style="color:#666">]</span> <span style="color:#666">0</span> of 10-100 startups
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">406</span>  0.0  0.4  <span style="color:#666">19548</span> <span style="color:#666">10152</span> ?        Ss   Apr03   0:00 /lib/systemd/systemd --user
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">407</span>  0.0  0.2 <span style="color:#666">104276</span>  <span style="color:#666">4820</span> ?        S    Apr03   0:00 <span style="color:#666">(</span>sd-pam<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>root         <span style="color:#666">413</span>  0.0  0.1   <span style="color:#666">4468</span>  <span style="color:#666">3496</span> ttyAT0   S+   Apr03   0:00 -bash
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">2722</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   Apr05   0:00 <span style="color:#666">[</span>kworker/0:1H-kblockd<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3158</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    06:57   0:00 <span style="color:#666">[</span>kworker/0:0-mm_percpu_wq<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3424</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    15:49   0:06 <span style="color:#666">[</span>kworker/u4:0-events_power_efficient<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3462</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    17:30   0:06 <span style="color:#666">[</span>kworker/u4:4-events_power_efficient<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3701</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    18:59   0:00 <span style="color:#666">[</span>kworker/0:3<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3704</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    19:00   0:00 <span style="color:#666">[</span>kworker/u4:1-events_unbound<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3733</span>  0.0  0.1   <span style="color:#666">4648</span>  <span style="color:#666">2824</span> ?        Ss   19:02   0:00 SCREEN
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">3734</span>  0.0  0.1   <span style="color:#666">4048</span>  <span style="color:#666">3276</span> pts/1    Ss   19:02   0:00 /bin/bash
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">4098</span>  0.1  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    19:05   0:01 <span style="color:#666">[</span>kworker/u4:2-events_unbound<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5180</span>  0.0  0.5  <span style="color:#666">19704</span> <span style="color:#666">10356</span> ?        Ss   19:17   0:00 sshd: root@notty
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5186</span>  0.0  0.0   <span style="color:#666">2840</span>  <span style="color:#666">1988</span> ?        Ss   19:17   0:00 /usr/lib/openssh/sftp-server
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5187</span>  0.0  0.5  <span style="color:#666">19544</span> <span style="color:#666">10296</span> ?        Ss   19:17   0:00 sshd: root@pts/0
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5193</span>  0.0  0.1   <span style="color:#666">4048</span>  <span style="color:#666">3236</span> pts/0    Ss   19:18   0:00 -bash
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5196</span>  0.0  0.1   <span style="color:#666">3944</span>  <span style="color:#666">2408</span> pts/0    S+   19:18   0:00 screen -xRR
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5291</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I&lt;   19:21   0:00 <span style="color:#666">[</span>kworker/0:2H<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5310</span>  0.0  0.0      <span style="color:#666">0</span>     <span style="color:#666">0</span> ?        I    19:26   0:00 <span style="color:#666">[</span>kworker/u4:3-events_power_efficient<span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>root        <span style="color:#666">5314</span>  <span style="color:#666">200</span>  0.1   <span style="color:#666">8056</span>  <span style="color:#666">3904</span> pts/1    R+   19:29   0:00 ps auxww
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Mostly what you&rsquo;d expect.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ip a
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#666">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 ::1/128 scope host noprefixroute
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:01 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:02 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>4: eth2: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:03 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>5: eth3: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:04 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>6: eth4: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:05 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>7: eth5: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:06 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>8: eth6: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:07 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>9: eth7: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:08 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>10: eth8: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:09 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>11: eth9: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0a brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>12: eth10: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0b brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>13: eth11: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0c brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>14: eth12: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0d brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>15: eth13: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0e brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>16: eth14: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:0f brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>17: eth15: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:10 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>18: eth16: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:11 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>19: eth17: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:12 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>20: eth18: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:13 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>21: eth19: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:14 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>22: eth20: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:15 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>23: eth21: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:16 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>24: eth22: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:17 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>25: eth23: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:18 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>26: eth24: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:19 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>27: eth25: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:1a brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>28: eth26: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:1b brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>29: eth27: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> qdisc noop state DOWN group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:1c brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>30: eth28: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#666">1500</span> qdisc mq state UP group default qlen <span style="color:#666">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 5e:37:b6:54:3b:1e brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 192.168.99.100/24 brd 192.168.99.255 scope global dynamic eth28
+</span></span><span style="display:flex;"><span>       valid_lft 5587sec preferred_lft 5587sec
+</span></span><span style="display:flex;"><span>    inet6 fe80::5c37:b6ff:fe54:3b1e/64 scope link
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Lots of beautiful ports! They may wish to use a different name for the ports to
+<a href="https://github.com/systemd/systemd/issues/16665#issuecomment-669167184">aid in automation</a>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# tree /etc/udev/
+</span></span><span style="display:flex;"><span>/etc/udev/
+</span></span><span style="display:flex;"><span>|-- hwdb.d
+</span></span><span style="display:flex;"><span>|-- rules.d
+</span></span><span style="display:flex;"><span><span style="color:#b44">`</span>-- udev.conf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">3</span> directories, <span style="color:#666">1</span> file
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# tree /etc/systemd/network
+</span></span><span style="display:flex;"><span>/etc/systemd/network
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">0</span> directories, <span style="color:#666">0</span> files
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# brctl show
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# networkctl
+</span></span><span style="display:flex;"><span>WARNING: systemd-networkd is not running, output will be incomplete.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>IDX LINK  TYPE     OPERATIONAL SETUP
+</span></span><span style="display:flex;"><span>  <span style="color:#666">1</span> lo    loopback -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">2</span> eth0  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">3</span> eth1  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">4</span> eth2  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">5</span> eth3  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">6</span> eth4  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">7</span> eth5  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">8</span> eth6  ether    -           unmanaged
+</span></span><span style="display:flex;"><span>  <span style="color:#666">9</span> eth7  ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">10</span> eth8  ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">11</span> eth9  ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">12</span> eth10 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">13</span> eth11 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">14</span> eth12 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">15</span> eth13 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">16</span> eth14 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">17</span> eth15 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">18</span> eth16 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">19</span> eth17 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">20</span> eth18 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">21</span> eth19 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">22</span> eth20 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">23</span> eth21 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">24</span> eth22 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">25</span> eth23 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">26</span> eth24 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">27</span> eth25 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">28</span> eth26 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">29</span> eth27 ether    -           unmanaged
+</span></span><span style="display:flex;"><span> <span style="color:#666">30</span> eth28 ether    -           unmanaged
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">30</span> links listed.
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat /etc/network/interfaces
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># interfaces(5) file used by ifup(8) and ifdown(8)</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># Include files from /etc/network/interfaces.d:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f">source</span> /etc/network/interfaces.d/*
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# ls /etc/network/interfaces.d/
+</span></span><span style="display:flex;"><span>dhcp
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat /etc/network/interfaces.d/dhcp
+</span></span><span style="display:flex;"><span>auto lo
+</span></span><span style="display:flex;"><span>iface lo inet loopback
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>auto eth28
+</span></span><span style="display:flex;"><span>iface eth28 inet dhcp
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Nothing happening here&hellip;</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Hardware</span>:<br /><br />
+
+<p>Overall the hardware left me wanting more. I think this is a good start, but
+it&rsquo;s not the &ldquo;enterprise-grade&rdquo; switch I was hoping for for the simple reason
+that I don&rsquo;t know any businesses that can live without 48 port switches or PoE.
+I think this is firmly in the <a href="https://en.wikipedia.org/wiki/Small_and_medium_enterprises">SMB</a>
+category for now, and I hope they break through into the mainstream. I think
+it&rsquo;s an excellent jumping point to help them build their upstream relationships
+and prepare for the next steps.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# lspci -v
+</span></span><span style="display:flex;"><span>pcilib: Cannot open /proc/bus/pci
+</span></span><span style="display:flex;"><span>lspci: Cannot find any working access method.
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# ls /sys/bus/pci
+</span></span><span style="display:flex;"><span>ls: cannot access <span style="color:#b44">&#39;/sys/bus/pci&#39;</span>: No such file or directory
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat /proc/1/cgroup
+</span></span><span style="display:flex;"><span>0::/init.scope
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# zcat /proc/config.gz &gt; zconfig
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# cat zconfig | grep PCI
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">CONFIG_HAVE_PCI</span><span style="color:#666">=</span>y
+</span></span><span style="display:flex;"><span><span style="color:#b8860b">CONFIG_GENERIC_PCI_IOMAP</span><span style="color:#666">=</span>y
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># CONFIG_PCI is not set</span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"># CONFIG_COMMON_CLK_RS9_PCIE is not set</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# lsmod
+</span></span><span style="display:flex;"><span>Module                  Size  Used by
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Performance</span>:<br /><br />
+
+<p>I wasn&rsquo;t able to assess performance, since this was really a standalone test
+rig. The ASIC in this switch is the <code>Microchip LAN9696</code> which isn&rsquo;t hugely
+powerful, but should do for most use-cases. I&rsquo;m not an ASIC specialist, so I
+look to others. I asked <a href="https://mastodon.social/@azonenberg@ioc.exchange">@azonenberg@ioc.exchange</a>
+what he thought to which he replied:</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/azonenberg.png"><img class="alignnone size-full" src="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/azonenberg.png"  width="100%" /></a></td></tr><tr><td>Restricted datasheet so I have no thoughts other than “I wouldn&#39;t use it in a design”</td></tr></table></br />
+
+<p>I do know that this chip can&rsquo;t handle 48 ports, so that limits its future use.
+Maybe Microchip have something else that would suit that purpose? I can live
+with a restricted datasheet as long as Novarq can fully implement what&rsquo;s needed
+in the open.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Operating system</span>:<br /><br />
+
+<p>Despite my great love for the Debian project and what it stands for, I do not
+see it as a technologically forward-thinking distro. As a result, I rarely recommend
+its use these days. I&rsquo;d love to see this switch running a modern upstream like
+Fedora. That would demonstrate its worth as a modern peer in my GNU+Linux
+datacentre stack.</p>
+<p>I want to see <code>systemd-networkd</code> and other modern networking tools being used. I
+also want to see a good declarative configuration story in this space. All of
+this is lacking at the moment.</p>
+<p>My understanding is that all of the relevant Linux kernel patches and userspace
+tweaks are not upstream yet, but that this work is well underway, and <code>Novarq</code>
+has assured me that this is a core goal. Great job folks!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Switchdev</span>:<br /><br />
+
+<p><a href="https://docs.kernel.org/networking/switchdev.html">Switchdev</a> is the name of
+the Linux kernel magic that offloads (forwards) the data plane work from the
+kernel. Basically you use the familiar Linux <code>ip</code> and <code>iptables</code> commands you&rsquo;re
+used to, and Linux causes the ASIC to do the packet pushing on your behalf.</p>
+<p>On the subject of integrating with the standard interfaces, more work may be
+needed, and TBQH, I&rsquo;m not the hardware specialist here.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ethtool -p eth28
+</span></span><span style="display:flex;"><span>Cannot identify NIC: Operation not supported
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# lspci -v
+</span></span><span style="display:flex;"><span>pcilib: Cannot open /proc/bus/pci
+</span></span><span style="display:flex;"><span>lspci: Cannot find any working access method.
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# devlink dev eswitch show
+</span></span><span style="display:flex;"><span>Failed to connect to devlink Netlink
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# bridge fdb show
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth0 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth1 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth2 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth3 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth4 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth5 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth6 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth7 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth8 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth9 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth10 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth11 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth12 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth13 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth14 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth15 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth16 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth17 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth18 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth19 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth20 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth21 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth22 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth23 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth24 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth25 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth26 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth27 self permanent
+</span></span><span style="display:flex;"><span>33:33:00:00:00:01 dev eth28 self permanent
+</span></span><span style="display:flex;"><span>01:00:5e:00:00:01 dev eth28 self permanent
+</span></span><span style="display:flex;"><span>33:33:ff:54:3b:1e dev eth28 self permanent
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# <span style="color:#a2f">cd</span> /sys/class/net/eth28/
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:/sys/class/net/eth28# ls -l
+</span></span><span style="display:flex;"><span>total <span style="color:#666">0</span>
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 addr_assign_type
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 addr_len
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 address
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 broadcast
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 carrier
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 carrier_changes
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 carrier_down_count
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 carrier_up_count
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 dev_id
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 dev_port
+</span></span><span style="display:flex;"><span>lrwxrwxrwx  <span style="color:#666">1</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 device -&gt; ../../../e00c0000.switch
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 dormant
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 duplex
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 flags
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 gro_flush_timeout
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 ifalias
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 ifindex
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 iflink
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 link_mode
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 mtu
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 name_assign_type
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 napi_defer_hard_irqs
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 netdev_group
+</span></span><span style="display:flex;"><span>lrwxrwxrwx  <span style="color:#666">1</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 of_node -&gt; ../../../../../../firmware/devicetree/base/axi/switch@e00c0000/ethernet-ports/port@29
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 operstate
+</span></span><span style="display:flex;"><span>lrwxrwxrwx  <span style="color:#666">1</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 phydev -&gt; ../../../e20101a8.mdio/mdio_bus/e20101a8.mdio-mii/e20101a8.mdio-mii:03
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 phys_port_name
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 phys_switch_id
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#666">2</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 power
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 proto_down
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#666">11</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 queues
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 speed
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#666">2</span> root root    <span style="color:#666">0</span> Apr  <span style="color:#666">6</span> 22:13 statistics
+</span></span><span style="display:flex;"><span>lrwxrwxrwx  <span style="color:#666">1</span> root root    <span style="color:#666">0</span> Jun <span style="color:#666">26</span>  <span style="color:#666">2025</span> subsystem -&gt; ../../../../../../class/net
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 testing
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 threaded
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">6</span> 22:13 tx_queue_len
+</span></span><span style="display:flex;"><span>-r--r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Apr  <span style="color:#666">3</span> 09:00 <span style="color:#a2f">type</span>
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#666">1</span> root root <span style="color:#666">4096</span> Jun <span style="color:#666">26</span>  <span style="color:#666">2025</span> uevent
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:/sys/class/net/eth28# cat phys_switch_id
+</span></span><span style="display:flex;"><span>5e37b6543b00
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:/sys/class/net/eth28# cat phys_port_name
+</span></span><span style="display:flex;"><span>p29
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:/sys/class/net/eth28#
+</span></span></code></pre></div><p>Not sure what&rsquo;s going on here&hellip; Perhaps there&rsquo;s still some work to do.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ethtool eth28
+</span></span><span style="display:flex;"><span>Settings <span style="color:#a2f;font-weight:bold">for</span> eth28:
+</span></span><span style="display:flex;"><span>        Supported ports: <span style="color:#666">[</span> TP    MII <span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>        Supported link modes:   10baseT/Half 10baseT/Full
+</span></span><span style="display:flex;"><span>                                100baseT/Half 100baseT/Full
+</span></span><span style="display:flex;"><span>                                1000baseT/Full
+</span></span><span style="display:flex;"><span>        Supported pause frame use: Symmetric Receive-only
+</span></span><span style="display:flex;"><span>        Supports auto-negotiation: Yes
+</span></span><span style="display:flex;"><span>        Supported FEC modes: Not reported
+</span></span><span style="display:flex;"><span>        Advertised link modes:  10baseT/Half 10baseT/Full
+</span></span><span style="display:flex;"><span>                                100baseT/Half 100baseT/Full
+</span></span><span style="display:flex;"><span>                                1000baseT/Full
+</span></span><span style="display:flex;"><span>        Advertised pause frame use: Symmetric Receive-only
+</span></span><span style="display:flex;"><span>        Advertised auto-negotiation: Yes
+</span></span><span style="display:flex;"><span>        Advertised FEC modes: Not reported
+</span></span><span style="display:flex;"><span>        Link partner advertised link modes:  10baseT/Half 10baseT/Full
+</span></span><span style="display:flex;"><span>                                             100baseT/Half 100baseT/Full
+</span></span><span style="display:flex;"><span>                                             1000baseT/Full
+</span></span><span style="display:flex;"><span>        Link partner advertised pause frame use: Symmetric Receive-only
+</span></span><span style="display:flex;"><span>        Link partner advertised auto-negotiation: Yes
+</span></span><span style="display:flex;"><span>        Link partner advertised FEC modes: Not reported
+</span></span><span style="display:flex;"><span>        Speed: 1000Mb/s
+</span></span><span style="display:flex;"><span>        Duplex: Full
+</span></span><span style="display:flex;"><span>        Auto-negotiation: on
+</span></span><span style="display:flex;"><span>        master-slave cfg: preferred master
+</span></span><span style="display:flex;"><span>        master-slave status: master
+</span></span><span style="display:flex;"><span>        Port: Twisted Pair
+</span></span><span style="display:flex;"><span>        PHYAD: <span style="color:#666">3</span>
+</span></span><span style="display:flex;"><span>        Transceiver: external
+</span></span><span style="display:flex;"><span>        MDI-X: Unknown <span style="color:#666">(</span>auto<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>        Link detected: yes
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Bridging</span>:<br /><br />
+
+<p>I want a switch, so I assume I need to&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ip link add br0 <span style="color:#a2f">type</span> bridge
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# ip link <span style="color:#a2f">set</span> eth6 master br0
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# ip link <span style="color:#a2f">set</span> eth7 master br0
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# brctl show
+</span></span><span style="display:flex;"><span>bridge name     bridge id               STP enabled     interfaces
+</span></span><span style="display:flex;"><span>br0             8000.eeed49fda19c       no              eth6
+</span></span><span style="display:flex;"><span>                                                        eth7
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~# bridge -s link
+</span></span><span style="display:flex;"><span>8: eth6: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> master br0 state disabled priority <span style="color:#666">32</span> cost <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>9: eth7: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#666">1500</span> master br0 state disabled priority <span style="color:#666">32</span> cost <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>Again, I couldn&rsquo;t test this, so I hope good documentation is coming soon.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Mgmt Config</span>:<br /><br />
+
+<p>I tried to build <a href="https://github.com/purpleidea/mgmt/"><code>mgmt</code></a> directly on the
+switch, but the debian golang version is so ancient, and it wasn&rsquo;t immediately
+obvious how to get something modern on there so I gave up and did a cross-build:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#a2f">time</span> env <span style="color:#b8860b">CGO_ENABLED</span><span style="color:#666">=</span><span style="color:#666">0</span> <span style="color:#b8860b">GOARCH</span><span style="color:#666">=</span>arm64 go build -ldflags<span style="color:#666">=</span>github.com/purpleidea/mgmt<span style="color:#666">=</span><span style="color:#b44">&#34;-X main.program=mgmt -X main.version=tactical&#34;</span> -o mgmt-linux-arm64 -tags <span style="color:#b44">&#39;noaugeas novirt nodocker&#39;</span>
+</span></span></code></pre></div><p>With all the main components compiled in, <code>mgmt</code> sits at a whopping <code>157M</code>. It
+could be trimmed down to optimize for this hardware, but there hasn&rsquo;t been a
+customer request for this yet.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ./mgmt-linux-arm64 --version
+</span></span><span style="display:flex;"><span>tactical
+</span></span></code></pre></div><p>Made a custom version for the test =D</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@bookworm-tactical1000:~# ./mgmt-linux-arm64 run --tmp-prefix lang hello0.mcl
+</span></span><span style="display:flex;"><span>This is: mgmt, version: tactical
+</span></span><span style="display:flex;"><span>Copyright <span style="color:#666">(</span>C<span style="color:#666">)</span> James Shubin and the project contributors
+</span></span><span style="display:flex;"><span>Written by James Shubin &lt;james@shubin.ca&gt; and the project contributors
+</span></span><span style="display:flex;"><span>21:37:16 main: start: <span style="color:#666">1775511436860679385</span>
+</span></span><span style="display:flex;"><span>21:37:16 cli: lang: lexing/parsing...
+</span></span><span style="display:flex;"><span>21:37:16 cli: lang: import: /root/
+</span></span><span style="display:flex;"><span>21:37:16 cli: lang: running <span style="color:#a2f">type</span> unification...
+</span></span><span style="display:flex;"><span>21:37:16 cli: lang: unification: found a solution of length: <span style="color:#666">6</span>
+</span></span><span style="display:flex;"><span>21:37:16 cli: lang: collecting files...
+</span></span><span style="display:flex;"><span>21:37:16 main: warning: working prefix directory is temporary!
+</span></span><span style="display:flex;"><span>21:37:16 main: working prefix is: /tmp/mgmt-bookworm-tactical1000-3992880798
+</span></span><span style="display:flex;"><span>21:37:23 pgp: created key: 07CE4F49
+</span></span><span style="display:flex;"><span>21:37:23 main: no seeds specified!
+</span></span><span style="display:flex;"><span>21:37:23 etcd: running...
+</span></span><span style="display:flex;"><span>21:37:23 etcd: waiting <span style="color:#a2f;font-weight:bold">for</span> server...
+</span></span><span style="display:flex;"><span>21:37:23 etcd: server: runServer: <span style="color:#666">(</span><span style="color:#b8860b">newCluster</span><span style="color:#666">=</span><span style="color:#a2f">true</span><span style="color:#666">)</span>: bookworm-tactical1000<span style="color:#666">=</span>http://localhost:2380
+</span></span><span style="display:flex;"><span>21:37:23 etcd: server: starting...
+</span></span><span style="display:flex;"><span>21:37:23 etcd: server: ready
+</span></span><span style="display:flex;"><span>21:37:23 main: etcd is ready!
+</span></span><span style="display:flex;"><span>21:37:23 main: waiting...
+</span></span><span style="display:flex;"><span>21:37:23 main: running...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: lexing/parsing...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: lexing/parsing took: 2.49542ms
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: import: /
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: interpolating took: 67.272µs
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: scope building took: 661.277µs
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: running <span style="color:#a2f">type</span> unification...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: unification: found a solution of length: <span style="color:#666">6</span>
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: <span style="color:#a2f">type</span> unification took: 1.575736ms
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: building <span style="color:#a2f;font-weight:bold">function</span> graph...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: building <span style="color:#a2f;font-weight:bold">function</span> graph took: 243.234µs
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: <span style="color:#a2f;font-weight:bold">function</span> graph: Vertices<span style="color:#666">(</span>3<span style="color:#666">)</span>, Edges<span style="color:#666">(</span>0<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: <span style="color:#a2f;font-weight:bold">function</span> engine initializing...
+</span></span><span style="display:flex;"><span>21:37:23 main: waiting...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: stream...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: <span style="color:#a2f;font-weight:bold">function</span> engine starting...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: lang: interpret: interpreting...
+</span></span><span style="display:flex;"><span>21:37:23 gapi: generating new graph...
+</span></span><span style="display:flex;"><span>21:37:23 main: new graph took: 1.104µs
+</span></span><span style="display:flex;"><span>21:37:23 engine: autoedge: building...
+</span></span><span style="display:flex;"><span>21:37:23 main: auto edges took: 425.135µs
+</span></span><span style="display:flex;"><span>21:37:23 engine: autogroup: algorithm: wrappedGrouper: NonReachabilityGrouper...
+</span></span><span style="display:flex;"><span>21:37:23 main: auto grouping took: 378.495µs
+</span></span><span style="display:flex;"><span>21:37:23 main: resource topological sort took: 14.776µs
+</span></span><span style="display:flex;"><span>21:37:23 main: send/recv building took: 848ns
+</span></span><span style="display:flex;"><span>21:37:23 main: commit...
+</span></span><span style="display:flex;"><span>21:37:23 engine: graph sync...
+</span></span><span style="display:flex;"><span>21:37:23 main: <span style="color:#a2f">export</span> cleanup took: 36.616µs
+</span></span><span style="display:flex;"><span>21:37:23 main: graph: Vertices<span style="color:#666">(</span>1<span style="color:#666">)</span>, Edges<span style="color:#666">(</span>0<span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>21:37:23 main: waiting...
+</span></span><span style="display:flex;"><span>21:37:23 engine: file<span style="color:#666">[</span>/tmp/mgmt-hello-world<span style="color:#666">]</span>: copy <span style="color:#666">29</span> bytes
+</span></span><span style="display:flex;"><span>^C21:37:26 interrupted by ^C
+</span></span><span style="display:flex;"><span>21:37:26 main: destroy...
+</span></span><span style="display:flex;"><span>21:37:26 main: deploy: exited
+</span></span><span style="display:flex;"><span>21:37:26 main: loop: exited
+</span></span><span style="display:flex;"><span>21:37:26 engine: graph sync...
+</span></span><span style="display:flex;"><span>21:37:26 etcd: server: runServer: <span style="color:#a2f;font-weight:bold">done</span>!
+</span></span><span style="display:flex;"><span>21:37:26 etcd: exited!
+</span></span><span style="display:flex;"><span>21:37:26 main: goodbye!
+</span></span><span style="display:flex;"><span>root@bookworm-tactical1000:~#
+</span></span></code></pre></div><p>It works!</p>
+<p>The next step would be using the <code>net</code> resource to manage these ports. It would
+also make sense to have add a <code>bridge</code> resource as well.</p>
+<p>An understated elegant aspect to the design of <code>mgmt</code> is that since it works as
+a distributed system, it can receive the &ldquo;algorithm&rdquo; (of mcl code) and then
+operate autonomously from the rest of the cluster to perform changes. If for
+example, the network connection to the rest of the cluster goes down, this isn&rsquo;t
+a problem. It will perform it&rsquo;s work, and then reconnect when ready. This means
+you can modify switch topologies without worrying about the SSH connection
+failing midway like you might with other tools.</p>
+<p>Furthermore, you can programmatically &ldquo;roll back&rdquo; a change and then notify the
+sysadmin if a reconfiguration subsequently didn&rsquo;t pass a &ldquo;network health check&rdquo;
+meaning <code>mgmt</code> can make it harder to lock yourself out from remote management!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Golang</span>:<br /><br />
+
+<p>The initial blog post that caught my eye was <a href="https://novarq.com/blogs/insights/beyond-linux-bare-metal-go-on-tactical-1000-with-tamago">this one</a>
+about running <code>golang</code> directly on the switch. I was curious, but <em>switchdev</em> is
+what caused me to stick around and dig deeper. I think it might be cute in some
+specialized scenarios to run a pure golang switch, but that&rsquo;s not the mainstream
+and switchdev could be and that doesn&rsquo;t preclude adding golang on top if you&rsquo;ve
+got a mainstream GNU+Linux distro.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Openness</span>:<br /><br />
+
+<p>Their site proclaims: &ldquo;OPEN STANDARDS. OPEN INFRASTRUCTURE. YOUR SOVEREIGNTY.&rdquo;.
+I love this, I&rsquo;m onboard. But to succeed you have to be <em>better</em>, since freedom
+isn&rsquo;t as marketable as we&rsquo;d all like. Once you&rsquo;re better, you have to make sure
+you hold onto those values!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Provisioning</span>:<br /><br />
+
+<p>The switch came fully provisioned so I don&rsquo;t know how you would do a base
+install. I would hope that it can UEFI (PXE) netboot like all of my other
+servers.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Port numbering</span>:<br /><br />
+
+<p>Just a small thought for the future. Look at a 48 port patch panel.</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/48-port-patch-panel.jpg"><img class="alignnone size-full" src="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/48-port-patch-panel.jpg"  width="100%" /></a></td></tr><tr><td>48 port patch panel</td></tr></table></br />
+
+<p>Now look at a 48 port switch&hellip;</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/48-port-switch.jpg"><img class="alignnone size-full" src="/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/48-port-switch.jpg"  width="100%" /></a></td></tr><tr><td>48 port switch</td></tr></table></br />
+
+<p>It would be so awesome if the switch vendors did the numbering left-to-right,
+top-to-bottom, like reading a book. This is less of an issue with the 24 port
+switches, but I hope we&rsquo;ll be past those soon. Just an idea.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>I&rsquo;m looking forward to seeing more from these folks. What&rsquo;s missing:</p>
+<ul>
+<li>1U, 48 port switch (w/ 2-4 10G uplinks) and PoE.</li>
+<li>Fully upstream so anyone can install a stock aarch64 distro like Fedora.</li>
+<li>Better CPU, more RAM and more storage. RAID 1 would be sweet.</li>
+<li>Light documentation for recommended best practices.</li>
+<li>Great automation story.</li>
+</ul>
+<p>I hope to help out with that last point some day, and <a href="https://mgmtconfig.com/">mgmt</a>
+and <a href="https://m9rx.com">m9rx.com</a> are here to build with anyone who wants to see
+their hardware magically come to life. You do the hard electrical engineering,
+we&rsquo;ll make usability a dream.</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p>PS: Special thanks to Luka Perkov and Todd Gregory for setting this all up for
+me. Best of luck to you all!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>April 9, 2026<br>
+				<small>4827 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/asic">asic</a> <a class="label label-default" href="/tags/config-management">config management</a> <a class="label label-default" href="/tags/cumulus">cumulus</a> <a class="label label-default" href="/tags/cumulusnetworks">cumulusnetworks</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/ifup/ifdown">ifup/ifdown</a> <a class="label label-default" href="/tags/iproute2">iproute2</a> <a class="label label-default" href="/tags/iptables">iptables</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/nda">nda</a> <a class="label label-default" href="/tags/networkd">networkd</a> <a class="label label-default" href="/tags/nftables">nftables</a> <a class="label label-default" href="/tags/novarq">novarq</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/selinux">selinux</a> <a class="label label-default" href="/tags/shorewall">shorewall</a> <a class="label label-default" href="/tags/switch">switch</a> <a class="label label-default" href="/tags/switchd">switchd</a> <a class="label label-default" href="/tags/switchdev">switchdev</a> <a class="label label-default" href="/tags/systemd">systemd</a> <a class="label label-default" href="/tags/trident">trident</a> <a class="label label-default" href="/tags/udev">udev</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2026 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2026/04/09/the-switch-as-an-ordinary-gnulinux-server.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

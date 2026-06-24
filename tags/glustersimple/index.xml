@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gluster::simple on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/glustersimple/</link>
+    <description>Recent content in Gluster::simple on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Wed, 08 Jan 2014 23:00:22 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/glustersimple/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatically deploying GlusterFS with Puppet-Gluster &#43; Vagrant!</title>
+      <link>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</link>
+      <pubDate>Wed, 08 Jan 2014 23:00:22 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/01/08/automatically-deploying-glusterfs-with-puppet-gluster-vagrant/</guid>
+      <description>&lt;p&gt;&lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;Puppet-Gluster&lt;/a&gt; was always about automating the deployment of &lt;a href=&#34;https://www.gluster.org/&#34;&gt;GlusterFS&lt;/a&gt;. Getting your own Puppet server and the associated infrastructure running was never included &amp;ldquo;&lt;em&gt;out of the box&lt;/em&gt;&amp;rdquo;. &lt;strong&gt;Today, it is!&lt;/strong&gt; (This is big news!)&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve used &lt;a href=&#34;https://www.vagrantup.com/&#34;&gt;Vagrant&lt;/a&gt; to automatically build these GlusterFS clusters. I&amp;rsquo;ve tested this with &lt;a href=&#34;https://fedoraproject.org/&#34;&gt;Fedora 20&lt;/a&gt;, and &lt;a href=&#34;https://github.com/pradels/vagrant-libvirt/&#34;&gt;vagrant-libvirt&lt;/a&gt;. This won&amp;rsquo;t work with Fedora 19 because of &lt;a href=&#34;https://bugzilla.redhat.com/show_bug.cgi?id=876541&#34;&gt;bz#876541&lt;/a&gt;. I recommend first reading my earlier articles for Vagrant and Fedora:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&#x9;&lt;li&gt;&#xA;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/09/vagrant-on-fedora-with-libvirt/&#34;&gt;Vagrant on Fedora with libvirt&lt;/a&gt;&lt;/blockquote&gt;&#xA;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2013/12/21/vagrant-vsftp-and-other-tricks/&#34;&gt;Vagrant vsftp and other tricks&lt;/a&gt;&lt;/blockquote&gt;&#xA;&lt;/li&gt;&#xA;&#x9;&lt;li&gt;&#xA;&lt;blockquote&gt;&lt;a href=&#34;https://purpleidea.com/blog/2014/01/02/vagrant-clustered-ssh-and-screen/&#34;&gt;Vagrant clustered SSH and &#39;screen&#39;&lt;/a&gt;&lt;/blockquote&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;Once you&#39;re comfortable with the material in the above articles, we can continue...&#xA;&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;The short answer&lt;/span&gt;:&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bookmarklet on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/bookmarklet/</link>
+    <description>Recent content in Bookmarklet on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 17 May 2013 07:39:06 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/bookmarklet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Forcing firefox to remember passwords</title>
+      <link>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</link>
+      <pubDate>Fri, 17 May 2013 07:39:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/05/17/forcing-firefox-to-remember-passwords/</guid>
+      <description>&lt;p&gt;There are a handful of websites out there that decide that they know better than your browser and tell it to not offer to save passwords. They do this by setting a form autocomplete attribute to &lt;em&gt;off&lt;/em&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Since we already agree that &lt;a href=&#34;https://github.com/tomerfiliba/rpyc/tree/master/demos/web8&#34;&gt;HTML and the web are a terrible idea&lt;/a&gt;, hopefully we can find a way to hack around this. It turns out that I didn&amp;rsquo;t have to, because many others have solved this hack before me. The cleanest version I found is here: &lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;&lt;a href=&#34;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&#34;&gt;http://www.howtogeek.com/62980/how-to-force-your-browser-to-remember-passwords/&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

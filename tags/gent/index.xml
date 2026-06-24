@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gent on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/gent/</link>
+    <description>Recent content in Gent on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 02 Feb 2019 03:00:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/gent/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upcoming Speaking and Events</title>
+      <link>https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/</link>
+      <pubDate>Sat, 02 Feb 2019 03:00:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2019/02/02/upcoming-speaking-and-events/</guid>
+      <description>&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;mgmt @ FOSDEM&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;Later today I&amp;rsquo;m giving four talks about &lt;a href=&#34;https://github.com/purpleidea/mgmt&#34;&gt;mgmt&lt;/a&gt;&#xA;at &lt;a href=&#34;https://fosdem.org/2019/schedule/speaker/james_shubin/&#34;&gt;FOSDEM&lt;/a&gt;. I&amp;rsquo;m also&#xA;giving two more on the following day. (One is a 5 min lightning talk.) I don&amp;rsquo;t&#xA;know how I got accepted for so many talks, I just replied to the CFP for every&#xA;room where I thought I had something interesting to share, and well, here we&#xA;are!&lt;/p&gt;&#xA;&lt;p&gt;I got rejected for the main track again, but I guess it&amp;rsquo;s up to me to make my&#xA;work more generally appealing first.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

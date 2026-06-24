@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ipa on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/ipa/</link>
+    <description>Recent content in Ipa on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 06 Jun 2014 06:12:19 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/ipa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Securely managing secrets for FreeIPA with Puppet</title>
+      <link>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</link>
+      <pubDate>Fri, 06 Jun 2014 06:12:19 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/06/06/securely-managing-secrets-for-freeipa-with-puppet/</guid>
+      <description>&lt;p&gt;Configuration management is an essential part of securing your infrastructure because it can make sure that it is set up correctly. It is essential that configuration management only enhance security, and not weaken it. Unfortunately, the status-quo of secret management in puppet is pretty poor.&lt;/p&gt;&#xA;&lt;p&gt;In the worst (and most common) case, plain text passwords are found in manifests. If the module author tried harder, sometimes these password strings are pre-hashed (and sometimes salted) and fed directly into the consumer. (This isn&amp;rsquo;t always possible without modifying the software you&amp;rsquo;re managing.)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>first release of puppet-shorewall</title>
+      <link>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</link>
+      <pubDate>Mon, 21 Oct 2013 00:07:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</guid>
+      <description>&lt;p&gt;Oh, hi there.&lt;/p&gt;&#xA;&lt;p&gt;In case you&amp;rsquo;re interested, I&amp;rsquo;ve just made a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall&#34;&gt;first release of my puppet-shorewall module&lt;/a&gt;. This isn&amp;rsquo;t meant as an exhaustive shorewall module, but it does provide most of the usual functionality that most users need.&lt;/p&gt;&#xA;&lt;p&gt;In particular, it&amp;rsquo;s the module dependency that I use for many of &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;my&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;other&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-cobbler&#34;&gt;modules&lt;/a&gt; that provide firewalling. This is probably where you&amp;rsquo;re most likely to consume it.&lt;/p&gt;&#xA;&lt;p&gt;In general most modules just implement &lt;em&gt;shorewall::rule&lt;/em&gt;, so if you really don&amp;rsquo;t want to use this code, you can implement that signature yourself, or not use automatic firewalling. The &lt;em&gt;shorewall::rule&lt;/em&gt; type has two main signatures, so have a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall&#34;&gt;look at the source&lt;/a&gt;, or a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall/blob/master/examples/misc-example.pp&#34;&gt;simple example&lt;/a&gt; if you want to get more familiar with the specifics. Using this module is highly recommended, specifically with &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;puppet-gluster&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>a puppet-ipa user type and a new difference engine</title>
+      <link>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</link>
+      <pubDate>Tue, 09 Jul 2013 06:41:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/07/09/a-puppet-ipa-user-type-and-a-new-difference-engine/</guid>
+      <description>&lt;p&gt;A simple hack to add a &lt;em&gt;user&lt;/em&gt; type to my &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;puppet-ipa&lt;/a&gt; module turned out to cause quite a stir. I&amp;rsquo;ve just pushed these changes out for your testing:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;3 files changed, 1401 insertions(+), 215 deletions(-)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;You should now have a highly capable user type, along with &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/examples/simple-usage3.pp#L13&#34;&gt;some quick examples&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;ve also done a rewrite of the &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa/blob/master/files/diff.py&#34;&gt;difference engine&lt;/a&gt;, so that it is cleaner and more robust. It now uses function decorators and individual function comparators to help wrangle the data into easily comparable forms. This should make adding future types easier, and less error prone. If you&amp;rsquo;re not comfortable with ruby, that&amp;rsquo;s okay, because it&amp;rsquo;s written in python!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Playing with FreeIPA and puppet</title>
+      <link>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</link>
+      <pubDate>Tue, 18 Jun 2013 12:36:54 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/06/18/playing-with-freeipa/</guid>
+      <description>&lt;p&gt;So I just rolled a new vm to hack around with &lt;a href=&#34;http://www.freeipa.org/&#34;&gt;FreeIPA&lt;/a&gt;. Here are some things that I&amp;rsquo;ve come across so far. I was planning on configuring LDAP, and Kerberos manually, but the included webui looks like a lovely tool to have for the data entry, user administrator type who likes to click on things. Let&amp;rsquo;s explore&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;text-decoration:underline;&#34;&gt;&lt;strong&gt;/etc/hosts&lt;/strong&gt;&lt;/span&gt;:&lt;/p&gt;&#xA;&lt;p&gt;FreeIPA is choosy about how your &lt;em&gt;/etc/hosts&lt;/em&gt; is formatted. It requires an entry that has a particular order, that is:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

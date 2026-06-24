@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dsl on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/dsl/</link>
+    <description>Recent content in Dsl on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 22 Nov 2024 18:16:00 -0500</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/dsl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mgmt Configuration Language: Functions</title>
+      <link>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</link>
+      <pubDate>Fri, 22 Nov 2024 18:16:00 -0500</pubDate>
+      <guid>https://purpleidea.com/blog/2024/11/22/functions-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been a little while since I introduced the&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;Mgmt Configuration Language&lt;/a&gt;. I&#xA;originally wrote this article in 2019, and as I was working on it alongside the&#xA;code for functions, when I realized that lambdas didn&amp;rsquo;t work properly. It took&#xA;some time to finally solve that properly. Since then I&amp;rsquo;ve been working to get &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;mgmt&lt;/a&gt;&#xA;production ready. It&amp;rsquo;s properly useful for production now, and so it&amp;rsquo;s time for&#xA;me to catch up on my documentation. I&amp;rsquo;ve revived and updated this article, let&amp;rsquo;s&#xA;go&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mgmt Configuration Language: Class and Include</title>
+      <link>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</link>
+      <pubDate>Fri, 26 Jul 2019 06:35:00 -0400</pubDate>
+      <guid>https://purpleidea.com/blog/2019/07/26/class-and-include-in-mgmt/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been a little over a year since I introduced the&#xA;&lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;Mgmt Configuration Language&lt;/a&gt;. A&#xA;lot has happened since then, and I&amp;rsquo;d like to introduce some of the missing&#xA;features that weren&amp;rsquo;t available when the language was first introduced. If you&#xA;haven&amp;rsquo;t already read that &lt;a href=&#34;https://purpleidea.com/blog/2018/02/05/mgmt-configuration-language/&#34;&gt;post&lt;/a&gt;,&#xA;please start there and come back when you&amp;rsquo;re finished. In this article we&amp;rsquo;ll&#xA;learn about classes.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Classes&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;You might remember that the &lt;a href=&#34;https://github.com/purpleidea/mgmt/&#34;&gt;&lt;em&gt;mgmt&lt;/em&gt;&lt;/a&gt;&#xA;language called &lt;code&gt;mcl&lt;/code&gt; has both &lt;code&gt;statements&lt;/code&gt;, and &lt;code&gt;expressions&lt;/code&gt;. Statements&#xA;ultimately produce the &lt;code&gt;resources&lt;/code&gt; and &lt;code&gt;edges&lt;/code&gt; that make up our output graph,&#xA;and expressions produce the values (strings, integers, lists, etc) that make up&#xA;the inputs to those statements.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Iteration in Puppet</title>
+      <link>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</link>
+      <pubDate>Sun, 17 Nov 2013 04:25:01 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/11/17/iteration-in-puppet/</guid>
+      <description>&lt;p&gt;People often ask how to do &lt;a href=&#34;https://en.wikipedia.org/wiki/Iteration&#34;&gt;iteration&lt;/a&gt; in &lt;a href=&#34;https://en.wikipedia.org/wiki/Puppet_%28software%29&#34;&gt;Puppet&lt;/a&gt;. Most Puppet users have a background in &lt;a href=&#34;https://en.wikipedia.org/wiki/Imperative_programming&#34;&gt;imperative programming&lt;/a&gt;, and are already very familiar with &lt;a href=&#34;https://en.wikipedia.org/wiki/For_loop&#34;&gt;&lt;em&gt;for&lt;/em&gt;&lt;/a&gt; loops. Puppet is sometimes confusing at first, because it is actually (or technically, contains) a &lt;a href=&#34;https://en.wikipedia.org/wiki/Declarative_programming&#34;&gt;declarative&lt;/a&gt;, &lt;a href=&#34;https://en.wikipedia.org/wiki/Domain-specific_language&#34;&gt;domain-specific language&lt;/a&gt;. In general, DSL&amp;rsquo;s aren&amp;rsquo;t always &lt;a href=&#34;https://en.wikipedia.org/wiki/Turing_completeness&#34;&gt;Turing complete&lt;/a&gt;, nor do they need to support &lt;a href=&#34;https://en.wikipedia.org/wiki/While_loop&#34;&gt;loops&lt;/a&gt;, but this doesn&amp;rsquo;t mean you can&amp;rsquo;t iterate.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppet/3/reference/lang_experimental_3_2.html&#34;&gt; Until recently&lt;/a&gt;, Puppet didn&amp;rsquo;t have an explicit looping construct, and it is quite possible to build &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;complex&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;modules&lt;/a&gt; without using this new construct. There are even some who believe that the language shouldn&amp;rsquo;t even contain this feature. I&amp;rsquo;ll abstain from that debate for now, but instead, I would like to show you some iteration techniques that you can use to get your desired result.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

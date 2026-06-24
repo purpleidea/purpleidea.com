@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fedora 23 on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/fedora-23/</link>
+    <description>Recent content in Fedora 23 on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 28 Dec 2015 14:59:23 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/fedora-23/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trying out Ceph with Oh-My-Vagrant</title>
+      <link>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</link>
+      <pubDate>Mon, 28 Dec 2015 14:59:23 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2015/12/28/trying-out-ceph-with-oh-my-vagrant/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.berrange.com/posts/2015/12/21/ceph-single-node-deployment-on-fedora-23/&#34;&gt;Daniel P. Berrangé wrote about trying out a single node ceph cluster.&lt;/a&gt; I decided to take his article and turn it into an Oh-My-Vagrant &lt;code&gt;omv.yaml&lt;/code&gt; file. It took me about two minutes to do so, and two hours to debug a problem caused by something I had broken on my laptop.&lt;/p&gt;&#xA;&lt;p&gt;If you&amp;rsquo;d like to replicate his article in less than 5 minutes, pull down the &lt;a href=&#34;https://github.com/purpleidea/oh-my-vagrant/blob/master/examples/ceph-deploy.yaml&#34;&gt;omv.yaml&lt;/a&gt; file that I&amp;rsquo;ve just published and run &lt;code&gt;omv up&lt;/code&gt;. Here&amp;rsquo;s the full terminal output of my session:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

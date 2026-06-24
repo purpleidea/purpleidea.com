@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mirrors on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/mirrors/</link>
+    <description>Recent content in Mirrors on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Mon, 23 Sep 2013 02:06:28 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/mirrors/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bittorent sync for repository mirroring</title>
+      <link>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</link>
+      <pubDate>Mon, 23 Sep 2013 02:06:28 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/09/23/bittorent-sync-for-repository-mirroring/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://twitter.com/theronconrey&#34;&gt;Theron Conrey&lt;/a&gt; writes about using:&lt;/p&gt;&#xA;&lt;blockquote&gt;&lt;a href=&#34;http://conrey.org/2013/05/21/bittorrent-sync-as-geo-replication-for-storage/&#34;&gt;BitTorrent Sync as Geo-Replication for Storage&lt;/a&gt;&lt;/blockquote&gt;&#xA;We got a chance to talk about this idea at Linuxcon. I&#39;m not entirely convinced there aren&#39;t some problem edge cases with this solution, but I think it will be hard to tell as long as the BitTorrent sync library is proprietary. I did come up with a special case of Theron&#39;s idea that I believe could work well.&#xA;&lt;p&gt;The special case uses the optimization that the synchronization (or file transferring) is unidirectional. This avoids any coherency complications involved if both sides were to write to the same file. Combined with the BitTorrent protocol, this does what normal torrent usage does, except with BitTorrent sync, we&amp;rsquo;re looking at a folder full of files.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

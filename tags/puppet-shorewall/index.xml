@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Puppet-Shorewall on purpleidea.com</title>
+    <link>https://purpleidea.com/tags/puppet-shorewall/</link>
+    <description>Recent content in Puppet-Shorewall on purpleidea.com</description>
+    <generator>Hugo</generator>
+    <language>en-ca</language>
+    <lastBuildDate>Tue, 04 Nov 2014 02:23:52 +0000</lastBuildDate>
+    <atom:link href="https://purpleidea.com/tags/puppet-shorewall/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The switch as an ordinary GNU/Linux server</title>
+      <link>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</link>
+      <pubDate>Tue, 04 Nov 2014 02:23:52 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/11/04/the-switch-as-an-ordinary-gnulinux-server/</guid>
+      <description>&lt;p&gt;The fact that we manage the &lt;a href=&#34;https://en.wikipedia.org/wiki/Network_switch&#34;&gt;switches&lt;/a&gt; in our data centres differently than any other server is patently absurd, but we do so because we want to harness the power of a tiny bit of &lt;a href=&#34;https://en.wikipedia.org/wiki/Silicon#Electronic_grade&#34;&gt;silicon&lt;/a&gt; which happens to be able to dramatically speed up the switching bandwidth.&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;absurd.png&#34;&gt;&lt;img class=&#34;wp-image-984 size-full&#34; src=&#34;absurd.png&#34; alt=&#34;absurd&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; beware of proprietary silicon, it&#39;s absurd!&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;That tiny bit of silicon is known as an &lt;a href=&#34;https://en.wikipedia.org/wiki/Application-specific_integrated_circuit&#34;&gt;ASIC&lt;/a&gt;, or an &lt;a href=&#34;https://en.wikipedia.org/wiki/Application-specific_integrated_circuit&#34;&gt;&lt;em&gt;application specific integrated circuit&lt;/em&gt;&lt;/a&gt;, and one particularly well performing ASIC (which is present in many commercially available switches) is called the &lt;a href=&#34;https://www.broadcom.com/products/Switching/Data-Center/BCM56850-Series&#34;&gt;Trident&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Puppet-Gluster now available as RPM</title>
+      <link>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</link>
+      <pubDate>Thu, 27 Mar 2014 20:32:41 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2014/03/27/puppet-gluster-now-available-as-rpm/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been afraid of &lt;a href=&#34;https://en.wikipedia.org/wiki/RPM_Package_Manager&#34;&gt;RPM&lt;/a&gt; and package maintaining [1] for years, but thanks to &lt;a href=&#34;http://www.keithley.org/kaleb/kaleb.html&#34;&gt;Kaleb Keithley&lt;/a&gt;, I have finally made some RPM&amp;rsquo;s that weren&amp;rsquo;t generated from a &lt;a href=&#34;http://docs.python.org/3/distutils/builtdist.html&#34;&gt;high level tool&lt;/a&gt;. Now that I have the &lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155&#34;&gt;boilerplate&lt;/a&gt; done, it&amp;rsquo;s a relatively painless process!&lt;/p&gt;&#xA;&lt;p&gt;In case you don&amp;rsquo;t know &lt;a href=&#34;https://twitter.com/kalebkuechle&#34;&gt;kkeithley&lt;/a&gt;, he is a wizard [2] who happens to also be especially cool and hardworking. If you meet him, be sure to buy him a &lt;a href=&#34;https://en.wikipedia.org/wiki/Beer&#34;&gt;&lt;em&gt;$BEVERAGE&lt;/em&gt;&lt;/a&gt;. &amp;lt;/plug&amp;gt;&lt;/p&gt;&#xA;&lt;table style=&#34;text-align:center; width:80%; margin:0 auto;&#34;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&#34;wizard_penguin.png&#34;&gt;&lt;img class=&#34;size-large wp-image-799&#34; src=&#34;wizard_penguin.png&#34; alt=&#34;A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.&#34; width=&#34;100%&#34; height=&#34;100%&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; A photo of kkeithley after he (temporarily) transformed himself into a wizard penguin.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/br /&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/purpleidea/puppet-gluster/commit/241956937f9778c332335267fac1256792c71155&#34;&gt;The full source of my changes is available in git.&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>first release of puppet-shorewall</title>
+      <link>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</link>
+      <pubDate>Mon, 21 Oct 2013 00:07:06 +0000</pubDate>
+      <guid>https://purpleidea.com/blog/2013/10/21/first-release-of-puppet-shorewall/</guid>
+      <description>&lt;p&gt;Oh, hi there.&lt;/p&gt;&#xA;&lt;p&gt;In case you&amp;rsquo;re interested, I&amp;rsquo;ve just made a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall&#34;&gt;first release of my puppet-shorewall module&lt;/a&gt;. This isn&amp;rsquo;t meant as an exhaustive shorewall module, but it does provide most of the usual functionality that most users need.&lt;/p&gt;&#xA;&lt;p&gt;In particular, it&amp;rsquo;s the module dependency that I use for many of &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;my&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-ipa&#34;&gt;other&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-nfs&#34;&gt;puppet&lt;/a&gt; &lt;a href=&#34;https://github.com/purpleidea/puppet-cobbler&#34;&gt;modules&lt;/a&gt; that provide firewalling. This is probably where you&amp;rsquo;re most likely to consume it.&lt;/p&gt;&#xA;&lt;p&gt;In general most modules just implement &lt;em&gt;shorewall::rule&lt;/em&gt;, so if you really don&amp;rsquo;t want to use this code, you can implement that signature yourself, or not use automatic firewalling. The &lt;em&gt;shorewall::rule&lt;/em&gt; type has two main signatures, so have a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall&#34;&gt;look at the source&lt;/a&gt;, or a &lt;a href=&#34;https://github.com/purpleidea/puppet-shorewall/blob/master/examples/misc-example.pp&#34;&gt;simple example&lt;/a&gt; if you want to get more familiar with the specifics. Using this module is highly recommended, specifically with &lt;a title=&#34;puppet-gluster&#34; href=&#34;https://github.com/purpleidea/puppet-gluster/&#34;&gt;puppet-gluster&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
