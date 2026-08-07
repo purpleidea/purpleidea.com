@@ -41,9 +41,9 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<hr>
-
-	{{ partial "post-comments" . }}
+	<div class="col-md-9">
+	{{ if .Params.mastodon_id }}
+		{{ partial "comments-mastodon" . }}
+	{{ end }}
 	</div>
 {{ partial "footer.html" . }}
