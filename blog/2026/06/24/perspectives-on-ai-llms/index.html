@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="My analysis and experiences using AI/LLMs">
+	<meta name="author" content="James Shubin">
+
+	<title>My perspectives on AI/LLMs - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2026/06/24/perspectives-on-ai-llms/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>My perspectives on AI/LLMs</strong><br><small>My analysis and experiences using AI/LLMs</small></h3>
+					<hr>
+					<p>There&rsquo;s a lot of talk about &ldquo;AI&rdquo; and &ldquo;LLMs&rdquo; recently. Here are my thoughts,
+experiences, and perspectives about all that. There seems to be a growing rift
+in the software industry about these tools. I&rsquo;m publishing this post to make my
+opinions as clear as possible. Of note, I&rsquo;ve provided specific git commit
+examples of some interesting results I&rsquo;ve had when using these models.</p>
+<br />
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/06/24/perspectives-on-ai-llms/watercolour.png"><img class="alignnone size-full" src="/blog/2026/06/24/perspectives-on-ai-llms/watercolour.png"  width="100%" /></a></td></tr><tr><td>Watercolour painted by a human artist.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Background</span>:<br /><br />
+
+<p>For a very long time, I have been, and still am, a strong Free Software
+advocate. Everyone who knows me knows what I stand for. I&rsquo;m about actions and
+results, not just talk. I&rsquo;ve spent a great amount of personal time and money
+<a href="https://github.com/purpleidea/mgmt/">writing Free Software</a> because I believe
+it&rsquo;s an important thing that our society needs. Without the four freedoms, we
+empower hegemons to control our computing, our data and our lives. AI and LLMs
+will accelerate our demise or uplift us. Let&rsquo;s be smart about this.</p>
+<br />
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+The bad&hellip;
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Copyright</span>:<br /><br />
+
+<p>All of the usable &ldquo;frontier&rdquo; models that produce interesting results were
+trained on millions of copyrighted (both permissive and copyleft) works. When I
+write software like <a href="https://mgmtconfig.com/">mgmt</a> I give it away for free. The
+catch is that it comes with both a social and legal obligation that derivative
+works must also be &ldquo;Free&rdquo;. I&rsquo;m glad that the world&rsquo;s corpus of knowledge can be
+used to produce innovative breakthroughs, but the fruit must be used to benefit
+the world; it must not be opaque, closed, or controlled by just one or two U.S.
+companies. The remediations are simple. From basic to impactful:</p>
+<ol>
+<li>Mandate that the companies release the full corpus of training data</li>
+<li>Mandate that the companies release the full model weights</li>
+<li>Mandate that the companies release the full (algorithmic) code for training
+and inference</li>
+</ol>
+<p>NOTE: There are more subtleties here in terms of fine-tuning and other aspects,
+but we&rsquo;ll keep it simple for now.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Copyright Washing</span>:<br /><br />
+
+<p>This happens when someone uses AI/LLM tooling to &ldquo;reimplement&rdquo; a project and
+releases it under a different license with different copyright holders. Often
+this also changes the language of implementation, but that is not required. This
+entirely negates the force of <a href="https://en.wikipedia.org/wiki/Copyleft">copyleft</a>
+and should be an illegal practice. I think this is substantially different from
+the <a href="https://en.wikipedia.org/wiki/Clean-room_design">clean-room</a> approach. It
+is quite different because it innately relies on the patterns and test cases in
+the original work to build the transformed derivative. By all sane and not
+corrupt interpretations, it must be seen as a derivative work and copyleft must
+apply. Unfortunately the legal systems of most countries have not caught up to
+the advances in technology, so we&rsquo;ll need your help to encourage your
+political representatives to do the right thing.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Environmental</span>:<br /><br />
+
+<p>There are legitimate concerns about the environmental cost of all the energy
+required to train and run these models. Overall I think the issues are related
+to government policy failures in moving more quickly toward renewable energy
+sources. There&rsquo;s plenty of sunshine around the world for all our near-term
+needs, and hopefully we&rsquo;ll use more of it to power our world. Using gas turbines
+to power data centres is horrendous.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Price</span>:<br /><br />
+
+<p>It&rsquo;s not clear how significantly the models are being subsidized, but they
+clearly are, and at some point cheap inference is going to be a lot harder to
+find. Hopefully the open source models will get a lot better before all but the
+biggest companies get priced out.</p>
+<p>If you don&rsquo;t believe me, try using any of the frontier models via the Amazon
+Bedrock API rather than your personal subscription. You&rsquo;ll likely be paying 10x
+what you might normally pay. This is what many companies already shell out.</p>
+<p>I&rsquo;ve found it incredibly hard to figure out exactly &ldquo;what you&rsquo;re paying for&rdquo; in
+terms of tokens when using one of the mainstream subscriptions. The companies
+are very opaque about this, and I&rsquo;m sure it&rsquo;s not an accident.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Sneaky Dealing</span>:<br /><br />
+
+<p>It&rsquo;s also not clear how much they throttle performance (due to demand) and when
+and why they degrade the service. It&rsquo;s hard to measure because these workloads
+are stochastic, but my personal belief is that it&rsquo;s absolutely happening. I
+don&rsquo;t have enough data on this.</p>
+<p>After Anthropic&rsquo;s &ldquo;Fable&rdquo; was revoked, my subsequent use of &ldquo;Opus 4.8&rdquo; felt
+significantly &ldquo;dumber&rdquo;. No, I don&rsquo;t think this is a perception bias, because I
+used &ldquo;Fable&rdquo; only briefly, but I saw concrete mistakes using &ldquo;Opus 4.8&rdquo; that I
+never saw in any of my earlier &ldquo;Opus&rdquo; use.</p>
+<p>It needs to be illegal to keep any of these practices opaque. We need strong
+whistleblower laws that reward the reporter with a percentage of the fine when
+these infractions are found to be occurring.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Trust</span>:<br /><br />
+
+<p>The harness that the model uses locally in your development environment needs to
+be 100% open source. We must not allow proprietary tools to invade our machines.
+We need to be able to trust our local tools to protect our systems and data from
+third-party abuse. We don&rsquo;t want them leaking private data or running amok. The
+biggest offender here is Anthropic. Their tool (Claude Code) works the best, but
+is officially still proprietary. They encrypt a lot of the &ldquo;thinking&rdquo; data and
+are playing games with how you use their tool. In contrast OpenAI has a tool
+(Codex) which is open source. Unfortunately the quality isn&rsquo;t as good. Hopefully
+it will get better.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Privacy</span>:<br /><br />
+
+<p>All of your code, thought processes, and more are not private at all when using
+these systems. I guarantee that companies and governments are using this data
+you send them for anti-competitive business intelligence and more. They&rsquo;ll claim
+otherwise, but that much good quality information never goes unharvested. We&rsquo;ll
+need serious laws and penalties for those that breach these protections, but the
+only long-term solution is running local model inference.</p>
+<p>These systems are ideal data-gathering machines for any organization or country
+that wants to be a hegemon, and also an amazing tool for processing large
+amounts of data. AI/LLMs can let you build human-readable queries to search for
+political opponents, business competitors and more. Don&rsquo;t let them get away with
+this.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Learning</span>:<br /><br />
+
+<p>I was once worried that the &ldquo;new generation&rdquo; of software developers would start
+from a younger age than I did, and would quickly surpass me. That fear proved
+unfounded because while in my youngest years I read paper books and learned how
+basic computing works, the new generation learned how to &ldquo;swipe&rdquo; on a screen and
+consume proprietary products without exploration. I never felt surpassed.</p>
+<p>I spent years grinding without any AI/LLM assistance. I suffered. I worked long
+nights. I moved printf statements around and recompiled incessantly. I learned.
+So many juniors (and seniors) take the &ldquo;easy out&rdquo; and let the tool &ldquo;get the
+answer&rdquo;. This is bad because you don&rsquo;t learn the art yourself, and if you do
+learn anything, you may learn something sub-optimal from a model!</p>
+<p>If you&rsquo;re starting a career in software engineering, I recommend that you avoid
+these tools for at least five years. If you&rsquo;re more experienced, make sure you
+keep exercising your skills, or you <em>will</em> lose them. Be diligent, don&rsquo;t be
+lazy.</p>
+<p>I don&rsquo;t merge a single line of slop. I carefully review and edit everything. I
+hope you do the same. There&rsquo;s a belief that reinforcement learning on
+machine-generated code leads to eventual model collapse. If this is true, and we
+don&rsquo;t polish our code significantly, then we&rsquo;ll hit a future plateau we won&rsquo;t be
+able to surpass.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Art</span>:<br /><br />
+
+<p>I personally don&rsquo;t like the so-called &ldquo;art&rdquo; being generated. (I&rsquo;m not talking
+about code, even though I consider a lot of that to be art.) I don&rsquo;t even like
+the <a href="https://en.wikipedia.org/wiki/Computer-generated_imagery">CGI</a> in most
+movies, so perhaps I&rsquo;m more sensitive here. I don&rsquo;t want to read
+AI/LLM-generated books or poems, or listen to generated music. I most recently
+hired a graphic designer to &ldquo;manually&rdquo; draw me a logo. Push back on this kind of
+thing and we&rsquo;ll be fine.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Worker displacement</span>:<br /><br />
+
+<p>This tooling will put many people out of a job, particularly the lower-skilled
+workers who don&rsquo;t have the experience to know when to push back on sub-optimal
+code or who don&rsquo;t know how to direct the models to get the correct architectural
+result. They&rsquo;ll also create new jobs as the reach of computing expands even
+further.</p>
+<p>We&rsquo;re going through a big upheaval.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">AI Safety</span>:<br /><br />
+
+<p>There&rsquo;s a growing number of people working on &ldquo;AI safety&rdquo;. A friend of mine is a
+world-class programmer, AI safety activist, and much-appreciated mgmt
+contributor. He has written some great interactive blog posts about this. Please
+read: <a href="https://gelisam.blogspot.com/">https://gelisam.blogspot.com/</a> for more!</p>
+<p>There are some nice interactive demos too:</p>
+<p><a href="https://gelisam.com/ai-safety-via-static-analysis/">https://gelisam.com/ai-safety-via-static-analysis/</a></p>
+<p>My personal belief is that there are genuine AI safety concerns on the horizon,
+but the &ldquo;<a href="https://en.wikipedia.org/wiki/Technological_singularity">singularity</a>&rdquo;
+is not the most immediate threat. That doesn&rsquo;t mean we shouldn&rsquo;t study and
+prepare for this scenario. We should be vigilant and constantly re-evaluating.
+Hopefully these tools aren&rsquo;t used to try to win a global war.</p>
+<p>The near-term dangers that I see revolve around single-country control and the
+extinction of the commons. The above paragraphs detail some of these points. The
+biggest worry is that of asymmetric power.</p>
+<br />
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+The reaction&hellip;
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Fear</span>:<br /><br />
+
+<p>The reactions have been extremely polarized. This has been a major technological
+leap, and many do not understand the implications of what&rsquo;s happening, and how
+quickly it is moving. I&rsquo;m lucky that I think I understand what&rsquo;s going on. I
+know many people with misperceptions about what&rsquo;s happening. Some are scared.
+Some are angry. Many people feel angry, scared and powerless.</p>
+<p>Some of the least qualified elevator operators are going to need to find a new
+career and the worst thing is that all of those lift operations are currently
+being handled by only one or two vendors. People are rightfully upset. They are
+not just reacting to the technology itself; they are reacting to the
+concentration of power around it.</p>
+<p>That reaction is reasonable. A lot of workers are being told that tools trained
+on the public commons, including copyleft software, may now be used to replace
+or devalue their labour. Worse, the most powerful versions of these tools are
+controlled by a small number of vendors in a single country.</p>
+<p>Try to lead with empathy. Don&rsquo;t force tool use, and do be an effective ally and
+work to solve the problems above: openness, privacy, copyright, trust, and
+control. If we tackle these problems, I think everyone will breathe a huge sigh
+of relief.</p>
+<p>For the moment I&rsquo;m trying to take the approach that we can also use this to
+build more (slop-free, high-quality) Free Software. I&rsquo;d like to continue with
+some precise examples.</p>
+<br />
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-success d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+The good&hellip;
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Motivation</span>:<br /><br />
+
+<p>We&rsquo;ve all had that annoying bug that was painful to track down. Or that feature
+branch we just couldn&rsquo;t find motivation to finish. Sometimes you just feel
+overwhelmed with the task at hand. All of this is normal and okay. I&rsquo;ve felt
+this way too. What surprised me is how much AI/LLMs helped in this area. I&rsquo;ve
+been able to fearlessly destroy errant bugs, tough performance challenges, and
+perform big pathfinding research that would have otherwise been too expensive a
+task for me to undertake!</p>
+<p>Some of the &ldquo;less fun&rdquo; bits of code, I&rsquo;ll leave entirely up to LLMs. Do I really
+care about debugging a <code>Makefile</code> issue?</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Languages</span>:<br /><br />
+
+<p>Statically typed languages that are simpler, faster to compile and iterate on
+are simply better for AI/LLMs. I think that <code>golang</code> is a perfect fit here.
+There&rsquo;s a strong case for even more strongly typed languages like <code>haskell</code>. If
+I was proficient in <code>haskell</code>, I&rsquo;m sure I&rsquo;d have an even greater delta increase
+of productivity. What&rsquo;s abundantly clear is that continuing to use <code>python</code> is
+not a good long-term strategy. I&rsquo;d also argue that the use of <code>rust</code> makes
+overall development speed slower. (Only use <code>rust</code> if you absolutely need that
+kind of low-level optimization. <code>Rust</code> should only be replacing <code>C</code> and <code>C++</code>.)
+For most programming uses today, I think <code>golang</code> is a good choice for most new
+projects. Too many choose the &ldquo;language they want to work with&rdquo; (eg: the one
+they want to learn for their next job/career) rather than the &ldquo;right language
+for the job&rdquo;.</p>
+<p><a href="https://www.youtube.com/watch?v=xcB_LF3cdqw&amp;t=4285s">Here&rsquo;s a recent interview from Simon Peyton Jones saying the same thing.</a>
+(I wouldn&rsquo;t specifically recommend this interview but it&rsquo;s a good SPJ source.)</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Testing</span>:<br /><br />
+
+<p>Most people don&rsquo;t enjoy writing tests. I&rsquo;m one of those people. What I mostly
+care about when testing is whether the code base changes or not.</p>
+<p>I&rsquo;ll confess: I&rsquo;m even okay with merging tests which are &ldquo;slightly slop&rdquo;. It&rsquo;s
+my one exception. They&rsquo;re usually stand-alone functions, so the overall code
+quality doesn&rsquo;t matter too much. You likely also need some well-written test
+harnesses too, so don&rsquo;t skimp everywhere! But if you want to move forward
+quickly, I&rsquo;ll totally merge an entirely AI/LLM-written test if I think it
+enforces a new invariant on my code.</p>
+<p>One caveat: absolutely do not merge tests that aren&rsquo;t correct! Future model use
+can read these tests and assume you wish to enforce a certain invariant which
+was unintended. As a result, this can prevent you from generating the &ldquo;correct&rdquo;
+code. Sometimes you can work around this by telling the models to ignore the
+tests, or by telling them that part of the goal is to find any &ldquo;broken&rdquo; tests.</p>
+<p>In one amazing example, I had a strange send/recv bug which I couldn&rsquo;t quite
+figure out. Attempts at asking the models to fix the bug were not successful.
+My personal attempts at reproducing the bug took a lot of time, and it wouldn&rsquo;t
+always trigger. I then decided to ask the AI/LLMs to try to at least write a
+reproducible test case to trigger the bug. (This test would naturally fail!)
+To my surprise and delight, this worked perfectly, and by inspecting the test, I
+was then able to quickly write the actual fix myself!</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/e381043f8b10e4b7f509fc9c6b9fd0a2e47bc1bc">e381043f8b10e4b7f509fc9c6b9fd0a2e47bc1bc</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Bugs</span>:<br /><br />
+
+<p>AI/LLMs are incredibly good at finding and fixing bugs. A recent example: A user
+reported an unusual error that I had never seen before. They had already
+attempted to debug this themselves by looking at dbus traces and much more. I
+believe they were into it for several hours when they reached out for help.
+<em>While simultaneously screen sharing with them to debug the issue</em>, I decided to
+paste the issue into <code>Claude Opus 4.7</code> and <code>Codex GPT 5.5</code> and I had a working
+fix in less than five minutes. The model referenced the source of the issue
+which I had overlooked in the docs. I confirmed the analysis and the fix, and it
+was merged shortly after. All the details are here if you&rsquo;re curious:</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/28d81c6a06c30f263182f66e0a9dac91ae50d5c5">28d81c6a06c30f263182f66e0a9dac91ae50d5c5</a></p>
+<p>For over a month, I&rsquo;d been occasionally hitting a rare heisenbug. I didn&rsquo;t know
+what caused it, and in order to reproduce it, the setup was quite involved. It
+would take quite a long time to iterate through the debugging loop, and to be
+quite honest, I was borderline depressed thinking about this challenge that I
+didn&rsquo;t know how to approach. The bug only appeared in a complex &ldquo;distributed
+systems&rdquo; scenario, and that was non-trivial to reproduce.</p>
+<p>Verifying the fix was trivial. It turned out to be in one of my least favourite
+parts of the code, the complex graph shape functions. The diff is beautiful. It
+even patched the &ldquo;explainer comments&rdquo; that we had written to remind ourselves of
+how this function worked. It also patched the same bug in a different function.
+This was a turning point for me.</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/2266c3c8e9f0cce1960f54a4ce23c516c847b074">2266c3c8e9f0cce1960f54a4ce23c516c847b074</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Quality</span>:<br /><br />
+
+<p>The models are exceptionally useful tools. If you can&rsquo;t accept that, then you
+are most likely &ldquo;holding them wrong&rdquo;. I&rsquo;ve noticed that I get better results
+when I&rsquo;m working within what I would call a &ldquo;higher quality&rdquo; code base. If
+you&rsquo;re building within a badly structured, architecturally poor, bug-ridden slop
+project, expect to generate more of the same. Everyone who invested in quality
+in the past, is getting a payoff today.</p>
+<p>The two commits below were virtually entirely generated from an LLM prompt. If
+you compare them to the existing (hand-written) functions in the same folder,
+you&rsquo;ll see they have an uncanny similarity. The models can match the code and
+commenting style of your existing project.</p>
+<p>I personally find this kind of graph shape logic very difficult to write, so
+this easily saved me a week of procrastination and suffering.</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/8290310fc46b5431cb6162fc4d6ae531158dfe85">8290310fc46b5431cb6162fc4d6ae531158dfe85</a>
+<a href="https://github.com/purpleidea/mgmt/commit/49e98ddae3ac3cf2bcf1307c3d5f7cd92ae14396">49e98ddae3ac3cf2bcf1307c3d5f7cd92ae14396</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Algorithmic Problems</span>:<br /><br />
+
+<p>I&rsquo;m personally a terrible algorithmist. But I can definitely measure performance
+and write and run tests! Sometimes if I&rsquo;m stuck, I&rsquo;ll ask a model to help me
+out! Here&rsquo;s an example of where I wasn&rsquo;t sure about the <code>yacc</code> precedence tables
+and I wanted help writing new tests (that I could verify) and fix issues:</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/ea32b8aea793fb97eabbe9ef7276ad6d07586989">ea32b8aea793fb97eabbe9ef7276ad6d07586989</a></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Research and Pathfinding</span>:<br /><br />
+
+<p>I&rsquo;ve also used the models to perform &ldquo;research&rdquo; to quickly explore a particular
+approach which would have otherwise possibly led me down multiple dead ends. I
+can then look at the code, learn about some of the implications, and then work
+on polishing it or exploring a different avenue!</p>
+<p>In a similar vein, I&rsquo;ve been pondering a few refactors, which might change quite
+a lot of lines of code. Instead of embarking head-first, I asked the AI/LLM
+tools to explore them. I was then able to determine if the implications were
+worth it or not. This took very little effort and provided a lot of value.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Specification Loops</span>:<br /><br />
+
+<p>When I implemented the &ldquo;etcd/fs&rdquo; package, I knew that I surely gotten many of
+the &ldquo;POSIX&rdquo; semantics wrong. Since I was the only consumer, and I knew the
+extent of the API surface that I needed, I didn&rsquo;t dwell on those issues, and
+decided to leave those potential bugs for &ldquo;future James&rdquo;! To my delight, that
+work became much easier. I asked the AI/LLM to find issues with the code, then
+<em>first</em> write a test case (that should fail), <em>then</em> write and merge the fix,
+<em>then</em> confirm the test now passed, and then continue with the next fix. In
+about an hour or so, it had generated about <code>18</code> separate commits, each with a
+proper test and fix. It was a joy to watch.</p>
+<p>From: <a href="https://github.com/purpleidea/mgmt/commit/b676e7fa3ba3a5833d1acaa72961d43042eba62a">b676e7fa3ba3a5833d1acaa72961d43042eba62a</a>
+To: <a href="https://github.com/purpleidea/mgmt/commit/defcbfe84ce3995092208b295ceafc68e1c0a120">defcbfe84ce3995092208b295ceafc68e1c0a120</a></p>
+<p>View the whole range with:</p>
+<p><code>git log cfa6366650e5aefc9cc43dc53389ba6ddb6877ab..defcbfe84ce3995092208b295ceafc68e1c0a120</code></p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Performance</span>:<br /><br />
+
+<p>LLMs are amazing at performance engineering. They can even parse <code>*.pprof</code> files
+and perform flamegraph analysis. In one example, I knew I wanted to improve the
+performance of my <code>mgmt deploy</code> operations. I could have dug into it myself, but
+it would have been a long ordeal. I manually performed the <code>pprof</code> collection,
+and then put the tool to work. This resulted in a 500% speedup!</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/cfa6366650e5aefc9cc43dc53389ba6ddb6877ab">cfa6366650e5aefc9cc43dc53389ba6ddb6877ab</a></p>
+<p>In another scenario, I increased performance, and reduced memory use and
+allocations by roughly 20% to 100%. This is huge, especially for the
+amount of effort it required.</p>
+<p><a href="https://github.com/purpleidea/mgmt/commit/a0649911ef17f120a37db1685c8afe0a0fd72fdf">a0649911ef17f120a37db1685c8afe0a0fd72fdf</a></p>
+<p>I&rsquo;ve even had more recent successes. Check out the latest
+<a href="https://github.com/purpleidea/mgmt/releases/tag/1.1.0">release notes</a> for more
+examples of performance engineering wins. They know how to run <code>benchstat</code> too!</p>
+<br />
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-blue d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Blue:"><use xlink:href="#info-blue"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+Looking to the future&hellip;
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">But Proprietary...</span><br /><br />
+
+<p>The most extreme or vocal anti-AI/LLM protesters would be wise to at least
+remember Stallman&rsquo;s essay. He used proprietary compilers:
+<a href="https://www.gnu.org/philosophy/when-free-depends-on-nonfree.html">https://www.gnu.org/philosophy/when-free-depends-on-nonfree.html</a>
+He is certainly an imperfect human, but there is a lesson here worth knowing. I
+personally believe that I&rsquo;m having a net benefit to the world of software
+freedom. We don&rsquo;t win because we&rsquo;re more Free, we win because we&rsquo;re better. Use
+the resources that you can to produce higher quality, safer, more Free Software!</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Diminishing Returns</span>:<br /><br />
+
+<p>Are the models getting better at a linear rate? Exponential? Is it logarithmic?
+It&rsquo;s not clear to me, but I wouldn&rsquo;t be surprised if it&rsquo;s sub-linear, at least
+for the next short while. I suspect we&rsquo;ll need some or all of the below before
+we see a major jump that should make us fear the impending singularity doom&hellip;</p>
+<ol>
+<li>Better data</li>
+</ol>
+<p>We&rsquo;ll need better-curated compendia of data. If you look at what&rsquo;s being used
+today, there are large amounts of garbage that go into training the models. It&rsquo;s
+almost amazing how robust they are to this already. Curation keeps improving. It
+is a major risk to be opaque about that process, since some groups will try to
+encode their values (for proselytizing) which are not universal.</p>
+<ol start="2">
+<li>Better algorithms</li>
+</ol>
+<p>The transformer architecture was a big revolution for the current models. I
+expect we&rsquo;ll see another big jump when we find out what follows. Some people are
+already working on this.</p>
+<ol start="3">
+<li>More power and compute</li>
+</ol>
+<p>Will we need nuclear fusion? Will we need room-temperature semiconductors? Will
+we need quantum computers? By the time all three of those have been &ldquo;solved&rdquo; to
+a first approximation, I&rsquo;d wager we should be on the lookout for a practical
+singularity.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Why?</span><br /><br />
+
+<p>I&rsquo;m bullish on AI/LLMs because I want to accelerate human progress. I want to
+accelerate science and learn more about
+<a href="https://en.wikipedia.org/wiki/Theory_of_everything">fundamental physics</a>. I
+want to cure diseases like cancer and <a href="https://en.wikipedia.org/wiki/Senescence">aging</a>.
+It&rsquo;s why we&rsquo;re here. These answers are possible in our lifetimes.</p>
+<br />
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+	<symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+	</symbol>
+	<symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+	<symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	</symbol>
+	<symbol id="info-blue" fill="currentColor" viewBox="0 0 16 16">
+		<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+	</symbol>
+</svg>
+<style>
+.alert-blue {
+	background-color:#008cba;
+	border-color:#008cba;
+}
+.alert-blue hr {
+	border-top-color:#d32a0e
+}
+.alert-blue {
+	color:#e6e6e6
+}
+</style>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+
+	<br />
+	<br />
+	<div style="font-size: 1.3em;">
+The conclusion&hellip;
+	</div>
+</div>
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>These tools are dangerous when opaque and centralized, useful when carefully
+reviewed, and most valuable when used to produce better Free Software. Join me!</p>
+<p>This blog post was written 100% by hand. I hope it was interesting for you to
+read. I hope it will be a useful &ldquo;sign to tap&rdquo; if trolls ever accuse me of slop
+or anything less than a commitment to advancing high-quality Free Software. I
+hope the specific examples have been interesting to you. They were beautiful
+discoveries for me.</p>
+<p><a href="https://github.com/purpleidea/mgmt/releases/tag/1.1.0">I&rsquo;ve just released a new version of mgmt.</a>
+I think it&rsquo;s the highest quality release I&rsquo;ve ever put out, and AI/LLM tooling
+was certainly part of helping me achieve that. Give it a try and tell me if you
+agree!</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>June 24, 2026<br>
+				<small>3682 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/non-technical">non-technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/ai">ai</a> <a class="label label-default" href="/tags/config-management">config management</a> <a class="label label-default" href="/tags/copyleft">copyleft</a> <a class="label label-default" href="/tags/copyright">copyright</a> <a class="label label-default" href="/tags/developer-tools">developer tools</a> <a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/free-software">free software</a> <a class="label label-default" href="/tags/golang">golang</a> <a class="label label-default" href="/tags/llm">llm</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/open-source">open source</a> <a class="label label-default" href="/tags/performance">performance</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> <a class="label label-default" href="/tags/software-engineering">software engineering</a> <a class="label label-default" href="/tags/testing">testing</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2026/06/24/perspectives-on-ai-llms/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2026/06/24/perspectives-on-ai-llms">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2026 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2026/06/24/perspectives-on-ai-llms.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+

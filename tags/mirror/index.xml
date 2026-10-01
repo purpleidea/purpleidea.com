@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Mirror on purpleidea.com</title>
+		<link>https://purpleidea.com/tags/mirror/</link>
+		<description>Recent content in Mirror on purpleidea.com</description>
+		<generator>Hugo</generator>
+		<language>en-ca</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 01 Oct 2026 18:05:00 -0400</lastBuildDate>
+		
+			<atom:link href="https://purpleidea.com/tags/mirror/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Faster DNF updates</title>
+				<link>https://purpleidea.com/blog/2026/10/01/faster-dnf-updates/</link>
+				<pubDate>Thu, 01 Oct 2026 18:05:00 -0400</pubDate>
+				<guid>https://purpleidea.com/blog/2026/10/01/faster-dnf-updates/</guid>
+				<description>&lt;p&gt;We&amp;rsquo;ve all sat through a very slow &lt;code&gt;dnf update&lt;/code&gt;. While in a rush to get out the&#xA;door, I realized it was going much slower than it should.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;br /&gt;&lt;span style=&#34;text-decoration:underline; font-weight: bold;&#34;&gt;Let&amp;#39;s go faster&lt;/span&gt;:&lt;br /&gt;&lt;br /&gt;&#xA;&#xA;&lt;p&gt;It seems the mirrors limit the maximum speed of each single file.&lt;/p&gt;&#xA;&lt;p&gt;So I added the following under the existing &lt;code&gt;[main]&lt;/code&gt; section in my&#xA;&lt;code&gt;/etc/dnf/dnf.conf&lt;/code&gt;:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;fastestmirror&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;True&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#b44&#34;&gt;max_parallel_downloads&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b44&#34;&gt;16&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;It turns out you can even set this to &lt;code&gt;20&lt;/code&gt;, but &lt;code&gt;16&lt;/code&gt; seemed plenty for me. Note&#xA;that this is &lt;em&gt;not&lt;/em&gt; the &lt;code&gt;max_downloads_per_mirror&lt;/code&gt; option, so I am not hosing any&#xA;one particular mirror by doing this.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="I want to saturate my crappy Canadian internet connection">
+	<meta name="author" content="James Shubin">
+
+	<title>Faster DNF updates - https://purpleidea.com/</title>
+	<link rel="canonical" href="https://purpleidea.com/blog/2026/10/01/faster-dnf-updates/">
+
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/fontawesome-all.css" rel="stylesheet">
+	<link href="/css/custom.css" rel="stylesheet">
+	<link href="/css/staticman.css" rel="stylesheet">
+
+
+	
+
+
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="https://purpleidea.com/">purpleidea.com</a>
+			</div>
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+
+					<li><a href="/about/">about</a></li>
+					<li><a href="/blog/">blog</a></li>
+					<li><a href="/projects/">projects</a></li>
+					<li><a href="/talks/">talks</a></li>
+					<li><a href="/misc/">misc</a></li>
+					<li><a href="/contact/">contact</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+	<div class="row">
+		<div class="col-md-9">
+			<div class="well well-sm">
+					<h3><strong>Faster DNF updates</strong><br><small>I want to saturate my crappy Canadian internet connection</small></h3>
+					<hr>
+					<p>We&rsquo;ve all sat through a very slow <code>dnf update</code>. While in a rush to get out the
+door, I realized it was going much slower than it should.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Let&#39;s go faster</span>:<br /><br />
+
+<p>It seems the mirrors limit the maximum speed of each single file.</p>
+<p>So I added the following under the existing <code>[main]</code> section in my
+<code>/etc/dnf/dnf.conf</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#b44">fastestmirror</span><span style="color:#666">=</span><span style="color:#b44">True</span>
+</span></span><span style="display:flex;"><span><span style="color:#b44">max_parallel_downloads</span><span style="color:#666">=</span><span style="color:#b44">16</span>
+</span></span></code></pre></div><p>It turns out you can even set this to <code>20</code>, but <code>16</code> seemed plenty for me. Note
+that this is <em>not</em> the <code>max_downloads_per_mirror</code> option, so I am not hosing any
+one particular mirror by doing this.</p>
+<p>In my testing, these settings sped things up. Note that <code>fastestmirror</code> uses TCP
+latency rather than available bandwidth to choose a mirror, so your results may
+vary.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">CLI</span>:<br /><br />
+
+<p>You can enable these settings for a one-shot CLI run with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dnf update --setopt<span style="color:#666">=</span><span style="color:#b8860b">fastestmirror</span><span style="color:#666">=</span>True --setopt<span style="color:#666">=</span><span style="color:#b8860b">max_parallel_downloads</span><span style="color:#666">=</span><span style="color:#666">16</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">mgmt config</span>:<br /><br />
+
+<p>If you use <a href="https://github.com/purpleidea/mgmt/">mgmt config</a>, then you get this
+automatically without even thinking about it. Use our <code>misc.dnf_update</code> class to
+just update the right way.</p>
+<p>We&rsquo;re building a growing compendium of &ldquo;just works in a polished and tuned way&rdquo;
+configurations, and we&rsquo;d love to share them with you.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Tail</span>:<br /><br />
+
+<p>The remaining bottleneck appears when a large download is still running after
+all the smaller downloads have finished. Prioritizing the largest files first
+could reduce that tail latency. Upstream feature request, anyone?</p>
+<table style="text-align:center; width:80%; margin:0 auto;"><tr><td>
+<a href="/blog/2026/10/01/faster-dnf-updates/tail.png"><img class="alignnone size-full" src="/blog/2026/10/01/faster-dnf-updates/tail.png"  width="100%" /></a></td></tr><tr><td>Watch chromium and firefox race.</td></tr></table></br />
+
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Upstream</span>:<br /><br />
+
+<p>If anyone can propose a higher parallel-download default and the scheduling
+feature to the right people, I&rsquo;d appreciate it.</p>
+
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Upgrade</span>:<br /><br />
+
+<p>I never upgrade my Fedora until about two weeks or so after the N-1 release, and
+since <code>Fedora 45</code> is just around the corner, it will be soon time to upgrade to
+<code>Fedora 44</code>. To do so you can use:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf system-upgrade download --setopt<span style="color:#666">=</span><span style="color:#b8860b">fastestmirror</span><span style="color:#666">=</span>True --setopt<span style="color:#666">=</span><span style="color:#b8860b">max_parallel_downloads</span><span style="color:#666">=</span><span style="color:#666">16</span> --releasever<span style="color:#666">=</span><span style="color:#666">44</span>
+</span></span></code></pre></div>
+
+<br /><span style="text-decoration:underline; font-weight: bold;">Conclusion</span>:<br /><br />
+
+<p>Overall, this reduced my overall download time from a projected three hours to
+under ten minutes.</p>
+<p>I&rsquo;m not sure why the parallel-download default isn&rsquo;t higher, but I hope this
+makes your day go by faster.</p>
+<p>Happy hacking!</p>
+<p>James</p>
+<p><br /><i>You can <a target="_blank" href="https://m9rx.com/">hire James</a> and his team at <a target="_blank" href="https://m9rx.com/">m9rx corporation</a>.</i>
+
+<br /><i>You can <a target="_blank" href="https://mastodon.social/@purpleidea">follow James on Mastodon</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://twitter.com/intent/follow?screen_name=purpleidea">follow James on Twitter</a> for more frequent updates and other random thoughts.</i>
+
+<br /><i>You can <a target="_blank" href="https://github.com/sponsors/purpleidea/">support James on GitHub</a> if you'd like to help sustain this kind of content.</i>
+
+<br /><i>You can <a target="_blank" href="https://www.patreon.com/purpleidea">support James on Patreon</a> if you'd like to help sustain this kind of content.</i>
+</p>
+
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			<div class="well well-sm"> 
+				<h4>October 1, 2026<br>
+				<small>402 words</small></h4>
+				<hr>
+				<strong>Categories</strong>
+				<ul class="list-unstyled">
+				
+					<li><a href="/categories/technical">technical</a></li>
+				
+				</ul>
+				<hr>
+				<strong>Tags</strong><br>
+				<a class="label label-default" href="/tags/devops">devops</a> <a class="label label-default" href="/tags/dnf">dnf</a> <a class="label label-default" href="/tags/dnf5">dnf5</a> <a class="label label-default" href="/tags/fedora">fedora</a> <a class="label label-default" href="/tags/fedora-upgrade">fedora-upgrade</a> <a class="label label-default" href="/tags/internet">internet</a> <a class="label label-default" href="/tags/linux">linux</a> <a class="label label-default" href="/tags/mgmt">mgmt</a> <a class="label label-default" href="/tags/mgmtconfig">mgmtconfig</a> <a class="label label-default" href="/tags/mirror">mirror</a> <a class="label label-default" href="/tags/planetfedora">planetfedora</a> 
+				
+
+				
+				
+				
+			</div>
+				<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 2px 15px;">
+			<h4>Links...</h4>
+		</div>
+		<div class="panel-body">
+
+			<a href="https://twitter.com/purpleidea" class="btn btn-info btn-xs"><i class="fa-brands fa-twitter-square fa-2x"></i></a>
+
+
+			<a href="https://github.com/purpleidea/" class="btn btn-primary btn-xs"><i class="fa-brands fa-github-square fa-2x"></i></a>
+
+
+			<a href="https://mastodon.social/@purpleidea" class="btn btn-primary btn-xs" style="background:#563ACC"><i class="fa-brands fa-mastodon fa-2x"></i></a>
+
+
+	
+
+			
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<hr>
+
+	
+<a name="comments"></a>
+<section class="post-comments">
+	<h3>Comments</h3>
+
+
+
+
+
+
+	
+
+	
+
+
+	<p>Nothing yet.</p>
+
+	<hr />
+	<a name="comment"></a>
+	<h3>Post a comment</h3>
+	<form class="post-new-comment" method="POST" action="https://api.staticman.net/v2/entry/purpleidea/purpleidea.com/master/comments">
+		<input type="hidden" name="options[redirect]" value="https://purpleidea.com/blog/2026/10/01/faster-dnf-updates/#comment-submitted">
+		<input type="hidden" name="options[entryId]" value="blog/2026/10/01/faster-dnf-updates">
+		<input type="hidden" name="options[reCaptcha][siteKey]" value="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp">
+		<input type="hidden" name="options[reCaptcha][secret]" value="AEl4ul2uMOx2EL2LMm/84zzh8mWLYIYW&#43;v2EEu7webGOtAqyQiLBa6QLjPgnlyNjJxE3UeccxuBQIWqPzG96FsVl0AVTihhHt3OGR1hteAZUAhoJjnH&#43;7PoyC3x7d4KDLypopDn&#43;HzWowOpAZuvfHE08n&#43;G4omrP5fUfkOrH03A=">
+		<div class="col-md-9">
+			<div class="row">
+				<textarea name="fields[message]" style="width: 80%; height: 50px;" class="post-comment-field" placeholder="Please enter your comment here..." rows="10"></textarea><br />
+			</div>
+			<div class="row">
+				<input name="fields[name]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your name">
+			</div>
+			<div class="row">
+				<input name="fields[email]" type="email" style="width: 50%;" class="post-comment-field" placeholder="Your email address">
+			</div>
+			<div class="row">
+				<input name="fields[url]" type="text" style="width: 50%;" class="post-comment-field" placeholder="Your website">
+			</div>
+			<div class="row">
+				<br />
+				<div class="g-recaptcha" data-sitekey="6Lc0u2EUAAAAAImKX7XafINIzeoLZFQCGFKF7qCp"></div>
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				(sorry but the spammers were getting too crazy!)
+			</div>
+			<div class="row">
+				<input type="submit" style="width: 80%;" class="post-comment-field btn btn-primary btn-xs" value="Submit">
+			</div>
+		</div>
+	</form>
+</section>
+
+<div id="comment-submitted" class="dialog">
+	<hr />
+	<h3>Thank you</h3>
+	<p>Your comment has been submitted and will be published if it gets approved.</p>
+	<p><a href="https://github.com/purpleidea/purpleidea.com/pulls">Click here</a> to see the patch you generated.</p>
+	<p><a href="#" class="btn">OK</a></p>
+</div>
+
+
+	</div>
+		<footer>
+		<div class="row">
+			<hr>
+			<div class="col-sm-12">
+				<p>
+				&copy; James Shubin 2026 &middot;
+				<a href="https://purpleidea.com/">https://purpleidea.com/</a>
+				
+					&middot;
+					<a href="https://github.com/purpleidea/purpleidea.com/blob/master/content/blog/2026/10/01/faster-dnf-updates.md" style="color:grey">Edit this page</a>
+				
+				</p>
+			</div>
+		</div>
+		</footer>
+	</div>
+
+	<script src="/js/jquery-1.11.3.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+</body>
+</html>
+
